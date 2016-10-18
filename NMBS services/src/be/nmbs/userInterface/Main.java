@@ -4,6 +4,7 @@ public class Main {
 	public static void main(String[] args) {
 		System.out.println("Hello NMBS!");
 		System.out.println("Printen op mijn branch");
-		System.out.println("Print vanuit mijn MSI");
+		int x = 5;
+		System.out.println(x);
 	}
 }
