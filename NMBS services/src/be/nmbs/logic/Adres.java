@@ -7,6 +7,15 @@ public class Adres {
 	private String bus;
 	private String woonplaats;
 	
+	// Constructor
+	public Adres(String straat, int huisnummer, int postcode, String bus, String woonplaats) {
+		this.straat = straat;
+		this.huisnummer = huisnummer;
+		this.postcode = postcode;
+		this.bus = bus;
+		this.woonplaats = woonplaats;
+	}
+	
 	// Getters
 	public String getStraat() { return straat; }
 	public int getHuisnummer() { return huisnummer; }

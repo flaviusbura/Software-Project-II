@@ -6,11 +6,14 @@ public class Persoon {
 	private Adres adres;
 	private char geslacht;
 	
-	// Methods
-	public void wijzigAdres(Adres adres) {
+	// Constructor
+	public Persoon(String voornaam, String achternaam, Adres adres, char geslacht) {
+		this.voornaam = voornaam;
+		this.achternaam = achternaam;
 		this.adres = adres;
+		this.geslacht = geslacht;
 	}
-	
+
 	// Getters
 	public String getVoornaam() { return voornaam; }
 	public String getAchternaam() { return achternaam; }
@@ -22,4 +25,9 @@ public class Persoon {
 	public void setAchternaam(String achternaam) { this.achternaam = achternaam; }
 	public void setAdres(Adres adres) { this.adres = adres; }
 	public void setGeslacht(char geslacht) { this.geslacht = geslacht; }
+	
+	// Methods
+	public void wijzigAdres(Adres adres) {
+		this.adres = adres;
+	}
 }
