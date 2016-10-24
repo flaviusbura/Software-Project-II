@@ -1,11 +1,11 @@
 package be.nmbs.logic;
 
 public class Adres {
-	String straat;
-	int huisnummer;
-	int postcode;
-	String bus;
-	String woonplaats;
+	private String straat;
+	private int huisnummer;
+	private int postcode;
+	private String bus;
+	private String woonplaats;
 	
 	// Getters
 	public String getStraat() { return straat; }
