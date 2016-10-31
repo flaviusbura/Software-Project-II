@@ -2,8 +2,7 @@ package be.nmbs.userInterface;
 
 public class Main {
 	public static void main(String[] args) {
-		PersoonDAO2 dao = new PersoonDAO2();
-		
-		dao.getPersoon(2);
+		System.out.println("Hello mijn branch");
+		System.out.println("Printen op mijn branch");
 	}
 }
