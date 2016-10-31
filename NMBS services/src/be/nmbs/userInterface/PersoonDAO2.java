@@ -11,19 +11,32 @@ public class PersoonDAO2 {
 	{
 		
 		Persoon s = new Persoon();
-		s.nr = 2;
+		
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://dt5.ehb.be/SP2G8","SP2G8","Groep8");
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery("select * from gebruiker");
-			rs.next();
-			String name = rs.getString("voornaam");
-			System.out.println(name);
 			
+			Connection con = DriverManager.getConnection("jdbc:mysql://dt5.ehb.be/SP2G8","SP2G8","Groep8");
+			PreparedStatement updateemp = con.prepareStatement
+				      ("insert into gebruiker values(null,?,?,?,?,?,?,?,?,?)");
+				      updateemp.setString(1,"man");
+				      updateemp.setString(2, "1/1/1");
+				      updateemp.setString(3, "Sam2");
+				      updateemp.setString(4, "leirens");
+				      updateemp.setInt(5,1);
+				      updateemp.setString(6, "xd");
+				      updateemp.setString(7, "xd");
+				      updateemp.setString(8, "xd");
+				      updateemp.setInt(9,1);
+				      updateemp.executeUpdate();
+				      Statement stmt = con.createStatement();
+				      String query = "select * from gebruiker";
+				      ResultSet rs =  stmt.executeQuery(query);
+				      while (rs.next()) {
+				         String name = rs.getString("voornaam");
+				         System.out.println(name);
+				      }      
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
