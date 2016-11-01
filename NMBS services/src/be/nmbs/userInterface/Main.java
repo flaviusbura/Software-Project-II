@@ -7,6 +7,11 @@ import be.nmbs.logic.*;
 
 public class Main {
 	public static void main(String[] args) {
+<<<<<<< HEAD
+		PersoonDAO2 dao = new PersoonDAO2();
+		
+		dao.getPersoon(2);
+=======
 		/*Gebruiker gebruiker = new Gebruiker(1, "Flavius", "Bura", "password", 1, true);
 		Gebruiker gebruiker2 = new Gebruiker(2, "User", "User", "User", 1, true);
 	    gebruikerDAO.insert(gebruiker);
@@ -24,5 +29,6 @@ public class Main {
 		}
 		
 		
+>>>>>>> refs/remotes/origin/master
 	}
 }
