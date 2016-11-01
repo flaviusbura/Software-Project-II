@@ -6,6 +6,5 @@
 	<classpathentry kind="lib" path="C:/Users/leire_000/Desktop/mysql-connector-java-5.1.40/mysql-connector-java-5.1.40-bin.jar"/>
 =======
 	<classpathentry kind="lib" path="/Users/flaviusb/Downloads/mysql-connector-java-5.1.40/mysql-connector-java-5.1.40-bin.jar"/>
->>>>>>> refs/remotes/origin/master
 	<classpathentry kind="output" path="bin"/>
 </classpath>
