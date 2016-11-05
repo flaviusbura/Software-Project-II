@@ -10,6 +10,7 @@ public class Main {
 <<<<<<< HEAD
 		System.out.println("Hello NMBS!");
 		System.out.println("Hello NMBS! 2 ");
+<<<<<<< HEAD
 		System.out.println("Hello NMBS! 2 ");
 		System.out.println("Hello NMBS! 2 ");
 		System.out.println("Hello NMBS! 2 ");
@@ -48,5 +49,9 @@ public class Main {
 >>>>>>> refs/remotes/origin/master
 >>>>>>> origin/Sam
 >>>>>>> branch 'master' of https://github.com/flaviusbura/Software-Project-II.git
+=======
+		System.out.println("Hello NMBS! 3 ");
+		System.out.println("Hello Abdel");
+>>>>>>> refs/heads/Abdelilah
 	}
 }

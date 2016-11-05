@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 <<<<<<< HEAD
+<<<<<<< HEAD
 	<classpathentry kind="src" path="NMBS services/src"/>
 =======
 <<<<<<< HEAD
@@ -9,6 +10,9 @@
 	<classpathentry kind="src" path="NMBS services/src"/>
 >>>>>>> refs/remotes/origin/master
 >>>>>>> branch 'master' of https://github.com/flaviusbura/Software-Project-II.git
+=======
+	<classpathentry kind="src" path="NMBS services/src"/>
+>>>>>>> refs/heads/Abdelilah
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

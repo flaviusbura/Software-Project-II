@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 <<<<<<< HEAD
+<<<<<<< HEAD
 	<name>Software Project</name>
 =======
 <<<<<<< HEAD
@@ -9,6 +10,9 @@
 	<name>Software-Project-II</name>
 >>>>>>> refs/remotes/origin/master
 >>>>>>> branch 'master' of https://github.com/flaviusbura/Software-Project-II.git
+=======
+	<name>NMBS Services</name>
+>>>>>>> refs/heads/Abdelilah
 	<comment></comment>
 	<projects>
 	</projects>
