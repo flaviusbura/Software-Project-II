@@ -98,7 +98,7 @@ public class KortingDAO extends BaseDAO {
 	 * @return
 	 */
 	public int delete(Korting korting) {
-		String sql = "DELETE FROM korting WHERE korting_id=?";
+		String sql = "UPDATE korting SET actief=0 WHERE korting_id=?";
 		PreparedStatement prep = null;
 		try {
 			if (getConnection().isClosed()) {

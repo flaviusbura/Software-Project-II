@@ -103,7 +103,7 @@ public class Persoon_adresDAO extends BaseDAO {
 	 * @return
 	 */
 	public int delete(Adres adres) {
-		String sql = "DELETE FROM klant_adres WHERE adres_id=?";
+		String sql = "UPDATE klant_adres SET actief=0 WHERE adres_id=?";
 		PreparedStatement prep = null;
 		try {
 			if (getConnection().isClosed()) {
