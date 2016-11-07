@@ -7,20 +7,20 @@ import java.util.ArrayList;
 
 import be.nmbs.logic.Gebruiker;
 
-public class Persoon_adresDAO extends BaseDAO {
+public class KortingDAO extends BaseDAO {
 	/**
 	 * Default constructor
 	 */
-	public Persoon_adresDAO(){}
+	public KortingDAO(){}
 	
 	/**
 	 * @return
 	 */
-	public Adres getAdres(int adres_id) {
+	public Korting getKorting(int korting_id) {
 		Adres adres=null;
 		PreparedStatement prep = null;
 		ResultSet res = null;
-		String sql = "SELECT * FROM klant_adres where adres_id=?";
+		String sql = "SELECT * FROM korting where korting_id=?";
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
@@ -28,20 +28,18 @@ public class Persoon_adresDAO extends BaseDAO {
 			prep = getConnection().prepareStatement(sql);
 			sql.setInt(1,adres_id);
 			res = prep.executeQuery();
+			Korting korting;
+
 			while (res.next()) {
-				String straat=res.getString("straat");
-				int huisnummer=res.getInt("nr");
-				int postcode=res.getInt("postcode");
-				String bus=res.getString("bus");
-				String woonplaats=res.getString("stad");
-				int adresId=res.getInt("adres_id");
-				String land=res.getString("land");
+				int korting_id=res.getInt("korting_id");
+				double hoeveelheid=res.getDouble("hoeveelheid");
+				String omschrijving=res.getString("omschrijving");
 				boolean actief=res.getInt("actief");
-				
-				Adres adres=new Adres(straat,huisnummer,postcode,bus,woonplaats,adresId,land,actief);
+				String typeKorting=res.getString("typeKorting");
+				Korting korting=new Korting(korting_id,hoeveelheid,omschrijving,actief,typeKorting);
 				
 			}
-			return adres;
+			return korting;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException(e.getMessage());
@@ -63,9 +61,9 @@ public class Persoon_adresDAO extends BaseDAO {
 	 * @param gebruiker
 	 * @return
 	 */
-	public int insert(Adres adres) {
+	public int insert(Korting korting) {
 		PreparedStatement prep = null;
-		String sql = "INSERT INTO klant_adres VALUES(?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO korting VALUES(?,?,?,?,?)";
 		
 		try {
 			if (getConnection().isClosed()) {
@@ -73,14 +71,11 @@ public class Persoon_adresDAO extends BaseDAO {
 			}
 			prep = getConnection().prepareStatement(sql);
 			
-			prep.setInt(1, adres.getId());
-			prep.setString(2, adres.getLand());
-			prep.setString(3, adres.getWoonplaats());
-			prep.setInt(4, adres.getPostcode());
-			prep.setString(5, adres.getStraat());
-			prep.setInt(6, adres.getHuisnummer());
-			prep.setString(7,adres.getBus());
-			prep.setInt(8,adres.getActief());
+			prep.setInt(1, korting.getId());
+			prep.setDouble(2,korting.getHoeveelheid());
+			prep.setString(3, korting.getOmschrijving());
+			prep.setInt(4, korting.getActief());
+			prep.setString(5, korting.getTypeKorting());
 			return prep.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -98,12 +93,12 @@ public class Persoon_adresDAO extends BaseDAO {
 	}
 	
 	/**
-	 * Deze methode gaat een adres verwijderen
+	 * Deze methode gaat een korting verwijderen
 	 * @param adres
 	 * @return
 	 */
-	public int delete(Adres adres) {
-		String sql = "DELETE FROM klant_adres WHERE adres_id=?";
+	public int delete(Korting korting) {
+		String sql = "DELETE FROM korting WHERE korting_id=?";
 		PreparedStatement prep = null;
 		try {
 			if (getConnection().isClosed()) {
@@ -111,7 +106,7 @@ public class Persoon_adresDAO extends BaseDAO {
 			}
 			prep = getConnection().prepareStatement(sql);
 			
-			prep.setInt(1, adres.getId());
+			prep.setInt(1,korting.getId());
 		    return prep.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -128,8 +123,8 @@ public class Persoon_adresDAO extends BaseDAO {
 		}
 	}
 	
-	public int update(Adres adres){
-		String sql = "UPDATE klant_adres SET actief=0 WHERE adres_id=?";
+	public int update(Korting korting){
+		String sql = "UPDATE korting SET actief=0 WHERE korting_id=?";
 		PreparedStatement prep = null;
 		try {
 			if (getConnection().isClosed()) {
@@ -137,10 +132,10 @@ public class Persoon_adresDAO extends BaseDAO {
 			}
 			prep = getConnection().prepareStatement(sql);
 			
-			prep.setInt(1, adres.getId());
+			prep.setInt(1, korting.getId());
 			prep.executeUpdate();
 			PreparedStatement prep = null;
-			String sql = "INSERT INTO klant_adres VALUES(?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO korting VALUES(?,?,?,?,?)";
 			
 			try {
 				if (getConnection().isClosed()) {
@@ -148,14 +143,11 @@ public class Persoon_adresDAO extends BaseDAO {
 				}
 				prep = getConnection().prepareStatement(sql);
 				
-				prep.setInt(1, adres.getId());
-				prep.setString(2, adres.getLand());
-				prep.setString(3, adres.getWoonplaats());
-				prep.setInt(4, adres.getPostcode());
-				prep.setString(5, adres.getStraat());
-				prep.setInt(6, adres.getHuisnummer());
-				prep.setString(7,adres.getBus());
-				prep.setInt(8,adres.getActief());
+				prep.setInt(1, korting.getId());
+				prep.setDouble(2,korting.getHoeveelheid());
+				prep.setString(3, korting.getOmschrijving());
+				prep.setInt(4, korting.getActief());
+				prep.setString(5, korting.getTypeKorting());
 				return prep.executeUpdate();
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());

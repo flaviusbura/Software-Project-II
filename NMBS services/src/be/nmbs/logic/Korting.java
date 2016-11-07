@@ -15,7 +15,7 @@ public class Korting {
 	}
 	
 	// getters
-	public int getID(){return korting_id;}
+	public int getId(){return korting_id;}
 	public double getHoeveelheid(){return hoeveelheid;}
 	public String getOmschrijving(){return omschrijving;}
 	public boolean getActief(){return actief;}
