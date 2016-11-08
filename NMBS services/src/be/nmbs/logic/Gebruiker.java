@@ -8,11 +8,6 @@ public class Gebruiker {
 	private boolean actief;
 	
 	/**
-	 * Default constructor
-	 */
-	public Gebruiker() {}
-	
-	/**
 	 * Constructor met vijf parameters. Maakt een gebruiker object aan.
 	 * @param voornaam
 	 * @param achternaam
@@ -26,13 +21,7 @@ public class Gebruiker {
 		this.voornaam =voornaam;
 		this.achternaam = achternaam;
 		this.wachtwoord = wachtwoord;
-		if (rol < 1) {
-			this.rol = 2;
-		} else if (rol > 2) {
-			this.rol = 2;
-		} else {
-			this.rol = rol;
-		}
+		this.rol = rol;
 		this.actief = actief;
 	}
 	
@@ -113,13 +102,7 @@ public class Gebruiker {
 	 * @param rol
 	 */
 	public void setRol(int rol) {
-		if (rol < 1) {
-			this.rol = 2;
-		} else if (rol > 2) {
-			this.rol = 2;
-		} else {
-			this.rol = rol;
-		}
+		this.rol = rol;
 	}
 	
 	/**
