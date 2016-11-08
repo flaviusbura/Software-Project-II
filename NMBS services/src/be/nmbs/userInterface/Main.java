@@ -7,6 +7,35 @@ import be.nmbs.logic.*;
 
 public class Main {
 	public static void main(String[] args) {
+<<<<<<< HEAD
+		/*Gebruiker gebruiker = new Gebruiker(1, "Flavius", "Bura", "password", 1, true);
+		Gebruiker gebruiker2 = new Gebruiker(2, "User", "User", "User", 1, true);
+	    gebruikerDAO.insert(gebruiker);
+		gebruikerDAO.insert(gebruiker2);*/
+		Gebruiker gebruiker = new Gebruiker(1, "Flavius", "Bura", "veranderd", 1, true);
+		GebruikerDAO gebruikerDAO = new GebruikerDAO();
+		Gebruiker gebruiker2 = new Gebruiker(2, "User", "User", "User", 1, true);
+		gebruikerDAO.delete(gebruiker2);
+		gebruikerDAO.updateWachtwoordById(gebruiker);
+		ArrayList<Gebruiker> gebruikers = new ArrayList<>();
+		gebruikers = gebruikerDAO.getAll();
+=======
+<<<<<<< HEAD
+		System.out.println("Hello NMBS!xddddddd");
+=======
+<<<<<<< HEAD
+		PersoonDAO2 dao = new PersoonDAO2();
+>>>>>>> branch 'Sam' of https://github.com/flaviusbura/Software-Project-II.git
+		
+<<<<<<< HEAD
+		for (Gebruiker g : gebruikers) {
+			System.out.println("Gebruikersnaam: " + g.getAchternaam());
+		}
+		
+		
+=======
+		dao.getPersoon(2);
+=======
 		/*Gebruiker gebruiker = new Gebruiker(1, "Flavius", "Bura", "password", 1, true);
 		Gebruiker gebruiker2 = new Gebruiker(2, "User", "User", "User", 1, true);
 	    gebruikerDAO.insert(gebruiker);
@@ -24,5 +53,8 @@ public class Main {
 		}
 		
 		
+>>>>>>> refs/remotes/origin/master
+>>>>>>> origin/Sam
+>>>>>>> branch 'Sam' of https://github.com/flaviusbura/Software-Project-II.git
 	}
 }
