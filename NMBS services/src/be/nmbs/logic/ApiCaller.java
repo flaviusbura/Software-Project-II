@@ -17,9 +17,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ApiCaller {
+	// readUrl klasse geleend van user dacwe op Stack Overflow (http://stackoverflow.com/questions/7467568/parsing-json-from-url)
 	private static String readUrl(String urlString) throws Exception {
 	    BufferedReader r = null;
 	    try {
+	    	// User agent code overgenomen van Esailija op Stack Overflow (http://stackoverflow.com/questions/13670692/403-forbidden-with-java-but-not-web-browser)
 	    	URLConnection connection = new URL(urlString).openConnection();
 	    	connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
 	    	connection.connect();
