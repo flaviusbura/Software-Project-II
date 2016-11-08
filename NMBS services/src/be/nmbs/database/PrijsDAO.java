@@ -1,5 +1,4 @@
-package be.nmbs.logic;
-
+package be.nmbs.database;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,7 +9,7 @@ import be.nmbs.logic.Prijs;
 
 public class PrijsDAO extends BaseDAO {
 
-	public PrijsrDAO(){}
+	public PrijsDAO(){}
 	
  ArrayList<Prijs> getAll() {
 		ArrayList<Prijs> lijst = null;
@@ -32,8 +31,8 @@ public class PrijsDAO extends BaseDAO {
 				String type = res.getString("type");
 				boolean actief = res.getBoolean("actief");
 				
-				Prijs prijs = new Prijs(prijs_Id,omschrijving, prijs, type, actief);
-				lijst.add((prijs));
+				Prijs p = new Prijs(prijs_id,omschrijving, prijs, type, actief);
+				lijst.add((p));
 			}
 			return lijst;
 		} catch (SQLException e) {
@@ -70,7 +69,7 @@ public class PrijsDAO extends BaseDAO {
 			prep.setString(2, prijs.getOmschrijving());
 			prep.setInt(3, prijs.getPrijs());
 			prep.setString(4, prijs.getType());
-			prep.setInt(5, prijs.getActief());
+			prep.setBoolean(5, prijs.getActief());
 			return prep.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
