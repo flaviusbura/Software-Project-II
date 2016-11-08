@@ -4,6 +4,6 @@ public class Ticket {
 	int id;
 	
 	public Ticket(){
-		System.out.println("test");
+		System.out.println("test2");
 	}
 }
