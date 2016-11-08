@@ -11,6 +11,10 @@ public class Main {
 		System.out.println("Hello NMBS!");
 		System.out.println("Hello NMBS! 2 ");
 <<<<<<< HEAD
+		System.out.println("test");
+		
+=======
+<<<<<<< HEAD
 		System.out.println("Hello NMBS! 2 ");
 		System.out.println("Hello NMBS! 2 ");
 		System.out.println("Hello NMBS! 2 ");
@@ -53,5 +57,6 @@ public class Main {
 		System.out.println("Hello NMBS! 3 ");
 		System.out.println("Hello Abdel");
 >>>>>>> refs/heads/Abdelilah
+>>>>>>> refs/remotes/origin/master
 	}
 }
