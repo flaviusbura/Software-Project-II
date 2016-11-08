@@ -1,13 +1,13 @@
 package be.nmbs.logic;
 
-public class Klant extends Persoon {
+public class Klant {
 	int id;
 	
-	// Constructor
+	/* Constructor
 	public Klant(String voornaam, String achternaam, Adres adres, char geslacht, int id) {
 		super(voornaam, achternaam, adres, geslacht);
 		this.id = id;
-	}
+	}*/
 	
 	// Getters
 	public int getId() { return id; }

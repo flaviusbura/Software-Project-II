@@ -6,16 +6,26 @@ public class Adres {
 	private int postcode;
 	private String bus;
 	private String woonplaats;
+	private int adresId;
 	
 	// Constructor
-	public Adres(String straat, int huisnummer, int postcode, String bus, String woonplaats) {
+	public Adres(String straat, int huisnummer, int postcode, String bus, String woonplaats, int adresId) {
 		this.straat = straat;
 		this.huisnummer = huisnummer;
 		this.postcode = postcode;
 		this.bus = bus;
 		this.woonplaats = woonplaats;
+		this.adresId = adresId;
 	}
 	
+	public int getAdresId() {
+		return adresId;
+	}
+
+	public void setAdresId(int adresId) {
+		this.adresId = adresId;
+	}
+
 	// Getters
 	public String getStraat() { return straat; }
 	public int getHuisnummer() { return huisnummer; }
