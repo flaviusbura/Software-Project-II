@@ -17,7 +17,7 @@ public class HoofdmenuGUI {
 	/**
 	 * Launch the application.
 	 */
-	public static void newScreen() {
+	public void newScreen() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -78,7 +78,7 @@ public class HoofdmenuGUI {
 			public void actionPerformed(ActionEvent e) {
 				
 				AbonnementenGUI aboGUI = new AbonnementenGUI();
-				aboGUI.newAbo();
+				aboGUI.newAboGUI();
 				frame.setVisible(false);
 			}
 		});
@@ -99,26 +99,61 @@ public class HoofdmenuGUI {
 		
 		JButton btnTicket = new JButton("ticket");
 		btnTicket.setBackground(new Color(70, 130, 180));
+		btnTicket.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TicketGUI tg = new TicketGUI();
+				tg.newTicketGUI();
+				frame.setVisible(false);
+			}
+		});
 		btnTicket.setBounds(65, 518, 204, 59);
 		frame.getContentPane().add(btnTicket);
 		
 		JButton btnStationInformatie = new JButton("station informatie");
 		btnStationInformatie.setBackground(new Color(70, 130, 180));
+		btnStationInformatie.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				StationInfoGUI sig = new StationInfoGUI();
+				sig.newStationInfoGUI();
+				frame.setVisible(false);
+			}
+		});
 		btnStationInformatie.setBounds(65, 606, 204, 59);
 		frame.getContentPane().add(btnStationInformatie);
 		
 		JButton btnRouteInformatie = new JButton("route informatie");
 		btnRouteInformatie.setBackground(new Color(70, 130, 180));
+		btnRouteInformatie.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RouteInfoGUI rig = new RouteInfoGUI();
+				rig.newRouteInfoGUI();
+				frame.setVisible(false);
+			}
+		});
 		btnRouteInformatie.setBounds(379, 248, 204, 59);
 		frame.getContentPane().add(btnRouteInformatie);
 		
 		JButton btnGroepsreservaties = new JButton("groepsreservaties");
 		btnGroepsreservaties.setBackground(new Color(70, 130, 180));
+		btnGroepsreservaties.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GroepsreservatiesGUI sig = new GroepsreservatiesGUI();
+				sig.newGroepsReservatieGUI();
+				frame.setVisible(false);
+			}
+		});
 		btnGroepsreservaties.setBounds(379, 342, 204, 59);
 		frame.getContentPane().add(btnGroepsreservaties);
 		
 		JButton btnVerlorenVoorwerpen = new JButton("verloren voorwerpen");
 		btnVerlorenVoorwerpen.setBackground(new Color(70, 130, 180));
+		btnVerlorenVoorwerpen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VerlorenVoorwerpenGUI vvg = new VerlorenVoorwerpenGUI();
+				vvg.newVerloorenVoorwerpGUI();
+				frame.setVisible(false);
+			}
+		});
 		btnVerlorenVoorwerpen.setBounds(379, 426, 204, 59);
 		frame.getContentPane().add(btnVerlorenVoorwerpen);
 	}

@@ -1,7 +1,9 @@
 package be.nmbs.userInterface;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -44,6 +46,18 @@ public class BoetesGUI {
 		JLabel lblBoetes = new JLabel("boetes");
 		lblBoetes.setBounds(88, 149, 46, 14);
 		frame.getContentPane().add(lblBoetes);
+
+		
+		JLabel lblLogo = new JLabel("");
+		lblLogo.setIcon(new ImageIcon("D:\\SamL\\Pictures\\nmbsoranje2.jpg"));
+		lblLogo.setBounds(0, 0, 408, 206);
+		frame.getContentPane().add(lblLogo);
+		
+		JLabel lblHeader = new JLabel("");
+		lblHeader.setOpaque(true);
+		lblHeader.setBackground(new Color(252, 172, 53));
+		lblHeader.setBounds(0, 0, 2097, 206);
+		frame.getContentPane().add(lblHeader);
 	}
 
 }

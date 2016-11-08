@@ -7,18 +7,18 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class AbonnementenGUI {
+public class GroepsreservatiesGUI {
 
 	private JFrame frame;
 
 	/**
 	 * Launch the application.
 	 */
-	public void newAboGUI() {
+	public void newGroepsReservatieGUI() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AbonnementenGUI window = new AbonnementenGUI();
+					GroepsreservatiesGUI window = new GroepsreservatiesGUI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -30,7 +30,7 @@ public class AbonnementenGUI {
 	/**
 	 * Create the application.
 	 */
-	public AbonnementenGUI() {
+	public GroepsreservatiesGUI() {
 		initialize();
 	}
 
@@ -42,11 +42,6 @@ public class AbonnementenGUI {
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
-		JLabel lblAbo = new JLabel("abo");
-		lblAbo.setBounds(68, 127, 46, 14);
-		frame.getContentPane().add(lblAbo);
-
 		
 		JLabel lblLogo = new JLabel("");
 		lblLogo.setIcon(new ImageIcon("D:\\SamL\\Pictures\\nmbsoranje2.jpg"));
