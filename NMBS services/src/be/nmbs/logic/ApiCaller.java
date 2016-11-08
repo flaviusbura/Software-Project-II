@@ -38,7 +38,7 @@ public class ApiCaller {
 	    }
 	}
 	
-	public List<Route> getTreinInfo(String stepOn, String stepOff) throws Exception {
+	public List<Route> getRouteInfo(String stepOn, String stepOff) throws Exception {
 		try {
 		    JSONObject json = new JSONObject(readUrl("https://traintracks.online/api/Route/" + stepOn + "/" + stepOff));
 		    
@@ -136,6 +136,78 @@ public class ApiCaller {
 			System.out.println("Geen routes gevonden. Een waarde die u hebt ingegeven bestaat niet.");
 			return null;
 		}
-		
+	}
+	
+	public Trein getTreinInfo(String id) throws Exception {
+		try {
+		    JSONObject trein = new JSONObject(readUrl("https://traintracks.online/api/Train/" + id));
+		    
+		    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+			format.setTimeZone(TimeZone.getTimeZone("GMT+1"));
+			
+			// Checken voor treinen
+    		JSONArray stations = trein.getJSONObject("Stops").getJSONArray("Stations");
+    		List<Station> s = new ArrayList<Station>();
+    		
+    		Date aDate = null, aaDate = null, dDate = null, adDate = null;
+    		// Time checking
+    		for (int k = 0; k < stations.length(); k++) {
+    			JSONObject station = stations.getJSONObject(k);
+    			JSONObject time = station.getJSONObject("Time");
+    			
+    			String sDate = "";
+    			// Checking arrival en actual arrival time
+    			if (k != 0) {
+    				
+    				// Arrival time
+    				sDate = time.getString("Arrival");
+    				if (sDate.endsWith("+01:00"))
+	    				sDate = sDate.substring(0, sDate.length() - 6);
+
+    				aDate = format.parse(sDate);
+    				
+    				// Actual arrival time
+    				sDate = time.getString("ActualArrival");
+	    			if (sDate.endsWith("+01:00"))
+	    				sDate = sDate.substring(0, sDate.length() - 6);
+	    			
+    				aaDate = format.parse(sDate);
+    			} else { aDate = null; aaDate = null; }
+  
+    			// Checking departure en actual departure time
+    			if (k != stations.length() - 1) {
+    				// Departure time
+	    			sDate = time.getString("Departure");
+	    			if (sDate.endsWith("+01:00"))
+	    				sDate = sDate.substring(0, sDate.length() - 6);
+	    			
+    				dDate = format.parse(sDate);
+    				
+    				// Actual departure time
+    				sDate = time.getString("ActualDeparture");
+	    			if (sDate.endsWith("+01:00"))
+	    				sDate = sDate.substring(0, sDate.length() - 6);
+	    			
+    				adDate = format.parse(sDate);
+    			} else { dDate = null; adDate = null; }
+    			
+    			if (k == 0)
+    				s.add(new Station(station.getString("Name"), null, station.getString("DeparturePlatform"), aDate, aaDate, dDate, adDate));
+    			else if (k == stations.length() - 1)
+    				s.add(new Station(station.getString("Name"), station.getString("ArrivalPlatform"), null, aDate, aaDate, dDate, adDate));
+    			else
+    				s.add(new Station(station.getString("Name"), station.getString("ArrivalPlatform"), station.getString("DeparturePlatform"), aDate, aaDate, dDate, adDate));
+    		}
+    		
+    		Trein t = new Trein(trein.getString("FullId"), trein.get("DepartureStation").toString(), trein.getString("TerminusStation"), s, trein.getBoolean("Cancelled"));
+
+		    return t;
+		} catch (JSONException e) {
+		    e.printStackTrace();
+			return null;
+		} catch (FileNotFoundException e) {
+			System.out.println("Geen trein gevonden. Een waarde die u hebt ingegeven bestaat niet.");
+			return null;
+		}
 	}
 }
