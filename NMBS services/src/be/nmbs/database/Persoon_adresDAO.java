@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import be.nmbs.logic.Adres;
 import be.nmbs.logic.Gebruiker;
 
 public class Persoon_adresDAO extends BaseDAO {
@@ -26,7 +27,7 @@ public class Persoon_adresDAO extends BaseDAO {
 				throw new IllegalStateException("Unexpected error!");
 			}
 			prep = getConnection().prepareStatement(sql);
-			sql.setInt(1,adres_id);
+			prep.setInt(1,adres_id);
 			res = prep.executeQuery();
 			while (res.next()) {
 				String straat=res.getString("straat");
@@ -36,9 +37,9 @@ public class Persoon_adresDAO extends BaseDAO {
 				String woonplaats=res.getString("stad");
 				int adresId=res.getInt("adres_id");
 				String land=res.getString("land");
-				boolean actief=res.getInt("actief");
+				boolean actief=res.getBoolean("actief");
 				
-				Adres adres=new Adres(straat,huisnummer,postcode,bus,woonplaats,adresId,land,actief);
+				 adres =new Adres(straat,huisnummer,postcode,bus,woonplaats,adresId,land,actief);
 				
 			}
 			return adres;
@@ -80,7 +81,7 @@ public class Persoon_adresDAO extends BaseDAO {
 			prep.setString(5, adres.getStraat());
 			prep.setInt(6, adres.getHuisnummer());
 			prep.setString(7,adres.getBus());
-			prep.setInt(8,adres.getActief());
+			prep.setBoolean(8,adres.getActief());
 			return prep.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -139,31 +140,31 @@ public class Persoon_adresDAO extends BaseDAO {
 			
 			prep.setInt(1, adres.getId());
 			prep.executeUpdate();
-			PreparedStatement prep = null;
-			String sql = "INSERT INTO klant_adres VALUES(?,?,?,?,?,?,?,?)";
+			PreparedStatement prep2 = null;
+			String sql2 = "INSERT INTO klant_adres VALUES(?,?,?,?,?,?,?,?)";
 			
 			try {
 				if (getConnection().isClosed()) {
 					throw new IllegalStateException("Unexpected error!");
 				}
-				prep = getConnection().prepareStatement(sql);
+				prep2 = getConnection().prepareStatement(sql2);
 				
-				prep.setInt(1, adres.getId());
-				prep.setString(2, adres.getLand());
-				prep.setString(3, adres.getWoonplaats());
-				prep.setInt(4, adres.getPostcode());
-				prep.setString(5, adres.getStraat());
-				prep.setInt(6, adres.getHuisnummer());
-				prep.setString(7,adres.getBus());
-				prep.setInt(8,adres.getActief());
-				return prep.executeUpdate();
+				prep2.setInt(1, adres.getId());
+				prep2.setString(2, adres.getLand());
+				prep2.setString(3, adres.getWoonplaats());
+				prep2.setInt(4, adres.getPostcode());
+				prep2.setString(5, adres.getStraat());
+				prep2.setInt(6, adres.getHuisnummer());
+				prep2.setString(7,adres.getBus());
+				prep2.setBoolean(8,adres.getActief());
+				return prep2.executeUpdate();
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 				throw new RuntimeException(e.getMessage());
 			} finally {
 				try {
-					if (prep != null)
-						prep.close();
+					if (prep2 != null)
+						prep2.close();
 
 				} catch (SQLException e) {
 					System.out.println(e.getMessage());

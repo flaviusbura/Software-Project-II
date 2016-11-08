@@ -5,7 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import be.nmbs.logic.Adres;
 import be.nmbs.logic.Gebruiker;
+import be.nmbs.logic.Korting;
 
 public class KortingDAO extends BaseDAO {
 	/**
@@ -17,7 +19,8 @@ public class KortingDAO extends BaseDAO {
 	 * @return
 	 */
 	public Korting getKorting(int korting_id) {
-		Adres adres=null;
+		
+		Korting korting =null;
 		PreparedStatement prep = null;
 		ResultSet res = null;
 		String sql = "SELECT * FROM korting where korting_id=?";
@@ -26,17 +29,16 @@ public class KortingDAO extends BaseDAO {
 				throw new IllegalStateException("Unexpected error!");
 			}
 			prep = getConnection().prepareStatement(sql);
-			sql.setInt(1,adres_id);
+			prep.setInt(1,korting_id);
 			res = prep.executeQuery();
-			Korting korting;
-
+			
 			while (res.next()) {
-				int korting_id=res.getInt("korting_id");
+				int korting_id2=res.getInt("korting_id");
 				double hoeveelheid=res.getDouble("hoeveelheid");
 				String omschrijving=res.getString("omschrijving");
-				boolean actief=res.getInt("actief");
+				boolean actief=res.getBoolean("actief");
 				String typeKorting=res.getString("typeKorting");
-				Korting korting=new Korting(korting_id,hoeveelheid,omschrijving,actief,typeKorting);
+				 korting=new Korting(korting_id2,hoeveelheid,omschrijving,actief,typeKorting);
 				
 			}
 			return korting;
@@ -74,7 +76,7 @@ public class KortingDAO extends BaseDAO {
 			prep.setInt(1, korting.getId());
 			prep.setDouble(2,korting.getHoeveelheid());
 			prep.setString(3, korting.getOmschrijving());
-			prep.setInt(4, korting.getActief());
+			prep.setBoolean(4, korting.getActief());
 			prep.setString(5, korting.getTypeKorting());
 			return prep.executeUpdate();
 		} catch (SQLException e) {
@@ -134,28 +136,28 @@ public class KortingDAO extends BaseDAO {
 			
 			prep.setInt(1, korting.getId());
 			prep.executeUpdate();
-			PreparedStatement prep = null;
-			String sql = "INSERT INTO korting VALUES(?,?,?,?,?)";
+			PreparedStatement prep2 = null;
+			String sql2 = "INSERT INTO korting VALUES(?,?,?,?,?)";
 			
 			try {
 				if (getConnection().isClosed()) {
 					throw new IllegalStateException("Unexpected error!");
 				}
-				prep = getConnection().prepareStatement(sql);
+				prep2 = getConnection().prepareStatement(sql2);
 				
-				prep.setInt(1, korting.getId());
-				prep.setDouble(2,korting.getHoeveelheid());
-				prep.setString(3, korting.getOmschrijving());
-				prep.setInt(4, korting.getActief());
-				prep.setString(5, korting.getTypeKorting());
-				return prep.executeUpdate();
+				prep2.setInt(1, korting.getId());
+				prep2.setDouble(2,korting.getHoeveelheid());
+				prep2.setString(3, korting.getOmschrijving());
+				prep2.setBoolean(4, korting.getActief());
+				prep2.setString(5, korting.getTypeKorting());
+				return prep2.executeUpdate();
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 				throw new RuntimeException(e.getMessage());
 			} finally {
 				try {
-					if (prep != null)
-						prep.close();
+					if (prep2 != null)
+						prep2.close();
 
 				} catch (SQLException e) {
 					System.out.println(e.getMessage());
