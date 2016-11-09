@@ -123,7 +123,7 @@ public class Gebruiker {
 	}
 	
 	/**
-	 * Stuurt een int terug
+	 * Stuurt een int terug. Een 1 als het actief is en een nul als niet actief is.
 	 * @return
 	 */
 	public int isActief() {

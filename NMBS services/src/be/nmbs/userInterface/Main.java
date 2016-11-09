@@ -25,5 +25,20 @@ public class Main {
 		for (Gebruiker g : gebruikers) {
 			System.out.println("Gebruikersnaam: " + g.getAchternaam());
 		}
+		
+		Klant klant = new Klant(1, "Flavius", "Bura", 1, "0478593920", true);
+		//Klant klant2 = new Klant(2, "Voornaam", "Achternaam", 1, "0473892093", true);
+		KlantDAO klantDAO = new KlantDAO();
+		
+		//klantDAO.insert(klant2);
+		//klantDAO.insert(klant);
+		//klantDAO.delete(klant2);
+		klantDAO.updateTelefoonByContactId(klant);
+		ArrayList<Klant> klanten = new ArrayList<Klant>();
+		klanten = klantDAO.getAll();
+		
+		for (Klant klant3 : klanten) {
+			System.out.println("Achternaam: " + klant3.getAchternaam());
+		}
 	}
 }
