@@ -12,9 +12,12 @@ public class Main {
 	    gebruikerDAO.insert(gebruiker);
 		gebruikerDAO.insert(gebruiker2);*/
 		Gebruiker gebruiker = new Gebruiker(1, "Flavius", "Bura", "veranderd", 1, true);
+		//Gebruiker gebruiker3 = new Gebruiker(2, "Sam", "Leirens", "samL", 1, true);
 		GebruikerDAO gebruikerDAO = new GebruikerDAO();
-		Gebruiker gebruiker2 = new Gebruiker(2, "User", "User", "User", 1, true);
-		gebruikerDAO.delete(gebruiker2);
+		//Gebruiker gebruiker2 = new Gebruiker(3, "User", "User", "User", 1, true);
+		//gebruikerDAO.insert(gebruiker3);
+		//gebruikerDAO.insert(gebruiker2);
+		//gebruikerDAO.delete(gebruiker2);
 		gebruikerDAO.updateWachtwoordById(gebruiker);
 		ArrayList<Gebruiker> gebruikers = new ArrayList<>();
 		gebruikers = gebruikerDAO.getAll();
