@@ -157,4 +157,49 @@ public class GebruikerDAO extends BaseDAO {
 			}
 		}      
     }
+	
+	/**
+	 * Deze methode gaat een GebruikerObject terug sturen op naam en voornaam
+	 */
+	public Gebruiker getGebruikerOpNaamEnVoornaam(Gebruiker gebruiker) {
+		Gebruiker gebruiker2 = null;
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		String sql = "SELECT * FROM gebruiker WHERE voornaam=? AND achternaam=?";
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+			
+			prep.setString(1, gebruiker.getVoornaam());
+			prep.setString(2, gebruiker.getAchternaam());
+			res = prep.executeQuery();
+			
+			while (res.next()) {
+				int gebruikerId = res.getInt("gebruiker_id");
+				String voornaam = res.getString("voornaam");
+				String achternaam = res.getString("achternaam");
+				String wachtwoord = res.getString("paswoord");
+				int rol = res.getInt("rol");
+				boolean actief = res.getBoolean("actief");
+				
+				gebruiker2 = new Gebruiker(gebruikerId, voornaam, achternaam, wachtwoord, rol, actief);
+			}
+			return gebruiker2;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+				if (res != null)
+					res.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
 }
