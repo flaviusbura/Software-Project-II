@@ -128,4 +128,43 @@ public class Klant {
 	public void setActief(boolean actief) {
 		this.actief = actief;
 	}
+	
+	/**
+	 * Deze methode overrides Object.hascode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((achternaam == null) ? 0 : achternaam.hashCode());
+		result = prime * result + ((voornaam == null) ? 0 : voornaam.hashCode());
+		return result;
+	}
+
+	/**
+	 * Deze methode overrides Object.equals(). Deze methode stuurt true terug
+	 *  als achternaam en voornaam gelijk zijn.
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Klant other = (Klant) obj;
+		if (achternaam == null) {
+			if (other.achternaam != null)
+				return false;
+		} else if (!achternaam.equals(other.achternaam))
+			return false;
+		if (voornaam == null) {
+			if (other.voornaam != null)
+				return false;
+		} else if (!voornaam.equals(other.voornaam))
+			return false;
+		return true;
+	}
+
 }

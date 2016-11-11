@@ -153,7 +153,7 @@ public class Gebruiker {
 	}
 
 	/**
-	 * Overrides Object.equals()
+	 * Overrides Object.equals(). Deze methode stuurt true terug als achternaam en voornaam gelijk zijn.
 	 */
 	@Override
 	public boolean equals(Object obj) {
