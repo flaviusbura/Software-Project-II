@@ -7,6 +7,12 @@ import java.util.ArrayList;
 
 import be.nmbs.logic.Gebruiker;
 
+/**
+ * Deze klasse is een DAO. Hiermee kunnen er Gebruiker-objecten naar de de database 
+ * geschreven, gevraagd, gewijzigd en verwijderd worden.
+ * @author flaviusb
+ *
+ */
 public class GebruikerDAO extends BaseDAO {
 	/**
 	 * Default constructor
@@ -15,7 +21,7 @@ public class GebruikerDAO extends BaseDAO {
 	
 	/**
 	 * Deze methode gaat een lijst terug sturen met alle data in mijn tabel gebruiker
-	 * @return
+	 * @return Een ArrayList van Gebruiker-Objecten
 	 */
 	public ArrayList<Gebruiker> getAll() {
 		ArrayList<Gebruiker> lijst = null;
