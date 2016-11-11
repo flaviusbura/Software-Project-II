@@ -157,5 +157,50 @@ public class KlantDAO extends BaseDAO {
 			}
 		}      
     }
+	
+	/**
+	 * Deze methode gaat een KlantObject terug sturen op naam en voornaam
+	 */
+	public Klant getKlantOpNaamEnVoornaam(Klant klant) {
+		Klant klant2 = null;
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		String sql = "SELECT * FROM klant_contact WHERE voornaam=? AND naam=?";
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+			
+			prep.setString(1, klant.getVoornaam());
+			prep.setString(2, klant.getAchternaam());
+			res = prep.executeQuery();
+			
+			while (res.next()) {
+				int contactId = res.getInt("contact_id");
+				String voornaam = res.getString("voornaam");
+				String achternaam = res.getString("naam");
+				int adresId = res.getInt("adres_id");
+				String telefoon = res.getString("telefoon");
+				boolean actief = res.getBoolean("actief");
+				
+				klant2 = new Klant(contactId, voornaam, achternaam, adresId, telefoon, actief);
+			}
+			return klant2;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+				if (res != null)
+					res.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
 }
 

@@ -98,6 +98,7 @@ public class GebruikerDAOTest {
 	public void tearDown() throws Exception {
 		gebruiker = null;
 		gebruiker2 = null;
+		gebruiker3 = null;
 		dao = null;
 	}
 }
