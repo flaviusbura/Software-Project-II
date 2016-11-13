@@ -84,7 +84,7 @@ public class GebruikerDAO extends BaseDAO {
 			prep.setString(3, gebruiker.getAchternaam());
 			prep.setString(4, gebruiker.getWachtwoord());
 			prep.setInt(5, gebruiker.getRol());
-			prep.setInt(6, gebruiker.isActief());
+			prep.setBoolean(6, gebruiker.isActief());
 			return prep.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());

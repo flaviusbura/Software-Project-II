@@ -42,7 +42,7 @@ public class GebruikerTest {
 		assertEquals("Bura", gebruikerMetParam.getAchternaam());
 		assertEquals("wachtwoord", gebruikerMetParam.getWachtwoord());
 		assertEquals(1, gebruikerMetParam.getRol());
-		assertEquals(1, gebruikerMetParam.isActief());
+		assertEquals(true, gebruikerMetParam.isActief());
 	}
 	
 	/**
@@ -90,7 +90,7 @@ public class GebruikerTest {
 	 */
 	@Test
 	public void testIsActief() {
-		assertEquals(1, gebruikerMetParam.isActief());
+		assertEquals(true, gebruikerMetParam.isActief());
 	}
 	
 	/**
@@ -150,9 +150,9 @@ public class GebruikerTest {
 	@Test
 	public void testSetActief() {
 		gebruikerMetParam.setActief(false);
-		assertEquals(0, gebruikerMetParam.isActief());
+		assertEquals(false, gebruikerMetParam.isActief());
 		gebruikerMetParam.setActief(true);
-		assertEquals(1, gebruikerMetParam.isActief());
+		assertEquals(true, gebruikerMetParam.isActief());
 	}
 	
 	/**

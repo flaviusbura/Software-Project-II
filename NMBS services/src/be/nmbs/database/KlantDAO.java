@@ -78,7 +78,7 @@ public class KlantDAO extends BaseDAO {
 			prep.setString(3, klant.getAchternaam());
 			prep.setInt(4, klant.getAdresId());
 			prep.setString(5, klant.getTelefoon());
-			prep.setInt(6, klant.isActief());
+			prep.setBoolean(6, klant.isActief());
 			return prep.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
