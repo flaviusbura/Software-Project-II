@@ -5,47 +5,41 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import be.nmbs.logic.Gebruiker;
+import be.nmbs.logic.Klant;
 
-/**
- * Deze klasse is een DAO. Hiermee kunnen er Gebruiker-objecten naar de de database 
- * geschreven, gevraagd, gewijzigd en verwijderd worden.
- * @author flaviusb
- *
- */
-public class GebruikerDAO extends BaseDAO {
+public class KlantDAO extends BaseDAO {
 	/**
 	 * Default constructor
 	 */
-	public GebruikerDAO(){}
+	public KlantDAO() {}
 	
 	/**
-	 * Deze methode gaat een lijst terug sturen met alle data in mijn tabel gebruiker
-	 * @return Een ArrayList van Gebruiker-Objecten
+	 * Deze methode gaat een lijst terug sturen met alle data in mijn tabel klant_contact
+	 * @return
 	 */
-	public ArrayList<Gebruiker> getAll() {
-		ArrayList<Gebruiker> lijst = null;
+	public ArrayList<Klant> getAll() {
+		ArrayList<Klant> lijst = null;
 		PreparedStatement prep = null;
 		ResultSet res = null;
-		String sql = "SELECT * FROM gebruiker";
+		String sql = "SELECT * FROM klant_contact";
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
 			}
 			prep = getConnection().prepareStatement(sql);
 			res = prep.executeQuery();
-			lijst = new ArrayList<Gebruiker>();
+			lijst = new ArrayList<Klant>();
 
 			while (res.next()) {
-				int gebruikerId = res.getInt("gebruiker_id");
+				int contactId = res.getInt("contact_id");
 				String voornaam = res.getString("voornaam");
-				String achternaam = res.getString("achternaam");
-				String wachtwoord = res.getString("paswoord");
-				int rol = res.getInt("rol");
+				String achternaam = res.getString("naam");
+				int adresId = res.getInt("adres_id");
+				String telefoon = res.getString("telefoon");
 				boolean actief = res.getBoolean("actief");
 				
-				Gebruiker gebruiker = new Gebruiker(gebruikerId, voornaam, achternaam, wachtwoord, rol, actief);
-				lijst.add((gebruiker));
+				Klant klant = new Klant(contactId, voornaam, achternaam, adresId, telefoon, actief);
+				lijst.add((klant));
 			}
 			return lijst;
 		} catch (SQLException e) {
@@ -66,12 +60,12 @@ public class GebruikerDAO extends BaseDAO {
 	
 	/**
 	 * Deze methode gaat een insert statement uitvoeren
-	 * @param gebruiker
+	 * @param klant
 	 * @return
 	 */
-	public int insert(Gebruiker gebruiker) {
+	public int insert(Klant klant) {
 		PreparedStatement prep = null;
-		String sql = "INSERT INTO gebruiker VALUES(?,?,?,?,?,?)";
+		String sql = "INSERT INTO klant_contact VALUES(?,?,?,?,?,?)";
 		
 		try {
 			if (getConnection().isClosed()) {
@@ -79,12 +73,12 @@ public class GebruikerDAO extends BaseDAO {
 			}
 			prep = getConnection().prepareStatement(sql);
 			
-			prep.setInt(1, gebruiker.getId());
-			prep.setString(2, gebruiker.getVoornaam());
-			prep.setString(3, gebruiker.getAchternaam());
-			prep.setString(4, gebruiker.getWachtwoord());
-			prep.setInt(5, gebruiker.getRol());
-			prep.setInt(6, gebruiker.isActief());
+			prep.setInt(1, klant.getContactId());
+			prep.setString(2, klant.getVoornaam());
+			prep.setString(3, klant.getAchternaam());
+			prep.setInt(4, klant.getAdresId());
+			prep.setString(5, klant.getTelefoon());
+			prep.setInt(6, klant.isActief());
 			return prep.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -102,12 +96,12 @@ public class GebruikerDAO extends BaseDAO {
 	}
 	
 	/**
-	 * Deze methode gaat een gebruiker verwijderen uit mijn databank
-	 * @param gebruiker
+	 * Deze methode gaat een klant verwijderen uit mijn databank
+	 * @param klant
 	 * @return
 	 */
-	public int delete(Gebruiker gebruiker) {
-		String sql = "DELETE FROM gebruiker WHERE gebruiker_id=?";
+	public int delete(Klant klant) {
+		String sql = "DELETE FROM klant_contact WHERE contact_id=?";
 		PreparedStatement prep = null;
 		try {
 			if (getConnection().isClosed()) {
@@ -115,7 +109,7 @@ public class GebruikerDAO extends BaseDAO {
 			}
 			prep = getConnection().prepareStatement(sql);
 			
-			prep.setInt(1, gebruiker.getId());
+			prep.setInt(1, klant.getContactId());
 		    return prep.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -133,12 +127,12 @@ public class GebruikerDAO extends BaseDAO {
 	}
 	
 	/**
-	 * Door gebruik te maken van deze methde kan het wachtwoord van een gebruiker veranderd worden
-	 * @param gebruiker
+	 * Door gebruik te maken van deze methde kan het telefoonnummer van een klant veranderd worden
+	 * @param klant
 	 * @return
 	 */
-	public int updateWachtwoordById(Gebruiker gebruiker) {
-        String sql = "UPDATE gebruiker SET paswoord=? WHERE gebruiker_id = ?";
+	public int updateTelefoonByContactId(Klant klant) {
+        String sql = "UPDATE klant_contact SET telefoon=? WHERE contact_id = ?";
         PreparedStatement prep = null;
         try {
         	if (getConnection().isClosed()) {
@@ -146,8 +140,8 @@ public class GebruikerDAO extends BaseDAO {
 			}
         	prep = getConnection().prepareStatement(sql);
         	
-            prep.setString(1, gebruiker.getWachtwoord());
-            prep.setInt(2, gebruiker.getId());
+            prep.setString(1, klant.getTelefoon());
+            prep.setInt(2, klant.getContactId());
             return prep.executeUpdate();
         } catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -165,34 +159,34 @@ public class GebruikerDAO extends BaseDAO {
     }
 	
 	/**
-	 * Deze methode gaat een GebruikerObject terug sturen op naam en voornaam
+	 * Deze methode gaat een KlantObject terug sturen op naam en voornaam
 	 */
-	public Gebruiker getGebruikerOpNaamEnVoornaam(Gebruiker gebruiker) {
-		Gebruiker gebruiker2 = null;
+	public Klant getKlantOpNaamEnVoornaam(Klant klant) {
+		Klant klant2 = null;
 		PreparedStatement prep = null;
 		ResultSet res = null;
-		String sql = "SELECT * FROM gebruiker WHERE voornaam=? AND achternaam=?";
+		String sql = "SELECT * FROM klant_contact WHERE voornaam=? AND naam=?";
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
 			}
 			prep = getConnection().prepareStatement(sql);
 			
-			prep.setString(1, gebruiker.getVoornaam());
-			prep.setString(2, gebruiker.getAchternaam());
+			prep.setString(1, klant.getVoornaam());
+			prep.setString(2, klant.getAchternaam());
 			res = prep.executeQuery();
 			
 			while (res.next()) {
-				int gebruikerId = res.getInt("gebruiker_id");
+				int contactId = res.getInt("contact_id");
 				String voornaam = res.getString("voornaam");
-				String achternaam = res.getString("achternaam");
-				String wachtwoord = res.getString("paswoord");
-				int rol = res.getInt("rol");
+				String achternaam = res.getString("naam");
+				int adresId = res.getInt("adres_id");
+				String telefoon = res.getString("telefoon");
 				boolean actief = res.getBoolean("actief");
 				
-				gebruiker2 = new Gebruiker(gebruikerId, voornaam, achternaam, wachtwoord, rol, actief);
+				klant2 = new Klant(contactId, voornaam, achternaam, adresId, telefoon, actief);
 			}
-			return gebruiker2;
+			return klant2;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException(e.getMessage());
@@ -209,3 +203,4 @@ public class GebruikerDAO extends BaseDAO {
 		}
 	}
 }
+
