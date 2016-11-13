@@ -1,27 +1,23 @@
 package be.nmbs.userInterface;
 
-import java.sql.Date;
-import java.util.ArrayList;
-
-import be.nmbs.database.VerlorenVoorwerpenDAO;
-import be.nmbs.logic.VerlorenVoorwerp;
-
 public class Main {
 	public static void main(String[] args) {
-		Date datum = new Date(2016, 11, 13);
-		VerlorenVoorwerp verlorenVoorwerp = new VerlorenVoorwerp(1, "Midi", "MacBook", datum, true);
-		VerlorenVoorwerp verlorenVoorwerp2 = new VerlorenVoorwerp(2, "Gent", "MSI", datum, true);
+		/*Date datum = new Date(2016, 11, 13);
+		Date betaalDatum = new Date(2016, 11, 15);
+		Boete boete = new Boete(1, 1, 10.30, datum, betaalDatum, false);
+		Boete boete2 = new Boete(2, 2, 5.20, datum, betaalDatum, false);
 		
-		VerlorenVoorwerpenDAO dao = new VerlorenVoorwerpenDAO();
+		BoeteDAO dao = new BoeteDAO();
 		
-		//dao.insert(verlorenVoorwerp);
-		//dao.insert(verlorenVoorwerp2);
-		
-		ArrayList<VerlorenVoorwerp> lijst = new ArrayList<VerlorenVoorwerp>();
+		//dao.insert(boete);
+		//dao.insert(boete2);
+		boete2.setBetaald(true);
+		dao.updateBetaaldByKlantId(boete2);
+		ArrayList<Boete> lijst = new ArrayList<Boete>();
 		lijst = dao.getAll();
 		
-		for (VerlorenVoorwerp voorwerp : lijst) {
-			System.out.println("Voorwerp: " + voorwerp.getOmschrijving());
-		}
+		for (Boete boete3 : lijst) {
+			System.out.println("Betaald: " + boete3.isBetaald());
+		}*/
 	}
 }
