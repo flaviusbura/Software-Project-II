@@ -6,9 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import be.nmbs.logic.Abonnement;
-import be.nmbs.logic.Adres;
 import be.nmbs.logic.Korting;
 import be.nmbs.database.KortingDAO;
+import be.nmbs.logic.Klant;
+import be.nmbs.logic.Prijs;
 
 public class AbonnementDAO extends BaseDAO{
 	
@@ -23,8 +24,8 @@ public class AbonnementDAO extends BaseDAO{
 			prep = getConnection().prepareStatement(sql);
 			prep.setInt(1, abonnement.getKlantContactId());
 			prep.setString(2, abonnement.getRoute());
-			prep.setDate(3, Date.valueOf(abonnement.getEindDatum()));
-//			prep.setInt(4, abonnement.getPrijsID());
+			prep.setString(3, abonnement.getEindDatum());
+			prep.setInt(4, abonnement.getPrijsId());
 			prep.setInt(5,abonnement.getKortingID());
 			prep.setBoolean(6, abonnement.isActief());
 		
@@ -111,26 +112,26 @@ public class AbonnementDAO extends BaseDAO{
 			}
 			prep = getConnection().prepareStatement(sql);
 			
-			prep.setInt(1,abonnement.getKlantID());
+			prep.setInt(1,abonnement.getKlantContactId());
 
 			res = prep.executeQuery();
 			while (res.next()) {
-				int abbonement_id=res.getInt("abbonement_id");
-				int klant_contact_id=res.getInt("klant_contact_id");
+				int abbonementId=res.getInt("abbonement_id");
+				int klantContactId = res.getInt("klant_contact_id");
 				String route=res.getString("route");
 				String einddatum=res.getString("einddatum");
-				int prijs_id=res.getInt("prijs_id");
-				int korting_id =res.getInt("korting_id");
+				int prijsId=res.getInt("prijs_id");
+				int kortingId =res.getInt("korting_id");
 				boolean actief=res.getBoolean("actief");
 				
 				KortingDAO kortingdao = new KortingDAO();
-				Korting korting = kortingdao.getKorting(korting_id);
-				Klant_contact_IdDAO klantdao = new Klant_contact_IdDAO();
-				Klant klant = klantdao.getKlant(klant_contact_id);
+				Korting korting = kortingdao.getKorting(kortingId);
+				KlantDAO klantdao = new KlantDAO();
+				Klant klant = klantdao.getKlantById(klantContactId);
 				PrijsDAO prijsdao = new PrijsDAO();
-				Prijs prijs = prijsdao.getPrijs(prijs_id);
+				Prijs prijs = prijsdao.getPrijsByPrijsId(prijsId);
 				
-				 abo =new Abonnement(abbonement_id,klant,route,einddatum,prijs,korting,actief);
+				 abo = new Abonnement(abbonementId, korting, actief, klant, route, einddatum, prijs);
 				
 			}
 			return abo;
@@ -148,6 +149,4 @@ public class AbonnementDAO extends BaseDAO{
 			}
 		}
 	}
-	
-
 }

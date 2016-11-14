@@ -1,7 +1,5 @@
 package be.nmbs.logic;
 
-import java.util.Date;
-
 public class Abonnement {
 	private int id;
 	private Klant klant;
@@ -9,15 +7,16 @@ public class Abonnement {
 	private String eindDatum;
 	private Korting korting;
 	private boolean actief;
-	private Prijs Prijs;
+	private Prijs prijs;
 	// Constructor
-	public Abonnement(int id,Korting korting, boolean actief,Klant klant, String route, String eindDatum) {
+	public Abonnement(int id,Korting korting, boolean actief,Klant klant, String route, String eindDatum, Prijs prijs) {
 		this.klant = klant;
 		this.route = route;
 		this.eindDatum = eindDatum;
 		this.id = id;
 		this.korting = korting;
 		this.actief = actief;
+		this.prijs = prijs;
 	}
 	
 	// Getters
@@ -40,10 +39,9 @@ public class Abonnement {
 	
 	//
 
-	public int getKlantcontactID()
+	public int getKlantContactId()
 	{
-		
-		return klant_contact.getId();
+		return klant.getContactId();
 	}
 	
 	public int getKortingID()
@@ -51,9 +49,9 @@ public class Abonnement {
 		
 		return korting.getId();
 	}
-	public int getPrijsID()
+	public int getPrijsId()
 	{
 		
-		return prijs.GetId();
+		return prijs.getPrijsId();
 	}
 }

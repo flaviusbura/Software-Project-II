@@ -17,6 +17,12 @@ import be.nmbs.logic.Ticket;
  */
 public class TicketDAO extends BaseDAO{
 	SimpleDateFormat format = new SimpleDateFormat( "YYYY/MM/DD" );
+	
+	/**
+	 * Default constructor.
+	 */
+	public TicketDAO() {}
+	
 	/**
 	 * Deze methode gaat een lijst terug sturen met alle data in mijn tabel ticket
 	 * @return Een ArrayList van Ticket-Objecten
@@ -90,7 +96,7 @@ public class TicketDAO extends BaseDAO{
 			java.sql.Date sqlDate= new java.sql.Date(ticket.getDatum().getTime());
 			prep.setDate(4, sqlDate);
 			prep.setInt(5, ticket.getKlas());
-			prep.setInt(6, ticket.isActief());
+			prep.setBoolean(6, ticket.isActief());
 			prep.setString(7, ticket.getEindStation().getName());
 			prep.setString(8, ticket.getOmschrijving());
 			prep.setInt(9, ticket.getPrijsId());

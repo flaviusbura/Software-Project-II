@@ -1,47 +1,32 @@
 package be.nmbs.userInterface;
 
-import java.util.ArrayList;
-
-import be.nmbs.database.*;
-import be.nmbs.logic.*;
+import be.nmbs.database.AbonnementDAO;
+import be.nmbs.database.KlantDAO;
+import be.nmbs.database.KortingDAO;
+import be.nmbs.database.PrijsDAO;
+import be.nmbs.logic.Abonnement;
+import be.nmbs.logic.Klant;
+import be.nmbs.logic.Korting;
+import be.nmbs.logic.Prijs;
 
 public class Main {
 	public static void main(String[] args) {
-		/*Gebruiker gebruiker = new Gebruiker(1, "Flavius", "Bura", "password", 1, true);
-		Gebruiker gebruiker2 = new Gebruiker(2, "User", "User", "User", 1, true);
-	    gebruikerDAO.insert(gebruiker);
-		gebruikerDAO.insert(gebruiker2);*/
-		Gebruiker gebruiker = new Gebruiker(1, "Flavius", "Bura", "veranderd", 1, true);
-		GebruikerDAO gebruikerDAO = new GebruikerDAO();
-		Gebruiker gebruiker2 = new Gebruiker(2, "User", "User", "User", 1, true);
-		gebruikerDAO.delete(gebruiker2);
-		gebruikerDAO.updateWachtwoordById(gebruiker);
-		ArrayList<Gebruiker> gebruikers = new ArrayList<>();
-		gebruikers = gebruikerDAO.getAll();
-		Station station = new Station();
-		Station startStation = new Station();
-		Station eindStation = new Station();
-		Date date = new Date("10/10/1010");
-		startStation.setName("Midi");
-		eindStation.setName("Noord");
-		station.setName("Gent");
+		KortingDAO dao = new KortingDAO();
+		Korting korting = dao.getKorting(1);
+		KlantDAO dao2 = new KlantDAO();
+		Klant klant = dao2.getKlantById(1);
+		String route = new String("string");
+		String eindDatum = "einddatum";
+		PrijsDAO dao3 = new PrijsDAO();
+		Prijs prijs = dao3.getPrijsByPrijsId(1);
+		Abonnement abonnement = new Abonnement(1, korting, true, klant, route, eindDatum, prijs);
+		Abonnement abonnement2 = new Abonnement(2, korting, false, klant, route, eindDatum, prijs);
 		
-		TicketDAO dao = new TicketDAO();
-		@SuppressWarnings("unused")
-		Ticket ticket = new Ticket(1, startStation, "ongewoon", date , 1, 
-				true, eindStation, "Gewone ticket",1, 1, station);
-		@SuppressWarnings("unused")
-		Ticket ticket2 = new Ticket(2, startStation, "gewoon", date, 1, 
-				true, eindStation, "Iets", 1, 1, station);
+		AbonnementDAO daoAb = new AbonnementDAO();
+		//daoAb.insert(abonnement);
+		daoAb.insert(abonnement2);
 		
-		//dao.insert(ticket);
-		//dao.insert(ticket2);
 		
-		ArrayList<Ticket> lijst = new ArrayList<Ticket>();
-		lijst = dao.getAll();
-		
-		for (Gebruiker g : gebruikers) {
-			System.out.println("Gebruikersnaam: " + g.getAchternaam());
-		}
+	
 	}
 }

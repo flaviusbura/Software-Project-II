@@ -123,13 +123,11 @@ public class Gebruiker {
 	}
 	
 	/**
-	 * Stuurt een int terug. Een 1 als het actief is en een nul als niet actief is.
+	 * Deze methode gaat terugsturen of mijn gerbuiker nog actief is.
 	 * @return
 	 */
-	public int isActief() {
-		if (actief == true)
-			return 1;
-		return 0;
+	public boolean isActief() {
+		return actief;
 	}
 	
 	/**

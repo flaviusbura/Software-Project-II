@@ -42,7 +42,7 @@ public class KlantTest {
 		assertEquals("Bura", klantMetPram.getAchternaam());
 		assertEquals(1, klantMetPram.getAdresId());
 		assertEquals("0489245939", klantMetPram.getTelefoon());
-		assertEquals(1, klantMetPram.isActief());
+		assertEquals(true, klantMetPram.isActief());
 	}
 	
 	/**
@@ -90,7 +90,7 @@ public class KlantTest {
 	 */
 	@Test
 	public void testIsActief() {
-		assertEquals(1, klantMetPram.isActief());
+		assertEquals(true, klantMetPram.isActief());
 	}
 	
 	/**
@@ -144,7 +144,7 @@ public class KlantTest {
 	@Test
 	public void testSetActief() {
 		klant.setActief(false);;
-		assertEquals(0, klant.isActief());
+		assertEquals(false, klant.isActief());
 	}
 	
 	/**

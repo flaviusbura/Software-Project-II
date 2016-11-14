@@ -138,10 +138,8 @@ public class Ticket {
 	 * Deze methode gaat een 1 terugsturen bij true en 0 bij false.
 	 * @return Een int aan aan te duiden true of false
 	 */
-	public int isActief() {
-		if (actief == true)
-			return 1;
-		return 0;
+	public boolean isActief() {
+		return actief;
 	}
 
 	/**
