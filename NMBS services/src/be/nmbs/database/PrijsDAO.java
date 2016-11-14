@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import be.nmbs.logic.Prijs;
 
 /**
@@ -19,7 +18,8 @@ public class PrijsDAO extends BaseDAO {
 	/**
 	 * Default constructor.
 	 */
-	public PrijsDAO() {}
+	public PrijsDAO() {
+	}
 
 	/**
 	 * Deze methode gaat aan de database alle gegevens vragen inde tabel prijs.
@@ -81,7 +81,7 @@ public class PrijsDAO extends BaseDAO {
 				throw new IllegalStateException("Unexpected error!");
 			}
 			prep = getConnection().prepareStatement(sql);
-			prep.setInt(1, prijs.getPrijs_id());
+			prep.setInt(1, prijs.getPrijsId());
 			prep.setString(2, prijs.getOmschrijving());
 			prep.setDouble(3, prijs.getPrijs());
 			prep.setString(4, prijs.getType());
@@ -117,7 +117,7 @@ public class PrijsDAO extends BaseDAO {
 			}
 			prep = getConnection().prepareStatement(sql);
 
-			prep.setInt(1, prijs.getPrijs_id());
+			prep.setInt(1, prijs.getPrijsId());
 			return prep.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -127,6 +127,52 @@ public class PrijsDAO extends BaseDAO {
 				if (prep != null)
 					prep.close();
 
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
+
+	/**
+	 * Deze methode gaat de prijs gaan zoeken op prijsId
+	 * 
+	 * @param prijsId
+	 * @return Een Prijs-object
+	 */
+	public Prijs getPrijsByPrijsId(int prijsId) {
+		Prijs prijsObject = null;
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		String sql = "SELECT * FROM prijs WHERE prijs_id=?";
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+
+			prep.setInt(1, prijsId);
+			res = prep.executeQuery();
+
+			while (res.next()) {
+				int prijs_id = res.getInt("prijs_id");
+				String omschrijving = res.getString("omschrijving");
+				double prijs = res.getDouble("prijs");
+				String type = res.getString("type");
+				boolean actief = res.getBoolean("actief");
+
+				prijsObject = new Prijs(prijs_id, omschrijving, prijs, type, actief);
+			}
+			return prijsObject;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+				if (res != null)
+					res.close();
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 				throw new RuntimeException("Unexpected error!");

@@ -202,5 +202,51 @@ public class KlantDAO extends BaseDAO {
 			}
 		}
 	}
+	
+	/**
+	 * Deze methode gaat een klant opzoeken op basis van KlantId
+	 * @param KlantContactId
+	 * @return Een Klant-object
+	 */
+	public Klant getKlantById(int KlantContactId) {
+		Klant klant = null;
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		String sql = "SELECT * FROM klant_contact WHERE contact_id=?";
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+			
+			prep.setInt(1, KlantContactId);
+			res = prep.executeQuery();
+			
+			while (res.next()) {
+				int contactId = res.getInt("contact_id");
+				String voornaam = res.getString("voornaam");
+				String achternaam = res.getString("naam");
+				int adresId = res.getInt("adres_id");
+				String telefoon = res.getString("telefoon");
+				boolean actief = res.getBoolean("actief");
+				
+				klant = new Klant(contactId, voornaam, achternaam, adresId, telefoon, actief);
+			}
+			return klant;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+				if (res != null)
+					res.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
 }
 

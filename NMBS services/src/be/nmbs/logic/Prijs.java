@@ -8,7 +8,7 @@ package be.nmbs.logic;
  */
 
 public class Prijs {
-	private int prijs_id;
+	private int prijsId;
 	private String omschrijving;
 	private double prijs;
 	private String type;
@@ -29,8 +29,8 @@ public class Prijs {
 	 * @param type
 	 * @param actief
 	 */
-	public Prijs(int prijs_id, String omschrijving, double prijs, String type, boolean actief) {
-		this.prijs_id = prijs_id;
+	public Prijs(int prijsId, String omschrijving, double prijs, String type, boolean actief) {
+		this.prijsId = prijsId;
 		this.omschrijving = omschrijving;
 		this.prijs = prijs;
 		this.type = type;
@@ -42,8 +42,8 @@ public class Prijs {
 	 * 
 	 * @return Een int, het id van de prijs.
 	 */
-	public int getPrijs_id() {
-		return prijs_id;
+	public int getPrijsId() {
+		return prijsId;
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class Prijs {
 	 * @param id
 	 */
 	public void setPrijs_id(int id) {
-		this.prijs_id = id;
+		this.prijsId = id;
 	}
 
 	/**

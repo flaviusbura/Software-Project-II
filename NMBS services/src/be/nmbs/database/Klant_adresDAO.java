@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import be.nmbs.logic.Adres;
 import be.nmbs.logic.Gebruiker;
 
-public class Persoon_adresDAO extends BaseDAO {
+public class Klant_adresDAO extends BaseDAO {
 	/**
 	 * Default constructor
 	 */
-	public Persoon_adresDAO(){}
+	public Klant_adresDAO(){}
 	
 	/**
 	 * @return
