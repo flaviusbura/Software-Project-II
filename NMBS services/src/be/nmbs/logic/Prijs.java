@@ -63,7 +63,7 @@ public class Prijs {
 		return actief;
 	}
 	
-	public void boolean setActief(boolean act)
+	public void setActief(boolean act)
 	{
 		this.actief=act;
 	}
