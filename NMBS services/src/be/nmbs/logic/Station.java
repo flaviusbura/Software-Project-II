@@ -7,15 +7,17 @@ public class Station {
 	private String arrivalPlatform, departurePlatform;
 	private Date arrival, arrivalDelay, departure, departureDelay;
 	
+	public Station() {}
 	// Constructor
-	public Station(String name, String arrivalPlatform, String departurePlatform, Date arrival, Date arrivalDelay, Date departure, Date departureDelay) {
+	public Station(String name, String arrivalPlatform, String departurePlatform, Date aDate,
+			Date aaDate, Date dDate, Date adDate) {
 		this.name = name;
 		this.setArrivalPlatform(arrivalPlatform);
 		this.setDeparturePlatform(departurePlatform);
-		this.arrival = arrival;
-		this.arrivalDelay = arrivalDelay;
-		this.setDeparture(departure);
-		this.setDepartureDelay(departureDelay);
+		this.arrival = aDate;
+		this.arrivalDelay = aaDate;
+		this.setDeparture(dDate);
+		this.setDepartureDelay(adDate);
 	}
 	
 	// toString
