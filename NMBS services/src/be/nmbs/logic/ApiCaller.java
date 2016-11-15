@@ -54,6 +54,7 @@ public class ApiCaller {
 	    }
 	}
 	
+	// Vraagt een lijst van routes op en geeft deze terug in een ArrayList
 	public ArrayList<Route> getRouteInfo(String stepOn, String stepOff) {
 		try {
 			String text = readUrl("https://traintracks.online/api/Route/" + stepOn + "/" + stepOff);
@@ -159,7 +160,115 @@ public class ApiCaller {
 			return null;
 		}
 	}
+
+	// Vraagt een lijst van routes op een gegeven tijdstip op en geeft deze terug in een ArrayList
+	public ArrayList<Route> getTimedRouteInfo(String stepOn, String stepOff, Date date) {
+		try {
+			String text = readUrl("https://traintracks.online/api/Route/" + stepOn + "/" + stepOff + "/" + date.getTime() / 1000);
+			if (text != "") {
+			    JSONObject json = new JSONObject(text);
+			    
+			    JSONArray routes = (JSONArray) json.get("Routes");
+			    
+			    ArrayList<Route> r = new ArrayList<Route>();
+			    ArrayList<Overstap> o = new ArrayList<Overstap>();
+			    ArrayList<Trein> t = new ArrayList<Trein>();
+			    
+			    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+				format.setTimeZone(TimeZone.getTimeZone("GMT+1"));
+				
+				// Alle routes overgaan -> length -1 vanwege één valse route meegegeven door api
+			    for (int i = 0; i < routes.length() - 1; i++) {
+			    	JSONObject route = routes.getJSONObject(i);
+			    	JSONArray treinen = route.getJSONArray("Trains");
+			    	JSONArray overstappen = route.getJSONArray("TransferStations");
+			    	
+			    	// Checken voor treinen
+			    	for (int j = 0; j < treinen.length(); j++) {
+			    		JSONObject trein = treinen.optJSONObject(j);
+			    		JSONArray stations = trein.getJSONObject("Stops").getJSONArray("Stations");
+			    		List<Station> s = new ArrayList<Station>();
+			    		
+			    		Date aDate = null, aaDate = null, dDate = null, adDate = null;
+			    		// Time checking
+			    		for (int k = 0; k < stations.length(); k++) {
+			    			JSONObject station = stations.getJSONObject(k);
+			    			JSONObject time = station.getJSONObject("Time");
+			    			
+			    			String sDate = "";
+			    			// Checking arrival en actual arrival time
+			    			if (k != 0) {
+			    				
+			    				// Arrival time
+			    				sDate = time.getString("Arrival");
+			    				if (sDate.endsWith("+01:00"))
+				    				sDate = sDate.substring(0, sDate.length() - 6);
 	
+			    				aDate = format.parse(sDate);
+			    				
+			    				// Actual arrival time
+			    				sDate = time.getString("ActualArrival");
+				    			if (sDate.endsWith("+01:00"))
+				    				sDate = sDate.substring(0, sDate.length() - 6);
+				    			
+			    				aaDate = format.parse(sDate);
+			    			} else { aDate = null; aaDate = null; }
+			  
+			    			// Checking departure en actual departure time
+			    			if (k != stations.length() - 1) {
+			    				// Departure time
+				    			sDate = time.getString("Departure");
+				    			if (sDate.endsWith("+01:00"))
+				    				sDate = sDate.substring(0, sDate.length() - 6);
+				    			
+			    				dDate = format.parse(sDate);
+			    				
+			    				// Actual departure time
+			    				sDate = time.getString("ActualDeparture");
+				    			if (sDate.endsWith("+01:00"))
+				    				sDate = sDate.substring(0, sDate.length() - 6);
+				    			
+			    				adDate = format.parse(sDate);
+			    			} else { dDate = null; adDate = null; }
+			    			
+			    			if (k == 0)
+			    				s.add(new Station(station.getString("Name"), null, station.getString("DeparturePlatform"), aDate, aaDate, dDate, adDate));
+			    			else if (k == stations.length() - 1)
+			    				s.add(new Station(station.getString("Name"), station.getString("ArrivalPlatform"), null, aDate, aaDate, dDate, adDate));
+			    			else
+			    				s.add(new Station(station.getString("Name"), station.getString("ArrivalPlatform"), station.getString("DeparturePlatform"), aDate, aaDate, dDate, adDate));
+			    		}
+			    		
+			    		t.add(new Trein(trein.getString("FullId"), trein.get("DepartureStation").toString(), trein.getString("TerminusStation"), s, trein.getBoolean("Cancelled")));
+			    	}
+			    	
+			    	// Checken voor overstappen
+			    	for (int j = 0; j < overstappen.length(); j++) {
+			    		JSONObject overstap = overstappen.optJSONObject(j);
+				    	if (!overstap.isNull("TransferAt"))
+				    		o.add(new Overstap(overstap.get("TransferAt").toString(), overstap.getInt("ArrivalPlatform"), overstap.getInt("DeparturePlatform")));
+			    	}
+				    
+			    	r.add(new Route(route.getString("Departure"), route.getString("Arrival"), t, o));
+			    	o.clear();
+			    	t.clear();
+			    }
+	
+			    return r;
+			} else {
+				return null;
+			}
+		} catch (JSONException e) {
+		    e.printStackTrace();
+			return null;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	// Vraagt een trein op met behulp van een id en geeft het resultaat terug
 	public Trein getTreinInfo(String id) {
 		try {
 			String text = readUrl("https://traintracks.online/api/Train/" + id);
