@@ -1,3 +1,5 @@
+package be.nmbs.logic;
+
 
 public class Korting {
 	private int korting_id;
@@ -22,7 +24,7 @@ public class Korting {
 	public String getTypeKorting(){return typeKorting;}
 	// setters
 	public void setHoeveelheid(double hoeveelheid){this.hoeveelheid=hoeveelheid;}
-	public void setOmschijving(string omschrijving){this.omschrijving=omschrijving;}
+	public void setOmschrijving(String omschrijving){this.omschrijving=omschrijving;}
 	public void setActief(boolean actief){this.actief=actief;}
 	public void setTypeKorting(String type){this.typeKorting=type;}
 }

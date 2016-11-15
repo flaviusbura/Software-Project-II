@@ -8,6 +8,11 @@ public class Gebruiker {
 	private boolean actief;
 	
 	/**
+	 * Default constructor
+	 */
+	public Gebruiker() {}
+	
+	/**
 	 * Constructor met vijf parameters. Maakt een gebruiker object aan.
 	 * @param voornaam
 	 * @param achternaam
@@ -21,7 +26,13 @@ public class Gebruiker {
 		this.voornaam =voornaam;
 		this.achternaam = achternaam;
 		this.wachtwoord = wachtwoord;
-		this.rol = rol;
+		if (rol < 1) {
+			this.rol = 2;
+		} else if (rol > 2) {
+			this.rol = 2;
+		} else {
+			this.rol = rol;
+		}
 		this.actief = actief;
 	}
 	
@@ -102,17 +113,21 @@ public class Gebruiker {
 	 * @param rol
 	 */
 	public void setRol(int rol) {
-		this.rol = rol;
+		if (rol < 1) {
+			this.rol = 2;
+		} else if (rol > 2) {
+			this.rol = 2;
+		} else {
+			this.rol = rol;
+		}
 	}
 	
 	/**
-	 * Stuurt een int terug
+	 * Deze methode gaat terugsturen of mijn gerbuiker nog actief is.
 	 * @return
 	 */
-	public int isActief() {
-		if (actief == true)
-			return 1;
-		return 0;
+	public boolean isActief() {
+		return actief;
 	}
 	
 	/**
@@ -121,5 +136,42 @@ public class Gebruiker {
 	 */
 	public void setActief(boolean actief) {
 		this.actief = actief;
+	}
+	
+	/**
+	 * Overrides Object.hashcode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((achternaam == null) ? 0 : achternaam.hashCode());
+		result = prime * result + ((voornaam == null) ? 0 : voornaam.hashCode());
+		return result;
+	}
+
+	/**
+	 * Overrides Object.equals(). Deze methode stuurt true terug als achternaam en voornaam gelijk zijn.
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Gebruiker other = (Gebruiker) obj;
+		if (achternaam == null) {
+			if (other.achternaam != null)
+				return false;
+		} else if (!achternaam.equals(other.achternaam))
+			return false;
+		if (voornaam == null) {
+			if (other.voornaam != null)
+				return false;
+		} else if (!voornaam.equals(other.voornaam))
+			return false;
+		return true;
 	}
 }

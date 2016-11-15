@@ -2,61 +2,25 @@ package be.nmbs.userInterface;
 
 import java.util.ArrayList;
 
-import be.nmbs.database.*;
-import be.nmbs.logic.*;
+import be.nmbs.database.BoeteDAO;
+import be.nmbs.logic.Boete;
 
 public class Main {
 	public static void main(String[] args) {
-<<<<<<< HEAD
-		System.out.println("Hello NMBS!");
-		System.out.println("Hello NMBS! 2 ");
-<<<<<<< HEAD
-		System.out.println("test");
+		Boete boete = new Boete(1, 1, 20.40, false);
+		Boete boete2 = new Boete(1, 2, 50.40, false);
 		
-=======
-<<<<<<< HEAD
-		System.out.println("Hello NMBS! 2 ");
-		System.out.println("Hello NMBS! 2 ");
-		System.out.println("Hello NMBS! 2 ");
-		System.out.println("Hello NMBS! 2 ");
-		System.out.println("Hello NMBS! 2 ");
-		System.out.println("Hello NMBS! 2 ");
-		System.out.println("Hello NMBS! 2 ");
+		BoeteDAO dao = new BoeteDAO();
+		dao.insert(boete);
+		dao.insert(boete2);
 		
-		//hg
-=======
-<<<<<<< HEAD
-		System.out.println("Hello NMBS!xddddddd");
-=======
-<<<<<<< HEAD
-		PersoonDAO2 dao = new PersoonDAO2();
+		ArrayList<Boete> lijst = new ArrayList<>();
+		lijst = dao.getAll();
 		
-		dao.getPersoon(2);
-=======
-		/*Gebruiker gebruiker = new Gebruiker(1, "Flavius", "Bura", "password", 1, true);
-		Gebruiker gebruiker2 = new Gebruiker(2, "User", "User", "User", 1, true);
-	    gebruikerDAO.insert(gebruiker);
-		gebruikerDAO.insert(gebruiker2);*/
-		Gebruiker gebruiker = new Gebruiker(1, "Flavius", "Bura", "veranderd", 1, true);
-		GebruikerDAO gebruikerDAO = new GebruikerDAO();
-		Gebruiker gebruiker2 = new Gebruiker(2, "User", "User", "User", 1, true);
-		gebruikerDAO.delete(gebruiker2);
-		gebruikerDAO.updateWachtwoordById(gebruiker);
-		ArrayList<Gebruiker> gebruikers = new ArrayList<>();
-		gebruikers = gebruikerDAO.getAll();
-		
-		for (Gebruiker g : gebruikers) {
-			System.out.println("Gebruikersnaam: " + g.getAchternaam());
+		for (Boete b : lijst) {
+			System.out.println("Datum: " + b.getDatumWithoutNonoSec());
+			System.out.println("Betaaldatum: " + b.getBetaalDatumWithoutNonoSec());
+			System.out.println();
 		}
-		
-		
->>>>>>> refs/remotes/origin/master
->>>>>>> origin/Sam
->>>>>>> branch 'master' of https://github.com/flaviusbura/Software-Project-II.git
-=======
-		System.out.println("Hello NMBS! 3 ");
-		System.out.println("Hello Abdel");
->>>>>>> refs/heads/Abdelilah
->>>>>>> refs/remotes/origin/master
 	}
 }
