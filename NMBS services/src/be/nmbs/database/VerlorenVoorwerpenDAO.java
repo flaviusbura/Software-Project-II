@@ -1,11 +1,11 @@
 package be.nmbs.database;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 
+import be.nmbs.logic.Station;
 import be.nmbs.logic.VerlorenVoorwerp;
 
 /**
@@ -43,12 +43,14 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 
 			while (res.next()) {
 				int id = res.getInt("voorwerp_id");
-				String station = res.getString("station");
+				String stationNaam = res.getString("station");
+				Station station = new Station();
+				station.setName(stationNaam);
 				String omschrijving = res.getString("omschrijving");
-				Date datum = res.getDate("datum");
+				Timestamp timestamp = res.getTimestamp("datum");
 				boolean actief = res.getBoolean("actief");
 
-				VerlorenVoorwerp voorwerp = new VerlorenVoorwerp(id, station, omschrijving, datum, actief);
+				VerlorenVoorwerp voorwerp = new VerlorenVoorwerp(id, station, omschrijving, timestamp, actief);
 				lijst.add((voorwerp));
 			}
 
@@ -89,12 +91,14 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 
 			res = prep.executeQuery();
 
-			String station = res.getString("station");
+			String stationNaam = res.getString("station");
+			Station station = new Station();
+			station.setName(stationNaam);
 			String omschrijving = res.getString("omschrijving");
-			Date datum = res.getDate("datum");
+			Timestamp timestamp = res.getTimestamp("datum");
 			boolean actief = res.getBoolean("actief");
 
-			VerlorenVoorwerp voorwerp = new VerlorenVoorwerp(id, station, omschrijving, datum, actief);
+			VerlorenVoorwerp voorwerp = new VerlorenVoorwerp(id, station, omschrijving, timestamp, actief);
 
 			return voorwerp;
 		} catch (SQLException e) {
@@ -121,7 +125,7 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 	 */
 	public int insert(VerlorenVoorwerp voorwerp) {
 		PreparedStatement prep = null;
-		String sql = "INSERT INTO verlorenvoorwerp VALUES(?,?,?,?,?)";
+		String sql = "INSERT INTO verlorenvoorwerp VALUES(null,?,?,?,?)";
 
 		try {
 			if (getConnection().isClosed())
@@ -129,11 +133,10 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 
 			prep = getConnection().prepareStatement(sql);
 			
-			prep.setInt(1, voorwerp.getId());
-			prep.setString(2, voorwerp.getStation());
-			prep.setString(3, voorwerp.getOmschrijving());
-			prep.setDate(4, new java.sql.Date(voorwerp.getDatum().getTime()));
-			prep.setBoolean(5, voorwerp.isActief());
+			prep.setString(1, voorwerp.getStation().getName());
+			prep.setString(2, voorwerp.getOmschrijving());
+			prep.setTimestamp(3, voorwerp.getTimestampNow());
+			prep.setBoolean(4, voorwerp.isActief());
 			return prep.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -151,13 +154,13 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 	}
 
 	/**
-	 * Deze methode gaat een Verlorenvoorwerp verwijderen op de database.
+	 * Deze methode gaat een Verlorenvoorwerp op niet acteif zetten op de database.
 	 * 
 	 * @param voorwerp
 	 * @return Een int om aan te geven hoeveel rijen aangepast zijn
 	 */
-	public int delete(VerlorenVoorwerp voorwerp) {
-		String sql = "DELETE FROM verlorenvoorwerpen WHERE voorwerp_id = ?";
+	public int updateActief(VerlorenVoorwerp voorwerp) {
+		String sql = "UPDATE verlorenvoorwerpen SET actief = false WHERE voorwerp_id = ?";
 		PreparedStatement prep = null;
 		try {
 			if (getConnection().isClosed())
