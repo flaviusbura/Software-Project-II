@@ -7,15 +7,25 @@ import java.util.ArrayList;
 
 import be.nmbs.logic.Gebruiker;
 
+/**
+ * Deze klasse is een DAO. Hiermee kunnen er Gebruiker-objecten naar de de
+ * database geschreven, gevraagd, gewijzigd en verwijderd worden.
+ * 
+ * @author flaviusb
+ *
+ */
 public class GebruikerDAO extends BaseDAO {
 	/**
 	 * Default constructor
 	 */
-	public GebruikerDAO(){}
-	
+	public GebruikerDAO() {
+	}
+
 	/**
-	 * Deze methode gaat een lijst terug sturen met alle data in mijn tabel gebruiker
-	 * @return
+	 * Deze methode gaat een lijst terug sturen met alle data in mijn tabel
+	 * gebruiker
+	 * 
+	 * @return Een ArrayList van Gebruiker-Objecten
 	 */
 	public ArrayList<Gebruiker> getAll() {
 		ArrayList<Gebruiker> lijst = null;
@@ -37,7 +47,7 @@ public class GebruikerDAO extends BaseDAO {
 				String wachtwoord = res.getString("paswoord");
 				int rol = res.getInt("rol");
 				boolean actief = res.getBoolean("actief");
-				
+
 				Gebruiker gebruiker = new Gebruiker(gebruikerId, voornaam, achternaam, wachtwoord, rol, actief);
 				lijst.add((gebruiker));
 			}
@@ -57,28 +67,29 @@ public class GebruikerDAO extends BaseDAO {
 			}
 		}
 	}
-	
+
 	/**
 	 * Deze methode gaat een insert statement uitvoeren
+	 * 
 	 * @param gebruiker
 	 * @return
 	 */
 	public int insert(Gebruiker gebruiker) {
 		PreparedStatement prep = null;
 		String sql = "INSERT INTO gebruiker VALUES(?,?,?,?,?,?)";
-		
+
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
 			}
 			prep = getConnection().prepareStatement(sql);
-			
+
 			prep.setInt(1, gebruiker.getId());
 			prep.setString(2, gebruiker.getVoornaam());
 			prep.setString(3, gebruiker.getAchternaam());
 			prep.setString(4, gebruiker.getWachtwoord());
 			prep.setInt(5, gebruiker.getRol());
-			prep.setInt(6, gebruiker.isActief());
+			prep.setBoolean(6, gebruiker.isActief());
 			return prep.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -94,9 +105,10 @@ public class GebruikerDAO extends BaseDAO {
 			}
 		}
 	}
-	
+
 	/**
 	 * Deze methode gaat een gebruiker verwijderen uit mijn databank
+	 * 
 	 * @param gebruiker
 	 * @return
 	 */
@@ -108,9 +120,9 @@ public class GebruikerDAO extends BaseDAO {
 				throw new IllegalStateException("Unexpected error!");
 			}
 			prep = getConnection().prepareStatement(sql);
-			
+
 			prep.setInt(1, gebruiker.getId());
-		    return prep.executeUpdate();
+			return prep.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException(e.getMessage());
@@ -125,25 +137,27 @@ public class GebruikerDAO extends BaseDAO {
 			}
 		}
 	}
-	
+
 	/**
-	 * Door gebruik te maken van deze methde kan het wachtwoord van een gebruiker veranderd worden
+	 * Door gebruik te maken van deze methde kan het wachtwoord van een
+	 * gebruiker veranderd worden
+	 * 
 	 * @param gebruiker
 	 * @return
 	 */
 	public int updateWachtwoordById(Gebruiker gebruiker) {
-        String sql = "UPDATE gebruiker SET paswoord=? WHERE gebruiker_id = ?";
-        PreparedStatement prep = null;
-        try {
-        	if (getConnection().isClosed()) {
+		String sql = "UPDATE gebruiker SET paswoord=? WHERE gebruiker_id = ?";
+		PreparedStatement prep = null;
+		try {
+			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
 			}
-        	prep = getConnection().prepareStatement(sql);
-        	
-            prep.setString(1, gebruiker.getWachtwoord());
-            prep.setInt(2, gebruiker.getId());
-            return prep.executeUpdate();
-        } catch (SQLException e) {
+			prep = getConnection().prepareStatement(sql);
+
+			prep.setString(1, gebruiker.getWachtwoord());
+			prep.setInt(2, gebruiker.getId());
+			return prep.executeUpdate();
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException(e.getMessage());
 		} finally {
@@ -155,6 +169,51 @@ public class GebruikerDAO extends BaseDAO {
 				System.out.println(e.getMessage());
 				throw new RuntimeException("Unexpected error!");
 			}
-		}      
-    }
+		}
+	}
+
+	/**
+	 * Deze methode gaat een GebruikerObject terug sturen op naam en voornaam
+	 */
+	public Gebruiker getGebruikerOpNaamEnVoornaam(Gebruiker gebruiker) {
+		Gebruiker gebruiker2 = null;
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		String sql = "SELECT * FROM gebruiker WHERE voornaam=? AND achternaam=?";
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+
+			prep.setString(1, gebruiker.getVoornaam());
+			prep.setString(2, gebruiker.getAchternaam());
+			res = prep.executeQuery();
+
+			while (res.next()) {
+				int gebruikerId = res.getInt("gebruiker_id");
+				String voornaam = res.getString("voornaam");
+				String achternaam = res.getString("achternaam");
+				String wachtwoord = res.getString("paswoord");
+				int rol = res.getInt("rol");
+				boolean actief = res.getBoolean("actief");
+
+				gebruiker2 = new Gebruiker(gebruikerId, voornaam, achternaam, wachtwoord, rol, actief);
+			}
+			return gebruiker2;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+				if (res != null)
+					res.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
 }
