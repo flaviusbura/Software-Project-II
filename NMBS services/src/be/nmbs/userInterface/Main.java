@@ -25,8 +25,5 @@ public class Main {
 		AbonnementDAO daoAb = new AbonnementDAO();
 		//daoAb.insert(abonnement);
 		daoAb.insert(abonnement2);
-		
-		
-	
 	}
 }
