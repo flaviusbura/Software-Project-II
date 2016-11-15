@@ -14,9 +14,10 @@ public class GebruikerTest {
 	/**
 	 * Hier maken wij de objecten die wij nodig hebben één keer aan zodat wij die niet telkens
 	 * in elke test opnieuw moeten aanmaken
+	 * @throws Exception
 	 */
 	@Before
-	public void setup() {
+	public void setup()  throws Exception {
 		gebruiker = new Gebruiker();
 		gebruikerMetParam = new Gebruiker(1, "Flavius", "Bura", "wachtwoord", 1, true);
 	}
@@ -41,7 +42,7 @@ public class GebruikerTest {
 		assertEquals("Bura", gebruikerMetParam.getAchternaam());
 		assertEquals("wachtwoord", gebruikerMetParam.getWachtwoord());
 		assertEquals(1, gebruikerMetParam.getRol());
-		assertEquals(1, gebruikerMetParam.isActief());
+		assertEquals(true, gebruikerMetParam.isActief());
 	}
 	
 	/**
@@ -89,7 +90,7 @@ public class GebruikerTest {
 	 */
 	@Test
 	public void testIsActief() {
-		assertEquals(1, gebruikerMetParam.isActief());
+		assertEquals(true, gebruikerMetParam.isActief());
 	}
 	
 	/**
@@ -149,15 +150,35 @@ public class GebruikerTest {
 	@Test
 	public void testSetActief() {
 		gebruikerMetParam.setActief(false);
-		assertEquals(0, gebruikerMetParam.isActief());
+		assertEquals(false, gebruikerMetParam.isActief());
 		gebruikerMetParam.setActief(true);
-		assertEquals(1, gebruikerMetParam.isActief());
+		assertEquals(true, gebruikerMetParam.isActief());
 	}
+	
+	/**
+	 * Deze methode test de hashcode() van de de klasse Gebruiker
+	 */
+	@Test
+	public void testHashcode() {
+		gebruiker = gebruikerMetParam;
+		assertEquals(gebruiker.hashCode(), gebruikerMetParam.hashCode());
+	}
+	
+	/**
+	 * Deze methode test de equals() van de klasse Gebruiker
+	 */
+	@Test
+	public void testEquals() {
+		gebruiker = gebruikerMetParam;
+		assertTrue(gebruiker.equals(gebruikerMetParam));
+	}
+	
 	/**
 	 * Hier gebeurt de clean-up
+	 * @throws Exception
 	 */
 	@After
-	public void teardown() {
+	public void teardown() throws Exception {
 		gebruiker = null;
 		gebruikerMetParam = null;
 	}

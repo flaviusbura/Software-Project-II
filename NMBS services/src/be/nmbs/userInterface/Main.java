@@ -2,28 +2,25 @@ package be.nmbs.userInterface;
 
 import java.util.ArrayList;
 
-import be.nmbs.database.*;
-import be.nmbs.logic.*;
+import be.nmbs.database.BoeteDAO;
+import be.nmbs.logic.Boete;
 
 public class Main {
 	public static void main(String[] args) {
-		/*Gebruiker gebruiker = new Gebruiker(1, "Flavius", "Bura", "password", 1, true);
-		Gebruiker gebruiker2 = new Gebruiker(2, "User", "User", "User", 1, true);
-	    gebruikerDAO.insert(gebruiker);
-		gebruikerDAO.insert(gebruiker2);*/
-		Gebruiker gebruiker = new Gebruiker(1, "Flavius", "Bura", "veranderd", 1, true);
-		//Gebruiker gebruiker3 = new Gebruiker(2, "Sam", "Leirens", "samL", 1, true);
-		GebruikerDAO gebruikerDAO = new GebruikerDAO();
-		//Gebruiker gebruiker2 = new Gebruiker(3, "User", "User", "User", 1, true);
-		//gebruikerDAO.insert(gebruiker3);
-		//gebruikerDAO.insert(gebruiker2);
-		//gebruikerDAO.delete(gebruiker2);
-		gebruikerDAO.updateWachtwoordById(gebruiker);
-		ArrayList<Gebruiker> gebruikers = new ArrayList<>();
-		gebruikers = gebruikerDAO.getAll();
+		Boete boete = new Boete(1, 1, 20.40, false);
+		Boete boete2 = new Boete(1, 2, 50.40, false);
 		
-		for (Gebruiker g : gebruikers) {
-			System.out.println("Gebruikersnaam: " + g.getAchternaam());
+		BoeteDAO dao = new BoeteDAO();
+		dao.insert(boete);
+		dao.insert(boete2);
+		
+		ArrayList<Boete> lijst = new ArrayList<>();
+		lijst = dao.getAll();
+		
+		for (Boete b : lijst) {
+			System.out.println("Datum: " + b.getDatumWithoutNonoSec());
+			System.out.println("Betaaldatum: " + b.getBetaalDatumWithoutNonoSec());
+			System.out.println();
 		}
 	}
 }
