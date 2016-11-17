@@ -15,7 +15,6 @@ public class Main {
 		Korting korting = dao.getKorting(1);
 		KlantDAO dao2 = new KlantDAO();
 		Klant klant = dao2.getKlantById(1);
-		Klant klant2 = dao2.getKlantById(2);
 		String route = new String("string");
 		String eindDatum = "einddatum";
 		PrijsDAO dao3 = new PrijsDAO();
@@ -26,5 +25,5 @@ public class Main {
 		AbonnementDAO daoAb = new AbonnementDAO();
 		//daoAb.insert(abonnement);
 		daoAb.insert(abonnement2);
-		}
+	}
 }
