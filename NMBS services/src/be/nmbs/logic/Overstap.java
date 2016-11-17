@@ -5,6 +5,7 @@ public class Overstap {
 	private int stepOffPlatform, stepOnPlatform;
 	
 	// Constructor
+	public Overstap(){}
 	public Overstap(String station, int stepOffPlatform, int stepOnPlatform) {
 		this.station = station;
 		this.stepOffPlatform = stepOffPlatform;

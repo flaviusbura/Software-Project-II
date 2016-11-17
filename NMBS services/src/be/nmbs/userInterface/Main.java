@@ -15,18 +15,16 @@ public class Main {
 		Korting korting = dao.getKorting(1);
 		KlantDAO dao2 = new KlantDAO();
 		Klant klant = dao2.getKlantById(1);
+		Klant klant2 = dao2.getKlantById(2);
 		String route = new String("string");
 		String eindDatum = "einddatum";
 		PrijsDAO dao3 = new PrijsDAO();
 		Prijs prijs = dao3.getPrijsByPrijsId(1);
 		Abonnement abonnement = new Abonnement(1, korting, true, klant, route, eindDatum, prijs);
-		Abonnement abonnement2 = new Abonnement(2, korting, false, klant, route, eindDatum, prijs);
+		Abonnement abonnement2 = new Abonnement(2, korting, false, klant2, route, eindDatum, prijs);
 		
 		AbonnementDAO daoAb = new AbonnementDAO();
 		//daoAb.insert(abonnement);
 		daoAb.insert(abonnement2);
-		
-		
-	
-	}
+		}
 }

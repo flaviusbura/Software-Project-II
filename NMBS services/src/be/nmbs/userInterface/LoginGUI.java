@@ -69,12 +69,12 @@ public class LoginGUI {
 		frame.getContentPane().add(passwordField);
 		
 		textField = new JTextField();
-		textField.setBounds(442, 319, 175, 32);
+		textField.setBounds(442, 319, 175, 26);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		JLabel lblUsername = new JLabel("username");
-		lblUsername.setBounds(353, 322, 66, 26);
+		lblUsername.setBounds(353, 322, 66, 14);
 		frame.getContentPane().add(lblUsername);
 		
 		JLabel lblPassword = new JLabel("password");
