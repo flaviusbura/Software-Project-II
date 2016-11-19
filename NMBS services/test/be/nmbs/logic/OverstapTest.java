@@ -11,7 +11,7 @@ public class OverstapTest {
 	private Overstap overstapMetParam;
 
 	/**
-	 * Hier maken wij de objecten die wij nodig hebben één keer aan zodat wij die niet telkens
+	 * Hier maken wij de objecten die wij nodig hebben 1 keer aan zodat wij die niet telkens
 	 * in elke test opnieuw moeten aanmaken
 	 * @throws Exception
 	 */
@@ -100,7 +100,7 @@ public class OverstapTest {
 		}
 		
 		/**
-		 * Deze methode tests de equals() van de klasse Klant
+		 * Deze methode tests de equals() van de klasse OverStap
 		 */
 		@Test
 		public void testEquals() {

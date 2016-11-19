@@ -20,10 +20,10 @@ public class Main {
 		PrijsDAO dao3 = new PrijsDAO();
 		Prijs prijs = dao3.getPrijsByPrijsId(1);
 		Abonnement abonnement = new Abonnement(1, korting, true, klant, route, eindDatum, prijs);
-		Abonnement abonnement2 = new Abonnement(2, korting, false, klant2, route, eindDatum, prijs);
+
 		
 		AbonnementDAO daoAb = new AbonnementDAO();
 		//daoAb.insert(abonnement);
-		daoAb.insert(abonnement2);
+	
 	}
 }
