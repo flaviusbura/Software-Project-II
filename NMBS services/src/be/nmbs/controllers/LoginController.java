@@ -1,7 +1,10 @@
 package be.nmbs.controllers;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 import javax.swing.JOptionPane;
 
@@ -9,13 +12,12 @@ import be.nmbs.database.GebruikerDAO;
 import be.nmbs.logic.Gebruiker;
 
 import be.nmbs.userInterface.View;
-
+import be.nmbs.logic.Hashing;
 
 public class LoginController {
 	private Gebruiker gebruiker;
 	private View view;
 	private GebruikerDAO gebruikerDAO;
-	private Gebruiker gebruiker2;
 	public LoginController() {
 		view = new View();
 
@@ -27,26 +29,17 @@ public class LoginController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				gebruiker = new Gebruiker();
-				gebruiker.setVoornaam(view.getGebruikerText().getText());
-				gebruiker.setWachtwoord(String.valueOf(view.getPasswordText().getPassword()));
-				gebruiker2 = new Gebruiker();
 				gebruikerDAO = new GebruikerDAO();
-				gebruiker2 = gebruikerDAO.getGebruikerOpUsername(view.getGebruikerText().getText());
-				
-				if(gebruiker == null)
-				{
-					System.out.println("gebruiker");
-					
-				}
-				if(gebruiker2 == null)
-				{
-					System.out.println("gebruiker2");
-					
-				}
+				gebruiker = gebruikerDAO.getGebruikerOpUsername(view.getGebruikerText().getText());
 				JOptionPane optionPane = new JOptionPane(view.getGebruikerText().getText());
-				try{
 				
-				 if (gebruiker2.getWachtwoord().equals(String.valueOf(view.getPasswordText().getPassword()))) {
+// Nakijken of het ingegeven paswoord overeen komt met het paswoord van in de database				
+				try{
+					Hashing hashing = new Hashing();
+//					System.out.println(gebruiker2.getWachtwoord());
+//					System.out.println(hashing.hashPaswoord(String.valueOf(view.getPasswordText().getPassword())));
+					
+				 if (Objects.equals(gebruiker.getWachtwoord(), new String(hashing.hashPaswoord(String.valueOf(view.getPasswordText().getPassword()))))) {
 					optionPane.showMessageDialog(null, "Je bent met succes ingelogd!");
 					view.getPanel().removeAll();
 					view.setPanelToNull();
@@ -64,6 +57,12 @@ public class LoginController {
 					optionPane.showMessageDialog(null, "Foutieve gegevens, probeer opniew!");
 					view.getGebruikerText().setText("");
 					view.getPasswordText().setText("");
+				} catch (HeadlessException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (NoSuchAlgorithmException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		});
