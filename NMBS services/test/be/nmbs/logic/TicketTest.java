@@ -29,7 +29,6 @@ public class TicketTest {
 		Station stationTest = new Station("bxl-zuid","2","3",date,date,date,date);
 		Timestamp ts = new Timestamp( 2016,  06,  12,  12,  12,  12,  12);
 		ticketMetParam = new Ticket(1,stationTest,"groep",ts,2,true,stationTest,"omschrijving",1,1,stationTest,1);
-
 	}
 	
 	/**
