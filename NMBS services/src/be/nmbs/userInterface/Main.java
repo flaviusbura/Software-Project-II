@@ -10,6 +10,7 @@ import be.nmbs.database.KlantDAO;
 import be.nmbs.database.KortingDAO;
 import be.nmbs.database.PrijsDAO;
 import be.nmbs.logic.Abonnement;
+import be.nmbs.logic.ApiCaller;
 import be.nmbs.logic.Gebruiker;
 import be.nmbs.logic.Klant;
 import be.nmbs.logic.Korting;
@@ -47,6 +48,7 @@ public class Main {
 			System.out.println("Klantnaam: " + k.getAchternaam());
 		}*/
 		
+		ApiCaller api = new ApiCaller();
 		
 	}	
 }
