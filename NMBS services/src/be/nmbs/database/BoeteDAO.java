@@ -1,11 +1,10 @@
 package be.nmbs.database;
 
+import java.sql.Timestamp;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import be.nmbs.logic.Boete;
 
@@ -17,7 +16,6 @@ import be.nmbs.logic.Boete;
  *
  */
 public class BoeteDAO extends BaseDAO {
-	SimpleDateFormat format = new SimpleDateFormat("YYYY/MM/DD");
 
 	/**
 	 * Default constructor.
@@ -48,8 +46,8 @@ public class BoeteDAO extends BaseDAO {
 				int boeteId = res.getInt("boeten_id");
 				int klantContactId = res.getInt("klant_contact_id");
 				double prijs = res.getDouble("prijs");
-				Date datum = res.getDate("datum");
-				Date betaalDatum = res.getDate("betaal_datum");
+				Timestamp datum = res.getTimestamp("datum");
+				Timestamp betaalDatum = res.getTimestamp("betaal_datum");
 				boolean betaald = res.getBoolean("betaald");
 
 				Boete boete = new Boete(boeteId, klantContactId, prijs, datum, betaalDatum, betaald);
@@ -80,21 +78,18 @@ public class BoeteDAO extends BaseDAO {
 	 */
 	public int insert(Boete boete) {
 		PreparedStatement prep = null;
-		String sql = "INSERT INTO boeten VALUES(?,?,?,?,?,?)";
+		String sql = "INSERT INTO boeten VALUES(null,?,?,?,?,?)";
 
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
 			}
 			prep = getConnection().prepareStatement(sql);
-			prep.setInt(1, boete.getBoeteId());
-			prep.setInt(2, boete.getKlantContactId());
-			prep.setDouble(3, boete.getPrijs());
-			java.sql.Date sqlDate = new java.sql.Date(boete.getDatum().getTime());
-			prep.setDate(4, sqlDate);
-			sqlDate = new java.sql.Date(boete.getBetaalDatum().getTime());
-			prep.setDate(5, sqlDate);
-			prep.setBoolean(6, boete.isBetaald());
+			prep.setInt(1, boete.getKlantContactId());
+			prep.setDouble(2, boete.getPrijs());
+			prep.setTimestamp(3, boete.getTimestampNow());
+			prep.setTimestamp(4, boete.getTimestampBetaalDatum());
+			prep.setBoolean(5, boete.isBetaald());
 			return prep.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());

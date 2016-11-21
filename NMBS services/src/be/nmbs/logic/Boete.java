@@ -1,6 +1,8 @@
 package be.nmbs.logic;
 
-import java.util.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Deze klasse gaat gebruikt worden om Boete-objecten aan te maken.
@@ -9,11 +11,12 @@ import java.util.Date;
  *
  */
 public class Boete {
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private int boeteId;
 	private int klantContactId;
 	private double prijs;
-	private Date datum;
-	private Date betaalDatum;
+	private Timestamp datum;
+	private Timestamp betaalDatum;
 	private boolean betaald;
 
 	/**
@@ -32,7 +35,16 @@ public class Boete {
 	 * @param betaalDatum
 	 * @param betaald
 	 */
-	public Boete(int boeteId, int klantContactId, double prijs, Date datum, Date betaalDatum, boolean betaald) {
+	public Boete(int boeteId, int klantContactId, double prijs, boolean betaald) {
+		super();
+		this.boeteId = boeteId;
+		this.klantContactId = klantContactId;
+		this.prijs = prijs;
+		this.betaald = betaald;
+	}
+	
+	public Boete(int boeteId, int klantContactId, double prijs, 
+			Timestamp datum, Timestamp betaalDatum, boolean betaald) {
 		super();
 		this.boeteId = boeteId;
 		this.klantContactId = klantContactId;
@@ -40,6 +52,32 @@ public class Boete {
 		this.datum = datum;
 		this.betaalDatum = betaalDatum;
 		this.betaald = betaald;
+	}
+	
+	public Timestamp getTimestampBetaalDatum() {
+		Timestamp timestamp = getTimestampNow();
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(timestamp);
+				cal.add(Calendar.DAY_OF_WEEK, 14);
+				timestamp = new Timestamp(cal.getTime().getTime());
+		return timestamp;
+	}
+	
+	public Timestamp getTimestampNow() {
+		Calendar calendar = Calendar.getInstance();
+		java.util.Date now = calendar.getTime();
+		Timestamp timestamp = new Timestamp(now.getTime());
+		return timestamp;
+	}
+	
+	public String getDatumWithoutNonoSec() {
+		String currentDate = sdf.format(datum);
+		return currentDate;
+	}
+	
+	public String getBetaalDatumWithoutNonoSec() {
+		String currentDate = sdf.format(betaalDatum);
+		return currentDate;
 	}
 
 	/**
@@ -102,37 +140,6 @@ public class Boete {
 	 * 
 	 * @return Een Date-object die een datum zal bevatten
 	 */
-	public Date getDatum() {
-		return datum;
-	}
-
-	/**
-	 * Deze methode sets de datum.
-	 * 
-	 * @param datum
-	 */
-	public void setDatum(Date datum) {
-		this.datum = datum;
-	}
-
-	/**
-	 * Deze methode gaat de datum tegen wanneer de boete ten laatste betaald
-	 * dient te worden terugsturen.
-	 * 
-	 * @return Een Date-object die een datum zal bevatten
-	 */
-	public Date getBetaalDatum() {
-		return betaalDatum;
-	}
-
-	/**
-	 * Deze methode sets betaalDatum.
-	 * 
-	 * @param betaalDatum
-	 */
-	public void setBetaalDatum(Date betaalDatum) {
-		this.betaalDatum = betaalDatum;
-	}
 
 	/**
 	 * Deze methode gaat terugsturen of een bepaalde boete betaald of niet
@@ -142,6 +149,22 @@ public class Boete {
 	 */
 	public boolean isBetaald() {
 		return betaald;
+	}
+
+	public Timestamp getDatum() {
+		return datum;
+	}
+
+	public void setDatum(Timestamp datum) {
+		this.datum = datum;
+	}
+
+	public Timestamp getBetaalDatum() {
+		return betaalDatum;
+	}
+
+	public void setBetaalDatum(Timestamp betaalDatum) {
+		this.betaalDatum = betaalDatum;
 	}
 
 	/**

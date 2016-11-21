@@ -1,16 +1,19 @@
 package be.nmbs.logic;
 
-import java.util.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 /**
  * Deze klasse gaat gebruikt worden om Ticket-objecten aan te maken. 
  * @author flaviusb
  *
  */
 public class Ticket {
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private int ticket_id;
 	private Station startStation;
 	private String soort;
-	private Date datum;
+	private Timestamp timestamp;
 	private int klas;
 	private boolean actief;
 	private Station eindStation;
@@ -18,6 +21,7 @@ public class Ticket {
 	private int prijsId;
 	private int kortingId;
 	private Station station; 
+	private int gebruikerId;
 	
 	/**
 	 * Default constructor.
@@ -37,14 +41,15 @@ public class Ticket {
 	 * @param prijsId Het prijsId om de prijs aan te duiden
 	 * @param kortingId Het kortingId om aan te duiden hoeveel koring de klant krijgt
 	 * @param station Waar is het ticket aangekocht?
+	 * @param gebruikerId De gebruiker die een ticket aanmaakt
 	 */
-	public Ticket(int ticket_id, Station startStation, String soort, Date datum, int klas, boolean actief,
-			Station eindStation, String omschrijving, int prijsId, int kortingId, Station station) {
+	public Ticket(int ticket_id, Station startStation, String soort, Timestamp timestamp, int klas, boolean actief,
+			Station eindStation, String omschrijving, int prijsId, int kortingId, Station station, int gebruikerId) {
 		super();
 		this.ticket_id = ticket_id;
 		this.startStation = startStation;
 		this.soort = soort;
-		this.datum = datum;
+		this.timestamp = timestamp;
 		this.klas = klas;
 		this.actief = actief;
 		this.eindStation = eindStation;
@@ -52,6 +57,51 @@ public class Ticket {
 		this.prijsId = prijsId;
 		this.kortingId = kortingId;
 		this.station = station;
+		this.gebruikerId = gebruikerId;
+	}
+	
+	public Ticket(int ticket_id, Station startStation, String soort, int klas, boolean actief,
+			Station eindStation, String omschrijving, int prijsId, int kortingId, Station station, int gebruikerId) {
+		super();
+		this.ticket_id = ticket_id;
+		this.startStation = startStation;
+		this.soort = soort;
+		this.klas = klas;
+		this.actief = actief;
+		this.eindStation = eindStation;
+		this.omschrijving = omschrijving;
+		this.prijsId = prijsId;
+		this.kortingId = kortingId;
+		this.station = station;
+		this.gebruikerId = gebruikerId;
+	}
+	
+	public int getGebruikerId() {
+		return gebruikerId;
+	}
+
+	public void setGebruikerId(int gebruikerId) {
+		this.gebruikerId = gebruikerId;
+	}
+	
+	public Timestamp getTimestampNow() {
+		Calendar calendar = Calendar.getInstance();
+		java.util.Date now = calendar.getTime();
+		Timestamp timestamp = new Timestamp(now.getTime());
+		return timestamp;
+	}
+	
+	public String getTimestampWithoutNonoSec() {
+		String currentDate = sdf.format(timestamp);
+		return currentDate;
+	}
+	
+	public Timestamp getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(Timestamp timestamp) {
+		this.timestamp = timestamp;
 	}
 
 	/**
@@ -100,22 +150,6 @@ public class Ticket {
 	 */
 	public void setSoort(String soort) {
 		this.soort = soort;
-	}
-
-	/**
-	 * Deze methode gaat een java.sql.Date-object terugsturen.
-	 * @return Een sql.Date-object
-	 */
-	public Date getDatum() {
-		return datum;
-	}
-
-	/**
-	 * Deze methode sets de datum.
-	 * @param datum
-	 */
-	public void setDatum(Date datum) {
-		this.datum = datum;
 	}
 
 	/**
@@ -221,7 +255,7 @@ public class Ticket {
 	public void setStation(Station station) {
 		this.station = station;
 	}
-
+	
 	/**
 	 * Deze methode overrides de Object.hashcode() methode.
 	 */

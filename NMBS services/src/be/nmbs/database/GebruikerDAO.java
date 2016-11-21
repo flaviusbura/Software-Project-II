@@ -44,11 +44,12 @@ public class GebruikerDAO extends BaseDAO {
 				int gebruikerId = res.getInt("gebruiker_id");
 				String voornaam = res.getString("voornaam");
 				String achternaam = res.getString("achternaam");
+				String username = res.getString("username");
 				String wachtwoord = res.getString("paswoord");
 				int rol = res.getInt("rol");
 				boolean actief = res.getBoolean("actief");
 
-				Gebruiker gebruiker = new Gebruiker(gebruikerId, voornaam, achternaam, wachtwoord, rol, actief);
+				Gebruiker gebruiker = new Gebruiker(gebruikerId, voornaam, achternaam,username, wachtwoord, rol, actief);
 				lijst.add((gebruiker));
 			}
 			return lijst;
@@ -76,7 +77,7 @@ public class GebruikerDAO extends BaseDAO {
 	 */
 	public int insert(Gebruiker gebruiker) {
 		PreparedStatement prep = null;
-		String sql = "INSERT INTO gebruiker VALUES(?,?,?,?,?,?)";
+		String sql = "INSERT INTO gebruiker VALUES(?,?,?,?,?,?,?)";
 
 		try {
 			if (getConnection().isClosed()) {
@@ -87,9 +88,10 @@ public class GebruikerDAO extends BaseDAO {
 			prep.setInt(1, gebruiker.getId());
 			prep.setString(2, gebruiker.getVoornaam());
 			prep.setString(3, gebruiker.getAchternaam());
-			prep.setString(4, gebruiker.getWachtwoord());
-			prep.setInt(5, gebruiker.getRol());
-			prep.setBoolean(6, gebruiker.isActief());
+			prep.setString(4, gebruiker.getUsername());
+			prep.setString(5, gebruiker.getWachtwoord());
+			prep.setInt(6, gebruiker.getRol());
+			prep.setBoolean(7, gebruiker.isActief());
 			return prep.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -194,11 +196,12 @@ public class GebruikerDAO extends BaseDAO {
 				int gebruikerId = res.getInt("gebruiker_id");
 				String voornaam = res.getString("voornaam");
 				String achternaam = res.getString("achternaam");
+				String username = res.getString("username");
 				String wachtwoord = res.getString("paswoord");
 				int rol = res.getInt("rol");
 				boolean actief = res.getBoolean("actief");
 
-				gebruiker2 = new Gebruiker(gebruikerId, voornaam, achternaam, wachtwoord, rol, actief);
+				gebruiker2 = new Gebruiker(gebruikerId, voornaam, achternaam,username, wachtwoord, rol, actief);
 			}
 			return gebruiker2;
 		} catch (SQLException e) {
@@ -216,4 +219,91 @@ public class GebruikerDAO extends BaseDAO {
 			}
 		}
 	}
+	
+	public Gebruiker getGebruikerOpUsernameEnPaswoord(String username, String paswoord) {
+		Gebruiker gebruiker2 = null;
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		String sql = "SELECT * FROM gebruiker WHERE username=? AND paswoord=?";
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+
+			prep.setString(1, username);
+			prep.setString(2, paswoord);
+			res = prep.executeQuery();
+
+			while (res.next()) {
+				int gebruikerId = res.getInt("gebruiker_id");
+				String voornaam = res.getString("voornaam");
+				String achternaam = res.getString("achternaam");
+				String username2 = res.getString("username");
+				String wachtwoord = res.getString("paswoord");
+				int rol = res.getInt("rol");
+				boolean actief = res.getBoolean("actief");
+
+				gebruiker2 = new Gebruiker(gebruikerId, voornaam, achternaam,username2, wachtwoord, rol, actief);
+			}
+			return gebruiker2;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+				if (res != null)
+					res.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
+	
+	public Gebruiker getGebruikerOpUsername(String username) {
+		Gebruiker gebruiker2 = null;
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		String sql = "SELECT * FROM gebruiker WHERE username=?";
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+
+			prep.setString(1, username);
+			res = prep.executeQuery();
+
+			while (res.next()) {
+				int gebruikerId = res.getInt("gebruiker_id");
+				String voornaam = res.getString("voornaam");
+				String achternaam = res.getString("achternaam");
+				String username2 = res.getString("username");
+				String wachtwoord = res.getString("paswoord");
+				int rol = res.getInt("rol");
+				boolean actief = res.getBoolean("actief");
+
+				gebruiker2 = new Gebruiker(gebruikerId, voornaam, achternaam,username2, wachtwoord, rol, actief);
+			}
+			return gebruiker2;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+				if (res != null)
+					res.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
+	
+	
 }
