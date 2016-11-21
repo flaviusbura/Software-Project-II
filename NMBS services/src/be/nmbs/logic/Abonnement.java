@@ -9,7 +9,10 @@ public class Abonnement {
 	private boolean actief;
 	private Prijs prijs;
 	// Constructor
-	public Abonnement(int id,Korting korting, boolean actief,Klant klant, String route, String eindDatum, Prijs prijs) {
+	public Abonnement(int id,Korting korting, 
+			boolean actief,Klant klant, 
+			String route, String eindDatum, 
+			Prijs prijs) {
 		this.klant = klant;
 		this.route = route;
 		this.eindDatum = eindDatum;
@@ -24,6 +27,7 @@ public class Abonnement {
 	public String getRoute(){	return route;}
 	public String getEindDatum() { return eindDatum; }
 	public int getId() {return id;}
+	public Prijs getPrijs() {return prijs;}
 	public Korting getKorting() {return korting;}
 	public boolean isActief() {return actief;}
 
@@ -33,6 +37,7 @@ public class Abonnement {
 	public void setRoute(String route) { this.route = route; }
 	public void setEindDatum(String eindDatum) { this.eindDatum = eindDatum; }	
 	public void setKorting(Korting korting) {this.korting = korting;}
+	public void setPrijs(Prijs prijs) {this.prijs=prijs;}
 	public void setId(int id) {this.id = id;}
 	public void setActief(boolean actief) {this.actief = actief;}
 	
