@@ -15,11 +15,12 @@ import be.nmbs.logic.Gebruiker;
 import be.nmbs.logic.Klant;
 import be.nmbs.logic.Korting;
 import be.nmbs.logic.Prijs;
+import be.nmbs.logic.Route;
 
 public class Main {
 	public static void main(String[] args) {
 
-		LoginController lc = new LoginController();
+		//LoginController lc = new LoginController();
 
 		/*
 		 * Klant klant = new Klant(); klant.setContactId(1); Prijs prijs = new
@@ -48,7 +49,11 @@ public class Main {
 			System.out.println("Klantnaam: " + k.getAchternaam());
 		}*/
 		
-		ApiCaller api = new ApiCaller();
-		
+		/*ApiCaller api = new ApiCaller();
+		ArrayList<Route> lijst = new ArrayList<>();
+		lijst = api.getRouteInfo("Brussel-Zuid", "Mechelen");
+		for (Route r : lijst) {
+			System.out.println(r.toString());
+		}*/
 	}	
 }
