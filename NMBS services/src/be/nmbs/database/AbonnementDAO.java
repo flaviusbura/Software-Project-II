@@ -42,7 +42,6 @@ public class AbonnementDAO extends BaseDAO{
 			try {
 				if (prep != null)
 					prep.close();
-
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 				throw new RuntimeException("Unexpected error!");
@@ -110,7 +109,6 @@ public class AbonnementDAO extends BaseDAO{
 			try {
 				if (prep != null)
 					prep.close();
-
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 				throw new RuntimeException("Unexpected error!");
