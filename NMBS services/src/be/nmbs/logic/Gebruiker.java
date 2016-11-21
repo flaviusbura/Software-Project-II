@@ -3,6 +3,7 @@ public class Gebruiker {
 	private int id;
 	private String voornaam;
 	private String achternaam;
+	private String username;
 	private String wachtwoord;
 	private int rol;
 	private boolean actief;
@@ -10,7 +11,8 @@ public class Gebruiker {
 	/**
 	 * Default constructor
 	 */
-	public Gebruiker() {}
+	public Gebruiker() {
+	}
 	
 	/**
 	 * Constructor met vijf parameters. Maakt een gebruiker object aan.
@@ -20,11 +22,12 @@ public class Gebruiker {
 	 * @param rol
 	 * @param actief
 	 */
-	public Gebruiker(int id, String voornaam, String achternaam, String wachtwoord,
+	public Gebruiker(int id, String voornaam, String achternaam, String username,String wachtwoord,
 			int rol, boolean actief) {
 		this.id = id;
 		this.voornaam =voornaam;
 		this.achternaam = achternaam;
+		this.username = username;
 		this.wachtwoord = wachtwoord;
 		if (rol < 1) {
 			this.rol = 2;
@@ -36,6 +39,15 @@ public class Gebruiker {
 		this.actief = actief;
 	}
 	
+	
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	/**
 	 * Deze stuurt de ID van de gebruiker terug
 	 * @return
