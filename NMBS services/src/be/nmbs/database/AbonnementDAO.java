@@ -29,7 +29,7 @@ public class AbonnementDAO extends BaseDAO{
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
 			prep.setTimestamp(4, abonnement.getTimestampNow());
-			prep.setTimestamp(5, abonnement.getTimestampDrieMaandAbonnemant());
+			prep.setTimestamp(5, abonnement.getTimestampDrieMaandAbonnemant(abonnement));
 			prep.setInt(6, abonnement.getPrijsId());
 			prep.setInt(7,abonnement.getKortingID());
 			prep.setBoolean(8, abonnement.isActief());
@@ -63,7 +63,7 @@ public class AbonnementDAO extends BaseDAO{
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
 			prep.setTimestamp(4, abonnement.getTimestampNow());
-			prep.setTimestamp(5, abonnement.getTimestampZesMaandAbonnemant());
+			prep.setTimestamp(5, abonnement.getTimestampZesMaandAbonnemant(abonnement));
 			prep.setInt(6, abonnement.getPrijsId());
 			prep.setInt(7,abonnement.getKortingID());
 			prep.setBoolean(8, abonnement.isActief());
@@ -97,7 +97,7 @@ public class AbonnementDAO extends BaseDAO{
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
 			prep.setTimestamp(4, abonnement.getTimestampNow());
-			prep.setTimestamp(5, abonnement.getTimestampNegenMaandAbonnemant());
+			prep.setTimestamp(5, abonnement.getTimestampNegenMaandAbonnemant(abonnement));
 			prep.setInt(6, abonnement.getPrijsId());
 			prep.setInt(7,abonnement.getKortingID());
 			prep.setBoolean(8, abonnement.isActief());
@@ -131,7 +131,7 @@ public class AbonnementDAO extends BaseDAO{
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
 			prep.setTimestamp(4, abonnement.getTimestampNow());
-			prep.setTimestamp(5, abonnement.getTimestampJaarAbonnemant());
+			prep.setTimestamp(5, abonnement.getTimestampJaarAbonnemant(abonnement));
 			prep.setInt(6, abonnement.getPrijsId());
 			prep.setInt(7,abonnement.getKortingID());
 			prep.setBoolean(8, abonnement.isActief());
@@ -161,7 +161,7 @@ public class AbonnementDAO extends BaseDAO{
 			}
 			prep = getConnection().prepareStatement(sql);
 			
-			prep.setTimestamp(1, abonnement.getTimestampDrieMaandAbonnemant());
+			prep.setTimestamp(1, abonnement.getTimestampDrieMaandAbonnemant(abonnement));
 			prep.setInt(2, abonnement.getAbonnementId());
 			
 		    return prep.executeUpdate();
@@ -189,7 +189,7 @@ public class AbonnementDAO extends BaseDAO{
 			}
 			prep = getConnection().prepareStatement(sql);
 			
-			prep.setTimestamp(1, abonnement.getTimestampZesMaandAbonnemant());
+			prep.setTimestamp(1, abonnement.getTimestampZesMaandAbonnemant(abonnement));
 			prep.setInt(2, abonnement.getAbonnementId());
 			
 		    return prep.executeUpdate();
@@ -217,7 +217,7 @@ public class AbonnementDAO extends BaseDAO{
 			}
 			prep = getConnection().prepareStatement(sql);
 			
-			prep.setTimestamp(1, abonnement.getTimestampNegenMaandAbonnemant());
+			prep.setTimestamp(1, abonnement.getTimestampNegenMaandAbonnemant(abonnement));
 			prep.setInt(2, abonnement.getAbonnementId());
 			
 		    return prep.executeUpdate();
@@ -245,7 +245,7 @@ public class AbonnementDAO extends BaseDAO{
 			}
 			prep = getConnection().prepareStatement(sql);
 			
-			prep.setTimestamp(1, abonnement.getTimestampJaarAbonnemant());
+			prep.setTimestamp(1, abonnement.getTimestampJaarAbonnemant(abonnement));
 			prep.setInt(2, abonnement.getAbonnementId());
 			
 		    return prep.executeUpdate();
@@ -327,6 +327,38 @@ public class AbonnementDAO extends BaseDAO{
 						 eindDatum, prijs, korting, actief);
 			}
 			return abo;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
+	
+	public static Timestamp getEindDatum(Abonnement abonnement) {
+		String sql = "SELECT * FROM abonnement WHERE abonnement_id = ?";
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		Timestamp timestamp = null;
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+			
+			prep.setInt(1, abonnement.getAbonnementId());
+			res = prep.executeQuery();
+			while (res.next()) {
+			timestamp = res.getTimestamp("eind_datum");
+			}
+			return timestamp;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException(e.getMessage());

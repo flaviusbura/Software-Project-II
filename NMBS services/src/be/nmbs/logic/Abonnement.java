@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import be.nmbs.database.AbonnementDAO;
+
 public class Abonnement {
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private int abonnementId;
@@ -62,8 +64,8 @@ public class Abonnement {
 		return currentDate;
 	}
 
-	public Timestamp getTimestampDrieMaandAbonnemant() {
-		Timestamp timestamp = getTimestampNow();
+	public Timestamp getTimestampDrieMaandAbonnemant(Abonnement abonnement) {
+		Timestamp timestamp = AbonnementDAO.getEindDatum(abonnement);
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(timestamp);
 		cal.add(Calendar.MONTH, 3);
@@ -71,8 +73,8 @@ public class Abonnement {
 		return timestamp;
 	}
 
-	public Timestamp getTimestampZesMaandAbonnemant() {
-		Timestamp timestamp = getTimestampNow();
+	public Timestamp getTimestampZesMaandAbonnemant(Abonnement abonnement) {
+		Timestamp timestamp = AbonnementDAO.getEindDatum(abonnement);
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(timestamp);
 		cal.add(Calendar.MONTH, 6);
@@ -80,8 +82,8 @@ public class Abonnement {
 		return timestamp;
 	}
 
-	public Timestamp getTimestampNegenMaandAbonnemant() {
-		Timestamp timestamp = getTimestampNow();
+	public Timestamp getTimestampNegenMaandAbonnemant(Abonnement abonnement) {
+		Timestamp timestamp = AbonnementDAO.getEindDatum(abonnement);
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(timestamp);
 		cal.add(Calendar.MONTH, 9);
@@ -89,8 +91,8 @@ public class Abonnement {
 		return timestamp;
 	}
 
-	public Timestamp getTimestampJaarAbonnemant() {
-		Timestamp timestamp = getTimestampNow();
+	public Timestamp getTimestampJaarAbonnemant(Abonnement abonnement) {
+		Timestamp timestamp = AbonnementDAO.getEindDatum(abonnement);
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(timestamp);
 		cal.add(Calendar.YEAR, 1);
