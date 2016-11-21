@@ -1,5 +1,6 @@
 package be.nmbs.userInterface;
 
+import be.nmbs.controllers.KeuzeSchermController;
 import be.nmbs.controllers.LoginController;
 import be.nmbs.database.AbonnementDAO;
 import be.nmbs.database.GebruikerDAO;
@@ -15,8 +16,12 @@ import be.nmbs.logic.Prijs;
 public class Main {
 	public static void main(String[] args) {
 
-	LoginController lc = new LoginController();
+	View view = new View();
+	view.maakFrameAan();
+	//LoginController lc = new LoginController(view);
+	KeuzeSchermController ksss = new KeuzeSchermController(view);
 	
+//	KeuzeSchermController ddd = new KeuzeSchermController(view);
 //	Gebruiker gebruiker = new Gebruiker();
 //	gebruiker.setUsername("Sam");
 //	gebruiker.setWachtwoord("xd");

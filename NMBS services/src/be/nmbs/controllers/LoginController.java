@@ -10,28 +10,28 @@ import javax.swing.JOptionPane;
 
 import be.nmbs.database.GebruikerDAO;
 import be.nmbs.logic.Gebruiker;
-
+import be.nmbs.userInterface.KeuzeSchermView;
+import be.nmbs.userInterface.LoginSchermView;
 import be.nmbs.userInterface.View;
 import be.nmbs.logic.Hashing;
 
 public class LoginController {
 	private Gebruiker gebruiker;
-	private View view;
+	
 	private GebruikerDAO gebruikerDAO;
-	public LoginController() {
-		view = new View();
-
+	public LoginController(View view) {
+		view.setPanel(LoginSchermView.initialiseView());
 		view.add(view.getPanel());
 		view.setVisible(true);
-		view.getOk().addActionListener(new ActionListener() {
+		LoginSchermView.getOk().addActionListener(new ActionListener() {
 			
 			@SuppressWarnings({ "deprecation", "static-access" })
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				gebruiker = new Gebruiker();
 				gebruikerDAO = new GebruikerDAO();
-				gebruiker = gebruikerDAO.getGebruikerOpUsername(view.getGebruikerText().getText());
-				JOptionPane optionPane = new JOptionPane(view.getGebruikerText().getText());
+				gebruiker = gebruikerDAO.getGebruikerOpUsername(LoginSchermView.getGebruikerText().getText());
+				JOptionPane optionPane = new JOptionPane(LoginSchermView.getGebruikerText().getText());
 				
 // Nakijken of het ingegeven paswoord overeen komt met het paswoord van in de database				
 				try{
@@ -39,24 +39,24 @@ public class LoginController {
 //					System.out.println(gebruiker2.getWachtwoord());
 //					System.out.println(hashing.hashPaswoord(String.valueOf(view.getPasswordText().getPassword())));
 					
-				 if (Objects.equals(gebruiker.getWachtwoord(), new String(hashing.hashPaswoord(String.valueOf(view.getPasswordText().getPassword()))))) {
+				 if (Objects.equals(gebruiker.getWachtwoord(), new String(hashing.hashPaswoord(String.valueOf(LoginSchermView.getPasswordText().getPassword()))))) {
 					optionPane.showMessageDialog(null, "Je bent met succes ingelogd!");
 					view.getPanel().removeAll();
 					view.setPanelToNull();
-					view.initialiseSecondPanel();
+					view.setPanel(KeuzeSchermView.initialiseView());
 					view.add(view.getPanel());
 					view.setVisible(true);
 				} else {
 					optionPane.showMessageDialog(null, "Foutieve gegevens, probeer opniew!");
-					view.getGebruikerText().setText("");
-					view.getPasswordText().setText("");
+					LoginSchermView.getGebruikerText().setText("");
+					LoginSchermView.getPasswordText().setText("");
 				}
 				}
 				catch(NullPointerException x)
 				{
-					optionPane.showMessageDialog(null, "Foutieve gegevens, probeer opniew!");
-					view.getGebruikerText().setText("");
-					view.getPasswordText().setText("");
+					optionPane.showMessageDialog(null, "Foutieve gegevens, probeer opniew! null");
+					LoginSchermView.getGebruikerText().setText("");
+					LoginSchermView.getPasswordText().setText("");
 				} catch (HeadlessException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -66,7 +66,7 @@ public class LoginController {
 				}
 			}
 		});
-		view.getCancel().addActionListener(new ActionListener() {
+		LoginSchermView.getCancel().addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
