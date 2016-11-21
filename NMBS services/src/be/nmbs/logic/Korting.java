@@ -27,4 +27,5 @@ public class Korting {
 	public void setOmschrijving(String omschrijving){this.omschrijving=omschrijving;}
 	public void setActief(boolean actief){this.actief=actief;}
 	public void setTypeKorting(String type){this.typeKorting=type;}
+	public void setId(int id){this.korting_id=id;}
 }
