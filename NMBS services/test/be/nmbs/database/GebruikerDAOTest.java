@@ -23,9 +23,9 @@ public class GebruikerDAOTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		gebruiker = new Gebruiker(1, "Flavius", "Bura", "wachtwoord", 2, true);
-		gebruiker2 = new Gebruiker(2, "User", "user", "password", 1 , true);
-		gebruiker3 = new Gebruiker(3, "Test", "TestNaam", "test", 2, true);
+		gebruiker = new Gebruiker(1, "Flavius", "Bura", "flaviusbura", "wachtwoord", 2, true);
+		gebruiker2 = new Gebruiker(2, "User", "user", "user", "password", 1 , true);
+		gebruiker3 = new Gebruiker(3, "Test", "TestNaam", "test", "test", 2, true);
 		dao = new GebruikerDAO();
 	}
 	public GebruikerDAOTest() {
