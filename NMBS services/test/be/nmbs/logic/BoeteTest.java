@@ -16,7 +16,7 @@ public class BoeteTest {
 	
 	private Boete boete;
 	private Boete boeteMetParam;
-	Timestamp ts = new Timestamp( 2016,  06,  12,  12,  12,  12,  12);
+	Timestamp ts = new Timestamp(System.currentTimeMillis());
 
 	/**
 	 * Objecten declareren om deze te kunnen hergebruiken
@@ -140,6 +140,7 @@ public class BoeteTest {
 	public void teardown() throws Exception {
 		boete = null;
 		boeteMetParam = null;
+		ts = null;
 	}
 	
 }
