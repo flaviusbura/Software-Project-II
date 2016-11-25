@@ -1,7 +1,5 @@
 package be.nmbs.userInterface;
 
-import be.nmbs.controllers.LoginController;
-
 public class Application {
 	private View view;
 	
@@ -10,7 +8,6 @@ public class Application {
 	}
 	
 	public void run() {
-		@SuppressWarnings("unused")
-		LoginController lc = new LoginController(view);
+		view.changeView(LoginView.initialize(view));
 	}
 }

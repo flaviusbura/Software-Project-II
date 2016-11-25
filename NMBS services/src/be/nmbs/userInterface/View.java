@@ -3,9 +3,12 @@ package be.nmbs.userInterface;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import be.nmbs.logic.Gebruiker;
+
 public class View extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel panel;
+	private static Gebruiker ingelogdGebruiker;
 
 	public View() {
 		this.setTitle("NMBS Services");
@@ -25,11 +28,25 @@ public class View extends JFrame {
 		panel = null;
 	}
 
+	public static void setIngelogdGebruiker(Gebruiker ingelogdGebruiker) {
+		View.ingelogdGebruiker = ingelogdGebruiker;
+	}
+
+	public static Gebruiker getIngelogdGebruiker() {
+		return ingelogdGebruiker;
+	}
+
 	public void changeView(JPanel panel) {
-		this.panel.removeAll();
-		this.setPanelToNull();
-		this.setPanel(panel);
-		this.add(panel);
-		this.setVisible(true);
+		if (this.panel != null) {
+			this.panel.removeAll();
+			this.setPanelToNull();
+			this.setPanel(panel);
+			this.add(panel);
+			this.setVisible(true);
+		} else {
+			this.setPanel(panel);
+			this.add(panel);
+			this.setVisible(true);
+		}
 	}
 }

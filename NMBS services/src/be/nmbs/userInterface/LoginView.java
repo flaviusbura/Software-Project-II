@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import be.nmbs.controllers.LoginController;
+
 public class LoginView {
 	private static JLabel userLabel;
 	private static JLabel passwordLabel;
@@ -17,8 +19,10 @@ public class LoginView {
 	private static JButton ok;
 	private static JButton cancel;
 	private static JPanel panel;
+	@SuppressWarnings("unused")
+	private static LoginController loginController;
 
-	public static JPanel initialize() {
+	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
 
 		GridBagConstraints c = new GridBagConstraints();
@@ -58,6 +62,7 @@ public class LoginView {
 		c.gridx = 1;
 		c.gridy = 2;
 		panel.add(cancel, c);
+		loginController = new LoginController(view);
 		return panel;
 	}
 

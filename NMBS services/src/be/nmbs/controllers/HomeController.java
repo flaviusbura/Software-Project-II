@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import be.nmbs.userInterface.AbonnementView;
 import be.nmbs.userInterface.HomeView;
+import be.nmbs.userInterface.LoginView;
 import be.nmbs.userInterface.View;
 
 public class HomeController {
@@ -15,6 +16,15 @@ public class HomeController {
 				AbonnementView.setAbonnementControllerToNull();
 				AbonnementView.setHomeControllerToNull();
 				view.changeView(AbonnementView.initialize(view));
+			}
+		});
+		
+		HomeView.getLogOut().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				HomeView.setHomeControllerToNull();
+				view.changeView(LoginView.initialize(view));
 			}
 		});
 	}

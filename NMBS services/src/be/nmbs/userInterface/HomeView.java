@@ -13,7 +13,9 @@ public class HomeView {
 	private static JButton btnTicket;
 	private static JButton btnVerlorenvoorwerpen;
 	private static JButton btnOpzoeken;
+	private static JButton logOut;
 	private static JPanel panel;
+	@SuppressWarnings("unused")
 	private static HomeController homeController;
 
 	@SuppressWarnings("static-access")
@@ -50,6 +52,13 @@ public class HomeView {
 			c.gridx = 0;
 			c.gridy = 2;
 			panel.add(btnOpzoeken, c);
+			
+			logOut = new JButton("Log out");
+			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.gridx = 1;
+			c.gridy = 2;
+			panel.add(logOut, c);
+			
 			homeController = new HomeController(view);
 			return panel;
 	}
@@ -60,5 +69,9 @@ public class HomeView {
 
 	public static JButton getBtnAbonnement() {
 		return btnAbonnement;
+	}
+	
+	public static JButton getLogOut() {
+		return logOut;
 	}
 }

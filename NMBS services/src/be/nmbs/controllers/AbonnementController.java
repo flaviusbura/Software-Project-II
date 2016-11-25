@@ -13,6 +13,7 @@ public class AbonnementController {
 		AbonnementView.getGoBackToHome().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("Gebruiker: " + View.getIngelogdGebruiker().getAchternaam());
 				HomeView.setHomeControllerToNull();
 				view.changeView(HomeView.initialize(view));
 			}

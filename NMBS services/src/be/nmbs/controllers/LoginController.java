@@ -17,13 +17,9 @@ import be.nmbs.logic.Hashing;
 
 public class LoginController {
 	private Gebruiker gebruiker;
-
 	private GebruikerDAO gebruikerDAO;
 
 	public LoginController(View view) {
-		view.setPanel(LoginView.initialize());
-		view.add(view.getPanel());
-		view.setVisible(true);
 		LoginView.getOk().addActionListener(new ActionListener() {
 
 			@SuppressWarnings("static-access")
@@ -44,6 +40,8 @@ public class LoginController {
 					if (Objects.equals(gebruiker.getWachtwoord(), new String(
 							hashing.hashPaswoord(String.valueOf(LoginView.getPasswordText().getPassword()))))) {
 						optionPane.showMessageDialog(null, "Je bent met succes ingelogd!");
+						view.setIngelogdGebruiker(gebruiker);
+						HomeView.setHomeControllerToNull();
 						view.changeView(HomeView.initialize(view));
 					} else {
 						optionPane.showMessageDialog(null, "Foutieve gegevens, probeer opniew!");
