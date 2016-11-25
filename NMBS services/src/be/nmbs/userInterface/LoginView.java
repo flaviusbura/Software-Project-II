@@ -9,115 +9,88 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class LoginSchermView {
+import be.nmbs.controllers.LoginController;
+
+public class LoginView {
 	private static JLabel userLabel;
 	private static JLabel passwordLabel;
 	private static JTextField gebruikerText;
 	private static JPasswordField passwordText;
 	private static JButton ok;
 	private static JButton cancel;
-	
-	
-	public JLabel getUserLabel() {
-		return userLabel;
-	}
+	private static JPanel panel;
+	@SuppressWarnings("unused")
+	private static LoginController loginController;
 
-
-	public void setUserLabel(JLabel userLabel) {
-		this.userLabel = userLabel;
-	}
-
-
-	public JLabel getPasswordLabel() {
-		return passwordLabel;
-	}
-
-
-	public void setPasswordLabel(JLabel passwordLabel) {
-		this.passwordLabel = passwordLabel;
-	}
-
-
-	public static JTextField getGebruikerText() {
-		return gebruikerText;
-	}
-
-
-	public void setGebruikerText(JTextField gebruikerText) {
-		this.gebruikerText = gebruikerText;
-	}
-
-
-	public static JPasswordField getPasswordText() {
-		return passwordText;
-	}
-
-
-	public void setPasswordText(JPasswordField passwordText) {
-		this.passwordText = passwordText;
-	}
-
-
-	public static JButton getOk() {
-		return ok;
-	}
-
-
-	public void setOk(JButton ok) {
-		this.ok = ok;
-	}
-
-
-	public static JButton getCancel() {
-		return cancel;
-	}
-
-
-	public void setCancel(JButton cancel) {
-		this.cancel = cancel;
-	}
-
-
-	public static JPanel initialiseView() {
-		JPanel panel = new JPanel();
+	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
+
 		GridBagConstraints c = new GridBagConstraints();
-		
+
 		userLabel = new JLabel("username");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
 		panel.add(userLabel, c);
-		
+
 		gebruikerText = new JTextField(10);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 0;
 		panel.add(gebruikerText, c);
-		
+
 		passwordLabel = new JLabel("password");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 1;
 		panel.add(passwordLabel, c);
-		
+
 		passwordText = new JPasswordField(10);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 1;
 		panel.add(passwordText, c);
-		
+
 		ok = new JButton("Ok");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 2;
 		panel.add(ok, c);
-		
+
 		cancel = new JButton("cancel");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 2;
 		panel.add(cancel, c);
+		loginController = new LoginController(view);
 		return panel;
+	}
+
+	public JLabel getUserLabel() {
+		return userLabel;
+	}
+
+	public JLabel getPasswordLabel() {
+		return passwordLabel;
+	}
+
+	public static JTextField getGebruikerText() {
+		return gebruikerText;
+	}
+
+	public static JPasswordField getPasswordText() {
+		return passwordText;
+	}
+
+	public static JButton getOk() {
+		return ok;
+	}
+
+	public static JButton getCancel() {
+		return cancel;
+	}
+	
+	public static void setLoginControllerToNull() {
+		loginController = null;
 	}
 }
