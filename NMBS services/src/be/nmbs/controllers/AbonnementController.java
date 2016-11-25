@@ -9,7 +9,6 @@ import be.nmbs.userInterface.View;
 
 public class AbonnementController {
 	public AbonnementController(View view) {
-		System.out.println("abo1");
 		AbonnementView.getGoBackToHome().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

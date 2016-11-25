@@ -13,7 +13,9 @@ public class AbonnementView {
 	private static JButton maakAbonnement;
 	private static JButton goBackToHome;
 	private static JPanel panel;
+	@SuppressWarnings("unused")
 	private static HomeController homeController;
+	@SuppressWarnings("unused")
 	private static AbonnementController abonnementController;
 	
 	@SuppressWarnings("static-access")

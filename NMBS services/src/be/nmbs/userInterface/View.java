@@ -39,6 +39,7 @@ public class View extends JFrame {
 	public void changeView(JPanel panel) {
 		if (this.panel != null) {
 			this.panel.removeAll();
+			this.panel.setVisible(false);
 			this.setPanelToNull();
 			this.setPanel(panel);
 			this.add(panel);

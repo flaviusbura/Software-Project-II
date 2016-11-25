@@ -70,47 +70,27 @@ public class LoginView {
 		return userLabel;
 	}
 
-	public void setUserLabel(JLabel userLabel) {
-		LoginView.userLabel = userLabel;
-	}
-
 	public JLabel getPasswordLabel() {
 		return passwordLabel;
-	}
-
-	public void setPasswordLabel(JLabel passwordLabel) {
-		LoginView.passwordLabel = passwordLabel;
 	}
 
 	public static JTextField getGebruikerText() {
 		return gebruikerText;
 	}
 
-	public void setGebruikerText(JTextField gebruikerText) {
-		LoginView.gebruikerText = gebruikerText;
-	}
-
 	public static JPasswordField getPasswordText() {
 		return passwordText;
-	}
-
-	public void setPasswordText(JPasswordField passwordText) {
-		LoginView.passwordText = passwordText;
 	}
 
 	public static JButton getOk() {
 		return ok;
 	}
 
-	public void setOk(JButton ok) {
-		LoginView.ok = ok;
-	}
-
 	public static JButton getCancel() {
 		return cancel;
 	}
-
-	public void setCancel(JButton cancel) {
-		LoginView.cancel = cancel;
+	
+	public static void setLoginControllerToNull() {
+		loginController = null;
 	}
 }
