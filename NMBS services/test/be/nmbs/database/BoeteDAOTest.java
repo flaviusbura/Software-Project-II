@@ -25,14 +25,14 @@ public class BoeteDAOTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		// klantenID's moeten overeen komen met een klant in de database!
-		boete1 = new Boete(10, 7, 5,false);
-		boete2 = new Boete(20,7, 7,true);
-		boete3 = new Boete(30, 7, 7.5,false);
+		// klantenID's moeten overeen komen met een klant in de database! En met de Foreign Key constraint op Klant_contact. Anders insert error!
+		boete1 = new Boete(10, 8, 5,false);
+		boete2 = new Boete(20,8, 7,true);
+		boete3 = new Boete(30, 8, 7.5,false);
 		dao = new BoeteDAO();
 	}
 	/**
-	 * Deze methode gaat test of de methode insert() van de klasse BoeteDAO werkt
+	 * Deze methode gaat test of de methode insert() van de klasse BoeteDAO werkt 
 	 */
 	@Test
 	public void testInsert() {
