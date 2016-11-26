@@ -10,8 +10,7 @@ import be.nmbs.logic.Prijs;
  * Deze klasse is een DAO. Hiermee kunnen er Prijs-objecten naar de de database
  * geschreven, gevraagd en verwijderd worden.
  * 
- * @author flaviusb
- *
+ *@author Abdel-Portable
  */
 public class PrijsDAO extends BaseDAO {
 

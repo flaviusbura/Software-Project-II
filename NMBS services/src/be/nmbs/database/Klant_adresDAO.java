@@ -3,10 +3,8 @@ package be.nmbs.database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import be.nmbs.logic.Adres;
-import be.nmbs.logic.Gebruiker;
 
 public class Klant_adresDAO extends BaseDAO {
 	/**
