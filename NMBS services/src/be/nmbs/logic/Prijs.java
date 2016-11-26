@@ -168,8 +168,9 @@ public class Prijs {
 			return false;
 		return true;
 	}
-	
-	
 
-	
+	@Override
+	public String toString() {
+		return prijs + " €" + " " + omschrijving;
+	}	
 }
