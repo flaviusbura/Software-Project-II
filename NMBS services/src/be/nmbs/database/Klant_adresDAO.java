@@ -219,4 +219,37 @@ public class Klant_adresDAO extends BaseDAO {
 			}
 		}
 	}
+	
+	public int updateAdresKlant(Adres adres) {
+		String sql = "UPDATE klant_adres SET land = ?, stad = ?, postcode = ?, straat = ?, nr = ?, bus = ?, actief = ? WHERE adres_id = ?";
+		PreparedStatement prep = null;
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+
+			prep.setString(1, adres.getLand());
+			prep.setString(2, adres.getWoonplaats());
+			prep.setInt(3, adres.getPostcode());
+			prep.setString(4, adres.getStraat());
+			prep.setInt(5, adres.getHuisnummer());
+			prep.setString(6, adres.getBus());
+			prep.setBoolean(7, true);
+			prep.setInt(8, adres.getAdresId());
+			return prep.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
 }

@@ -30,7 +30,7 @@ public class NiuweKlantAanmakenController {
 				String bus = NieuweKlantAanmakenView.getBusText().getText();
 				int postcode = Integer.parseInt(NieuweKlantAanmakenView.getPostcodeText().getText());
 				String stad = NieuweKlantAanmakenView.getStadText().getText();
-				String land = NieuweKlantAanmakenView.getStadText().getText();
+				String land = NieuweKlantAanmakenView.getLandText().getText();
 				adres = new Adres(straat, huisnummer, postcode, bus, stad, land, true);
 				adresDAO = new Klant_adresDAO();
 				adresDAO.insert(adres);

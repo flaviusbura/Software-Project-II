@@ -247,5 +247,39 @@ public class KlantDAO extends BaseDAO {
 			}
 		}
 	}
+	
+	public int getAdresIdOpNaamEnVoornaam(String voornaam, String naam) {
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		int adresId = 0;
+		String sql = "SELECT adres_id FROM klant_contact WHERE voornaam = ? AND naam = ?";
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+			
+			prep.setString(1, voornaam);
+			prep.setString(2, naam);
+			res = prep.executeQuery();
+			while (res.next()) {
+				adresId = res.getInt("adres_id");
+			}
+			return adresId;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+				if (res != null)
+					res.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
 }
 

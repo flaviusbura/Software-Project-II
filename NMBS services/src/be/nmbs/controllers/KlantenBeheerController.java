@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import be.nmbs.userInterface.HomeView;
+import be.nmbs.userInterface.KlantWijzigenView;
 import be.nmbs.userInterface.KlantenBeheerView;
 import be.nmbs.userInterface.NieuweKlantAanmakenView;
 import be.nmbs.userInterface.View;
@@ -23,7 +24,8 @@ public class KlantenBeheerController {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				HomeView.setHomeControllerToNull();
+				KlantWijzigenView.setKlantWijzigenControllerToNull();
+				view.changeView(KlantWijzigenView.initialize(view));
 			}
 		});
 		
