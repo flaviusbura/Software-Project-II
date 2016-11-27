@@ -59,8 +59,17 @@ public class HomeView {
 			c.gridy = 2;
 			panel.add(logOut, c);
 			
+			
 			homeController = new HomeController(view);
 			return panel;
+	}
+
+	public static JButton getBtnBoete() {
+		return btnBoete;
+	}
+
+	public static void setBtnBoete(JButton btnBoete) {
+		HomeView.btnBoete = btnBoete;
 	}
 
 	public static void setHomeControllerToNull() {
