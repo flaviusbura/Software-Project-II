@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import be.nmbs.controllers.NiuweKlantAanmakenController;
+import be.nmbs.controllers.NieuweKlantAanmakenController;
 
 public class NieuweKlantAanmakenView {
 	private static JButton klantAanmaken;
@@ -34,7 +34,7 @@ public class NieuweKlantAanmakenView {
 	
 	private static JPanel panel;
 	@SuppressWarnings("unused")
-	private static NiuweKlantAanmakenController niuweKlantAanmakenController;
+	private static NieuweKlantAanmakenController niuweKlantAanmakenController;
 	
 	@SuppressWarnings("static-access")
 	public static JPanel initialize(View view) {
@@ -179,7 +179,7 @@ public class NieuweKlantAanmakenView {
 			c.gridy = 9;
 			panel.add(actieannuleren, c);
 			
-			niuweKlantAanmakenController = new NiuweKlantAanmakenController(view);
+			niuweKlantAanmakenController = new NieuweKlantAanmakenController(view);
 			return panel;
 	}
 	

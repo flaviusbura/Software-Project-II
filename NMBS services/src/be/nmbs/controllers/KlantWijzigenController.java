@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import be.nmbs.userInterface.AdresWijzigenView;
 import be.nmbs.userInterface.KlantWijzigenView;
 import be.nmbs.userInterface.KlantenBeheerView;
+import be.nmbs.userInterface.TelefoonWijzigenView;
 import be.nmbs.userInterface.View;
 
 public class KlantWijzigenController {
@@ -23,7 +24,8 @@ public class KlantWijzigenController {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				TelefoonWijzigenView.setTelefoonWijzigenControllerToNull();
+				view.changeView(TelefoonWijzigenView.initialize(view));
 			}
 		});
 		

@@ -13,13 +13,13 @@ import be.nmbs.userInterface.KlantenBeheerView;
 import be.nmbs.userInterface.NieuweKlantAanmakenView;
 import be.nmbs.userInterface.View;
 
-public class NiuweKlantAanmakenController {
+public class NieuweKlantAanmakenController {
 	private Adres adres;
 	private Klant klant;
 	private Klant_adresDAO adresDAO;
 	private KlantDAO klantDAO;
 	
-	public NiuweKlantAanmakenController(View view) {
+	public NieuweKlantAanmakenController(View view) {
 		NieuweKlantAanmakenView.getKlantAanmaken().addActionListener(new ActionListener() {
 			
 			@SuppressWarnings("static-access")
