@@ -65,20 +65,19 @@ public class KlantDAO extends BaseDAO {
 	 */
 	public int insert(Klant klant) {
 		PreparedStatement prep = null;
-		String sql = "INSERT INTO klant_contact VALUES(?,?,?,?,?,?)";
+		String sql = "INSERT INTO klant_contact VALUES(null,?,?,?,?,?)";
 		
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
 			}
 			prep = getConnection().prepareStatement(sql);
-			
-			prep.setInt(1, klant.getContactId());
-			prep.setString(2, klant.getVoornaam());
-			prep.setString(3, klant.getAchternaam());
-			prep.setInt(4, klant.getAdresId());
-			prep.setString(5, klant.getTelefoon());
-			prep.setBoolean(6, klant.isActief());
+
+			prep.setString(1, klant.getVoornaam());
+			prep.setString(2, klant.getAchternaam());
+			prep.setInt(3, klant.getAdresId());
+			prep.setString(4, klant.getTelefoon());
+			prep.setBoolean(5, klant.isActief());
 			return prep.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());

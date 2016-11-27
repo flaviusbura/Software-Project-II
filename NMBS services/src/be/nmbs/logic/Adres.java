@@ -19,7 +19,16 @@ public class Adres {
 		this.adresId = adresId;
 		this.land=land;
 		this.actief=actief;
-		
+	}
+	
+	public Adres(String straat, int huisnummer, int postcode, String bus, String woonplaats, String land,boolean actief) {
+		this.straat = straat;
+		this.huisnummer = huisnummer;
+		this.postcode = postcode;
+		this.bus = bus;
+		this.woonplaats = woonplaats;
+		this.land=land;
+		this.actief=actief;
 	}
 	
 	public int getAdresId() {
