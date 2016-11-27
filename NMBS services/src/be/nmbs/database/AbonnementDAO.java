@@ -371,4 +371,5 @@ public class AbonnementDAO extends BaseDAO{
 			}
 		}
 	}
+	
 }
