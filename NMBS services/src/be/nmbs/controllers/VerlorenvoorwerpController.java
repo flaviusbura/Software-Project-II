@@ -23,6 +23,7 @@ import be.nmbs.logic.Prijs;
 import be.nmbs.logic.StationNMBS;
 import be.nmbs.logic.Ticket;
 import be.nmbs.logic.VerlorenVoorwerp;
+import be.nmbs.tablemodels.VerlorenvoorwerpTableModel;
 import be.nmbs.userInterface.HomeView;
 import be.nmbs.userInterface.TicketView;
 import be.nmbs.userInterface.VerlorenvoorwerpView;
@@ -44,57 +45,18 @@ public class VerlorenvoorwerpController {
 					
 				System.out.println("knop geduwt");
 				
-				final String[] columnNames = {"Voorwerp ID",
-                        "station",
-                        "omschrijving",
-                        "datum"};
-
-		        
 		        String oms = VerlorenvoorwerpView.getTxtType().getText();
 		        System.out.println(oms);
+		        
 		        ArrayList<VerlorenVoorwerp> allVerlorenvoorwerp = verlorenvoorwerpdao.getAllOpSoort(oms);
 		        
-		        final Object[][] data = new Object[allVerlorenvoorwerp.size()][4];
+		        VerlorenvoorwerpTableModel verlorenvoorwerpTableModel = new VerlorenvoorwerpTableModel();
+		        verlorenvoorwerpTableModel.setVoorwerpen(allVerlorenvoorwerp);
 		        
-		        for(int i = 0;i<allVerlorenvoorwerp.size();i++) {
-		        	
-		        data[i][0] = allVerlorenvoorwerp.get(i).getId();
-		        data[i][1] = allVerlorenvoorwerp.get(i).getStation().getNaam();
-		        data[i][2] = allVerlorenvoorwerp.get(i).getOmschrijving();
-		        data[i][3] = allVerlorenvoorwerp.get(i).getTimestamp();
-					
-				}
 		        
-		 
-		        final JTable table = new JTable(data, columnNames);
-		        table.setPreferredScrollableViewportSize(new Dimension(500, 70));
-		        table.setFillsViewportHeight(true);
-		 
-		        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		        if (ALLOW_ROW_SELECTION) { // true by default
-		            ListSelectionModel rowSM = table.getSelectionModel();
-		            rowSM.addListSelectionListener(new ListSelectionListener() {
-		                public void valueChanged(ListSelectionEvent e) {
-		                    //Ignore extra messages.
-		                    if (e.getValueIsAdjusting()) return;
-		 
-		                    ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-		                    if (lsm.isSelectionEmpty()) {
-		                        System.out.println("No rows are selected.");
-		                    } else {
-		                        int selectedRow = lsm.getMinSelectionIndex();
-		                        System.out.println("Row " + selectedRow
-		                                           + " is now selected.");
-		                    }
-		                }
-		            });
-		        } else {
-		            table.setRowSelectionAllowed(false);
-		        }
-		        
-		     VerlorenvoorwerpView.getPanel().add(table);
-					//VerlorenvoorwerpView.clearFields();
-			
+		     	VerlorenvoorwerpView.getTabel().setModel(verlorenvoorwerpTableModel);
+		     	VerlorenvoorwerpView.getTabel().setVisible(true);
+		     	
 			}
 		});
 		

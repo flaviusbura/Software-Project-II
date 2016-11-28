@@ -11,9 +11,11 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -35,9 +37,11 @@ public class VerlorenvoorwerpView {
 	private static JButton btnZoekOmschrijving;
 	private static JButton btnVorigScherm;
 	private static VerlorenvoorwerpController verlorenvoorwerpController;
-	 private static  boolean ALLOW_COLUMN_SELECTION = false;
-	 private static boolean ALLOW_ROW_SELECTION = true;
-	 private static VerlorenVoorwerpenDAO verlorenvoorwerpdao;
+	private static JTable tabel;
+	
+	private static  boolean ALLOW_COLUMN_SELECTION = false;
+	private static boolean ALLOW_ROW_SELECTION = true;
+	private static VerlorenVoorwerpenDAO verlorenvoorwerpdao;
 	 
 	 
 	public static JPanel initialize(View view) {
@@ -72,58 +76,36 @@ public class VerlorenvoorwerpView {
 		panel.add(btnVorigScherm, c);
 		
 		
-
-        final String[] columnNames = {"Voorwerp ID",
-                                      "station",
-                                      "omschrijving",
-                                      "datum"};
- 
-        
-        String oms = txtType.getText();
-        ArrayList<VerlorenVoorwerp> allVerlorenvoorwerp = verlorenvoorwerpdao.getAll();
-        
-        final Object[][] data = new Object[allVerlorenvoorwerp.size()][4];
-        
-        for(int i = 0;i<allVerlorenvoorwerp.size();i++) {
-        	
-        data[i][0] = allVerlorenvoorwerp.get(i).getId();
-        data[i][1] = allVerlorenvoorwerp.get(i).getStation().getNaam();
-        data[i][2] = allVerlorenvoorwerp.get(i).getOmschrijving();
-        data[i][3] = allVerlorenvoorwerp.get(i).getTimestamp();
-			
-		}
-        
- 
-        final JTable table = new JTable(data, columnNames);
-        table.setPreferredScrollableViewportSize(new Dimension(500, 70));
-        table.setFillsViewportHeight(true);
- 
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        if (ALLOW_ROW_SELECTION) { // true by default
-            ListSelectionModel rowSM = table.getSelectionModel();
-            rowSM.addListSelectionListener(new ListSelectionListener() {
-                public void valueChanged(ListSelectionEvent e) {
-                    //Ignore extra messages.
-                    if (e.getValueIsAdjusting()) return;
- 
-                    ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-                    if (lsm.isSelectionEmpty()) {
-                        System.out.println("No rows are selected.");
-                    } else {
-                        int selectedRow = lsm.getMinSelectionIndex();
-                        System.out.println("Row " + selectedRow
-                                           + " is now selected.");
-                    }
-                }
-            });
-        } else {
-            table.setRowSelectionAllowed(false);
-        }
-        
-        panel.add(table);
+		tabel = new JTable();
+		tabel.setPreferredScrollableViewportSize(new Dimension(500, 200));
+    
+		c.fill = GridBagConstraints.VERTICAL;
+		c.gridx = 2;
+		c.gridheight = 3;
+		
+		tabel.setVisible(false);
+		
+		JScrollPane scrollPane = new JScrollPane(tabel);
+		
+		//scrollPane.setBorder(new EmptyBorder(0, 10, 0, 0));
+		
+		panel.add(scrollPane);
+		
 		verlorenvoorwerpController = new VerlorenvoorwerpController(view);
 		return panel;
 	}
+	
+	public static JTable getTabel() {
+		return tabel;
+	}
+
+
+
+	public static void setTabel(JTable tabel) {
+		VerlorenvoorwerpView.tabel = tabel;
+	}
+
+
 
 	public static JPanel getPanel() {
 		return panel;
