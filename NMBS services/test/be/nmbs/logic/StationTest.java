@@ -28,8 +28,7 @@ public class StationTest {
 	@Before
 	public void setup()  throws Exception {
 		station = new Station();
-		stationMetParam = new Station("Abdel","AbdelTest","Test",format.parse("20-11-2016"),
-																format.parse("20-10-2016"),
+		stationMetParam = new Station("Abdel","AbdelTest","Test",format.parse("20-11-2016"),format.parse("20-10-2016"),
 																format.parse("20-09-2016"),
 																format.parse("20-08-2016"));
 		

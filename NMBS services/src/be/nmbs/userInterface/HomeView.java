@@ -66,12 +66,21 @@ public class HomeView {
 			c.gridy = 3;
 			panel.add(logOut, c);
 			
+			
 			homeController = new HomeController(view);
 			return panel;
 	}
 
 	public static JButton getKlantenBeheer() {
 		return klantenBeheer;
+	}
+
+	public static JButton getBtnBoete() {
+		return btnBoete;
+	}
+
+	public static void setBtnBoete(JButton btnBoete) {
+		HomeView.btnBoete = btnBoete;
 	}
 
 	public static void setHomeControllerToNull() {

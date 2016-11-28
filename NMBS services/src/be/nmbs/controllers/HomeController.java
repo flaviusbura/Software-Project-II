@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import be.nmbs.userInterface.AbonnementView;
+import be.nmbs.userInterface.BoeteView;
 import be.nmbs.userInterface.HomeView;
 import be.nmbs.userInterface.KlantenBeheerView;
 import be.nmbs.userInterface.LoginView;
@@ -17,6 +18,15 @@ public class HomeController {
 			public void actionPerformed(ActionEvent e) {
 				AbonnementView.setAbonnementControllerToNull();
 				view.changeView(AbonnementView.initialize(view));
+			}
+		});
+		
+		HomeView.getBtnBoete().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				BoeteView.setBoeteControllerToNull();
+				BoeteView.setHomeControllerToNull();
+				view.changeView(BoeteView.initialize(view));
 			}
 		});
 		
