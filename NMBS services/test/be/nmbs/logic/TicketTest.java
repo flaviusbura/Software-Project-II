@@ -15,7 +15,7 @@ public class TicketTest {
 	private Ticket ticketMetParam;
 	Date date = new Date();
 	Station station = new Station("bxl-zuid","2","3",date,date,date,date);
-	Timestamp ts = new Timestamp( 2016,  06,  12,  12,  12,  12,  12);
+	Timestamp ts = new Timestamp(System.currentTimeMillis());
 
 	/**
 	 * Hier maken wij de objecten die wij nodig hebben 1 keer aan zodat wij die niet telkens
@@ -27,7 +27,7 @@ public class TicketTest {
 		ticket = new Ticket();
 		Date date = new Date();
 		Station stationTest = new Station("bxl-zuid","2","3",date,date,date,date);
-		Timestamp ts = new Timestamp( 2016,  06,  12,  12,  12,  12,  12);
+		Timestamp ts = new Timestamp(System.currentTimeMillis());
 		ticketMetParam = new Ticket(1,stationTest,"groep",ts,2,true,stationTest,"omschrijving",1,1,stationTest,1);
 	}
 	

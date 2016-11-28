@@ -19,7 +19,7 @@ public class GebruikerTest {
 	@Before
 	public void setup()  throws Exception {
 		gebruiker = new Gebruiker();
-		gebruikerMetParam = new Gebruiker(1, "Flavius", "Bura", "wachtwoord", 1, true);
+		gebruikerMetParam = new Gebruiker(1, "Flavius", "Bura", "flaviusbura", "wachtwoord", 1, true);
 	}
 	
 	/**

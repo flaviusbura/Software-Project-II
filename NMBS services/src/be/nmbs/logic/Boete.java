@@ -35,7 +35,8 @@ public class Boete {
 	 * @param betaalDatum
 	 * @param betaald
 	 */
-	public Boete(int boeteId, int klantContactId, double prijs, boolean betaald) {
+	public Boete(int boeteId, int klantContactId, 
+				double prijs, boolean betaald) {
 		super();
 		this.boeteId = boeteId;
 		this.klantContactId = klantContactId;
@@ -43,8 +44,9 @@ public class Boete {
 		this.betaald = betaald;
 	}
 	
-	public Boete(int boeteId, int klantContactId, double prijs, 
-			Timestamp datum, Timestamp betaalDatum, boolean betaald) {
+	public Boete(int boeteId, int klantContactId,
+			double prijs,Timestamp datum, 
+			Timestamp betaalDatum, boolean betaald) {
 		super();
 		this.boeteId = boeteId;
 		this.klantContactId = klantContactId;
