@@ -28,4 +28,9 @@ public class Korting {
 	public void setActief(boolean actief){this.actief=actief;}
 	public void setTypeKorting(String type){this.typeKorting=type;}
 	public void setId(int id){this.korting_id=id;}
+
+	@Override
+	public String toString() {
+		return hoeveelheid + " €" + " " + omschrijving;
+	}
 }
