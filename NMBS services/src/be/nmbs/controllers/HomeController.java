@@ -15,7 +15,6 @@ public class HomeController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				AbonnementView.setAbonnementControllerToNull();
-				AbonnementView.setHomeControllerToNull();
 				view.changeView(AbonnementView.initialize(view));
 			}
 		});

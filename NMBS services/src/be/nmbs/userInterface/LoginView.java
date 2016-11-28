@@ -17,7 +17,7 @@ public class LoginView {
 	private static JTextField gebruikerText;
 	private static JPasswordField passwordText;
 	private static JButton ok;
-	private static JButton cancel;
+	private static JButton closeApp;
 	private static JPanel panel;
 	@SuppressWarnings("unused")
 	private static LoginController loginController;
@@ -57,11 +57,11 @@ public class LoginView {
 		c.gridy = 2;
 		panel.add(ok, c);
 
-		cancel = new JButton("cancel");
+		closeApp = new JButton("Close");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 2;
-		panel.add(cancel, c);
+		panel.add(closeApp, c);
 		loginController = new LoginController(view);
 		return panel;
 	}
@@ -86,8 +86,8 @@ public class LoginView {
 		return ok;
 	}
 
-	public static JButton getCancel() {
-		return cancel;
+	public static JButton getCloseApp() {
+		return closeApp;
 	}
 	
 	public static void setLoginControllerToNull() {
