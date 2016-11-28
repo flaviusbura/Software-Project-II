@@ -64,13 +64,6 @@ public class HomeView {
 			return panel;
 	}
 
-	public static JButton getBtnBoete() {
-		return btnBoete;
-	}
-
-	public static void setBtnBoete(JButton btnBoete) {
-		HomeView.btnBoete = btnBoete;
-	}
 
 	public static void setHomeControllerToNull() {
 		homeController = null;

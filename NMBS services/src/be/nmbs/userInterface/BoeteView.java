@@ -28,38 +28,6 @@ public class BoeteView {
 	@SuppressWarnings("unused")
 	private static BoeteController abonnementController;
 	private static JCheckBox cbBetaald;
-	public static JLabel getLblBoeteId() {
-		return lblBoeteId;
-	}
-
-	public static void setLblBoeteId(JLabel lblBoeteId) {
-		BoeteView.lblBoeteId = lblBoeteId;
-	}
-
-	public static JLabel getLblKlantContactId() {
-		return lblKlantContactId;
-	}
-
-	public static void setLblKlantContactId(JLabel lblKlantContactId) {
-		BoeteView.lblKlantContactId = lblKlantContactId;
-	}
-
-	public static JTextField getTxtBoeteId() {
-		return txtBoeteId;
-	}
-
-	public static void setTxtBoeteId(JTextField txtBoeteId) {
-		BoeteView.txtBoeteId = txtBoeteId;
-	}
-
-	public static JTextField getTxtKlantContactId() {
-		return txtKlantContactId;
-	}
-
-	public static void setTxtKlantContactId(JTextField txtKlantContactId) {
-		BoeteView.txtKlantContactId = txtKlantContactId;
-	}
-
 	private static JLabel lblPrijs;
 	private static JLabel lblDatum;
 	private static JLabel lblBetaalDatum;
@@ -133,7 +101,37 @@ public class BoeteView {
 		
 		return panel;
 	}
+	public static JLabel getLblBoeteId() {
+		return lblBoeteId;
+	}
 
+	public static void setLblBoeteId(JLabel lblBoeteId) {
+		BoeteView.lblBoeteId = lblBoeteId;
+	}
+
+	public static JLabel getLblKlantContactId() {
+		return lblKlantContactId;
+	}
+
+	public static void setLblKlantContactId(JLabel lblKlantContactId) {
+		BoeteView.lblKlantContactId = lblKlantContactId;
+	}
+
+	public static JTextField getTxtBoeteId() {
+		return txtBoeteId;
+	}
+
+	public static void setTxtBoeteId(JTextField txtBoeteId) {
+		BoeteView.txtBoeteId = txtBoeteId;
+	}
+
+	public static JTextField getTxtKlantContactId() {
+		return txtKlantContactId;
+	}
+
+	public static void setTxtKlantContactId(JTextField txtKlantContactId) {
+		BoeteView.txtKlantContactId = txtKlantContactId;
+	}
 	public static JButton getBetaalBoete() {
 		return betaalBoete;
 	}
