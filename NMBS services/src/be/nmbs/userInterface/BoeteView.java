@@ -79,86 +79,56 @@ public class BoeteView {
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		back = new JButton("Back");
-		c.fill = new GridBagConstraints().HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 0;
-		panel.add(back, c);
-		
-		lblPrijs = new JLabel("prijs");
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 0;
-		panel.add(lblPrijs, c);
-		
-		lblDatum = new JLabel("datum");
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 1;
-		panel.add(lblDatum, c);
-		
-		txtDatum = new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 1;
-		txtDatum.setText(strDate);
-		panel.add(txtDatum, c);
-		
+				
 		lblBetaalDatum = new JLabel("betaal datum");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
-		c.gridy = 2;
+		c.gridy = 1;
 		panel.add(lblBetaalDatum, c);
 		
-		txtDatum = new JTextField(10);
+		txtBetaalDatum = new JTextField(10);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
-		c.gridy = 2;
-		txtDatum.setText(strDate);
-		panel.add(txtDatum, c);
+		c.gridy = 1;
+		txtBetaalDatum.setText(strDate);
+		panel.add(txtBetaalDatum, c);
 		
 		lblBoeteId = new JLabel("boete id");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
-		c.gridy = 3;
+		c.gridy = 2;
 		panel.add(lblBoeteId, c);
 		
 		txtBoeteId = new JTextField(10);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
-		c.gridy = 3;
+		c.gridy = 2;
 		panel.add(txtBoeteId, c);
-		
-		lblKlantContactId = new JLabel("boete id");
+			
+		lblBetaald = new JLabel("betaald");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
-		c.gridy = 4;
-		panel.add(lblKlantContactId, c);
+		c.gridy = 3;
+		panel.add(lblBetaald, c);
 		
-		txtKlantContactId = new JTextField(10);
+		cbBetaald = new JCheckBox("Betaald", true);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
-		c.gridy = 4;
-		panel.add(txtKlantContactId, c);
-		
-		cbBetaald = new JCheckBox("betaald", false);
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 4;
+		c.gridy = 3;
 		panel.add(cbBetaald, c);
 		
-		maakBoete = new JButton("Maak boete");
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 6;
-		panel.add(maakBoete, c);
 		
 		betaalBoete = new JButton("betaal boete");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
-		c.gridy = 6;
+		c.gridy = 4;
 		panel.add(betaalBoete, c);
 		
+		back = new JButton("Back");
+		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 4;
+		panel.add(back, c);
 		boeteController = new BoeteController(view);
 		
 		return panel;
@@ -188,14 +158,7 @@ public class BoeteView {
 		BoeteView.cbBetaald = cbBetaald;
 	}
 
-	public static void clearFields() {
-		txtPrijs.setText("");
-		txtBetaalDatum.setText("");
-		txtBetaald.setText("");
-		txtDatum.setText(strDate);
-		
-		
-	}
+	
 
 	public static JButton getBack() {
 		return back;
