@@ -85,4 +85,36 @@ public class HomeView {
 	public static JButton getLogOut() {
 		return logOut;
 	}
+
+	public static JButton getBtnBoete() {
+		return btnBoete;
+	}
+
+	public static void setBtnBoete(JButton btnBoete) {
+		HomeView.btnBoete = btnBoete;
+	}
+
+	public static JButton getBtnTicket() {
+		return btnTicket;
+	}
+
+	public static void setBtnTicket(JButton btnTicket) {
+		HomeView.btnTicket = btnTicket;
+	}
+
+	public static JButton getBtnVerlorenvoorwerpen() {
+		return btnVerlorenvoorwerpen;
+	}
+
+	public static void setBtnVerlorenvoorwerpen(JButton btnVerlorenvoorwerpen) {
+		HomeView.btnVerlorenvoorwerpen = btnVerlorenvoorwerpen;
+	}
+
+	public static JButton getBtnOpzoeken() {
+		return btnOpzoeken;
+	}
+
+	public static void setBtnOpzoeken(JButton btnOpzoeken) {
+		HomeView.btnOpzoeken = btnOpzoeken;
+	}
 }

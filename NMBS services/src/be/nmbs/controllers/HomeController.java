@@ -7,6 +7,7 @@ import be.nmbs.userInterface.AbonnementView;
 import be.nmbs.userInterface.HomeView;
 import be.nmbs.userInterface.KlantenBeheerView;
 import be.nmbs.userInterface.LoginView;
+import be.nmbs.userInterface.TicketView;
 import be.nmbs.userInterface.View;
 
 public class HomeController {
@@ -36,5 +37,17 @@ public class HomeController {
 				view.changeView(KlantenBeheerView.initialize(view));
 			}
 		});
+		
+		HomeView.getBtnTicket().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				TicketView.setTicketControllerToNull();
+				TicketView.setHomeControllerToNull();
+				view.changeView(TicketView.initialize(view));
+				
+			}
+		});
+		
 	}
 }
