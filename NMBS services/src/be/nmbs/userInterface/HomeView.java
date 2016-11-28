@@ -95,14 +95,6 @@ public class HomeView {
 		return logOut;
 	}
 
-	public static JButton getBtnBoete() {
-		return btnBoete;
-	}
-
-	public static void setBtnBoete(JButton btnBoete) {
-		HomeView.btnBoete = btnBoete;
-	}
-
 	public static JButton getBtnTicket() {
 		return btnTicket;
 	}
