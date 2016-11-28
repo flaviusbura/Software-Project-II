@@ -104,7 +104,7 @@ public class BoeteView {
 		txtDatum.setText(strDate);
 		panel.add(txtDatum, c);
 		
-		lblDatum = new JLabel("betaal datum");
+		lblBetaalDatum = new JLabel("betaal datum");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 2;
