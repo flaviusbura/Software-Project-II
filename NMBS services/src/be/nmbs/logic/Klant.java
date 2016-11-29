@@ -22,6 +22,9 @@ public class Klant {
 	 * @param telefoon
 	 * @param actief
 	 */
+	public Klant(int contactId) {
+		this.contactId = contactId;
+	}
 	public Klant(int contactId, String voornaam, String achternaam, int adresId, String telefoon, boolean actief) {
 		super();
 		this.contactId = contactId;

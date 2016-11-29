@@ -22,6 +22,10 @@ public class Gebruiker {
 	 * @param rol
 	 * @param actief
 	 */
+	public Gebruiker(int id)
+	{
+		this.id=id;
+	}
 	public Gebruiker(int id, String voornaam, String achternaam, String username,String wachtwoord,
 			int rol, boolean actief) {
 		this.id = id;

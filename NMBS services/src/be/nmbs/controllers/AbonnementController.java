@@ -34,15 +34,13 @@ public class AbonnementController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					// public Abonnement(int abonnementId, Klant klant, int
-					// gebruikerId, String route, Timestamp startDatum,
-					// Timestamp eindDatum, Prijs prijs, Korting korting,boolean
-					// actief)
-					StationNMBS startstation = new StationNMBS((String) TicketView.getBeginstationlijst().getSelectedItem());
-					Klant klant = new Klant((String) AbonnementView.getCbxKlant_Contact().getSelectedItem());
+					
+					//StationNMBS startstation = new StationNMBS((String) TicketView.getBeginstationlijst().getSelectedItem());
+					
+					Klant klant = (Klant) AbonnementView.getKlantenLijst().getSelectedItem();
 					int klantId = klant.getContactId();
 
-					Gebruiker gebruiker = (Gebruiker) AbonnementView.getCbxGebruiker().getSelectedItem();
+					Gebruiker gebruiker = (Gebruiker) AbonnementView.getGebruikerLijst().getSelectedItem();
 					int gebruikerId = gebruiker.getId();
 					String route = AbonnementView.getTxtRoute().getText();
 
@@ -61,32 +59,15 @@ public class AbonnementController {
 					cal.add(Calendar.MONTH,3);
 					Timestamp verlengDrieMaanden = new Timestamp(cal.getTime().getTime());
 					
-					/*
-					 * 
-					 * long retryDate = System.currentTimeMillis();
-					 * 
-					 * int sec = 600;
-					 * 
-					 * Timestamp original = new Timestamp(retryDate); 
-					 * Calendar cal = Calendar.getInstance();
-					 * cal.setTimeInMillis(original.getTime());
-					 * cal.add(Calendar.SECOND, sec);
-					 * 
-					 * Timestamp later = new Timestamp(cal.getTime().getTime());
-					 * 
-					 * System.out.println(original); System.out.println(later);
-					 */
 					// test boven
-					Prijs prijs = (Prijs) AbonnementView.getPrijzenlijst().getSelectedItem();
+					//Gebruiker gebruiker = new Gebruiker((int) AbonnementView.getCbxGebruiker().getSelectedItem());
+					Prijs prijs = (Prijs) AbonnementView.getPrijzenLijst().getSelectedItem();
 					int prijsId = prijs.getPrijsId();
 
-					Korting korting = (Korting) AbonnementView.getPrijzenlijst().getSelectedItem();
+					Korting korting = (Korting) AbonnementView.getKortingLijst().getSelectedItem();
 					int kortingId = korting.getId();
-					// public Abonnement(Klant klant, int gebruikerId, String
-					// route, Timestamp startDatum,
-					// Timestamp eindDatum, Prijs prijs, Korting korting,boolean
-					// actief)
-					Abonnement abonnement = new Abonnement(klant, gebruikerId, route, ts, verlengDrieMaanden, prijs, korting, true);
+	
+					Abonnement abonnement = new Abonnement(klantId, gebruikerId, route, ts, verlengDrieMaanden, prijsId, kortingId, true);
 					AbonnementDAO abonnementDao = new AbonnementDAO();
 					abonnementDao.verlengAbonnementMetDrieMaand(abonnement);
 

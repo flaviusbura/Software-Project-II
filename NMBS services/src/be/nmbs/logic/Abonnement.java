@@ -17,8 +17,25 @@ public class Abonnement {
 	private Prijs prijs;
 	private Korting korting;
 	private boolean actief;
+	private int klant_contactId;
+	private int prijsId;
+	private int kortingId;
 
 	public Abonnement() {
+	}
+
+	public Abonnement(int klant_contactId, int gebruikerId, String route,Timestamp startDatum,
+			Timestamp eindDatum, int prijsId, int kortingId,
+			boolean actief) {
+		super();
+		this.startDatum = startDatum;
+		this.eindDatum = eindDatum;
+		this.klant_contactId = klant_contactId;
+		this.gebruikerId = gebruikerId;
+		this.route = route;
+		this.prijsId = prijsId;
+		this.kortingId = kortingId;
+		this.actief = actief;
 	}
 
 	public Abonnement(int abonnementId, Klant klant, int gebruikerId, String route, Timestamp startDatum,
@@ -35,8 +52,8 @@ public class Abonnement {
 		this.actief = actief;
 	}
 
-	public Abonnement(Klant klant, int gebruikerId, String route, Timestamp startDatum,
-			Timestamp eindDatum, Prijs prijs, Korting korting, boolean actief) {
+	public Abonnement(Klant klant, int gebruikerId, String route, Timestamp startDatum, Timestamp eindDatum,
+			Prijs prijs, Korting korting, boolean actief) {
 		super();
 		this.abonnementId = abonnementId;
 		this.klant = klant;
@@ -48,6 +65,7 @@ public class Abonnement {
 		this.korting = korting;
 		this.actief = actief;
 	}
+
 	public Abonnement(int abonnementId, Klant klant, int gebruikerId, String route, Prijs prijs, Korting korting,
 			boolean actief) {
 		super();

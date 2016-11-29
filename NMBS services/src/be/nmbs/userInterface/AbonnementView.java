@@ -38,6 +38,7 @@ public class AbonnementView {
 
 	private static JLabel lblKlant_Contact;
 	private static JComboBox cbxKlant_Contact;
+	private static JComboBox<Klant> klantenLijst;
 	static KlantDAO klantDao = new KlantDAO();
 
 	private static JLabel lblPrijs;
@@ -53,7 +54,8 @@ public class AbonnementView {
 	private static JLabel lblGebruiker;
 	private static JComboBox cbxGebruiker;
 	private static GebruikerDAO gebruikerDao = new GebruikerDAO();
-
+	private static JComboBox<Gebruiker> gebruikerLijst;
+	
 	private static JLabel lblRoute;
 	private static JTextField txtRoute;
 
@@ -71,42 +73,46 @@ public class AbonnementView {
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-
+		/*
 		ArrayList<Klant> alleKlanten = klantDao.getAll();
 		String[] klantLijst = new String[alleKlanten.size()];
 		for (int i = 0; i < alleKlanten.size(); i++) {
-			klantLijst[i] = "" + alleKlanten.get(i).getAchternaam() + alleKlanten.get(i).getVoornaam();
+			klantLijst[i] = "" + alleKlanten.get(i).getAchternaam() + " " + alleKlanten.get(i).getVoornaam();
 		}
-		
+		*/
 		lblKlant_Contact = new JLabel("Klant ");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
 		panel.add(lblKlant_Contact, c);
-
-		cbxKlant_Contact = new JComboBox(klantLijst);
+		
+		ArrayList<Klant> alleKlanten = klantDao.getAll();
+		klantenLijst = new JComboBox<>();
+		for (Klant klant : alleKlanten) {
+			klantenLijst.addItem(klant);
+		}
+		
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridy = 0;
-		panel.add(cbxKlant_Contact, c);
-
+		panel.add(klantenLijst, c);
+		
 		ArrayList<Gebruiker> alleGebruiker = gebruikerDao.getAll();
-		String[] gebruikerLijst = new String[alleGebruiker.size()];
-		for (int i = 0; i < alleGebruiker.size(); i++) {
-			gebruikerLijst[i] = "" + alleGebruiker.get(i).getAchternaam() + alleGebruiker.get(i).getVoornaam();
+		gebruikerLijst = new JComboBox<>();
+		for (Gebruiker gebruiker : alleGebruiker) {
+			gebruikerLijst.addItem(gebruiker);
 		}
 
-		lblGebruiker = new JLabel("Klant ");
+		lblGebruiker = new JLabel("Gebruiker ");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 1;
-		panel.add(lblKlant_Contact, c);
+		panel.add(lblGebruiker, c);
 
-		cbxGebruiker = new JComboBox(gebruikerLijst);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridy = 1;
-		panel.add(cbxKlant_Contact, c);
+		panel.add(gebruikerLijst, c);
 
 		lblRoute = new JLabel("Route");
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -142,7 +148,6 @@ public class AbonnementView {
 		 * txtEindDatum.setText(strDate); panel.add(txtEindDatum, c);
 		 */
 		ArrayList<Prijs> allPrijzen = prijsDao.getAll();
-
 		prijzenLijst = new JComboBox<>();
 		for (Prijs prijs : allPrijzen) {
 			prijzenLijst.addItem(prijs);
@@ -191,6 +196,22 @@ public class AbonnementView {
 		homeController = new HomeController(view);
 		abonnementController = new AbonnementController(view);
 		return panel;
+	}
+
+	public static JComboBox<Gebruiker> getGebruikerLijst() {
+		return gebruikerLijst;
+	}
+
+	public static void setGebruikerLijst(JComboBox<Gebruiker> gebruikerLijst) {
+		AbonnementView.gebruikerLijst = gebruikerLijst;
+	}
+
+	public static JComboBox<Klant> getKlantenLijst() {
+		return klantenLijst;
+	}
+
+	public static void setKlantenLijst(JComboBox<Klant> klantenLijst) {
+		AbonnementView.klantenLijst = klantenLijst;
 	}
 
 	public static JComboBox<Prijs> getPrijzenLijst() {
