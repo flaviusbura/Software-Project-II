@@ -34,6 +34,7 @@ import be.nmbs.logic.Gebruiker;
 public class AbonnementView {
 	private static JButton maakAbonnement;
 	private static JButton goBackToHome;
+	private static JButton verlengDrieMaanden;
 	private static JPanel panel;
 
 	private static JLabel lblKlant_Contact;
@@ -55,7 +56,7 @@ public class AbonnementView {
 	private static JComboBox cbxGebruiker;
 	private static GebruikerDAO gebruikerDao = new GebruikerDAO();
 	private static JComboBox<Gebruiker> gebruikerLijst;
-	
+
 	private static JLabel lblRoute;
 	private static JTextField txtRoute;
 
@@ -73,30 +74,28 @@ public class AbonnementView {
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		/*
-		ArrayList<Klant> alleKlanten = klantDao.getAll();
-		String[] klantLijst = new String[alleKlanten.size()];
-		for (int i = 0; i < alleKlanten.size(); i++) {
-			klantLijst[i] = "" + alleKlanten.get(i).getAchternaam() + " " + alleKlanten.get(i).getVoornaam();
+		
+		ArrayList<Klant> allKlanten = klantDao.getAll();
+
+		String[] klantLijst = new String[allKlanten.size()];
+		
+		for(int i=0; i < allKlanten.size(); i++) {
+			klantLijst[i] = "" + allKlanten.get(i).getAchternaam();
 		}
-		*/
-		lblKlant_Contact = new JLabel("Klant ");
+		
+		
+		lblKlant_Contact = new JLabel("Klanten");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
 		panel.add(lblKlant_Contact, c);
-		
-		ArrayList<Klant> alleKlanten = klantDao.getAll();
-		klantenLijst = new JComboBox<>();
-		for (Klant klant : alleKlanten) {
-			klantenLijst.addItem(klant);
-		}
-		
+
+		cbxKlant_Contact = new JComboBox(klantLijst);
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 2;
+		c.gridx = 1;
 		c.gridy = 0;
-		panel.add(klantenLijst, c);
-		
+		panel.add(cbxKlant_Contact, c);
+
 		ArrayList<Gebruiker> alleGebruiker = gebruikerDao.getAll();
 		gebruikerLijst = new JComboBox<>();
 		for (Gebruiker gebruiker : alleGebruiker) {
@@ -138,15 +137,20 @@ public class AbonnementView {
 		c.gridy = 3;
 		txtStartDatum.setText(strDate);
 		panel.add(txtStartDatum, c);
-		/*
-		 * lblEindDatum = new JLabel("Eind datum "); c.fill =
-		 * GridBagConstraints.HORIZONTAL; c.gridx = 0; c.gridy = 4;
-		 * panel.add(lblEindDatum, c);
-		 * 
-		 * txtEindDatum= new JTextField(10); c.fill =
-		 * GridBagConstraints.HORIZONTAL; c.gridx = 2; c.gridy = 4;
-		 * txtEindDatum.setText(strDate); panel.add(txtEindDatum, c);
-		 */
+
+		lblEindDatum = new JLabel("Eind datum ");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 4;
+		panel.add(lblEindDatum, c);
+
+		txtEindDatum = new JTextField(10);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 4;
+		txtEindDatum.setText(strDate);
+		panel.add(txtEindDatum, c);
+
 		ArrayList<Prijs> allPrijzen = prijsDao.getAll();
 		prijzenLijst = new JComboBox<>();
 		for (Prijs prijs : allPrijzen) {
@@ -187,15 +191,32 @@ public class AbonnementView {
 		c.gridx = 2;
 		c.gridy = 7;
 		panel.add(maakAbonnement, c);
-
+		
+		//verlengDrieMaanden
+		verlengDrieMaanden = new JButton("Verleng drie maanden");
+		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 7;
+		panel.add(verlengDrieMaanden, c);
 		goBackToHome = new JButton("Back");
 		c.fill = new GridBagConstraints().HORIZONTAL;
 		c.gridx = 2;
 		c.gridy = 8;
 		panel.add(goBackToHome, c);
+		
+	
+		
 		homeController = new HomeController(view);
 		abonnementController = new AbonnementController(view);
 		return panel;
+	}
+
+	public static JButton getVerlengDrieMaanden() {
+		return verlengDrieMaanden;
+	}
+
+	public static void setVerlengDrieMaanden(JButton verlengDrieMaanden) {
+		AbonnementView.verlengDrieMaanden = verlengDrieMaanden;
 	}
 
 	public static JComboBox<Gebruiker> getGebruikerLijst() {

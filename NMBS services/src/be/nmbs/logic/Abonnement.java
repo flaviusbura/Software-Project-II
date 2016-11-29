@@ -95,8 +95,16 @@ public class Abonnement {
 		return currentDate;
 	}
 
-	public Timestamp getTimestampDrieMaandAbonnemant(Abonnement abonnement) {
-		Timestamp timestamp = AbonnementDAO.getEindDatum(abonnement);
+	public Timestamp getTimestampDrieMaandAbonnemant(Timestamp timestamp) {
+		/*
+		java.sql.Timestamp ts = ...
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(ts);
+				cal.add(Calendar.DAY_OF_WEEK, 14);
+				ts.setTime(cal.getTime().getTime()); // or
+				ts = new Timestamp(cal.getTime().getTime());
+		*/
+		//Timestamp timestamp = AbonnementDAO.getEindDatum(abonnement);
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(timestamp);
 		cal.add(Calendar.MONTH, 3);
@@ -203,18 +211,46 @@ public class Abonnement {
 	public void setPrijs(Prijs prijs) {
 		this.prijs = prijs;
 	}
-
+/*
 	public int getKlantContactId() {
 		return klant.getContactId();
 	}
-
+*/
 	public int getKortingID() {
 
 		return korting.getId();
 	}
 
+	public SimpleDateFormat getSdf() {
+		return sdf;
+	}
+
+	public void setSdf(SimpleDateFormat sdf) {
+		this.sdf = sdf;
+	}
+
+	public int getKlant_contactId() {
+		return klant_contactId;
+	}
+
+	public void setKlant_contactId(int klant_contactId) {
+		this.klant_contactId = klant_contactId;
+	}
+
+	public int getKortingId() {
+		return kortingId;
+	}
+
+	public void setKortingId(int kortingId) {
+		this.kortingId = kortingId;
+	}
+
+	public void setPrijsId(int prijsId) {
+		this.prijsId = prijsId;
+	}
+
 	public int getPrijsId() {
 
-		return prijs.getPrijsId();
+		return prijsId;
 	}
 }

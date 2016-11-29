@@ -25,13 +25,13 @@ public class AbonnementDAO extends BaseDAO{
 				throw new IllegalStateException("Unexpected error!");
 			}
 			prep = getConnection().prepareStatement(sql);
-			prep.setInt(1, abonnement.getKlantContactId());
+			prep.setInt(1, abonnement.getKlant_contactId());
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
 			prep.setTimestamp(4, abonnement.getTimestampNow());
-			prep.setTimestamp(5, abonnement.getTimestampDrieMaandAbonnemant(abonnement));
+			prep.setTimestamp(5, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getEindDatum()));
 			prep.setInt(6, abonnement.getPrijsId());
-			prep.setInt(7,abonnement.getKortingID());
+			prep.setInt(7,abonnement.getKortingId());
 			prep.setBoolean(8, abonnement.isActief());
 		
 			return prep.executeUpdate();
@@ -48,7 +48,7 @@ public class AbonnementDAO extends BaseDAO{
 			}
 		}
 	}
-	
+	/*
 	public int insertZesMaandAbonnement(Abonnement abonnement) {
 		PreparedStatement prep = null;
 		String sql = "INSERT INTO abonnement VALUES(null,?,?,?,?,?,?,?,?)";
@@ -58,7 +58,7 @@ public class AbonnementDAO extends BaseDAO{
 				throw new IllegalStateException("Unexpected error!");
 			}
 			prep = getConnection().prepareStatement(sql);
-			prep.setInt(1, abonnement.getKlantContactId());
+			prep.setInt(1, abonnement.getKlant_contactId());
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
 			prep.setTimestamp(4, abonnement.getTimestampNow());
@@ -149,7 +149,7 @@ public class AbonnementDAO extends BaseDAO{
 			}
 		}
 	}
-	
+	*/
 	public int verlengAbonnementMetDrieMaand(Abonnement abonnement) {
 		String sql = "UPDATE abonnement SET eind_datum=? WHERE abonnement_id=?";
 		PreparedStatement prep = null;
@@ -159,7 +159,7 @@ public class AbonnementDAO extends BaseDAO{
 			}
 			prep = getConnection().prepareStatement(sql);
 			
-			prep.setTimestamp(1, abonnement.getTimestampDrieMaandAbonnemant(abonnement));
+			prep.setTimestamp(1, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getEindDatum()));
 			prep.setInt(2, abonnement.getAbonnementId());
 			
 		    return prep.executeUpdate();
@@ -299,8 +299,8 @@ public class AbonnementDAO extends BaseDAO{
 				throw new IllegalStateException("Unexpected error!");
 			}
 			prep = getConnection().prepareStatement(sql);
-			
-			prep.setInt(1, abonnement.getKlantContactId());
+			//dit later veranderen naar getKlantContactId();
+			prep.setInt(1, abonnement.getKlant_contactId());
 
 			res = prep.executeQuery();
 			while (res.next()) {
