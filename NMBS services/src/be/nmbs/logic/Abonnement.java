@@ -35,6 +35,19 @@ public class Abonnement {
 		this.actief = actief;
 	}
 
+	public Abonnement(Klant klant, int gebruikerId, String route, Timestamp startDatum,
+			Timestamp eindDatum, Prijs prijs, Korting korting, boolean actief) {
+		super();
+		this.abonnementId = abonnementId;
+		this.klant = klant;
+		this.gebruikerId = gebruikerId;
+		this.route = route;
+		this.startDatum = startDatum;
+		this.eindDatum = eindDatum;
+		this.prijs = prijs;
+		this.korting = korting;
+		this.actief = actief;
+	}
 	public Abonnement(int abonnementId, Klant klant, int gebruikerId, String route, Prijs prijs, Korting korting,
 			boolean actief) {
 		super();
