@@ -66,28 +66,28 @@ public class VerlengAbonnementView {
 		new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
-		c.gridy = 7;
+		c.gridy = 8;
 		panel.add(verleng6Maanden, c);
 		
 		verleng9Maanden = new JButton("Verleng negen maanden");
 		new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
-		c.gridy = 7;
+		c.gridy = 9;
 		panel.add(verleng9Maanden, c);
 		
 		verleng12Maanden = new JButton("Verleng twaalf maanden");
 		new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
-		c.gridy = 7;
+		c.gridy = 10;
 		panel.add(verleng12Maanden, c);
 		
 		goBackToHome = new JButton("Back");
 		new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
-		c.gridy = 8;
+		c.gridy = 12;
 		panel.add(goBackToHome, c);
 		
 	

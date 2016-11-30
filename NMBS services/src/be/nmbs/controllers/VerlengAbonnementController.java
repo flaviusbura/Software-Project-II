@@ -32,10 +32,65 @@ public class VerlengAbonnementController {
 				Abonnement abo = new Abonnement();
 				abo = abonnementDao.getAll_ByID(abonnementID);
 				abonnementDao.verlengAbonnementMetDrieMaand(abo);
-				JOptionPane.showMessageDialog(view.getPanel(), "Abonnement verlengd met driee maanden");
+				JOptionPane.showMessageDialog(view.getPanel(), "Abonnement verlengd met drie maanden");
 			}
 		});
 		
+		VerlengAbonnementView.getVerleng6Maanden().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// Abonnement Abonnement = (Abonnement)
+				// VerlengAbonnementView.getAbonnementIDLijst().getSelectedItem();
+				// Abonnement Abonnement = new
+				// Abonnement(VerlengAbonnementView.getAbonnementIDLijst().getSelectedItem());
+				
+				Abonnement abonnement = (Abonnement) VerlengAbonnementView.getAbonnementLijst().getSelectedItem();
+				int abonnementID = abonnement.getAbonnementId();
+				AbonnementDAO abonnementDao = new AbonnementDAO();
+				Abonnement abo = new Abonnement();
+				abo = abonnementDao.getAll_ByID(abonnementID);
+				abonnementDao.verlengAbonnementMetZesMaand(abo);
+				JOptionPane.showMessageDialog(view.getPanel(), "Abonnement verlengd met zes maanden");
+			}
+		});
+		
+		VerlengAbonnementView.getVerleng9Maanden().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// Abonnement Abonnement = (Abonnement)
+				// VerlengAbonnementView.getAbonnementIDLijst().getSelectedItem();
+				// Abonnement Abonnement = new
+				// Abonnement(VerlengAbonnementView.getAbonnementIDLijst().getSelectedItem());
+				
+				Abonnement abonnement = (Abonnement) VerlengAbonnementView.getAbonnementLijst().getSelectedItem();
+				int abonnementID = abonnement.getAbonnementId();
+				AbonnementDAO abonnementDao = new AbonnementDAO();
+				Abonnement abo = new Abonnement();
+				abo = abonnementDao.getAll_ByID(abonnementID);
+				abonnementDao.verlengAbonnementMetNegenMaand(abo);
+				JOptionPane.showMessageDialog(view.getPanel(), "Abonnement verlengd met negen maanden");
+			}
+		});
+		VerlengAbonnementView.getVerleng12Maanden().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// Abonnement Abonnement = (Abonnement)
+				// VerlengAbonnementView.getAbonnementIDLijst().getSelectedItem();
+				// Abonnement Abonnement = new
+				// Abonnement(VerlengAbonnementView.getAbonnementIDLijst().getSelectedItem());
+				
+				Abonnement abonnement = (Abonnement) VerlengAbonnementView.getAbonnementLijst().getSelectedItem();
+				int abonnementID = abonnement.getAbonnementId();
+				AbonnementDAO abonnementDao = new AbonnementDAO();
+				Abonnement abo = new Abonnement();
+				abo = abonnementDao.getAll_ByID(abonnementID);
+				abonnementDao.verlengAbonnementMetDrieMaand(abo);
+				JOptionPane.showMessageDialog(view.getPanel(), "Abonnement verlengd met een jaar");
+			}
+		});
 		VerlengAbonnementView.getGoBackToHome().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

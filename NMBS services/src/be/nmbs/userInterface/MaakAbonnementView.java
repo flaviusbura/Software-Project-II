@@ -32,7 +32,10 @@ import be.nmbs.logic.Gebruiker;
  *
  */
 public class MaakAbonnementView {
-	private static JButton maakAbonnement;
+	private static JButton maakAbonnement3;
+	private static JButton maakAbonnement6;
+	private static JButton maakAbonnement9;
+	private static JButton maakAbonnement12;
 	private static JButton goBackToHome;
 	private static JButton verlengDrieMaanden;
 	private static JPanel panel;
@@ -184,22 +187,33 @@ public class MaakAbonnementView {
 		panel.add(kortingLijst, c);
 
 		// buttons
-		maakAbonnement = new JButton("Abonnement aanmaken");
+		maakAbonnement3 = new JButton("Drie maanden");
 		c.fill = new GridBagConstraints().HORIZONTAL;
 		c.gridx = 2;
 		c.gridy = 7;
-		panel.add(maakAbonnement, c);
+		panel.add(maakAbonnement3, c);
 		
-		//verlengDrieMaanden
-		verlengDrieMaanden = new JButton("Verleng drie maanden");
-		c.fill = new GridBagConstraints().HORIZONTAL;
-		c.gridx = 2;
-		c.gridy = 7;
-		panel.add(verlengDrieMaanden, c);
-		goBackToHome = new JButton("Back");
+		
+		maakAbonnement6 = new JButton("Zes maanden");
 		c.fill = new GridBagConstraints().HORIZONTAL;
 		c.gridx = 2;
 		c.gridy = 8;
+		panel.add(maakAbonnement6, c);
+		maakAbonnement9 = new JButton("Negen maanden");
+		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 9;
+		panel.add(maakAbonnement9, c);
+		maakAbonnement12 = new JButton("Twaalf maanden");
+		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 10;
+		panel.add(maakAbonnement12, c);
+		
+		goBackToHome = new JButton("Back");
+		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 12;
 		panel.add(goBackToHome, c);
 		
 	
@@ -209,13 +223,55 @@ public class MaakAbonnementView {
 		return panel;
 	}
 
-	public static JButton getMaakAbonnement() {
-		return maakAbonnement;
+	
+
+	public static JButton getMaakAbonnement3() {
+		return maakAbonnement3;
 	}
 
-	public static void setMaakAbonnement() {
-		MaakAbonnementView.maakAbonnement = maakAbonnement;
+
+
+	public static void setMaakAbonnement3(JButton maakAbonnement3) {
+		MaakAbonnementView.maakAbonnement3 = maakAbonnement3;
 	}
+
+
+
+	public static JButton getMaakAbonnement6() {
+		return maakAbonnement6;
+	}
+
+
+
+	public static void setMaakAbonnement6(JButton maakAbonnement6) {
+		MaakAbonnementView.maakAbonnement6 = maakAbonnement6;
+	}
+
+
+
+	public static JButton getMaakAbonnement9() {
+		return maakAbonnement9;
+	}
+
+
+
+	public static void setMaakAbonnement9(JButton maakAbonnement9) {
+		MaakAbonnementView.maakAbonnement9 = maakAbonnement9;
+	}
+
+
+
+	public static JButton getMaakAbonnement12() {
+		return maakAbonnement12;
+	}
+
+
+
+	public static void setMaakAbonnement12(JButton maakAbonnement12) {
+		MaakAbonnementView.maakAbonnement12 = maakAbonnement12;
+	}
+
+
 
 	public static JButton getGoBackToHome() {
 		return goBackToHome;

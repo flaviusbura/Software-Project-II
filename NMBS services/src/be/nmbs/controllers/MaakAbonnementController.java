@@ -28,7 +28,7 @@ import javax.swing.JOptionPane;
 public class MaakAbonnementController {
 	public MaakAbonnementController(View view) {
 
-		MaakAbonnementView.getMaakAbonnement().addActionListener(new ActionListener() {
+		MaakAbonnementView.getMaakAbonnement3().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -73,7 +73,7 @@ public class MaakAbonnementController {
 					//System.out.println(klanten.getContactId()+" "+gebruikerId+" "+route+" "+ts+" "+ts2+" "+prijsId+" "+kortingId);
 					abonnementDao.insertDrieMaandAbonnement(abonnement);
 					
-					JOptionPane.showMessageDialog(view.getPanel(), "Abonnement aangemaakt");
+					JOptionPane.showMessageDialog(view.getPanel(), "Abonnement aangemaakt voor drie maanden");
 
 				} catch (ParseException e1) {
 					e1.printStackTrace();
@@ -81,6 +81,163 @@ public class MaakAbonnementController {
 			}
 		});
 
+		MaakAbonnementView.getMaakAbonnement6().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+				
+					
+					//StationNMBS startstation = new StationNMBS((String) TicketView.getBeginstationlijst().getSelectedItem());
+					//int s_n = (Integer) jComboBoxSN.getSelectedItem();
+					//Gebruiker gebruiker = new Gebruiker((Integer) MaakAbonnementView.getGebruikerLijst().getSelectedItem());
+					
+					Klant klanten = (Klant) MaakAbonnementView.getKlantenLijst().getSelectedItem();
+					int klantId = klanten.getContactId();
+					
+					Gebruiker gebruiker = (Gebruiker) MaakAbonnementView.getGebruikerLijst().getSelectedItem();
+					int gebruikerId = gebruiker.getId();
+					String route = MaakAbonnementView.getTxtRoute().getText();
+
+					// startDatum omzetten
+					String startDatum = MaakAbonnementView.getTxtStartDatum().getText();
+					DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+					Date date = format.parse(startDatum);
+					Long tijd = date.getTime();
+					Timestamp ts = new Timestamp(tijd);
+
+					// eindDatum omzetten
+
+					String eindDatum = MaakAbonnementView.getTxtStartDatum().getText();
+					Date date2 = format.parse(eindDatum);
+					Long tijd2 = date2.getTime();
+					Timestamp ts2 = new Timestamp(tijd2);
+
+				
+					Prijs prijs = (Prijs) MaakAbonnementView.getPrijzenLijst().getSelectedItem();
+					int prijsId = prijs.getPrijsId();
+
+					Korting korting = (Korting) MaakAbonnementView.getKortingLijst().getSelectedItem();
+					int kortingId = korting.getId();
+
+					Abonnement abonnement = new Abonnement(klantId, gebruikerId, route, ts, ts2, prijsId,
+							kortingId, true);
+					AbonnementDAO abonnementDao = new AbonnementDAO();
+					//System.out.println(klanten.getContactId()+" "+gebruikerId+" "+route+" "+ts+" "+ts2+" "+prijsId+" "+kortingId);
+					abonnementDao.insertZesMaandAbonnement(abonnement);
+					
+					JOptionPane.showMessageDialog(view.getPanel(), "Abonnement aangemaakt voor zes maanden");
+
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		MaakAbonnementView.getMaakAbonnement9().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+				
+					
+					//StationNMBS startstation = new StationNMBS((String) TicketView.getBeginstationlijst().getSelectedItem());
+					//int s_n = (Integer) jComboBoxSN.getSelectedItem();
+					//Gebruiker gebruiker = new Gebruiker((Integer) MaakAbonnementView.getGebruikerLijst().getSelectedItem());
+					
+					Klant klanten = (Klant) MaakAbonnementView.getKlantenLijst().getSelectedItem();
+					int klantId = klanten.getContactId();
+					
+					Gebruiker gebruiker = (Gebruiker) MaakAbonnementView.getGebruikerLijst().getSelectedItem();
+					int gebruikerId = gebruiker.getId();
+					String route = MaakAbonnementView.getTxtRoute().getText();
+
+					// startDatum omzetten
+					String startDatum = MaakAbonnementView.getTxtStartDatum().getText();
+					DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+					Date date = format.parse(startDatum);
+					Long tijd = date.getTime();
+					Timestamp ts = new Timestamp(tijd);
+
+					// eindDatum omzetten
+
+					String eindDatum = MaakAbonnementView.getTxtStartDatum().getText();
+					Date date2 = format.parse(eindDatum);
+					Long tijd2 = date2.getTime();
+					Timestamp ts2 = new Timestamp(tijd2);
+
+				
+					Prijs prijs = (Prijs) MaakAbonnementView.getPrijzenLijst().getSelectedItem();
+					int prijsId = prijs.getPrijsId();
+
+					Korting korting = (Korting) MaakAbonnementView.getKortingLijst().getSelectedItem();
+					int kortingId = korting.getId();
+
+					Abonnement abonnement = new Abonnement(klantId, gebruikerId, route, ts, ts2, prijsId,
+							kortingId, true);
+					AbonnementDAO abonnementDao = new AbonnementDAO();
+					//System.out.println(klanten.getContactId()+" "+gebruikerId+" "+route+" "+ts+" "+ts2+" "+prijsId+" "+kortingId);
+					abonnementDao.insertNegenMaandAbonnement(abonnement);
+					
+					JOptionPane.showMessageDialog(view.getPanel(), "Abonnement aangemaakt voor negen maanden");
+
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		MaakAbonnementView.getMaakAbonnement12().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+				
+					
+					//StationNMBS startstation = new StationNMBS((String) TicketView.getBeginstationlijst().getSelectedItem());
+					//int s_n = (Integer) jComboBoxSN.getSelectedItem();
+					//Gebruiker gebruiker = new Gebruiker((Integer) MaakAbonnementView.getGebruikerLijst().getSelectedItem());
+					
+					Klant klanten = (Klant) MaakAbonnementView.getKlantenLijst().getSelectedItem();
+					int klantId = klanten.getContactId();
+					
+					Gebruiker gebruiker = (Gebruiker) MaakAbonnementView.getGebruikerLijst().getSelectedItem();
+					int gebruikerId = gebruiker.getId();
+					String route = MaakAbonnementView.getTxtRoute().getText();
+
+					// startDatum omzetten
+					String startDatum = MaakAbonnementView.getTxtStartDatum().getText();
+					DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+					Date date = format.parse(startDatum);
+					Long tijd = date.getTime();
+					Timestamp ts = new Timestamp(tijd);
+
+					// eindDatum omzetten
+
+					String eindDatum = MaakAbonnementView.getTxtStartDatum().getText();
+					Date date2 = format.parse(eindDatum);
+					Long tijd2 = date2.getTime();
+					Timestamp ts2 = new Timestamp(tijd2);
+
+				
+					Prijs prijs = (Prijs) MaakAbonnementView.getPrijzenLijst().getSelectedItem();
+					int prijsId = prijs.getPrijsId();
+
+					Korting korting = (Korting) MaakAbonnementView.getKortingLijst().getSelectedItem();
+					int kortingId = korting.getId();
+
+					Abonnement abonnement = new Abonnement(klantId, gebruikerId, route, ts, ts2, prijsId,
+							kortingId, true);
+					AbonnementDAO abonnementDao = new AbonnementDAO();
+					//System.out.println(klanten.getContactId()+" "+gebruikerId+" "+route+" "+ts+" "+ts2+" "+prijsId+" "+kortingId);
+					abonnementDao.insertEenJaarAbonnement(abonnement);
+					
+					JOptionPane.showMessageDialog(view.getPanel(), "Abonnement aangemaakt voor een jaar");
+
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		MaakAbonnementView.getGoBackToHome().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
