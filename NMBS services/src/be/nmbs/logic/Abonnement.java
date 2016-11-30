@@ -21,7 +21,7 @@ public class Abonnement {
 	private int prijsId;
 	private int kortingId;
 
-	public Abonnement() {
+	public Abonnement(Object object) {
 	}
 
 	public Abonnement(int klant_contactId, int gebruikerId, String route,Timestamp startDatum,
@@ -52,10 +52,23 @@ public class Abonnement {
 		this.actief = actief;
 	}
 
+	public Abonnement(int abonnementId, int klant_contactId, int gebruikerId, String route, Timestamp startDatum,
+			Timestamp eindDatum, int prijsId, int kortingId, boolean actief) {
+		super();
+		this.abonnementId = abonnementId;
+		this.klant_contactId = klant_contactId;
+		this.gebruikerId = gebruikerId;
+		this.route = route;
+		this.startDatum = startDatum;
+		this.eindDatum = eindDatum;
+		this.prijsId = prijsId;
+		this.kortingId = kortingId;
+		this.actief = actief;
+	}
 	public Abonnement(Klant klant, int gebruikerId, String route, Timestamp startDatum, Timestamp eindDatum,
 			Prijs prijs, Korting korting, boolean actief) {
 		super();
-		this.abonnementId = abonnementId;
+		
 		this.klant = klant;
 		this.gebruikerId = gebruikerId;
 		this.route = route;
@@ -76,6 +89,11 @@ public class Abonnement {
 		this.prijs = prijs;
 		this.korting = korting;
 		this.actief = actief;
+	}
+
+
+	public Abonnement() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public Timestamp getTimestampNow() {
@@ -174,6 +192,12 @@ public class Abonnement {
 
 	public int getAbonnementId() {
 		return abonnementId;
+	}
+
+	
+	@Override
+	public String toString() {
+		return " " + abonnementId;
 	}
 
 	public void setAbonnementId(int abonnementId) {

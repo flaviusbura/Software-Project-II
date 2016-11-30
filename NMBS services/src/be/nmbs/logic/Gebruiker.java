@@ -60,6 +60,11 @@ public class Gebruiker {
 		return id;
 	}
 	
+	@Override
+	public String toString() {
+		return  id + " " + username;
+	}
+
 	/**
 	 * Deze methode sets mijn ID van de gebruiker
 	 * @param id

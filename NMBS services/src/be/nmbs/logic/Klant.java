@@ -1,6 +1,13 @@
 package be.nmbs.logic;
 
 public class Klant {
+	@Override
+	public String toString() {
+		return achternaam + " " + voornaam;
+	}
+	
+	
+
 	private int contactId;
 	private String voornaam;
 	private String achternaam;
