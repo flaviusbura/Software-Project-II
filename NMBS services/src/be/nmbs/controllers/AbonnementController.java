@@ -38,6 +38,8 @@ public class AbonnementController {
 					//int klantId = klant.getContactId();
 					Klant klanten = new Klant((String) AbonnementView.getCbxKlant_Contact().getSelectedItem(),(String) AbonnementView.getCbxKlant_Contact().getSelectedItem());
 					
+					//Gebruiker gebruiker = new Gebruiker((int) AbonnementView.getCbxGebruiker().getSelectedItem());
+					
 					Gebruiker gebruiker = (Gebruiker) AbonnementView.getGebruikerLijst().getSelectedItem();
 					int gebruikerId = gebruiker.getId();
 					String route = AbonnementView.getTxtRoute().getText();

@@ -92,26 +92,35 @@ public class AbonnementView {
 
 		cbxKlant_Contact = new JComboBox(klantLijst);
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
+		c.gridx = 2;
 		c.gridy = 0;
 		panel.add(cbxKlant_Contact, c);
 
+		/*
 		ArrayList<Gebruiker> alleGebruiker = gebruikerDao.getAll();
 		gebruikerLijst = new JComboBox<>();
 		for (Gebruiker gebruiker : alleGebruiker) {
 			gebruikerLijst.addItem(gebruiker);
 		}
+		*/
+		ArrayList<Gebruiker> alleGebruiker = gebruikerDao.getAll();
 
-		lblGebruiker = new JLabel("Gebruiker ");
+		String[] gebruikerLijst = new String[alleGebruiker.size()];
+		
+		for(int i=0; i < alleGebruiker.size(); i++) {
+			gebruikerLijst[i] = "" + alleGebruiker.get(i).getId();
+		}
+		lblGebruiker = new JLabel("GebruikerID ");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 1;
 		panel.add(lblGebruiker, c);
-
+		
+		cbxGebruiker = new JComboBox(gebruikerLijst);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridy = 1;
-		panel.add(gebruikerLijst, c);
+		panel.add(cbxGebruiker, c);
 
 		lblRoute = new JLabel("Route");
 		c.fill = GridBagConstraints.HORIZONTAL;
