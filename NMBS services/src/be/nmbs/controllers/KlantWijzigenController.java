@@ -3,7 +3,7 @@ package be.nmbs.controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import be.nmbs.userInterface.AdresWijzigenView;
+import be.nmbs.userInterface.NieuwAdresView;
 import be.nmbs.userInterface.KlantWijzigenView;
 import be.nmbs.userInterface.KlantenBeheerView;
 import be.nmbs.userInterface.TelefoonWijzigenView;
@@ -11,7 +11,7 @@ import be.nmbs.userInterface.View;
 
 public class KlantWijzigenController {
 	public KlantWijzigenController(View view) {
-		KlantWijzigenView.getAdresWijzigen().addActionListener(new ActionListener() {
+		/*KlantWijzigenView.getAdresWijzigen().addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -26,6 +26,15 @@ public class KlantWijzigenController {
 			public void actionPerformed(ActionEvent e) {
 				TelefoonWijzigenView.setTelefoonWijzigenControllerToNull();
 				view.changeView(TelefoonWijzigenView.initialize(view));
+			}
+		});*/
+		
+		KlantWijzigenView.getAdresButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				NieuwAdresView.setNieuwAdresControllerToNull();
+				view.changeView(NieuwAdresView.initialize(view));	
 			}
 		});
 		

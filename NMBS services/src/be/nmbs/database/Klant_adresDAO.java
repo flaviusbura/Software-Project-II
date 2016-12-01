@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import be.nmbs.logic.Adres;
 
+
 public class Klant_adresDAO extends BaseDAO {
 	/**
 	 * Default constructor
