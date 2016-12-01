@@ -64,9 +64,9 @@ public class AbonnementDAO extends BaseDAO{
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
 			prep.setTimestamp(4, abonnement.getTimestampNow());
-			prep.setTimestamp(5, abonnement.getTimestampZesMaandAbonnemant(abonnement));
+			prep.setTimestamp(5, abonnement.getTimestampZesMaandAbonnemant(abonnement.getEindDatum()));
 			prep.setInt(6, abonnement.getPrijsId());
-			prep.setInt(7,abonnement.getKortingID());
+			prep.setInt(7,abonnement.getKortingId());
 			prep.setBoolean(8, abonnement.isActief());
 		
 			return prep.executeUpdate();
@@ -77,7 +77,6 @@ public class AbonnementDAO extends BaseDAO{
 			try {
 				if (prep != null)
 					prep.close();
-
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 				throw new RuntimeException("Unexpected error!");
@@ -189,7 +188,7 @@ public class AbonnementDAO extends BaseDAO{
 			}
 			prep = getConnection().prepareStatement(sql);
 			
-			prep.setTimestamp(1, abonnement.getTimestampZesMaandAbonnemant(abonnement));
+			prep.setTimestamp(1, abonnement.getTimestampZesMaandAbonnemant(abonnement.getEindDatum()));
 			prep.setInt(2, abonnement.getAbonnementId());
 			
 		    return prep.executeUpdate();
@@ -217,7 +216,7 @@ public class AbonnementDAO extends BaseDAO{
 			}
 			prep = getConnection().prepareStatement(sql);
 			
-			prep.setTimestamp(1, abonnement.getTimestampNegenMaandAbonnemant(abonnement));
+			prep.setTimestamp(1, abonnement.getTimestampNegenMaandAbonnemant(abonnement.getEindDatum()));
 			prep.setInt(2, abonnement.getAbonnementId());
 			
 		    return prep.executeUpdate();
@@ -245,7 +244,7 @@ public class AbonnementDAO extends BaseDAO{
 			}
 			prep = getConnection().prepareStatement(sql);
 			
-			prep.setTimestamp(1, abonnement.getTimestampJaarAbonnemant(abonnement));
+			prep.setTimestamp(1, abonnement.getTimestampJaarAbonnemant(abonnement.getEindDatum()));
 			prep.setInt(2, abonnement.getAbonnementId());
 			
 		    return prep.executeUpdate();

@@ -130,8 +130,8 @@ public class Abonnement {
 		return timestamp;
 	}
 
-	public Timestamp getTimestampZesMaandAbonnemant(Abonnement abonnement) {
-		Timestamp timestamp = AbonnementDAO.getEindDatum(abonnement);
+	public Timestamp getTimestampZesMaandAbonnemant(Timestamp timestamp) {
+		
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(timestamp);
 		cal.add(Calendar.MONTH, 6);
@@ -139,8 +139,7 @@ public class Abonnement {
 		return timestamp;
 	}
 
-	public Timestamp getTimestampNegenMaandAbonnemant(Abonnement abonnement) {
-		Timestamp timestamp = AbonnementDAO.getEindDatum(abonnement);
+	public Timestamp getTimestampNegenMaandAbonnemant(Timestamp timestamp) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(timestamp);
 		cal.add(Calendar.MONTH, 9);
@@ -148,8 +147,8 @@ public class Abonnement {
 		return timestamp;
 	}
 
-	public Timestamp getTimestampJaarAbonnemant(Abonnement abonnement) {
-		Timestamp timestamp = AbonnementDAO.getEindDatum(abonnement);
+	public Timestamp getTimestampJaarAbonnemant(Timestamp timestamp) {
+		
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(timestamp);
 		cal.add(Calendar.YEAR, 1);
@@ -235,11 +234,11 @@ public class Abonnement {
 	public void setPrijs(Prijs prijs) {
 		this.prijs = prijs;
 	}
-/*
+
 	public int getKlantContactId() {
 		return klant.getContactId();
 	}
-*/
+
 	public int getKortingID() {
 
 		return korting.getId();
@@ -277,4 +276,5 @@ public class Abonnement {
 
 		return prijsId;
 	}
+	
 }
