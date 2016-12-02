@@ -7,21 +7,21 @@ import java.util.Calendar;
 public class VerlorenVoorwerp {
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private int id;
-	private Station station;
+	private StationNMBS station;
 	private String omschrijving;
 	private Timestamp timestamp;
 	private boolean actief;
 
 	public VerlorenVoorwerp() {}
 	
-	public VerlorenVoorwerp(int id, Station station, String omschrijving, boolean actief) {
+	public VerlorenVoorwerp(int id, StationNMBS station, String omschrijving, boolean actief) {
 		this.id = id;
 		this.station = station;
 		this.omschrijving = omschrijving;
 		this.actief = actief;
 	}
 	
-	public VerlorenVoorwerp(int id, Station station, String omschrijving, Timestamp timestamp, boolean actief) {
+	public VerlorenVoorwerp(int id, StationNMBS station, String omschrijving, Timestamp timestamp, boolean actief) {
 		this.id = id;
 		this.station = station;
 		this.omschrijving = omschrijving;
@@ -33,7 +33,7 @@ public class VerlorenVoorwerp {
 		return id;
 	}
 
-	public Station getStation() {
+	public StationNMBS getStationStationNMBS() {
 		return station;
 	}
 
@@ -50,7 +50,11 @@ public class VerlorenVoorwerp {
 		this.id = id;
 	}
 
-	public void setStation(Station station) {
+	public StationNMBS getStation() {
+		return station;
+	}
+
+	public void setStation(StationNMBS station) {
 		this.station = station;
 	}
 
@@ -81,4 +85,6 @@ public class VerlorenVoorwerp {
 		String currentDate = sdf.format(timestamp);
 		return currentDate;
 	}
+
+
 }

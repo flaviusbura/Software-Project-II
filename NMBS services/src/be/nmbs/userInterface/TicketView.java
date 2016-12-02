@@ -24,8 +24,6 @@ import be.nmbs.logic.StationNMBS;
 public class TicketView {
 	private static JPanel panel;
 	private static JLabel lblBeginStation;
-	private static JTextField txtBeginStation;
-	private static JTextField txtEindStation;
 	public static JTextField getTxtSoort() {
 		return txtSoort;
 	}

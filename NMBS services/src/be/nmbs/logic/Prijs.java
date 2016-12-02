@@ -19,7 +19,11 @@ public class Prijs {
 	 */
 	public Prijs() {
 	}
-
+	
+	public Prijs(int prijsId)
+	{
+		this.prijsId=prijsId;
+	}
 	/**
 	 * Constructor met alle nodige parameters.
 	 * 

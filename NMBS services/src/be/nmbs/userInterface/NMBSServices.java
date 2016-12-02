@@ -5,5 +5,8 @@ public class NMBSServices {
 		View view = new View();
 		Application application = new Application(view);
 		application.run();
+		
 	}
+	
+	
 }
