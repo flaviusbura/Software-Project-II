@@ -253,4 +253,166 @@ public class Klant_adresDAO extends BaseDAO {
 			}
 		}
 	}
+	
+	public int updateLandByAdresId(int adresID, String land) {
+        String sql = "UPDATE klant_adres SET land = ? WHERE adres_id = ?";
+        PreparedStatement prep = null;
+        try {
+        	if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+        	prep = getConnection().prepareStatement(sql);
+        	
+            prep.setString(1, land);
+            prep.setInt(2, adresID);
+            return prep.executeUpdate();
+        } catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}      
+    }
+	
+	public int updateStraatByAdresId(int adresID, String straat) {
+        String sql = "UPDATE klant_adres SET straat = ? WHERE adres_id = ?";
+        PreparedStatement prep = null;
+        try {
+        	if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+        	prep = getConnection().prepareStatement(sql);
+        	
+            prep.setString(1, straat);
+            prep.setInt(2, adresID);
+            return prep.executeUpdate();
+        } catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}      
+    }
+	
+	public int updateNrByAdresId(int adresID, int huisnummer) {
+        String sql = "UPDATE klant_adres SET nr = ? WHERE adres_id = ?";
+        PreparedStatement prep = null;
+        try {
+        	if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+        	prep = getConnection().prepareStatement(sql);
+        	
+            prep.setInt(1, huisnummer);
+            prep.setInt(2, adresID);
+            return prep.executeUpdate();
+        } catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}      
+    }
+	
+	public int updatePostcodeByAdresId(int adresID, int postcode) {
+        String sql = "UPDATE klant_adres SET postcode = ? WHERE adres_id = ?";
+        PreparedStatement prep = null;
+        try {
+        	if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+        	prep = getConnection().prepareStatement(sql);
+        	
+            prep.setInt(1, postcode);
+            prep.setInt(2, adresID);
+            return prep.executeUpdate();
+        } catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}      
+    }
+	
+	public int updateWoonplaatsByAdresId(int adresID, String woonplaats) {
+        String sql = "UPDATE klant_adres SET stad = ? WHERE adres_id = ?";
+        PreparedStatement prep = null;
+        try {
+        	if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+        	prep = getConnection().prepareStatement(sql);
+        	
+            prep.setString(1, woonplaats);
+            prep.setInt(2, adresID);
+            return prep.executeUpdate();
+        } catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}      
+    }
+	
+	public int updateBusByAdresId(int adresID, String bus) {
+        String sql = "UPDATE klant_adres SET bus = ? WHERE adres_id = ?";
+        PreparedStatement prep = null;
+        try {
+        	if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+        	prep = getConnection().prepareStatement(sql);
+        	
+            prep.setString(1, bus);
+            prep.setInt(2, adresID);
+            return prep.executeUpdate();
+        } catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}      
+    }
 }
