@@ -43,7 +43,7 @@ public class KlantWijzigenController {
 				annuleren = new JButton("Annuleren");
 
 				jFrame.setSize(400, 200);
-				jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 				jFrame.setLocation(dim.width / 2 - jFrame.getSize().width / 2,
 						dim.height / 2 - jFrame.getSize().height / 2);
@@ -118,7 +118,7 @@ public class KlantWijzigenController {
 				annuleren = new JButton("Annuleren");
 
 				jFrame.setSize(400, 200);
-				jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 				jFrame.setLocation(dim.width / 2 - jFrame.getSize().width / 2,
 						dim.height / 2 - jFrame.getSize().height / 2);
@@ -193,7 +193,7 @@ public class KlantWijzigenController {
 				annuleren = new JButton("Annuleren");
 
 				jFrame.setSize(400, 200);
-				jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 				jFrame.setLocation(dim.width / 2 - jFrame.getSize().width / 2,
 						dim.height / 2 - jFrame.getSize().height / 2);
@@ -268,7 +268,7 @@ public class KlantWijzigenController {
 				annuleren = new JButton("Annuleren");
 
 				jFrame.setSize(400, 200);
-				jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 				jFrame.setLocation(dim.width / 2 - jFrame.getSize().width / 2,
 						dim.height / 2 - jFrame.getSize().height / 2);
@@ -343,7 +343,7 @@ public class KlantWijzigenController {
 				annuleren = new JButton("Annuleren");
 
 				jFrame.setSize(400, 200);
-				jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 				jFrame.setLocation(dim.width / 2 - jFrame.getSize().width / 2,
 						dim.height / 2 - jFrame.getSize().height / 2);
@@ -418,7 +418,7 @@ public class KlantWijzigenController {
 				annuleren = new JButton("Annuleren");
 
 				jFrame.setSize(400, 200);
-				jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 				jFrame.setLocation(dim.width / 2 - jFrame.getSize().width / 2,
 						dim.height / 2 - jFrame.getSize().height / 2);
@@ -497,7 +497,7 @@ public class KlantWijzigenController {
 				annuleren = new JButton("Annuleren");
 
 				jFrame.setSize(400, 200);
-				jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 				jFrame.setLocation(dim.width / 2 - jFrame.getSize().width / 2,
 						dim.height / 2 - jFrame.getSize().height / 2);
@@ -576,7 +576,7 @@ public class KlantWijzigenController {
 				annuleren = new JButton("Annuleren");
 
 				jFrame.setSize(400, 200);
-				jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 				jFrame.setLocation(dim.width / 2 - jFrame.getSize().width / 2,
 						dim.height / 2 - jFrame.getSize().height / 2);
@@ -651,7 +651,7 @@ public class KlantWijzigenController {
 				annuleren = new JButton("Annuleren");
 
 				jFrame.setSize(400, 200);
-				jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 				jFrame.setLocation(dim.width / 2 - jFrame.getSize().width / 2,
 						dim.height / 2 - jFrame.getSize().height / 2);
