@@ -7,14 +7,13 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import be.nmbs.controllers.AbonnementController;
-import be.nmbs.controllers.HomeController;
 
 public class AbonnementView {
-	private static JButton maakAbonnement;
-	private static JButton goBackToHome;
+	private static JButton nieuwAboMaken;
+	private static JButton aboVerlengen;
+	private static JButton aboZoeken;
+	private static JButton home;
 	private static JPanel panel;
-	@SuppressWarnings("unused")
-	private static HomeController homeController;
 	@SuppressWarnings("unused")
 	private static AbonnementController abonnementController;
 	
@@ -22,33 +21,48 @@ public class AbonnementView {
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
 
-		maakAbonnement = new JButton("Abonnement aanmaken");
+		nieuwAboMaken = new JButton("Nieuw abonnement maken");
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = new GridBagConstraints().HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
-		panel.add(maakAbonnement, c);
-
-		goBackToHome = new JButton("Go Back To Home");
+		panel.add(nieuwAboMaken, c);
+		
+		aboVerlengen = new JButton("Abonnement Verlengen");
 		c.fill = new GridBagConstraints().HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 0;
-		panel.add(goBackToHome, c);
-			homeController = new HomeController(view);
+		panel.add(aboVerlengen, c);
+		
+		aboZoeken = new JButton("Abonnement zoeken");
+		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 1;
+		panel.add(aboZoeken, c);
+
+		home = new JButton("Home");
+		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 1;
+		panel.add(home, c);
 			abonnementController = new AbonnementController(view);
 		return panel;
 	}
-
-	public static JButton getMaakAbonnement() {
-		return maakAbonnement;
-	}
-
-	public static JButton getGoBackToHome() {
-		return goBackToHome;
-	}
 	
-	public static void setHomeControllerToNull() {
-		homeController = null;
+	public static JButton getNieuwAboMaken() {
+		return nieuwAboMaken;
+	}
+
+	public static JButton getAboVerlengen() {
+		return aboVerlengen;
+	}
+
+	public static JButton getAboZoeken() {
+		return aboZoeken;
+	}
+
+	public static JButton getHome() {
+		return home;
 	}
 	
 	public static void setAbonnementControllerToNull() {

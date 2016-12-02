@@ -58,7 +58,7 @@ public class LoginController {
 			}
 		});
 
-		LoginView.getCancel().addActionListener(new ActionListener() {
+		LoginView.getCloseApp().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {

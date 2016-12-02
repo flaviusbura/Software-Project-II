@@ -138,8 +138,15 @@ public class ApiCaller {
 			    	// Checken voor overstappen
 			    	for (int j = 0; j < overstappen.length(); j++) {
 			    		JSONObject overstap = overstappen.optJSONObject(j);
-				    	if (!overstap.isNull("TransferAt"))
-				    		o.add(new Overstap(overstap.get("TransferAt").toString(), overstap.getInt("ArrivalPlatform"), overstap.getInt("DeparturePlatform")));
+			    		String ar = overstap.getString("ArrivalTime");
+			    		Date arrival = format.parse(ar);
+			    		
+			    		String dep = overstap.getString("DepartureTime");
+			    		Date departure = format.parse(dep);
+			    		if (overstap.get("ArrivalPlatform") == null)
+			    			o.add(new Overstap(overstap.get("FullId").toString(), overstap.get("TransferAt").toString(), null, overstap.getString("DeparturePlatform"), arrival, departure, overstap.getString("TerminusStation")));
+			    		else 
+			    			o.add(new Overstap(overstap.get("FullId").toString(), overstap.get("TransferAt").toString(), overstap.getString("ArrivalPlatform"), overstap.getString("DeparturePlatform"), arrival, departure, overstap.getString("TerminusStation")));
 			    	}
 				    
 			    	r.add(new Route(route.getString("Departure"), route.getString("Arrival"), t, o));
@@ -245,8 +252,16 @@ public class ApiCaller {
 			    	// Checken voor overstappen
 			    	for (int j = 0; j < overstappen.length(); j++) {
 			    		JSONObject overstap = overstappen.optJSONObject(j);
-				    	if (!overstap.isNull("TransferAt"))
-				    		o.add(new Overstap(overstap.get("TransferAt").toString(), overstap.getInt("ArrivalPlatform"), overstap.getInt("DeparturePlatform")));
+			    		String ar = overstap.getString("ArrivalTime");
+			    		Date arrival = format.parse(ar);
+			    		
+			    		String dep = overstap.getString("DepartureTime");
+			    		Date departure = format.parse(dep);
+			    		
+			    		if (overstap.isNull("ArrivalPlatform"))
+			    			o.add(new Overstap(overstap.get("FullId").toString(), overstap.get("TransferAt").toString(), null, null, arrival, departure, overstap.getString("TerminusStation")));
+			    		else 
+			    			o.add(new Overstap(overstap.get("FullId").toString(), overstap.get("TransferAt").toString(), (String) overstap.get("ArrivalPlatform"), overstap.getString("DeparturePlatform"), arrival, departure, overstap.getString("TerminusStation")));
 			    	}
 				    
 			    	r.add(new Route(route.getString("Departure"), route.getString("Arrival"), t, o));

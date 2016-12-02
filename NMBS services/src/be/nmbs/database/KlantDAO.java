@@ -65,20 +65,19 @@ public class KlantDAO extends BaseDAO {
 	 */
 	public int insert(Klant klant) {
 		PreparedStatement prep = null;
-		String sql = "INSERT INTO klant_contact VALUES(?,?,?,?,?,?)";
+		String sql = "INSERT INTO klant_contact VALUES(null,?,?,?,?,?)";
 		
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
 			}
 			prep = getConnection().prepareStatement(sql);
-			
-			prep.setInt(1, klant.getContactId());
-			prep.setString(2, klant.getVoornaam());
-			prep.setString(3, klant.getAchternaam());
-			prep.setInt(4, klant.getAdresId());
-			prep.setString(5, klant.getTelefoon());
-			prep.setBoolean(6, klant.isActief());
+
+			prep.setString(1, klant.getVoornaam());
+			prep.setString(2, klant.getAchternaam());
+			prep.setInt(3, klant.getAdresId());
+			prep.setString(4, klant.getTelefoon());
+			prep.setBoolean(5, klant.isActief());
 			return prep.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -233,6 +232,74 @@ public class KlantDAO extends BaseDAO {
 				klant = new Klant(contactId, voornaam, achternaam, adresId, telefoon, actief);
 			}
 			return klant;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+				if (res != null)
+					res.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
+	
+	public int getAdresIdOpNaamEnVoornaam(String voornaam, String naam) {
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		int adresId = 0;
+		String sql = "SELECT adres_id FROM klant_contact WHERE voornaam = ? AND naam = ?";
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+			
+			prep.setString(1, voornaam);
+			prep.setString(2, naam);
+			res = prep.executeQuery();
+			while (res.next()) {
+				adresId = res.getInt("adres_id");
+			}
+			return adresId;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+				if (res != null)
+					res.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
+	
+	public int getContactIdOpNaamEnVoornaam(String voornaam, String naam) {
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		int contactId = 0;
+		String sql = "SELECT contact_id FROM klant_contact WHERE voornaam = ? AND naam = ?";
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+			
+			prep.setString(1, voornaam);
+			prep.setString(2, naam);
+			res = prep.executeQuery();
+			while (res.next()) {
+				contactId = res.getInt("contact_id");
+			}
+			return contactId;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException(e.getMessage());
