@@ -315,5 +315,86 @@ public class KlantDAO extends BaseDAO {
 			}
 		}
 	}
+	
+	public int updateVoornaamByContactId(int contactID, String voornaam) {
+        String sql = "UPDATE klant_contact SET voornaam = ? WHERE contact_id = ?";
+        PreparedStatement prep = null;
+        try {
+        	if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+        	prep = getConnection().prepareStatement(sql);
+        	
+            prep.setString(1, voornaam);
+            prep.setInt(2, contactID);
+            return prep.executeUpdate();
+        } catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}      
+    }
+	
+	public int updateAchternaamByContactId(int contactID, String voornaam) {
+        String sql = "UPDATE klant_contact SET naam = ? WHERE contact_id = ?";
+        PreparedStatement prep = null;
+        try {
+        	if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+        	prep = getConnection().prepareStatement(sql);
+        	
+            prep.setString(1, voornaam);
+            prep.setInt(2, contactID);
+            return prep.executeUpdate();
+        } catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}      
+    }
+	
+	public int updateTelefoonByContactId(int contactID, String telefoon) {
+        String sql = "UPDATE klant_contact SET telefoon = ? WHERE contact_id = ?";
+        PreparedStatement prep = null;
+        try {
+        	if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+        	prep = getConnection().prepareStatement(sql);
+        	
+            prep.setString(1, telefoon);
+            prep.setInt(2, contactID);
+            return prep.executeUpdate();
+        } catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}      
+    }
 }
 

@@ -54,7 +54,7 @@ public class HomeView {
 			c.gridy = 2;
 			panel.add(btnOpzoeken, c);
 			
-			klantenBeheer = new JButton("Klanten Beheer");
+			klantenBeheer = new JButton("Klantenbeheer");
 			c.fill = new GridBagConstraints().HORIZONTAL;
 			c.gridx = 1;
 			c.gridy = 2;
