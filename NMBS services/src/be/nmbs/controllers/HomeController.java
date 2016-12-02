@@ -7,6 +7,8 @@ import be.nmbs.userInterface.AbonnementView;
 import be.nmbs.userInterface.BoeteView;
 import be.nmbs.userInterface.HomeView;
 import be.nmbs.userInterface.LoginView;
+import be.nmbs.userInterface.TicketView;
+import be.nmbs.userInterface.VerlorenvoorwerpView;
 import be.nmbs.userInterface.View;
 
 public class HomeController {
@@ -36,5 +38,29 @@ public class HomeController {
 				view.changeView(LoginView.initialize(view));
 			}
 		});
+		
+		HomeView.getBtnTicket().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				TicketView.setTicketControllerToNull();
+			//	TicketView.setHomeControllerToNull();
+				view.changeView(TicketView.initialize(view));
+				
+			}
+		});
+		
+		HomeView.getBtnVerlorenvoorwerpen().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				VerlorenvoorwerpView.setVerlorenvoorwerpControllerToNull();
+				//VerlorenvoorwerpView.setHomeControllerToNull();
+				view.changeView(VerlorenvoorwerpView.initialize(view));
+				
+			}
+		});
+		
+		
 	}
 }
