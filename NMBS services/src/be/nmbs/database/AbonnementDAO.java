@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import be.nmbs.logic.Abonnement;
-import be.nmbs.logic.Gebruiker;
 import be.nmbs.logic.Korting;
 import be.nmbs.database.BaseDAO;
 import be.nmbs.database.KlantDAO;
@@ -18,7 +17,7 @@ import be.nmbs.logic.Prijs;
 
 public class AbonnementDAO extends BaseDAO{
 	
-	public int insertDrieMaandAbonnement(Abonnement abonnement) {
+	public int insertDrieMaandAbonnement(Abonnement abonnement, Timestamp startDatum) {
 		PreparedStatement prep = null;
 		String sql = "INSERT INTO abonnement VALUES(null,?,?,?,?,?,?,?,?)";
 		
@@ -30,8 +29,8 @@ public class AbonnementDAO extends BaseDAO{
 			prep.setInt(1, abonnement.getKlant_contactId());
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
-			prep.setTimestamp(4, abonnement.getTimestampNow());
-			prep.setTimestamp(5, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getEindDatum()));
+			prep.setTimestamp(4, startDatum);
+			prep.setTimestamp(5, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getStartDatum()));
 			prep.setInt(6, abonnement.getPrijsId());
 			prep.setInt(7,abonnement.getKortingId());
 			prep.setBoolean(8, abonnement.isActief());
@@ -51,7 +50,7 @@ public class AbonnementDAO extends BaseDAO{
 		}
 	}
 	
-	public int insertZesMaandAbonnement(Abonnement abonnement) {
+	public int insertZesMaandAbonnement(Abonnement abonnement, Timestamp startDatum) {
 		PreparedStatement prep = null;
 		String sql = "INSERT INTO abonnement VALUES(null,?,?,?,?,?,?,?,?)";
 		
@@ -63,8 +62,8 @@ public class AbonnementDAO extends BaseDAO{
 			prep.setInt(1, abonnement.getKlant_contactId());
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
-			prep.setTimestamp(4, abonnement.getTimestampNow());
-			prep.setTimestamp(5, abonnement.getTimestampZesMaandAbonnemant(abonnement.getEindDatum()));
+			prep.setTimestamp(4, startDatum);
+			prep.setTimestamp(5, abonnement.getTimestampZesMaandAbonnemant(abonnement.getStartDatum()));
 			prep.setInt(6, abonnement.getPrijsId());
 			prep.setInt(7,abonnement.getKortingId());
 			prep.setBoolean(8, abonnement.isActief());
@@ -84,7 +83,7 @@ public class AbonnementDAO extends BaseDAO{
 		}
 	}
 	
-	public int insertNegenMaandAbonnement(Abonnement abonnement) {
+	public int insertNegenMaandAbonnement(Abonnement abonnement, Timestamp startDatum) {
 		PreparedStatement prep = null;
 		String sql = "INSERT INTO abonnement VALUES(null,?,?,?,?,?,?,?,?)";
 		
@@ -96,8 +95,8 @@ public class AbonnementDAO extends BaseDAO{
 			prep.setInt(1, abonnement.getKlant_contactId());
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
-			prep.setTimestamp(4, abonnement.getTimestampNow());
-			prep.setTimestamp(5, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getEindDatum()));
+			prep.setTimestamp(4, startDatum);
+			prep.setTimestamp(5, abonnement.getTimestampNegenMaandAbonnemant(abonnement.getStartDatum()));
 			prep.setInt(6, abonnement.getPrijsId());
 			prep.setInt(7,abonnement.getKortingId());
 			prep.setBoolean(8, abonnement.isActief());
@@ -117,7 +116,7 @@ public class AbonnementDAO extends BaseDAO{
 		}
 	}
 	
-	public int insertEenJaarAbonnement(Abonnement abonnement) {
+	public int insertEenJaarAbonnement(Abonnement abonnement, Timestamp startDatum) {
 		PreparedStatement prep = null;
 		String sql = "INSERT INTO abonnement VALUES(null,?,?,?,?,?,?,?,?)";
 		
@@ -129,8 +128,8 @@ public class AbonnementDAO extends BaseDAO{
 			prep.setInt(1, abonnement.getKlant_contactId());
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
-			prep.setTimestamp(4, abonnement.getTimestampNow());
-			prep.setTimestamp(5, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getEindDatum()));
+			prep.setTimestamp(4, startDatum);
+			prep.setTimestamp(5, abonnement.getTimestampJaarAbonnemant(abonnement.getStartDatum()));
 			prep.setInt(6, abonnement.getPrijsId());
 			prep.setInt(7,abonnement.getKortingId());
 			prep.setBoolean(8, abonnement.isActief());
