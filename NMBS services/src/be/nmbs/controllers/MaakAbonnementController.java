@@ -79,7 +79,10 @@ public class MaakAbonnementController {
 					// System.out.println(klanten.getContactId()+"
 					// "+gebruikerId+" "+route+" "+ts+" "+ts2+" "+prijsId+"
 					// "+kortingId);
-					abonnementDao.insertDrieMaandAbonnement(abonnement);
+					
+					/*Hier een startDatum 
+					 aan megeven (Timestamp datatype)*/
+					//abonnementDao.insertDrieMaandAbonnement(abonnement);
 
 					JOptionPane.showMessageDialog(view.getPanel(), "Abonnement aangemaakt voor drie maanden");
 
@@ -133,7 +136,10 @@ public class MaakAbonnementController {
 							true);
 					AbonnementDAO abonnementDao = new AbonnementDAO();
 					//System.out.println(klanten.getContactId()+""+gebruikerId+" "+route+" "+ts+" "+ts2+" "+prijsId+""+kortingId);
-					abonnementDao.insertZesMaandAbonnement(abonnement);
+					
+					/*Hier een startDatum 
+					 aan megeven (Timestamp datatype)*/
+					//abonnementDao.insertZesMaandAbonnement(abonnement);
 
 					JOptionPane.showMessageDialog(view.getPanel(), "Abonnement aangemaakt voor zes maanden");
 
@@ -189,7 +195,10 @@ public class MaakAbonnementController {
 					// System.out.println(klanten.getContactId()+"
 					// "+gebruikerId+" "+route+" "+ts+" "+ts2+" "+prijsId+"
 					// "+kortingId);
-					abonnementDao.insertNegenMaandAbonnement(abonnement);
+					
+					/*Hier een startDatum 
+					 aan megeven (Timestamp datatype)*/
+					//abonnementDao.insertNegenMaandAbonnement(abonnement);
 
 					JOptionPane.showMessageDialog(view.getPanel(), "Abonnement aangemaakt voor negen maanden");
 
@@ -244,7 +253,9 @@ public class MaakAbonnementController {
 					// System.out.println(klanten.getContactId()+"
 					// "+gebruikerId+" "+route+" "+ts+" "+ts2+" "+prijsId+"
 					// "+kortingId);
-					abonnementDao.insertEenJaarAbonnement(abonnement);
+					/*Hier een startDatum 
+					 aan megeven (Timestamp datatype)*/
+					//abonnementDao.insertEenJaarAbonnement(abonnement);
 
 					JOptionPane.showMessageDialog(view.getPanel(), "Abonnement aangemaakt voor een jaar");
 

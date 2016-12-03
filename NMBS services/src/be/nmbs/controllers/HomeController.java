@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import be.nmbs.userInterface.AbonnementView;
 import be.nmbs.userInterface.BoeteView;
 import be.nmbs.userInterface.HomeView;
+import be.nmbs.userInterface.KlantenBeheerView;
+import be.nmbs.userInterface.RouteAskView;
 import be.nmbs.userInterface.LoginView;
 import be.nmbs.userInterface.TicketView;
 import be.nmbs.userInterface.VerlorenvoorwerpView;
@@ -17,7 +19,6 @@ public class HomeController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				AbonnementView.setAbonnementControllerToNull();
-				AbonnementView.setHomeControllerToNull();
 				view.changeView(AbonnementView.initialize(view));
 			}
 		});
@@ -30,6 +31,15 @@ public class HomeController {
 				view.changeView(BoeteView.initialize(view));
 			}
 		});
+		
+		HomeView.getBtnRoutes().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				RouteAskView.setRouteAskControllerToNull();
+				view.changeView(RouteAskView.initialize(view));
+			}
+		});
+		
 		HomeView.getLogOut().addActionListener(new ActionListener() {
 			
 			@Override
@@ -38,6 +48,15 @@ public class HomeController {
 				view.changeView(LoginView.initialize(view));
 			}
 		});
+		
+		HomeView.getKlantenBeheer().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				KlantenBeheerView.setKlantenBeheerControllerToNull();
+				view.changeView(KlantenBeheerView.initialize(view));
+			}
+		});		
 		
 		HomeView.getBtnTicket().addActionListener(new ActionListener() {
 			@Override

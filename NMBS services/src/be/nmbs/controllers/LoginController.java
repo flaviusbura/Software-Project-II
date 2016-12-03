@@ -38,7 +38,7 @@ public class LoginController {
 				Hashing hashing = new Hashing();
 				try {
 					if (Objects.equals(gebruiker.getWachtwoord(), new String(
-							hashing.hashPaswoord(String.valueOf(LoginView.getPasswordText().getPassword()))))) {
+						hashing.hashPaswoord(String.valueOf(LoginView.getPasswordText().getPassword()))))) {
 						optionPane.showMessageDialog(null, "Je bent met succes ingelogd!");
 						view.setIngelogdGebruiker(gebruiker);
 						HomeView.setHomeControllerToNull();
@@ -58,7 +58,7 @@ public class LoginController {
 			}
 		});
 
-		LoginView.getCancel().addActionListener(new ActionListener() {
+		LoginView.getCloseApp().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {

@@ -5,11 +5,11 @@ import java.util.List;
 
 public class Route {
 	private String stepOn, stepOff;
-	private List<Trein> treinen;
-	private List<Overstap> overstappen;
+	private ArrayList<Trein> treinen;
+	private ArrayList<Overstap> overstappen;
 	
 	// Constructor
-	public Route(String stepOn, String stepOff, List<Trein> treinen, List<Overstap> overstappen) {
+	public Route(String stepOn, String stepOff, ArrayList<Trein> treinen, ArrayList<Overstap> overstappen) {
 		this.stepOn = stepOn;
 		this.stepOff = stepOff;
 		this.treinen = new ArrayList<Trein>(treinen);
@@ -33,12 +33,12 @@ public class Route {
 	// Getters
 	public String getStepOn() { return stepOn; }
 	public String getStepOff() { return stepOff; }
-	public List<Trein> getTreinen() { return treinen; }
-	public List<Overstap> getOverstappen() { return overstappen; }
+	public ArrayList<Trein> getTreinen() { return treinen; }
+	public ArrayList<Overstap> getOverstappen() { return overstappen; }
 	
 	// Setters
 	public void setStepOn(String stepOn) { this.stepOn = stepOn; }
 	public void setStepOff(String stepOff) { this.stepOff = stepOff; }
-	public void setTreinen(List<Trein> treinen) { this.treinen = treinen; }
-	public void setOverstappen(List<Overstap> overstappen) { this.overstappen = overstappen; }
+	public void setTreinen(ArrayList<Trein> treinen) { this.treinen = treinen; }
+	public void setOverstappen(ArrayList<Overstap> overstappen) { this.overstappen = overstappen; }
 }
