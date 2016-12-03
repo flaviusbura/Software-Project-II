@@ -11,10 +11,10 @@ import be.nmbs.logic.Abonnement;
 
 public class NMBSServices {
 	public static void main(String[] args) throws ParseException {
-		/*View view = new View();
+		View view = new View();
 		Application application = new Application(view);
-		application.run();*/
-		String startDatum = "24-12-2016 00:00";
+		application.run();
+		/*String startDatum = "24-12-2016 00:00";
 		DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 	    Date date = format.parse(startDatum);
 		Long tijd = date.getTime();
@@ -31,6 +31,6 @@ public class NMBSServices {
 		abonnement.setAbonnementId(36);
 		Timestamp eindDatum = abonnementDAO.getEindDatum(abonnement);
 		abonnement.setEindDatum(eindDatum);
-		abonnementDAO.verlengAbonnementMetEenJaar(abonnement);
+		abonnementDAO.verlengAbonnementMetEenJaar(abonnement);*/
 	}
 }
