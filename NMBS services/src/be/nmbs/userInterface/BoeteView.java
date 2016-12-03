@@ -28,6 +28,79 @@ public class BoeteView {
 	@SuppressWarnings("unused")
 	private static BoeteController abonnementController;
 	private static JCheckBox cbBetaald;
+	private static JLabel lblPrijs;
+	private static JLabel lblDatum;
+	private static JLabel lblBetaalDatum;
+	private static JLabel lblBetaald;
+	private static JTextField txtBoeteId;
+	private static JTextField txtKlantContactId;
+	private static JTextField txtPrijs;
+	private static JTextField txtDatum;
+	private static JTextField txtBetaalDatum;
+	private static JTextField txtBetaald;
+	static SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+	static Date now = new Date();
+	static String strDate = sdfDate.format(now);
+	
+	private static BoeteController boeteController;
+	@SuppressWarnings("static-access")
+	public static JPanel initialize(View view) {
+		panel = new JPanel(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+				
+		lblBetaalDatum = new JLabel("betaal datum");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 1;
+		panel.add(lblBetaalDatum, c);
+		
+		txtBetaalDatum = new JTextField(10);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 1;
+		txtBetaalDatum.setText(strDate);
+		panel.add(txtBetaalDatum, c);
+		
+		lblBoeteId = new JLabel("boete id");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 2;
+		panel.add(lblBoeteId, c);
+		
+		txtBoeteId = new JTextField(10);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 2;
+		panel.add(txtBoeteId, c);
+			
+		lblBetaald = new JLabel("betaald");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 3;
+		panel.add(lblBetaald, c);
+		
+		cbBetaald = new JCheckBox("Betaald", true);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 3;
+		panel.add(cbBetaald, c);
+		
+		
+		betaalBoete = new JButton("betaal boete");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 4;
+		panel.add(betaalBoete, c);
+		
+		back = new JButton("Back");
+		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 4;
+		panel.add(back, c);
+		boeteController = new BoeteController(view);
+		
+		return panel;
+	}
 	public static JLabel getLblBoeteId() {
 		return lblBoeteId;
 	}
@@ -59,111 +132,6 @@ public class BoeteView {
 	public static void setTxtKlantContactId(JTextField txtKlantContactId) {
 		BoeteView.txtKlantContactId = txtKlantContactId;
 	}
-
-	private static JLabel lblPrijs;
-	private static JLabel lblDatum;
-	private static JLabel lblBetaalDatum;
-	private static JLabel lblBetaald;
-	private static JTextField txtBoeteId;
-	private static JTextField txtKlantContactId;
-	private static JTextField txtPrijs;
-	private static JTextField txtDatum;
-	private static JTextField txtBetaalDatum;
-	private static JTextField txtBetaald;
-	static SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-	static Date now = new Date();
-	static String strDate = sdfDate.format(now);
-	
-	private static BoeteController boeteController;
-	@SuppressWarnings("static-access")
-	public static JPanel initialize(View view) {
-		panel = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		back = new JButton("Back");
-		c.fill = new GridBagConstraints().HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 0;
-		panel.add(back, c);
-		
-		lblPrijs = new JLabel("prijs");
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 0;
-		panel.add(lblPrijs, c);
-		
-		lblDatum = new JLabel("datum");
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 1;
-		panel.add(lblDatum, c);
-		
-		txtDatum = new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 1;
-		txtDatum.setText(strDate);
-		panel.add(txtDatum, c);
-		
-		lblBetaalDatum = new JLabel("betaal datum");
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 2;
-		panel.add(lblBetaalDatum, c);
-		
-		txtDatum = new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 2;
-		txtDatum.setText(strDate);
-		panel.add(txtDatum, c);
-		
-		lblBoeteId = new JLabel("boete id");
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 3;
-		panel.add(lblBoeteId, c);
-		
-		txtBoeteId = new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 3;
-		panel.add(txtBoeteId, c);
-		
-		lblKlantContactId = new JLabel("boete id");
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 4;
-		panel.add(lblKlantContactId, c);
-		
-		txtKlantContactId = new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 4;
-		panel.add(txtKlantContactId, c);
-		
-		cbBetaald = new JCheckBox("betaald", false);
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 4;
-		panel.add(cbBetaald, c);
-		
-		maakBoete = new JButton("Maak boete");
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 6;
-		panel.add(maakBoete, c);
-		
-		betaalBoete = new JButton("betaal boete");
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 6;
-		panel.add(betaalBoete, c);
-		
-		boeteController = new BoeteController(view);
-		
-		return panel;
-	}
-
 	public static JButton getBetaalBoete() {
 		return betaalBoete;
 	}
@@ -188,14 +156,7 @@ public class BoeteView {
 		BoeteView.cbBetaald = cbBetaald;
 	}
 
-	public static void clearFields() {
-		txtPrijs.setText("");
-		txtBetaalDatum.setText("");
-		txtBetaald.setText("");
-		txtDatum.setText(strDate);
-		
-		
-	}
+	
 
 	public static JButton getBack() {
 		return back;

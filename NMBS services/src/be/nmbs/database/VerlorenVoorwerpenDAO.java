@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import be.nmbs.logic.Station;
+import be.nmbs.logic.StationNMBS;
 import be.nmbs.logic.VerlorenVoorwerp;
 
 /**
@@ -45,8 +46,57 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 			while (res.next()) {
 				int id = res.getInt("voorwerp_id");
 				String stationNaam = res.getString("station");
-				Station station = new Station();
-				station.setName(stationNaam);
+				StationNMBS station = new StationNMBS();
+				station.setNaam(stationNaam);
+				String omschrijving = res.getString("omschrijving");
+				Timestamp timestamp = res.getTimestamp("datum");
+				boolean actief = res.getBoolean("actief");
+
+				VerlorenVoorwerp voorwerp = new VerlorenVoorwerp(id, station, omschrijving, timestamp, actief);
+				lijst.add((voorwerp));
+			}
+
+			return lijst;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+				if (res != null)
+					res.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
+	/**
+	 * Deze methode gaat alle rijen gaan opvragen in de tabel
+	 * verloprenvoorwerpen.
+	 * 
+	 * @return Een ArrayList met alle Verlorenvoorwerpen-objecten
+	 */
+	public ArrayList<VerlorenVoorwerp> getAllOpSoort(String soort) {
+		ArrayList<VerlorenVoorwerp> lijst = null;
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		String sql = "SELECT * FROM verlorenvoorwerp where omschrijving=?";
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+			prep.setString(1,soort);
+			res = prep.executeQuery();
+			lijst = new ArrayList<VerlorenVoorwerp>();
+
+			while (res.next()) {
+				int id = res.getInt("voorwerp_id");
+				String stationNaam = res.getString("station");
+				StationNMBS station = new StationNMBS();
+				station.setNaam(stationNaam);
 				String omschrijving = res.getString("omschrijving");
 				Timestamp timestamp = res.getTimestamp("datum");
 				boolean actief = res.getBoolean("actief");
@@ -72,6 +122,7 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 		}
 	}
 
+
 	/**
 	 * Deze methode gaat een verlorenvoorwerp opzoek op basis van een id.
 	 * 
@@ -93,8 +144,8 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 			res = prep.executeQuery();
 
 			String stationNaam = res.getString("station");
-			Station station = new Station();
-			station.setName(stationNaam);
+			StationNMBS station = new StationNMBS();
+			station.setNaam(stationNaam);
 			String omschrijving = res.getString("omschrijving");
 			Timestamp timestamp = res.getTimestamp("datum");
 			boolean actief = res.getBoolean("actief");
@@ -134,7 +185,7 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 
 			prep = getConnection().prepareStatement(sql);
 			
-			prep.setString(1, voorwerp.getStation().getName());
+			prep.setString(1, voorwerp.getStation().getNaam());
 			prep.setString(2, voorwerp.getOmschrijving());
 			prep.setTimestamp(3, voorwerp.getTimestampNow());
 			prep.setBoolean(4, voorwerp.isActief());

@@ -12,7 +12,7 @@ public class HomeView {
 	private static JButton btnBoete;
 	private static JButton btnTicket;
 	private static JButton btnVerlorenvoorwerpen;
-	private static JButton btnOpzoeken;
+	private static JButton btnRoutes;
 	private static JButton logOut;
 	private static JButton klantenBeheer;
 	private static JPanel panel;
@@ -48,11 +48,11 @@ public class HomeView {
 			c.gridy = 1;
 			panel.add(btnBoete, c);
 
-			btnOpzoeken = new JButton("Trein opzoeken");
+			btnRoutes = new JButton("Routes zoeken");
 			c.fill = new GridBagConstraints().HORIZONTAL;
 			c.gridx = 0;
 			c.gridy = 2;
-			panel.add(btnOpzoeken, c);
+			panel.add(btnRoutes, c);
 			
 			klantenBeheer = new JButton("Klantenbeheer");
 			c.fill = new GridBagConstraints().HORIZONTAL;
@@ -111,11 +111,11 @@ public class HomeView {
 		HomeView.btnVerlorenvoorwerpen = btnVerlorenvoorwerpen;
 	}
 
-	public static JButton getBtnOpzoeken() {
-		return btnOpzoeken;
+	public static JButton getBtnRoutes() {
+		return btnRoutes;
 	}
 
-	public static void setBtnOpzoeken(JButton btnOpzoeken) {
-		HomeView.btnOpzoeken = btnOpzoeken;
+	public static void setBtnRoutes(JButton btnRoutes) {
+		HomeView.btnRoutes = btnRoutes;
 	}
 }
