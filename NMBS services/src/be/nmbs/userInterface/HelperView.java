@@ -1,4 +1,4 @@
-package be.nmbs.logic;
+package be.nmbs.userInterface;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class HelperFrame extends JFrame {
+public class HelperView extends JFrame {
 	/**
 	 * 
 	 */
@@ -31,7 +31,7 @@ public class HelperFrame extends JFrame {
 	private JButton ok;
 	private JButton annuleren;
 	
-	public HelperFrame(String wijzig, String nieuw) {
+	public HelperView(String wijzig, String nieuw) {
 		jFrame = new JFrame(wijzig);
 		jPanel = new JPanel(new GridBagLayout());
 		jLabel = new JLabel(nieuw);
@@ -64,7 +64,9 @@ public class HelperFrame extends JFrame {
 		c.gridx = 1;
 		c.gridy = 1;
 		jPanel.add(annuleren, c);
-
+		//Dit zorgt ervoor dat de code die in de actionlistener staat wordt afgevuurd als enter ingeduwd wordt.
+		jFrame.getRootPane().setDefaultButton(ok);
+		
 		jFrame.add(jPanel);
 		jFrame.setVisible(true);
 	}

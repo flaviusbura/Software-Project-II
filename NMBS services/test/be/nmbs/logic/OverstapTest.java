@@ -18,7 +18,7 @@ public class OverstapTest {
 	@Before
 	public void setUp() throws Exception {
 		overstap = new Overstap();
-		overstapMetParam = new Overstap("Brussel-Zuid",1,2);
+		//overstapMetParam = new Overstap("Brussel-Zuid",1,2);
 	}
 	
 	/**
@@ -77,7 +77,7 @@ public class OverstapTest {
 		 */
 		@Test
 		public void testSetStepOffPlatform() {
-			overstap.setStepOffPlatform(2);
+			//overstap.setStepOffPlatform(2);
 			assertEquals(2,overstap.getStepOffPlatform());
 		}
 		
@@ -87,7 +87,7 @@ public class OverstapTest {
 		 */
 		@Test
 		public void testSetStepOnPlatform() {
-			overstap.setStepOffPlatform(4);
+			//overstap.setStepOffPlatform(4);
 			assertEquals(4,overstap.getStepOffPlatform());
 		}
 		/**

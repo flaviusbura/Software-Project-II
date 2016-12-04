@@ -20,7 +20,7 @@ public class LoginController {
 	private GebruikerDAO gebruikerDAO;
 
 	public LoginController(View view) {
-		LoginView.getOk().addActionListener(new ActionListener() {
+		LoginView.getLogin().addActionListener(new ActionListener() {
 
 			@SuppressWarnings("static-access")
 			@Override

@@ -6,21 +6,21 @@ import javax.swing.JOptionPane;
 import be.nmbs.userInterface.NieuwAdresView;
 import be.nmbs.database.KlantDAO;
 import be.nmbs.database.Klant_adresDAO;
-import be.nmbs.logic.HelperFrame;
+import be.nmbs.userInterface.HelperView;
 import be.nmbs.userInterface.KlantWijzigenView;
 import be.nmbs.userInterface.KlantenBeheerView;
 import be.nmbs.userInterface.View;
 
 public class KlantWijzigenController {
 	private JOptionPane jOptionPane = new JOptionPane();
-	private HelperFrame helpMe;
+	private HelperView helpMe;
 
 	public KlantWijzigenController(View view) {
 		KlantWijzigenView.getVoornaam().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				helpMe = new HelperFrame("Voornaam wijzigen", "Nieuwe voornaam");
+				helpMe = new HelperView("Voornaam wijzigen", "Nieuwe voornaam");
 				helpMe.getOk().addActionListener(new ActionListener() {
 
 					@SuppressWarnings("static-access")
@@ -61,7 +61,7 @@ public class KlantWijzigenController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				helpMe = new HelperFrame("Achternaam wijzigen", "Nieuwe achternaam");
+				helpMe = new HelperView("Achternaam wijzigen", "Nieuwe achternaam");
 				helpMe.getOk().addActionListener(new ActionListener() {
 
 					@SuppressWarnings("static-access")
@@ -102,7 +102,7 @@ public class KlantWijzigenController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				helpMe = new HelperFrame("Telefoon wijzigen", "Nieuwe telefoon");
+				helpMe = new HelperView("Telefoon wijzigen", "Nieuwe telefoon");
 				helpMe.getOk().addActionListener(new ActionListener() {
 
 					@SuppressWarnings("static-access")
@@ -143,7 +143,7 @@ public class KlantWijzigenController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				helpMe = new HelperFrame("Land wijzigen", "Nieuw land");
+				helpMe = new HelperView("Land wijzigen", "Nieuw land");
 				helpMe.getOk().addActionListener(new ActionListener() {
 
 					@SuppressWarnings("static-access")
@@ -184,7 +184,7 @@ public class KlantWijzigenController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				helpMe = new HelperFrame("Straat wijzigen", "Nieuwe straat");
+				helpMe = new HelperView("Straat wijzigen", "Nieuwe straat");
 				helpMe.getOk().addActionListener(new ActionListener() {
 
 					@SuppressWarnings("static-access")
@@ -225,7 +225,7 @@ public class KlantWijzigenController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				helpMe = new HelperFrame("Huisnummer wijzigen", "Nieuw huisnummer");
+				helpMe = new HelperView("Huisnummer wijzigen", "Nieuw huisnummer");
 				helpMe.getOk().addActionListener(new ActionListener() {
 
 					@SuppressWarnings("static-access")
@@ -270,7 +270,7 @@ public class KlantWijzigenController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				helpMe = new HelperFrame("Postcode wijzigen", "Nieuwe postcode");
+				helpMe = new HelperView("Postcode wijzigen", "Nieuwe postcode");
 				helpMe.getOk().addActionListener(new ActionListener() {
 
 					@SuppressWarnings("static-access")
@@ -315,7 +315,7 @@ public class KlantWijzigenController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				helpMe = new HelperFrame("Woonplaats wijzigen", "Nieuwe woonplaats");
+				helpMe = new HelperView("Woonplaats wijzigen", "Nieuwe woonplaats");
 				helpMe.getOk().addActionListener(new ActionListener() {
 
 					@SuppressWarnings("static-access")
@@ -356,7 +356,7 @@ public class KlantWijzigenController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				helpMe = new HelperFrame("Bus wijzigen", "Nieuwe bus");
+				helpMe = new HelperView("Bus wijzigen", "Nieuwe bus");
 				helpMe.getOk().addActionListener(new ActionListener() {
 
 					@SuppressWarnings("static-access")

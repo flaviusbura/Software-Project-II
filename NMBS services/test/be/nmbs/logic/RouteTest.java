@@ -27,7 +27,7 @@ public class RouteTest {
 		route = caller.getRouteInfo("Mechelen", "Brussel-Zuid").get(0);
 		
 		overstappen = new ArrayList<Overstap>();
-		overstappen.add(new Overstap("1", 1, 2));
+		//overstappen.add(new Overstap("1", 1, 2));
 		
 		treinen = new ArrayList<Trein>();
 		treinen.add(new Trein("1", "2", "3", null, false));
@@ -86,7 +86,7 @@ public class RouteTest {
 
 	@Test
 	public void testSetOverstappen() {
-		overstappen.add(new Overstap("2", 3, 4));
+		//overstappen.add(new Overstap("2", 3, 4));
 		route3.setOverstappen(overstappen);
 		assertEquals(overstappen, route3.getOverstappen());
 	}
