@@ -2,10 +2,13 @@ package be.nmbs.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 import be.nmbs.userInterface.NieuwAdresView;
 import be.nmbs.database.KlantDAO;
 import be.nmbs.database.Klant_adresDAO;
+import be.nmbs.logic.Klant;
 import be.nmbs.userInterface.HelperView;
 import be.nmbs.userInterface.KlantWijzigenView;
 import be.nmbs.userInterface.KlantenBeheerView;
@@ -408,6 +411,27 @@ public class KlantWijzigenController {
 			public void actionPerformed(ActionEvent e) {
 				KlantenBeheerView.setKlantenBeheerControllerToNull();
 				view.changeView(KlantenBeheerView.initialize(view));
+			}
+		});
+
+		KlantWijzigenView.getZoek().addActionListener(new ActionListener() {
+
+			@SuppressWarnings("static-access")
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String naam;
+				naam = KlantWijzigenView.getZoekText().getText();
+				if (naam == null) {
+					jOptionPane.showMessageDialog(null, "Geen klanten gevonden met deze achternaam.");
+					KlantWijzigenView.getZoekText().setText("");
+				} else {
+					ArrayList<Klant> lijst = new ArrayList<>();
+					KlantDAO klantDAO = new KlantDAO();
+					lijst = klantDAO.getAllByAchternaam(naam);
+					KlantWijzigenView.setLijst(lijst);
+					KlantWijzigenView.setKlantWijzigenControllerToNull();
+					view.changeView(KlantWijzigenView.initialize(view));
+				}
 			}
 		});
 	}

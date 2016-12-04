@@ -10,15 +10,17 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import be.nmbs.controllers.KlantWijzigenController;
-import be.nmbs.database.KlantDAO;
 import be.nmbs.database.Klant_adresDAO;
 import be.nmbs.logic.Adres;
 import be.nmbs.logic.Klant;
 
 public class KlantWijzigenView {
+	private static JTextField zoekText;
+	private static JButton zoek;
 	private static JButton voornaam;
 	private static JButton naam;
 	private static JButton telefoon;
@@ -31,6 +33,7 @@ public class KlantWijzigenView {
 	private static JButton bus;
 	private static JButton back;
 	private static JPanel panel;
+	private static ArrayList<Klant> lijst = new ArrayList<>();
 	@SuppressWarnings("unused")
 	private static KlantWijzigenController klantWijzigenController;
 	private static JTable table;
@@ -41,9 +44,6 @@ public class KlantWijzigenView {
 
 		String[] kolommen = { "ContactID", "AdresID", "Voornaam", "Achternaam", "Telefoon", "Land", "Straat",
 				"Huisnummer", "Postcode", "Woonplaats", "Bus", "Actief" };
-		KlantDAO klantDAO = new KlantDAO();
-		ArrayList<Klant> lijst = new ArrayList<>();
-		lijst = klantDAO.getAll();
 		String[][] klantData = new String[lijst.size()][12];
 		Klant_adresDAO klant_adresDAO = new Klant_adresDAO();
 		Adres adres;
@@ -109,15 +109,27 @@ public class KlantWijzigenView {
 		c.gridy = 0;
 		panel.add(jPanel, c);
 
-		voornaam = new JButton("Voornaam wijzigen");
+		zoekText = new JTextField(5);
 		c.fill = new GridBagConstraints().HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
+		jPanel.add(zoekText, c);
+		
+		zoek = new JButton("Zoek");
+		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 0;
+		jPanel.add(zoek, c);
+		
+		voornaam = new JButton("Voornaam wijzigen");
+		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 1;
 		jPanel.add(voornaam, c);
 
 		naam = new JButton("Achternaam wijzigen");
 		c.fill = new GridBagConstraints().HORIZONTAL;
-		c.gridx = 0;
+		c.gridx = 1;
 		c.gridy = 1;
 		jPanel.add(naam, c);
 
@@ -129,54 +141,58 @@ public class KlantWijzigenView {
 
 		adresButton = new JButton("Nieuw adres");
 		c.fill = new GridBagConstraints().HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 3;
+		c.gridx = 1;
+		c.gridy = 2;
 		jPanel.add(adresButton, c);
 
 		land = new JButton("Land wijzigen");
 		c.fill = new GridBagConstraints().HORIZONTAL;
 		c.gridx = 0;
-		c.gridy = 4;
+		c.gridy = 3;
 		jPanel.add(land, c);
 
 		straat = new JButton("Straat wijzigen");
 		c.fill = new GridBagConstraints().HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 5;
+		c.gridx = 1;
+		c.gridy = 3;
 		jPanel.add(straat, c);
 
 		huisnummer = new JButton("Huisnummer wijzigen");
 		c.fill = new GridBagConstraints().HORIZONTAL;
 		c.gridx = 0;
-		c.gridy = 6;
+		c.gridy = 4;
 		jPanel.add(huisnummer, c);
 
 		postcode = new JButton("Postcode wijzigen");
 		c.fill = new GridBagConstraints().HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 7;
+		c.gridx = 1;
+		c.gridy = 4;
 		jPanel.add(postcode, c);
 
 		woonplaats = new JButton("Woonplaats wijzigen");
 		c.fill = new GridBagConstraints().HORIZONTAL;
 		c.gridx = 0;
-		c.gridy = 8;
+		c.gridy = 5;
 		jPanel.add(woonplaats, c);
 
 		bus = new JButton("Bus wijzigen");
 		c.fill = new GridBagConstraints().HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 9;
+		c.gridx = 1;
+		c.gridy = 5;
 		jPanel.add(bus, c);
 
 		back = new JButton("Back");
 		c.fill = new GridBagConstraints().HORIZONTAL;
 		c.gridx = 0;
-		c.gridy = 10;
+		c.gridy = 6;
 		jPanel.add(back, c);
 
 		klantWijzigenController = new KlantWijzigenController(view);
 		return panel;
+	}
+
+	public static void setLijst(ArrayList<Klant> lijst) {
+		KlantWijzigenView.lijst = lijst;
 	}
 
 	public static void resizeColumnWidth(JTable table) {
@@ -232,6 +248,14 @@ public class KlantWijzigenView {
 
 	public static JButton getBus() {
 		return bus;
+	}
+
+	public static JTextField getZoekText() {
+		return zoekText;
+	}
+
+	public static JButton getZoek() {
+		return zoek;
 	}
 
 	public static JTable getTable() {
