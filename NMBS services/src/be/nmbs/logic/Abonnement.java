@@ -94,6 +94,18 @@ public class Abonnement {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Abonnement(int klantId, int gebruikerId, String route, Timestamp eindDatum, int prijsId, int kortingId,boolean actief) {
+		
+		this.eindDatum = eindDatum;
+		this.klant_contactId = klantId;
+		this.gebruikerId = gebruikerId;
+		this.route = route;
+		this.prijsId = prijsId;
+		this.kortingId = kortingId;
+		this.actief = actief;
+		// TODO Auto-generated constructor stub
+	}
+
 	public Timestamp getTimestampNow() {
 		Calendar calendar = Calendar.getInstance();
 		java.util.Date now = calendar.getTime();

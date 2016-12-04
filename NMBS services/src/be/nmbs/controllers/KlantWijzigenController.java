@@ -77,8 +77,7 @@ public class KlantWijzigenController {
 					public void actionPerformed(ActionEvent e) {
 						try {
 							int row = KlantWijzigenView.getTable().getSelectedRow();
-							int contactID = Integer
-									.valueOf((String) KlantWijzigenView.getTable().getModel().getValueAt(row, 0));
+							int contactID = Integer.valueOf((String) KlantWijzigenView.getTable().getModel().getValueAt(row, 0));
 							String voornaam = jTextField.getText();
 							KlantDAO klantDAO = new KlantDAO();
 							klantDAO.updateVoornaamByContactId(contactID, voornaam);
