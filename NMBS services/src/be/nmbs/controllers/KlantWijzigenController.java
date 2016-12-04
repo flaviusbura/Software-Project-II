@@ -1,76 +1,27 @@
 package be.nmbs.controllers;
 
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
 import be.nmbs.userInterface.NieuwAdresView;
 import be.nmbs.database.KlantDAO;
 import be.nmbs.database.Klant_adresDAO;
+import be.nmbs.logic.HelperFrame;
 import be.nmbs.userInterface.KlantWijzigenView;
 import be.nmbs.userInterface.KlantenBeheerView;
 import be.nmbs.userInterface.View;
 
 public class KlantWijzigenController {
-	private JFrame jFrame;
-	private JPanel jPanel;
-	private JLabel jLabel;
-	private JTextField jTextField;
-	private JButton ok;
-	private JButton annuleren;
-	JOptionPane jOptionPane = new JOptionPane();
+	private JOptionPane jOptionPane = new JOptionPane();
+	private HelperFrame helpMe;
 
 	public KlantWijzigenController(View view) {
 		KlantWijzigenView.getVoornaam().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				jFrame = new JFrame("Voornaam wijzigen");
-				jPanel = new JPanel(new GridBagLayout());
-				jLabel = new JLabel("Nieuwe voornaam");
-				jTextField = new JTextField(10);
-				ok = new JButton("Ok");
-				annuleren = new JButton("Annuleren");
-
-				jFrame.setSize(400, 200);
-				jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-				jFrame.setLocation(dim.width / 2 - jFrame.getSize().width / 2,
-						dim.height / 2 - jFrame.getSize().height / 2);
-				GridBagConstraints c = new GridBagConstraints();
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 0;
-				c.gridy = 0;
-				jPanel.add(jLabel, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 1;
-				c.gridy = 0;
-				jPanel.add(jTextField, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 0;
-				c.gridy = 1;
-				jPanel.add(ok, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 1;
-				c.gridy = 1;
-				jPanel.add(annuleren, c);
-
-				jFrame.add(jPanel);
-				jFrame.setVisible(true);
-				ok.addActionListener(new ActionListener() {
+				helpMe = new HelperFrame("Voornaam wijzigen", "Nieuwe voornaam");
+				helpMe.getOk().addActionListener(new ActionListener() {
 
 					@SuppressWarnings("static-access")
 					@Override
@@ -79,15 +30,15 @@ public class KlantWijzigenController {
 							int row = KlantWijzigenView.getTable().getSelectedRow();
 							int contactID = Integer
 									.valueOf((String) KlantWijzigenView.getTable().getModel().getValueAt(row, 0));
-							String voornaam = jTextField.getText();
+							String voornaam = helpMe.getjTextField().getText();
 							KlantDAO klantDAO = new KlantDAO();
 							klantDAO.updateVoornaamByContactId(contactID, voornaam);
 							jOptionPane.showMessageDialog(null, "Voornaam geupdatet!");
-							jFrame.dispose();
+							helpMe.getjFrame().dispose();
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
 							view.changeView(KlantWijzigenView.initialize(view));
 						} catch (ArrayIndexOutOfBoundsException e2) {
-							jFrame.dispose();
+							helpMe.getjFrame().dispose();
 							jOptionPane.showMessageDialog(null,
 									"U heeft geen rij geselecteerd!\nSelecteer een rij die u wenst te wijzigen.");
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
@@ -96,11 +47,11 @@ public class KlantWijzigenController {
 					}
 				});
 
-				annuleren.addActionListener(new ActionListener() {
+				helpMe.getAnnuleren().addActionListener(new ActionListener() {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						jFrame.dispose();
+						helpMe.getjFrame().dispose();
 					}
 				});
 			}
@@ -110,42 +61,8 @@ public class KlantWijzigenController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				jFrame = new JFrame("Achternaam wijzigen");
-				jPanel = new JPanel(new GridBagLayout());
-				jLabel = new JLabel("Nieuwe achternaam");
-				jTextField = new JTextField(10);
-				ok = new JButton("Ok");
-				annuleren = new JButton("Annuleren");
-
-				jFrame.setSize(400, 200);
-				jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-				jFrame.setLocation(dim.width / 2 - jFrame.getSize().width / 2,
-						dim.height / 2 - jFrame.getSize().height / 2);
-				GridBagConstraints c = new GridBagConstraints();
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 0;
-				c.gridy = 0;
-				jPanel.add(jLabel, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 1;
-				c.gridy = 0;
-				jPanel.add(jTextField, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 0;
-				c.gridy = 1;
-				jPanel.add(ok, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 1;
-				c.gridy = 1;
-				jPanel.add(annuleren, c);
-
-				jFrame.add(jPanel);
-				jFrame.setVisible(true);
-				ok.addActionListener(new ActionListener() {
+				helpMe = new HelperFrame("Achternaam wijzigen", "Nieuwe achternaam");
+				helpMe.getOk().addActionListener(new ActionListener() {
 
 					@SuppressWarnings("static-access")
 					@Override
@@ -154,15 +71,15 @@ public class KlantWijzigenController {
 							int row = KlantWijzigenView.getTable().getSelectedRow();
 							int contactID = Integer
 									.valueOf((String) KlantWijzigenView.getTable().getModel().getValueAt(row, 0));
-							String voornaam = jTextField.getText();
+							String voornaam = helpMe.getjTextField().getText();
 							KlantDAO klantDAO = new KlantDAO();
 							klantDAO.updateAchternaamByContactId(contactID, voornaam);
 							jOptionPane.showMessageDialog(null, "Achternaam geupdatet!");
-							jFrame.dispose();
+							helpMe.getjFrame().dispose();
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
 							view.changeView(KlantWijzigenView.initialize(view));
 						} catch (ArrayIndexOutOfBoundsException e2) {
-							jFrame.dispose();
+							helpMe.getjFrame().dispose();
 							jOptionPane.showMessageDialog(null,
 									"U heeft geen rij geselecteerd!\nSelecteer een rij die u wenst te wijzigen.");
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
@@ -171,11 +88,11 @@ public class KlantWijzigenController {
 					}
 				});
 
-				annuleren.addActionListener(new ActionListener() {
+				helpMe.getAnnuleren().addActionListener(new ActionListener() {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						jFrame.dispose();
+						helpMe.getjFrame().dispose();
 					}
 				});
 			}
@@ -185,42 +102,8 @@ public class KlantWijzigenController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				jFrame = new JFrame("Telefoon wijzigen");
-				jPanel = new JPanel(new GridBagLayout());
-				jLabel = new JLabel("Nieuwe telefoon");
-				jTextField = new JTextField(10);
-				ok = new JButton("Ok");
-				annuleren = new JButton("Annuleren");
-
-				jFrame.setSize(400, 200);
-				jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-				jFrame.setLocation(dim.width / 2 - jFrame.getSize().width / 2,
-						dim.height / 2 - jFrame.getSize().height / 2);
-				GridBagConstraints c = new GridBagConstraints();
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 0;
-				c.gridy = 0;
-				jPanel.add(jLabel, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 1;
-				c.gridy = 0;
-				jPanel.add(jTextField, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 0;
-				c.gridy = 1;
-				jPanel.add(ok, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 1;
-				c.gridy = 1;
-				jPanel.add(annuleren, c);
-
-				jFrame.add(jPanel);
-				jFrame.setVisible(true);
-				ok.addActionListener(new ActionListener() {
+				helpMe = new HelperFrame("Telefoon wijzigen", "Nieuwe telefoon");
+				helpMe.getOk().addActionListener(new ActionListener() {
 
 					@SuppressWarnings("static-access")
 					@Override
@@ -229,15 +112,15 @@ public class KlantWijzigenController {
 							int row = KlantWijzigenView.getTable().getSelectedRow();
 							int contactID = Integer
 									.valueOf((String) KlantWijzigenView.getTable().getModel().getValueAt(row, 0));
-							String telefoon = jTextField.getText();
+							String telefoon = helpMe.getjTextField().getText();
 							KlantDAO klantDAO = new KlantDAO();
 							klantDAO.updateTelefoonByContactId(contactID, telefoon);
 							jOptionPane.showMessageDialog(null, "Telefoon geupdatet!");
-							jFrame.dispose();
+							helpMe.getjFrame().dispose();
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
 							view.changeView(KlantWijzigenView.initialize(view));
 						} catch (ArrayIndexOutOfBoundsException e2) {
-							jFrame.dispose();
+							helpMe.getjFrame().dispose();
 							jOptionPane.showMessageDialog(null,
 									"U heeft geen rij geselecteerd!\nSelecteer een rij die u wenst te wijzigen.");
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
@@ -246,11 +129,11 @@ public class KlantWijzigenController {
 					}
 				});
 
-				annuleren.addActionListener(new ActionListener() {
+				helpMe.getAnnuleren().addActionListener(new ActionListener() {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						jFrame.dispose();
+						helpMe.getjFrame().dispose();
 					}
 				});
 			}
@@ -260,42 +143,8 @@ public class KlantWijzigenController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				jFrame = new JFrame("Land wijzigen");
-				jPanel = new JPanel(new GridBagLayout());
-				jLabel = new JLabel("Nieuw land");
-				jTextField = new JTextField(10);
-				ok = new JButton("Ok");
-				annuleren = new JButton("Annuleren");
-
-				jFrame.setSize(400, 200);
-				jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-				jFrame.setLocation(dim.width / 2 - jFrame.getSize().width / 2,
-						dim.height / 2 - jFrame.getSize().height / 2);
-				GridBagConstraints c = new GridBagConstraints();
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 0;
-				c.gridy = 0;
-				jPanel.add(jLabel, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 1;
-				c.gridy = 0;
-				jPanel.add(jTextField, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 0;
-				c.gridy = 1;
-				jPanel.add(ok, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 1;
-				c.gridy = 1;
-				jPanel.add(annuleren, c);
-
-				jFrame.add(jPanel);
-				jFrame.setVisible(true);
-				ok.addActionListener(new ActionListener() {
+				helpMe = new HelperFrame("Land wijzigen", "Nieuw land");
+				helpMe.getOk().addActionListener(new ActionListener() {
 
 					@SuppressWarnings("static-access")
 					@Override
@@ -304,15 +153,15 @@ public class KlantWijzigenController {
 							int row = KlantWijzigenView.getTable().getSelectedRow();
 							int adresID = Integer
 									.valueOf((String) KlantWijzigenView.getTable().getModel().getValueAt(row, 1));
-							String land = jTextField.getText();
+							String land = helpMe.getjTextField().getText();
 							Klant_adresDAO klant_adresDAO = new Klant_adresDAO();
 							klant_adresDAO.updateLandByAdresId(adresID, land);
 							jOptionPane.showMessageDialog(null, "Land geupdatet!");
-							jFrame.dispose();
+							helpMe.getjFrame().dispose();
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
 							view.changeView(KlantWijzigenView.initialize(view));
 						} catch (ArrayIndexOutOfBoundsException e2) {
-							jFrame.dispose();
+							helpMe.getjFrame().dispose();
 							jOptionPane.showMessageDialog(null,
 									"U heeft geen rij geselecteerd!\nSelecteer een rij die u wenst te wijzigen.");
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
@@ -321,11 +170,11 @@ public class KlantWijzigenController {
 					}
 				});
 
-				annuleren.addActionListener(new ActionListener() {
+				helpMe.getAnnuleren().addActionListener(new ActionListener() {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						jFrame.dispose();
+						helpMe.getjFrame().dispose();
 					}
 				});
 			}
@@ -335,42 +184,8 @@ public class KlantWijzigenController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				jFrame = new JFrame("Straat wijzigen");
-				jPanel = new JPanel(new GridBagLayout());
-				jLabel = new JLabel("Nieuwe straat");
-				jTextField = new JTextField(10);
-				ok = new JButton("Ok");
-				annuleren = new JButton("Annuleren");
-
-				jFrame.setSize(400, 200);
-				jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-				jFrame.setLocation(dim.width / 2 - jFrame.getSize().width / 2,
-						dim.height / 2 - jFrame.getSize().height / 2);
-				GridBagConstraints c = new GridBagConstraints();
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 0;
-				c.gridy = 0;
-				jPanel.add(jLabel, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 1;
-				c.gridy = 0;
-				jPanel.add(jTextField, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 0;
-				c.gridy = 1;
-				jPanel.add(ok, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 1;
-				c.gridy = 1;
-				jPanel.add(annuleren, c);
-
-				jFrame.add(jPanel);
-				jFrame.setVisible(true);
-				ok.addActionListener(new ActionListener() {
+				helpMe = new HelperFrame("Straat wijzigen", "Nieuwe straat");
+				helpMe.getOk().addActionListener(new ActionListener() {
 
 					@SuppressWarnings("static-access")
 					@Override
@@ -379,15 +194,15 @@ public class KlantWijzigenController {
 							int row = KlantWijzigenView.getTable().getSelectedRow();
 							int adresID = Integer
 									.valueOf((String) KlantWijzigenView.getTable().getModel().getValueAt(row, 1));
-							String straat = jTextField.getText();
+							String straat = helpMe.getjTextField().getText();
 							Klant_adresDAO klant_adresDAO = new Klant_adresDAO();
 							klant_adresDAO.updateStraatByAdresId(adresID, straat);
 							jOptionPane.showMessageDialog(null, "Straat geupdatet!");
-							jFrame.dispose();
+							helpMe.getjFrame().dispose();
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
 							view.changeView(KlantWijzigenView.initialize(view));
 						} catch (ArrayIndexOutOfBoundsException e2) {
-							jFrame.dispose();
+							helpMe.getjFrame().dispose();
 							jOptionPane.showMessageDialog(null,
 									"U heeft geen rij geselecteerd!\nSelecteer een rij die u wenst te wijzigen.");
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
@@ -396,11 +211,11 @@ public class KlantWijzigenController {
 					}
 				});
 
-				annuleren.addActionListener(new ActionListener() {
+				helpMe.getAnnuleren().addActionListener(new ActionListener() {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						jFrame.dispose();
+						helpMe.getjFrame().dispose();
 					}
 				});
 			}
@@ -410,42 +225,8 @@ public class KlantWijzigenController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				jFrame = new JFrame("Huisnummer wijzigen");
-				jPanel = new JPanel(new GridBagLayout());
-				jLabel = new JLabel("Nieuw huisnummer");
-				jTextField = new JTextField(10);
-				ok = new JButton("Ok");
-				annuleren = new JButton("Annuleren");
-
-				jFrame.setSize(400, 200);
-				jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-				jFrame.setLocation(dim.width / 2 - jFrame.getSize().width / 2,
-						dim.height / 2 - jFrame.getSize().height / 2);
-				GridBagConstraints c = new GridBagConstraints();
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 0;
-				c.gridy = 0;
-				jPanel.add(jLabel, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 1;
-				c.gridy = 0;
-				jPanel.add(jTextField, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 0;
-				c.gridy = 1;
-				jPanel.add(ok, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 1;
-				c.gridy = 1;
-				jPanel.add(annuleren, c);
-
-				jFrame.add(jPanel);
-				jFrame.setVisible(true);
-				ok.addActionListener(new ActionListener() {
+				helpMe = new HelperFrame("Huisnummer wijzigen", "Nieuw huisnummer");
+				helpMe.getOk().addActionListener(new ActionListener() {
 
 					@SuppressWarnings("static-access")
 					@Override
@@ -455,15 +236,15 @@ public class KlantWijzigenController {
 							int adresID = Integer
 									.valueOf((String) KlantWijzigenView.getTable().getModel().getValueAt(row, 1));
 							int huisnummer = 0;
-							huisnummer = Integer.valueOf(jTextField.getText());
+							huisnummer = Integer.valueOf(helpMe.getjTextField().getText());
 							Klant_adresDAO klant_adresDAO = new Klant_adresDAO();
 							klant_adresDAO.updateNrByAdresId(adresID, huisnummer);
 							jOptionPane.showMessageDialog(null, "Huisnummer geupdatet!");
-							jFrame.dispose();
+							helpMe.getjFrame().dispose();
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
 							view.changeView(KlantWijzigenView.initialize(view));
 						} catch (ArrayIndexOutOfBoundsException e2) {
-							jFrame.dispose();
+							helpMe.getjFrame().dispose();
 							jOptionPane.showMessageDialog(null,
 									"U heeft geen rij geselecteerd!\nSelecteer een rij die u wenst te wijzigen.");
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
@@ -475,11 +256,11 @@ public class KlantWijzigenController {
 					}
 				});
 
-				annuleren.addActionListener(new ActionListener() {
+				helpMe.getAnnuleren().addActionListener(new ActionListener() {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						jFrame.dispose();
+						helpMe.getjFrame().dispose();
 					}
 				});
 			}
@@ -489,42 +270,8 @@ public class KlantWijzigenController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				jFrame = new JFrame("Postcode wijzigen");
-				jPanel = new JPanel(new GridBagLayout());
-				jLabel = new JLabel("Nieuwe postcode");
-				jTextField = new JTextField(10);
-				ok = new JButton("Ok");
-				annuleren = new JButton("Annuleren");
-
-				jFrame.setSize(400, 200);
-				jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-				jFrame.setLocation(dim.width / 2 - jFrame.getSize().width / 2,
-						dim.height / 2 - jFrame.getSize().height / 2);
-				GridBagConstraints c = new GridBagConstraints();
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 0;
-				c.gridy = 0;
-				jPanel.add(jLabel, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 1;
-				c.gridy = 0;
-				jPanel.add(jTextField, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 0;
-				c.gridy = 1;
-				jPanel.add(ok, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 1;
-				c.gridy = 1;
-				jPanel.add(annuleren, c);
-
-				jFrame.add(jPanel);
-				jFrame.setVisible(true);
-				ok.addActionListener(new ActionListener() {
+				helpMe = new HelperFrame("Postcode wijzigen", "Nieuwe postcode");
+				helpMe.getOk().addActionListener(new ActionListener() {
 
 					@SuppressWarnings("static-access")
 					@Override
@@ -534,15 +281,15 @@ public class KlantWijzigenController {
 							int adresID = Integer
 									.valueOf((String) KlantWijzigenView.getTable().getModel().getValueAt(row, 1));
 							int postcode = 0;
-							postcode = Integer.valueOf(jTextField.getText());
+							postcode = Integer.valueOf(helpMe.getjTextField().getText());
 							Klant_adresDAO klant_adresDAO = new Klant_adresDAO();
 							klant_adresDAO.updatePostcodeByAdresId(adresID, postcode);
 							jOptionPane.showMessageDialog(null, "Postcode geupdatet!");
-							jFrame.dispose();
+							helpMe.getjFrame().dispose();
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
 							view.changeView(KlantWijzigenView.initialize(view));
 						} catch (ArrayIndexOutOfBoundsException e2) {
-							jFrame.dispose();
+							helpMe.getjFrame().dispose();
 							jOptionPane.showMessageDialog(null,
 									"U heeft geen rij geselecteerd!\nSelecteer een rij die u wenst te wijzigen.");
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
@@ -554,11 +301,11 @@ public class KlantWijzigenController {
 					}
 				});
 
-				annuleren.addActionListener(new ActionListener() {
+				helpMe.getAnnuleren().addActionListener(new ActionListener() {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						jFrame.dispose();
+						helpMe.getjFrame().dispose();
 					}
 				});
 			}
@@ -568,42 +315,8 @@ public class KlantWijzigenController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				jFrame = new JFrame("Woonplaats wijzigen");
-				jPanel = new JPanel(new GridBagLayout());
-				jLabel = new JLabel("Nieuwe woonplaats");
-				jTextField = new JTextField(10);
-				ok = new JButton("Ok");
-				annuleren = new JButton("Annuleren");
-
-				jFrame.setSize(400, 200);
-				jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-				jFrame.setLocation(dim.width / 2 - jFrame.getSize().width / 2,
-						dim.height / 2 - jFrame.getSize().height / 2);
-				GridBagConstraints c = new GridBagConstraints();
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 0;
-				c.gridy = 0;
-				jPanel.add(jLabel, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 1;
-				c.gridy = 0;
-				jPanel.add(jTextField, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 0;
-				c.gridy = 1;
-				jPanel.add(ok, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 1;
-				c.gridy = 1;
-				jPanel.add(annuleren, c);
-
-				jFrame.add(jPanel);
-				jFrame.setVisible(true);
-				ok.addActionListener(new ActionListener() {
+				helpMe = new HelperFrame("Woonplaats wijzigen", "Nieuwe woonplaats");
+				helpMe.getOk().addActionListener(new ActionListener() {
 
 					@SuppressWarnings("static-access")
 					@Override
@@ -612,15 +325,15 @@ public class KlantWijzigenController {
 							int row = KlantWijzigenView.getTable().getSelectedRow();
 							int adresID = Integer
 									.valueOf((String) KlantWijzigenView.getTable().getModel().getValueAt(row, 1));
-							String woonplaats = jTextField.getText();
+							String woonplaats = helpMe.getjTextField().getText();
 							Klant_adresDAO klant_adresDAO = new Klant_adresDAO();
 							klant_adresDAO.updateWoonplaatsByAdresId(adresID, woonplaats);
 							jOptionPane.showMessageDialog(null, "Woonplaats geupdatet!");
-							jFrame.dispose();
+							helpMe.getjFrame().dispose();
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
 							view.changeView(KlantWijzigenView.initialize(view));
 						} catch (ArrayIndexOutOfBoundsException e2) {
-							jFrame.dispose();
+							helpMe.getjFrame().dispose();
 							jOptionPane.showMessageDialog(null,
 									"U heeft geen rij geselecteerd!\nSelecteer een rij die u wenst te wijzigen.");
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
@@ -629,11 +342,11 @@ public class KlantWijzigenController {
 					}
 				});
 
-				annuleren.addActionListener(new ActionListener() {
+				helpMe.getAnnuleren().addActionListener(new ActionListener() {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						jFrame.dispose();
+						helpMe.getjFrame().dispose();
 					}
 				});
 			}
@@ -643,42 +356,8 @@ public class KlantWijzigenController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				jFrame = new JFrame("Bus wijzigen");
-				jPanel = new JPanel(new GridBagLayout());
-				jLabel = new JLabel("Nieuwe bus");
-				jTextField = new JTextField(10);
-				ok = new JButton("Ok");
-				annuleren = new JButton("Annuleren");
-
-				jFrame.setSize(400, 200);
-				jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-				jFrame.setLocation(dim.width / 2 - jFrame.getSize().width / 2,
-						dim.height / 2 - jFrame.getSize().height / 2);
-				GridBagConstraints c = new GridBagConstraints();
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 0;
-				c.gridy = 0;
-				jPanel.add(jLabel, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 1;
-				c.gridy = 0;
-				jPanel.add(jTextField, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 0;
-				c.gridy = 1;
-				jPanel.add(ok, c);
-
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 1;
-				c.gridy = 1;
-				jPanel.add(annuleren, c);
-
-				jFrame.add(jPanel);
-				jFrame.setVisible(true);
-				ok.addActionListener(new ActionListener() {
+				helpMe = new HelperFrame("Bus wijzigen", "Nieuwe bus");
+				helpMe.getOk().addActionListener(new ActionListener() {
 
 					@SuppressWarnings("static-access")
 					@Override
@@ -687,15 +366,15 @@ public class KlantWijzigenController {
 							int row = KlantWijzigenView.getTable().getSelectedRow();
 							int adresID = Integer
 									.valueOf((String) KlantWijzigenView.getTable().getModel().getValueAt(row, 1));
-							String bus = jTextField.getText();
+							String bus = helpMe.getjTextField().getText();
 							Klant_adresDAO klant_adresDAO = new Klant_adresDAO();
 							klant_adresDAO.updateBusByAdresId(adresID, bus);
 							jOptionPane.showMessageDialog(null, "Bus geupdatet!");
-							jFrame.dispose();
+							helpMe.getjFrame().dispose();
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
 							view.changeView(KlantWijzigenView.initialize(view));
 						} catch (ArrayIndexOutOfBoundsException e2) {
-							jFrame.dispose();
+							helpMe.getjFrame().dispose();
 							jOptionPane.showMessageDialog(null,
 									"U heeft geen rij geselecteerd!\nSelecteer een rij die u wenst te wijzigen.");
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
@@ -704,11 +383,11 @@ public class KlantWijzigenController {
 					}
 				});
 
-				annuleren.addActionListener(new ActionListener() {
+				helpMe.getAnnuleren().addActionListener(new ActionListener() {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						jFrame.dispose();
+						helpMe.getjFrame().dispose();
 					}
 				});
 			}
