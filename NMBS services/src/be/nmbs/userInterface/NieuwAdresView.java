@@ -8,15 +8,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import be.nmbs.controllers.AdresWijzigenController;
+import be.nmbs.controllers.NieuwAdresController;
 
-public class AdresWijzigenView {
+public class NieuwAdresView {
 	private static JButton klantAdresWijzigen;
 	private static JButton actieannuleren;
-	private static JLabel voornaam;
-	private static JTextField voornaamText;
-	private static JLabel naam;
-	private static JTextField naamText;
 	private static JLabel straat;
 	private static JTextField straatText;
 	private static JLabel nr;
@@ -32,40 +28,13 @@ public class AdresWijzigenView {
 	
 	private static JPanel panel;
 	@SuppressWarnings("unused")
-	private static AdresWijzigenController adresWijzigenController;
+	private static NieuwAdresController nieuwAdresController;
 	
 	@SuppressWarnings("static-access")
 	public static JPanel initialize(View view) {
 			panel = new JPanel(new GridBagLayout());
-			
-			voornaam = new JLabel("Voornaam");
+
 			GridBagConstraints c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
-			c.gridx = 0;
-			c.gridy = 0;
-			panel.add(voornaam, c);
-			
-			voornaamText = new JTextField(20);
-			c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
-			c.gridx = 1;
-			c.gridy = 0;
-			panel.add(voornaamText, c);
-			
-			naam = new JLabel("Naam");
-			c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
-			c.gridx = 0;
-			c.gridy = 1;
-			panel.add(naam, c);
-			
-			naamText = new JTextField(20);
-			c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
-			c.gridx = 1;
-			c.gridy = 1;
-			panel.add(naamText, c);
-			
 			straat = new JLabel("Straat");
 			c = new GridBagConstraints();
 			c.fill = new GridBagConstraints().HORIZONTAL;
@@ -73,7 +42,7 @@ public class AdresWijzigenView {
 			c.gridy = 2;
 			panel.add(straat, c);
 			
-			straatText = new JTextField(50);
+			straatText = new JTextField(10);
 			c = new GridBagConstraints();
 			c.fill = new GridBagConstraints().HORIZONTAL;
 			c.gridx = 1;
@@ -87,7 +56,7 @@ public class AdresWijzigenView {
 			c.gridy = 3;
 			panel.add(nr, c);
 			
-			nrText = new JTextField(4);
+			nrText = new JTextField(10);
 			c = new GridBagConstraints();
 			c.fill = new GridBagConstraints().HORIZONTAL;
 			c.gridx = 1;
@@ -163,7 +132,7 @@ public class AdresWijzigenView {
 			c.gridy = 8;
 			panel.add(actieannuleren, c);
 			
-			adresWijzigenController = new AdresWijzigenController(view);
+			nieuwAdresController = new NieuwAdresController(view);
 			return panel;
 	}
 	
@@ -175,16 +144,8 @@ public class AdresWijzigenView {
 		return actieannuleren;
 	}
 	
-	public static void setAdresWijzigenControllerToNull() {
-		adresWijzigenController = null;
-	}
-	
-	public static JTextField getVoornaamText() {
-		return voornaamText;
-	}
-
-	public static JTextField getNaamText() {
-		return naamText;
+	public static void setNieuwAdresControllerToNull() {
+		nieuwAdresController = null;
 	}
 
 	public static JTextField getStraatText() {

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import be.nmbs.logic.Boete;
+import be.nmbs.logic.Prijs;
 
 /**
  * Deze klasse is een DAO. Hiermee kunnen er Boete-objecten naar de de database
@@ -139,4 +140,35 @@ public class BoeteDAO extends BaseDAO {
 			}
 		}
 	}
+	
+	public int updateBetaaldByBoeteId(int boeteId, boolean betaald) {
+		
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		//String sql = "SELECT * FROM boete WHERE boeten_id=?";
+		String sql = "UPDATE boeten SET betaald=? WHERE boeten_id=?";
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+			prep.setInt(2, boeteId);
+			prep.setBoolean(1, betaald);
+			return prep.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
+	
 }
