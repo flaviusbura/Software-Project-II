@@ -160,39 +160,39 @@ public class MaakAbonnementView {
 		departureLabel = new JLabel("Vertrekstation ");
 		// GridBagConstraints c = new GridBagConstraints();
 		c.fill = new GridBagConstraints().HORIZONTAL;
-		c.gridx = 0;
+		c.gridx = 1;
 		c.gridy = 1;
 		panel.add(departureLabel, c);
 
 		departureField = new JComboBox(stationLijst);
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 2;
+		c.gridx = 2;
+		c.gridy = 1;
 		panel.add(departureField, c);
 
 		arrivalLabel = new JLabel("Bestemming");
 		c = new GridBagConstraints();
 		c.fill = new GridBagConstraints().HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 3;
+		c.gridx = 1;
+		c.gridy = 2;
 		panel.add(arrivalLabel, c);
 
 		arrivalField = new JComboBox(stationLijst);
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 4;
+		c.gridx = 2;
+		c.gridy = 2;
 		panel.add(arrivalField, c);
 
 		lblEindDatum = new JLabel("Eind datum ");
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 5;
+		c.gridx = 1;
+		c.gridy = 3;
 		panel.add(lblEindDatum, c);
 
 		txtEindDatum = new JTextField(10);
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 6;
+		c.gridx = 2;
+		c.gridy = 3;
 		txtEindDatum.setText(strDate);
 		panel.add(txtEindDatum, c);
 
@@ -204,19 +204,19 @@ public class MaakAbonnementView {
 
 		lblPrijs = new JLabel("Prijs ");
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 7;
+		c.gridx = 1;
+		c.gridy = 4;
 		panel.add(lblPrijs, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 8;
+		c.gridx = 2;
+		c.gridy = 4;
 		panel.add(prijzenLijst, c);
 
 		lblKorting = new JLabel("Korting ");
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 9;
+		c.gridx = 1;
+		c.gridy = 5;
 		panel.add(lblKorting, c);
 
 		ArrayList<Korting> allKorting = kortingDao.getAll();
@@ -225,35 +225,36 @@ public class MaakAbonnementView {
 			kortingLijst.addItem(korting);
 		}
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 10;
+		c.gridx = 2;
+		c.gridy = 5;
 		panel.add(kortingLijst, c);
 
 		lblMaanden = new JLabel("Geldig ");
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 11;
+		c.gridx = 1;
+		c.gridy = 6;
 		panel.add(lblMaanden, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 12;
+		c.gridx = 2;
+		c.gridy = 6;
 		panel.add(combo, c);
 
 		// buttons
-		maakAbonnement = new JButton("Maak Abonnement");
-		new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 13;
-		panel.add(maakAbonnement, c);
-
 		goBackToHome = new JButton("Back");
 		new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 14;
+		c.gridx = 1;
+		c.gridy = 7;
 		panel.add(goBackToHome, c);
+		maakAbonnement = new JButton("Maak Abonnement");
+		new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 7;
+		panel.add(maakAbonnement, c);
+
+		
 
 		homeController = new HomeController(view);
 		maakAbonnementController = new MaakAbonnementController(view);
