@@ -10,6 +10,7 @@ import be.nmbs.userInterface.KlantenBeheerView;
 import be.nmbs.userInterface.RouteAskView;
 import be.nmbs.userInterface.LoginView;
 import be.nmbs.userInterface.TicketView;
+import be.nmbs.userInterface.TrainAskView;
 import be.nmbs.userInterface.VerlorenvoorwerpView;
 import be.nmbs.userInterface.View;
 
@@ -37,6 +38,14 @@ public class HomeController {
 			public void actionPerformed(ActionEvent e) {
 				RouteAskView.setRouteAskControllerToNull();
 				view.changeView(RouteAskView.initialize(view));
+			}
+		});
+		
+		HomeView.getBtnTrains().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TrainAskView.setTrainAskControllerToNull();
+				view.changeView(TrainAskView.initialize(view));
 			}
 		});
 		
