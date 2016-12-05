@@ -3,8 +3,6 @@ package be.nmbs.userInterface;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.ArrayList;
-import java.util.Calendar;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -12,36 +10,32 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import be.nmbs.controllers.RouteGetController;
+import be.nmbs.controllers.TrainGetController;
 import be.nmbs.logic.ApiCaller;
-import be.nmbs.logic.Route;
+import be.nmbs.logic.Trein;
 
-public class RouteGetView {
+public class TrainGetView {
 	private static JPanel panel;
 	private static JButton back;
 	private static JLabel info;
 	private static JTable table;
-
-	private static ArrayList<Route> routes;
 	
-	private static boolean ALLOW_COLUMN_SELECTION = false;
-	private static boolean ALLOW_ROW_SELECTION = true;
+	private static Trein train;
 	
 	@SuppressWarnings("unused")
-	private static RouteGetController routeGetController;
+	private static TrainGetController trainGetController;
 
 	@SuppressWarnings("static-access")
-	public static JPanel initialize(View view, String departureStation, String arrivalStation, Calendar departure) {			
+	public static JPanel initialize(View view, String id) {			
 		panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c;
 		
 		ApiCaller caller = new ApiCaller();
 		
-		routes = caller.getTimedRouteInfo(departureStation, arrivalStation, departure.getTime());
+		train = caller.getTreinInfo(id);
 		
-		System.out.println(departure.getTimeInMillis());
-		if (routes == null) {
-			info = new JLabel("Geen routes gevonden");
+		if (train == null) {
+			info = new JLabel("Geen trein gevonden");
 			c = new GridBagConstraints();
 			c.fill = new GridBagConstraints().HORIZONTAL;
 			c.gridx = 0;
@@ -77,12 +71,12 @@ public class RouteGetView {
 			panel.add(back, c);
 		}
 		
-		routeGetController = new RouteGetController(view, routes);
+		trainGetController = new TrainGetController(view, train);
 		return panel;
 	}
 
-	public static void setRouteGetControllerToNull() {
-		routeGetController = null;
+	public static void setTrainGetControllerToNull() {
+		trainGetController = null;
 	}
 
 	public static JButton getBack() {
@@ -94,6 +88,6 @@ public class RouteGetView {
 	}
 
 	public static void setTabel(JTable table) {
-		RouteGetView.table = table;
+		TrainGetView.table = table;
 	}
 }

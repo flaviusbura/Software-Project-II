@@ -132,7 +132,9 @@ public class ApiCaller {
 			    				s.add(new Station(station.getString("Name"), station.getString("ArrivalPlatform"), station.getString("DeparturePlatform"), aDate, aaDate, dDate, adDate));
 			    		}
 			    		
-			    		t.add(new Trein(trein.getString("FullId"), trein.get("DepartureStation").toString(), trein.getString("TerminusStation"), s, trein.getBoolean("Cancelled")));
+			    		JSONObject trainTime = trein.getJSONObject("Time");
+			    		Date tDate = format.parse(trainTime.getString("Arrival"));
+			    		t.add(new Trein(trein.getString("FullId"), trein.get("DepartureStation").toString(), trein.getString("TerminusStation"), s, trein.getBoolean("Cancelled"), tDate));
 			    	}
 			    	
 			    	// Checken voor overstappen
@@ -171,7 +173,9 @@ public class ApiCaller {
 	// Vraagt een lijst van routes op een gegeven tijdstip op en geeft deze terug in een ArrayList
 	public ArrayList<Route> getTimedRouteInfo(String stepOn, String stepOff, Date date) {
 		try {
-			String text = readUrl("https://traintracks.online/api/Route/" + stepOn + "/" + stepOff + "/" + date.getTime() / 1000);
+			long ms = (date.getTime() + 3600) / 1000;
+			System.out.println(ms);
+			String text = readUrl("https://traintracks.online/api/Route/" + stepOn + "/" + stepOff + "/" + ms);
 			if (text != "") {
 			    JSONObject json = new JSONObject(text);
 			    
@@ -238,15 +242,19 @@ public class ApiCaller {
 			    				adDate = format.parse(sDate);
 			    			} else { dDate = null; adDate = null; }
 			    			
-			    			if (k == 0)
+			    			if (k == 0 && !station.isNull("DeparturePlatform"))
 			    				s.add(new Station(station.getString("Name"), null, station.getString("DeparturePlatform"), aDate, aaDate, dDate, adDate));
-			    			else if (k == stations.length() - 1)
+			    			else if (k == stations.length() - 1 && !station.isNull("ArrivalPlatform"))
 			    				s.add(new Station(station.getString("Name"), station.getString("ArrivalPlatform"), null, aDate, aaDate, dDate, adDate));
+			    			else if (station.isNull("DeparturePlatform") && station.isNull("ArrivalPlatform"))
+			    				s.add(new Station(station.getString("Name"), null, null, aDate, aaDate, dDate, adDate));
 			    			else
 			    				s.add(new Station(station.getString("Name"), station.getString("ArrivalPlatform"), station.getString("DeparturePlatform"), aDate, aaDate, dDate, adDate));
 			    		}
 			    		
-			    		t.add(new Trein(trein.getString("FullId"), trein.get("DepartureStation").toString(), trein.getString("TerminusStation"), s, trein.getBoolean("Cancelled")));
+			    		JSONObject trainTime = trein.getJSONObject("Time");
+			    		Date tDate = format.parse(trainTime.getString("Arrival"));
+			    		t.add(new Trein(trein.getString("FullId"), trein.get("DepartureStation").toString(), trein.getString("TerminusStation"), s, trein.getBoolean("Cancelled"), tDate));
 			    	}
 			    	
 			    	// Checken voor overstappen
@@ -348,7 +356,9 @@ public class ApiCaller {
 	    				s.add(new Station(station.getString("Name"), station.getString("ArrivalPlatform"), station.getString("DeparturePlatform"), aDate, aaDate, dDate, adDate));
 	    		}
 	    		
-	    		Trein t = new Trein(trein.getString("FullId"), trein.get("DepartureStation").toString(), trein.getString("TerminusStation"), s, trein.getBoolean("Cancelled"));
+	    		JSONObject trainTime = trein.getJSONObject("Time");
+	    		Date tDate = format.parse(trainTime.getString("Arrival"));
+	    		Trein t = new Trein(trein.getString("FullId"), trein.get("DepartureStation").toString(), trein.getString("TerminusStation"), s, trein.getBoolean("Cancelled"), tDate);
 	
 			    return t;
 			} else {
