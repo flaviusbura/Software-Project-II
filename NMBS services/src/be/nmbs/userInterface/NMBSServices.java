@@ -28,9 +28,9 @@ public class NMBSServices {
 		//abonnementDAO.insertNegenMaandAbonnement(abonnement, ts);
 		//abonnementDAO.insertEenJaarAbonnement(abonnement, ts);
 		
-		/*abonnement.setAbonnementId(34);
+		abonnement.setAbonnementId(36);
 		Timestamp eindDatum = abonnementDAO.getEindDatum(abonnement);
 		abonnement.setEindDatum(eindDatum);
-		abonnementDAO.verlengAbonnementMetDrieMaand(abonnement);*/
+		abonnementDAO.verlengAbonnementMetEenJaar(abonnement);*/
 	}
 }

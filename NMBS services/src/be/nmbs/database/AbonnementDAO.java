@@ -30,7 +30,7 @@ public class AbonnementDAO extends BaseDAO{
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
 			prep.setTimestamp(4, startDatum);
-			prep.setTimestamp(5, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getStartDatum()));
+			prep.setTimestamp(5, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getEindDatum()));
 			prep.setInt(6, abonnement.getPrijsId());
 			prep.setInt(7,abonnement.getKortingId());
 			prep.setBoolean(8, abonnement.isActief());
@@ -63,7 +63,7 @@ public class AbonnementDAO extends BaseDAO{
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
 			prep.setTimestamp(4, startDatum);
-			prep.setTimestamp(5, abonnement.getTimestampZesMaandAbonnemant(abonnement.getStartDatum()));
+			prep.setTimestamp(5, abonnement.getTimestampZesMaandAbonnemant(abonnement.getEindDatum()));
 			prep.setInt(6, abonnement.getPrijsId());
 			prep.setInt(7,abonnement.getKortingId());
 			prep.setBoolean(8, abonnement.isActief());
@@ -96,7 +96,7 @@ public class AbonnementDAO extends BaseDAO{
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
 			prep.setTimestamp(4, startDatum);
-			prep.setTimestamp(5, abonnement.getTimestampNegenMaandAbonnemant(abonnement.getStartDatum()));
+			prep.setTimestamp(5, abonnement.getTimestampNegenMaandAbonnemant(abonnement.getEindDatum()));
 			prep.setInt(6, abonnement.getPrijsId());
 			prep.setInt(7,abonnement.getKortingId());
 			prep.setBoolean(8, abonnement.isActief());
@@ -129,7 +129,7 @@ public class AbonnementDAO extends BaseDAO{
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
 			prep.setTimestamp(4, startDatum);
-			prep.setTimestamp(5, abonnement.getTimestampJaarAbonnemant(abonnement.getStartDatum()));
+			prep.setTimestamp(5, abonnement.getTimestampJaarAbonnemant(abonnement.getEindDatum()));
 			prep.setInt(6, abonnement.getPrijsId());
 			prep.setInt(7,abonnement.getKortingId());
 			prep.setBoolean(8, abonnement.isActief());
@@ -151,7 +151,7 @@ public class AbonnementDAO extends BaseDAO{
 	}
 	
 	public int verlengAbonnementMetDrieMaand(Abonnement abonnement) {
-		String sql = "UPDATE abonnement SET eind_datum=? WHERE abonnement_id=?";
+		String sql = "UPDATE abonnement SET start_datum = ?, eind_datum = ? WHERE abonnement_id=?";
 		PreparedStatement prep = null;
 		try {
 			if (getConnection().isClosed()) {
@@ -159,8 +159,11 @@ public class AbonnementDAO extends BaseDAO{
 			}
 			prep = getConnection().prepareStatement(sql);
 			
-			prep.setTimestamp(1, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getEindDatum()));
-			prep.setInt(2, abonnement.getAbonnementId());
+			abonnement.getEindDatum().setTime(abonnement.getEindDatum().getTime() + (1 * 1000));
+			
+			prep.setTimestamp(1, abonnement.getEindDatum());
+			prep.setTimestamp(2, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getEindDatum()));
+			prep.setInt(3, abonnement.getAbonnementId());
 			
 		    return prep.executeUpdate();
 		} catch (SQLException e) {
@@ -179,7 +182,7 @@ public class AbonnementDAO extends BaseDAO{
 	}
 	
 	public int verlengAbonnementMetZesMaand(Abonnement abonnement) {
-		String sql = "UPDATE abonnement SET eind_datum = ? WHERE abonnement_id = ?";
+		String sql = "UPDATE abonnement SET start_datum = ?, eind_datum = ? WHERE abonnement_id=?";
 		PreparedStatement prep = null;
 		try {
 			if (getConnection().isClosed()) {
@@ -187,8 +190,11 @@ public class AbonnementDAO extends BaseDAO{
 			}
 			prep = getConnection().prepareStatement(sql);
 			
-			prep.setTimestamp(1, abonnement.getTimestampZesMaandAbonnemant(abonnement.getEindDatum()));
-			prep.setInt(2, abonnement.getAbonnementId());
+			abonnement.getEindDatum().setTime(abonnement.getEindDatum().getTime() + (1 * 1000));
+			
+			prep.setTimestamp(1, abonnement.getEindDatum());
+			prep.setTimestamp(2, abonnement.getTimestampZesMaandAbonnemant(abonnement.getEindDatum()));
+			prep.setInt(3, abonnement.getAbonnementId());
 			
 		    return prep.executeUpdate();
 		} catch (SQLException e) {
@@ -207,7 +213,7 @@ public class AbonnementDAO extends BaseDAO{
 	}
 	
 	public int verlengAbonnementMetNegenMaand(Abonnement abonnement) {
-		String sql = "UPDATE abonnement SET eind_datum = ? WHERE abonnement_id = ?";
+		String sql = "UPDATE abonnement SET start_datum = ?, eind_datum = ? WHERE abonnement_id=?";
 		PreparedStatement prep = null;
 		try {
 			if (getConnection().isClosed()) {
@@ -215,8 +221,11 @@ public class AbonnementDAO extends BaseDAO{
 			}
 			prep = getConnection().prepareStatement(sql);
 			
-			prep.setTimestamp(1, abonnement.getTimestampNegenMaandAbonnemant(abonnement.getEindDatum()));
-			prep.setInt(2, abonnement.getAbonnementId());
+			abonnement.getEindDatum().setTime(abonnement.getEindDatum().getTime() + (1 * 1000));
+			
+			prep.setTimestamp(1, abonnement.getEindDatum());
+			prep.setTimestamp(2, abonnement.getTimestampNegenMaandAbonnemant(abonnement.getEindDatum()));
+			prep.setInt(3, abonnement.getAbonnementId());
 			
 		    return prep.executeUpdate();
 		} catch (SQLException e) {
@@ -235,7 +244,7 @@ public class AbonnementDAO extends BaseDAO{
 	}
 	
 	public int verlengAbonnementMetEenJaar(Abonnement abonnement) {
-		String sql = "UPDATE abonnement SET eind_datum = ? WHERE abonnement_id = ?";
+		String sql = "UPDATE abonnement SET start_datum = ?, eind_datum = ? WHERE abonnement_id=?";
 		PreparedStatement prep = null;
 		try {
 			if (getConnection().isClosed()) {
@@ -243,8 +252,11 @@ public class AbonnementDAO extends BaseDAO{
 			}
 			prep = getConnection().prepareStatement(sql);
 			
-			prep.setTimestamp(1, abonnement.getTimestampJaarAbonnemant(abonnement.getEindDatum()));
-			prep.setInt(2, abonnement.getAbonnementId());
+			abonnement.getEindDatum().setTime(abonnement.getEindDatum().getTime() + (1 * 1000));
+			
+			prep.setTimestamp(1, abonnement.getEindDatum());
+			prep.setTimestamp(2, abonnement.getTimestampJaarAbonnemant(abonnement.getEindDatum()));
+			prep.setInt(3, abonnement.getAbonnementId());
 			
 		    return prep.executeUpdate();
 		} catch (SQLException e) {
