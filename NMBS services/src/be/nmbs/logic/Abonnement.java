@@ -4,8 +4,6 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import be.nmbs.database.AbonnementDAO;
-
 public class Abonnement {
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private int abonnementId;
@@ -126,6 +124,7 @@ public class Abonnement {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(timestamp);
 		cal.add(Calendar.MONTH, 3);
+		cal.add(Calendar.SECOND, -1);
 		timestamp = new Timestamp(cal.getTime().getTime());
 		return timestamp;
 	}
@@ -135,6 +134,7 @@ public class Abonnement {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(timestamp);
 		cal.add(Calendar.MONTH, 6);
+		cal.add(Calendar.SECOND, -1);
 		timestamp = new Timestamp(cal.getTime().getTime());
 		return timestamp;
 	}
@@ -143,6 +143,7 @@ public class Abonnement {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(timestamp);
 		cal.add(Calendar.MONTH, 9);
+		cal.add(Calendar.SECOND, -1);
 		timestamp = new Timestamp(cal.getTime().getTime());
 		return timestamp;
 	}
@@ -152,6 +153,7 @@ public class Abonnement {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(timestamp);
 		cal.add(Calendar.YEAR, 1);
+		cal.add(Calendar.SECOND, -1);
 		timestamp = new Timestamp(cal.getTime().getTime());
 		return timestamp;
 	}
