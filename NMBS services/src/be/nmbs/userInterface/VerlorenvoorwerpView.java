@@ -36,8 +36,10 @@ public class VerlorenvoorwerpView {
 	private static JTextField txtType;
 	private static JButton btnZoekOmschrijving;
 	private static JButton btnVorigScherm;
+	private static JButton btnNieuwVerlorenvoorwerp;
 	private static VerlorenvoorwerpController verlorenvoorwerpController;
 	private static JTable tabel;
+	private static JButton btnTerugGegeven;
 	
 	private static  boolean ALLOW_COLUMN_SELECTION = false;
 	private static boolean ALLOW_ROW_SELECTION = true;
@@ -65,16 +67,29 @@ public class VerlorenvoorwerpView {
 
 		btnZoekOmschrijving = new JButton("zoek");
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 2;
+		c.gridx = 1;
+		c.gridy = 1;
 		panel.add(btnZoekOmschrijving, c);
 		
-		btnVorigScherm = new JButton("vorig scherm");
+		
+		btnTerugGegeven = new JButton("terug gegeven");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 2;
-		panel.add(btnVorigScherm, c);
+		panel.add(btnTerugGegeven, c);
 		
+		
+		btnNieuwVerlorenvoorwerp = new JButton("nieuw verlorenvoorwerp");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 3;
+		panel.add(btnNieuwVerlorenvoorwerp, c);
+
+		btnVorigScherm = new JButton("vorig scherm");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 4;
+		panel.add(btnVorigScherm, c);
 		
 		tabel = new JTable();
 		tabel.setPreferredScrollableViewportSize(new Dimension(500, 200));
@@ -91,10 +106,27 @@ public class VerlorenvoorwerpView {
 		
 		panel.add(scrollPane);
 		
+
 		verlorenvoorwerpController = new VerlorenvoorwerpController(view);
 		return panel;
 	}
 	
+	public static JButton getBtnTerugGegeven() {
+		return btnTerugGegeven;
+	}
+
+	public static void setBtnTerugGegeven(JButton btnTerugGegeven) {
+		VerlorenvoorwerpView.btnTerugGegeven = btnTerugGegeven;
+	}
+
+	public static JButton getBtnNieuwVerlorenvoorwerp() {
+		return btnNieuwVerlorenvoorwerp;
+	}
+
+	public static void setBtnNieuwVerlorenvoorwerp(JButton btnNieuwVerlorenvoorwerp) {
+		VerlorenvoorwerpView.btnNieuwVerlorenvoorwerp = btnNieuwVerlorenvoorwerp;
+	}
+
 	public static JTable getTabel() {
 		return tabel;
 	}

@@ -25,6 +25,8 @@ import be.nmbs.logic.Ticket;
 import be.nmbs.logic.VerlorenVoorwerp;
 import be.nmbs.tablemodels.VerlorenvoorwerpTableModel;
 import be.nmbs.userInterface.HomeView;
+import be.nmbs.userInterface.KlantWijzigenView;
+import be.nmbs.userInterface.NieuwVerlorenvoorwerpView;
 import be.nmbs.userInterface.TicketView;
 import be.nmbs.userInterface.VerlorenvoorwerpView;
 import be.nmbs.userInterface.View;
@@ -33,7 +35,7 @@ public class VerlorenvoorwerpController {
 	 private static  boolean ALLOW_COLUMN_SELECTION = false;
 	 private static boolean ALLOW_ROW_SELECTION = true;
 	 private static VerlorenVoorwerpenDAO verlorenvoorwerpdao;
-	
+	 JOptionPane optionPane = new JOptionPane();
 
 	public VerlorenvoorwerpController(View view) {
 		
@@ -43,10 +45,10 @@ public class VerlorenvoorwerpController {
 			public void actionPerformed(ActionEvent e) {
 				
 					
-				System.out.println("knop geduwt");
+				
 				
 		        String oms = VerlorenvoorwerpView.getTxtType().getText();
-		        System.out.println(oms);
+		      
 		        
 		        ArrayList<VerlorenVoorwerp> allVerlorenvoorwerp = verlorenvoorwerpdao.getAllOpSoort(oms);
 		        
@@ -71,6 +73,57 @@ public class VerlorenvoorwerpController {
 						view.changeView(HomeView.initialize(view));
 					}
 				});
+		
+		
+		
+		VerlorenvoorwerpView.getBtnNieuwVerlorenvoorwerp().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+	
+				//	NieuwVerlorenvoorwerpView.setVerlorenvoorwerpControllerToNull();
+					
+					view.changeView(NieuwVerlorenvoorwerpView.initialize(view));
+					}
+				});
+		
+		
+		
+		VerlorenvoorwerpView.getBtnTerugGegeven().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				int row = VerlorenvoorwerpView.getTabel().getSelectedRow();
+				int voorwerpID = 0;
+				try {
+					voorwerpID = (int) VerlorenvoorwerpView.getTabel().getModel().getValueAt(row, 0);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Kies een voorwerp in de tabel die je wilt terug geven en dus uit de inventaris halen");
+				}
+			
+					
+				
+				verlorenvoorwerpdao.updateActief(voorwerpID);
+				 String oms = VerlorenvoorwerpView.getTxtType().getText();
+			      
+			        
+			        ArrayList<VerlorenVoorwerp> allVerlorenvoorwerp = verlorenvoorwerpdao.getAllOpSoort(oms);
+			        
+			        VerlorenvoorwerpTableModel verlorenvoorwerpTableModel = new VerlorenvoorwerpTableModel();
+			        verlorenvoorwerpTableModel.setVoorwerpen(allVerlorenvoorwerp);
+			        
+			        
+			     	VerlorenvoorwerpView.getTabel().setModel(verlorenvoorwerpTableModel);
+			     	VerlorenvoorwerpView.getTabel().setVisible(true);
+				}
+					
+				});
+		
+		
+	
 	
 	}
 
