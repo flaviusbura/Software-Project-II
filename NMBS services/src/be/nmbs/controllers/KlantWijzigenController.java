@@ -8,7 +8,11 @@ import javax.swing.JOptionPane;
 import be.nmbs.userInterface.NieuwAdresView;
 import be.nmbs.database.KlantDAO;
 import be.nmbs.database.Klant_adresDAO;
+import be.nmbs.exceptions.EnkelCijfersException;
+import be.nmbs.exceptions.EnkelLettersException;
+import be.nmbs.exceptions.NietGeldigePostcodeException;
 import be.nmbs.logic.Klant;
+import be.nmbs.logic.VeiligeInvoer;
 import be.nmbs.userInterface.HelperView;
 import be.nmbs.userInterface.KlantWijzigenView;
 import be.nmbs.userInterface.KlantenBeheerView;
@@ -17,6 +21,9 @@ import be.nmbs.userInterface.View;
 public class KlantWijzigenController {
 	private JOptionPane jOptionPane = new JOptionPane();
 	private HelperView helpMe;
+	private ArrayList<Klant> lijst = new ArrayList<>();
+	private KlantDAO klantDAO = new KlantDAO();
+	private static String naam;
 
 	public KlantWijzigenController(View view) {
 		KlantWijzigenView.getVoornaam().addActionListener(new ActionListener() {
@@ -34,18 +41,28 @@ public class KlantWijzigenController {
 							int contactID = Integer
 									.valueOf((String) KlantWijzigenView.getTable().getModel().getValueAt(row, 0));
 							String voornaam = helpMe.getjTextField().getText();
-							KlantDAO klantDAO = new KlantDAO();
-							klantDAO.updateVoornaamByContactId(contactID, voornaam);
-							jOptionPane.showMessageDialog(null, "Voornaam geupdatet!");
-							helpMe.getjFrame().dispose();
-							KlantWijzigenView.setKlantWijzigenControllerToNull();
-							view.changeView(KlantWijzigenView.initialize(view));
+							if (VeiligeInvoer.checkForOnlyLetters(voornaam) == false) {
+								throw new EnkelLettersException();
+							} else {
+								KlantDAO klantDAO = new KlantDAO();
+								klantDAO.updateVoornaamByContactId(contactID, voornaam);
+								jOptionPane.showMessageDialog(null, "Voornaam geupdatet!");
+								helpMe.getjFrame().dispose();
+								lijst = klantDAO.getAllByAchternaam(naam);
+								KlantWijzigenView.setLijst(lijst);
+								KlantWijzigenView.setKlantWijzigenControllerToNull();
+								view.changeView(KlantWijzigenView.initialize(view));
+							}
 						} catch (ArrayIndexOutOfBoundsException e2) {
 							helpMe.getjFrame().dispose();
 							jOptionPane.showMessageDialog(null,
 									"U heeft geen rij geselecteerd!\nSelecteer een rij die u wenst te wijzigen.");
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
 							view.changeView(KlantWijzigenView.initialize(view));
+						} catch (EnkelLettersException e3) {
+							helpMe.getjTextField().setText("");
+							jOptionPane.showMessageDialog(null,
+									"Dit veldje mag niet leeg zijn en/of andere\n karakters dan letters bevatten.");
 						}
 					}
 				});
@@ -75,18 +92,28 @@ public class KlantWijzigenController {
 							int contactID = Integer
 									.valueOf((String) KlantWijzigenView.getTable().getModel().getValueAt(row, 0));
 							String voornaam = helpMe.getjTextField().getText();
-							KlantDAO klantDAO = new KlantDAO();
-							klantDAO.updateAchternaamByContactId(contactID, voornaam);
-							jOptionPane.showMessageDialog(null, "Achternaam geupdatet!");
-							helpMe.getjFrame().dispose();
-							KlantWijzigenView.setKlantWijzigenControllerToNull();
-							view.changeView(KlantWijzigenView.initialize(view));
+							if (VeiligeInvoer.checkForOnlyLetters(voornaam) == false) {
+								throw new EnkelLettersException();
+							} else {
+								KlantDAO klantDAO = new KlantDAO();
+								klantDAO.updateAchternaamByContactId(contactID, voornaam);
+								jOptionPane.showMessageDialog(null, "Achternaam geupdatet!");
+								helpMe.getjFrame().dispose();
+								lijst = klantDAO.getAllByAchternaam(naam);
+								KlantWijzigenView.setLijst(lijst);
+								KlantWijzigenView.setKlantWijzigenControllerToNull();
+								view.changeView(KlantWijzigenView.initialize(view));
+							}
 						} catch (ArrayIndexOutOfBoundsException e2) {
 							helpMe.getjFrame().dispose();
 							jOptionPane.showMessageDialog(null,
 									"U heeft geen rij geselecteerd!\nSelecteer een rij die u wenst te wijzigen.");
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
 							view.changeView(KlantWijzigenView.initialize(view));
+						} catch (EnkelLettersException e3) {
+							helpMe.getjTextField().setText("");
+							jOptionPane.showMessageDialog(null,
+									"Dit veldje mag niet leeg zijn en/of andere\n karakters dan letters bevatten.");
 						}
 					}
 				});
@@ -116,18 +143,28 @@ public class KlantWijzigenController {
 							int contactID = Integer
 									.valueOf((String) KlantWijzigenView.getTable().getModel().getValueAt(row, 0));
 							String telefoon = helpMe.getjTextField().getText();
-							KlantDAO klantDAO = new KlantDAO();
-							klantDAO.updateTelefoonByContactId(contactID, telefoon);
-							jOptionPane.showMessageDialog(null, "Telefoon geupdatet!");
-							helpMe.getjFrame().dispose();
-							KlantWijzigenView.setKlantWijzigenControllerToNull();
-							view.changeView(KlantWijzigenView.initialize(view));
+							if (VeiligeInvoer.checkForOnlyNumbers(telefoon) == false) {
+								throw new EnkelCijfersException();
+							} else {
+								KlantDAO klantDAO = new KlantDAO();
+								klantDAO.updateTelefoonByContactId(contactID, telefoon);
+								jOptionPane.showMessageDialog(null, "Telefoon geupdatet!");
+								helpMe.getjFrame().dispose();
+								lijst = klantDAO.getAllByAchternaam(naam);
+								KlantWijzigenView.setLijst(lijst);
+								KlantWijzigenView.setKlantWijzigenControllerToNull();
+								view.changeView(KlantWijzigenView.initialize(view));
+							}
 						} catch (ArrayIndexOutOfBoundsException e2) {
 							helpMe.getjFrame().dispose();
 							jOptionPane.showMessageDialog(null,
 									"U heeft geen rij geselecteerd!\nSelecteer een rij die u wenst te wijzigen.");
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
 							view.changeView(KlantWijzigenView.initialize(view));
+						} catch (EnkelCijfersException e3) {
+							helpMe.getjTextField().setText("");
+							jOptionPane.showMessageDialog(null,
+									"Dit veldje mag niet leeg zijn en/of andere\n karakters dan cijfers bevatten.");
 						}
 					}
 				});
@@ -157,18 +194,28 @@ public class KlantWijzigenController {
 							int adresID = Integer
 									.valueOf((String) KlantWijzigenView.getTable().getModel().getValueAt(row, 1));
 							String land = helpMe.getjTextField().getText();
-							Klant_adresDAO klant_adresDAO = new Klant_adresDAO();
-							klant_adresDAO.updateLandByAdresId(adresID, land);
-							jOptionPane.showMessageDialog(null, "Land geupdatet!");
-							helpMe.getjFrame().dispose();
-							KlantWijzigenView.setKlantWijzigenControllerToNull();
-							view.changeView(KlantWijzigenView.initialize(view));
+							if (VeiligeInvoer.checkForOnlyLetters(land) == false) {
+								throw new EnkelLettersException();
+							} else {
+								Klant_adresDAO klant_adresDAO = new Klant_adresDAO();
+								klant_adresDAO.updateLandByAdresId(adresID, land);
+								jOptionPane.showMessageDialog(null, "Land geupdatet!");
+								helpMe.getjFrame().dispose();
+								lijst = klantDAO.getAllByAchternaam(naam);
+								KlantWijzigenView.setLijst(lijst);
+								KlantWijzigenView.setKlantWijzigenControllerToNull();
+								view.changeView(KlantWijzigenView.initialize(view));
+							}
 						} catch (ArrayIndexOutOfBoundsException e2) {
 							helpMe.getjFrame().dispose();
 							jOptionPane.showMessageDialog(null,
 									"U heeft geen rij geselecteerd!\nSelecteer een rij die u wenst te wijzigen.");
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
 							view.changeView(KlantWijzigenView.initialize(view));
+						} catch (EnkelLettersException e3) {
+							helpMe.getjTextField().setText("");
+							jOptionPane.showMessageDialog(null,
+									"Dit veldje mag niet leeg zijn en/of andere\n karakters dan letters bevatten.");
 						}
 					}
 				});
@@ -198,18 +245,28 @@ public class KlantWijzigenController {
 							int adresID = Integer
 									.valueOf((String) KlantWijzigenView.getTable().getModel().getValueAt(row, 1));
 							String straat = helpMe.getjTextField().getText();
-							Klant_adresDAO klant_adresDAO = new Klant_adresDAO();
-							klant_adresDAO.updateStraatByAdresId(adresID, straat);
-							jOptionPane.showMessageDialog(null, "Straat geupdatet!");
-							helpMe.getjFrame().dispose();
-							KlantWijzigenView.setKlantWijzigenControllerToNull();
-							view.changeView(KlantWijzigenView.initialize(view));
+							if (VeiligeInvoer.checkForOnlyLetters(straat) == false) {
+								throw new EnkelLettersException();
+							} else {
+								Klant_adresDAO klant_adresDAO = new Klant_adresDAO();
+								klant_adresDAO.updateStraatByAdresId(adresID, straat);
+								jOptionPane.showMessageDialog(null, "Straat geupdatet!");
+								helpMe.getjFrame().dispose();
+								lijst = klantDAO.getAllByAchternaam(naam);
+								KlantWijzigenView.setLijst(lijst);
+								KlantWijzigenView.setKlantWijzigenControllerToNull();
+								view.changeView(KlantWijzigenView.initialize(view));
+							}
 						} catch (ArrayIndexOutOfBoundsException e2) {
 							helpMe.getjFrame().dispose();
 							jOptionPane.showMessageDialog(null,
 									"U heeft geen rij geselecteerd!\nSelecteer een rij die u wenst te wijzigen.");
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
 							view.changeView(KlantWijzigenView.initialize(view));
+						} catch (EnkelLettersException e3) {
+							helpMe.getjTextField().setText("");
+							jOptionPane.showMessageDialog(null,
+									"Dit veldje mag niet leeg zijn en/of andere\n karakters dan letters bevatten.");
 						}
 					}
 				});
@@ -252,9 +309,9 @@ public class KlantWijzigenController {
 									"U heeft geen rij geselecteerd!\nSelecteer een rij die u wenst te wijzigen.");
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
 							view.changeView(KlantWijzigenView.initialize(view));
-						} catch (NumberFormatException e2) {
+						} catch (NumberFormatException e3) {
 							jOptionPane.showMessageDialog(null,
-									"Een huisnummer bestaat enkel uit cijfers.\nProbeer opnieuw!");
+									"Dit veldje mag niet leeg zijn en/of andere\n karakters dan cijfers bevatten.");
 						}
 					}
 				});
@@ -285,21 +342,29 @@ public class KlantWijzigenController {
 									.valueOf((String) KlantWijzigenView.getTable().getModel().getValueAt(row, 1));
 							int postcode = 0;
 							postcode = Integer.valueOf(helpMe.getjTextField().getText());
-							Klant_adresDAO klant_adresDAO = new Klant_adresDAO();
-							klant_adresDAO.updatePostcodeByAdresId(adresID, postcode);
-							jOptionPane.showMessageDialog(null, "Postcode geupdatet!");
-							helpMe.getjFrame().dispose();
-							KlantWijzigenView.setKlantWijzigenControllerToNull();
-							view.changeView(KlantWijzigenView.initialize(view));
+							if (postcode > 9999 || postcode < 1000) {
+								throw new NietGeldigePostcodeException();
+							} else {
+								Klant_adresDAO klant_adresDAO = new Klant_adresDAO();
+								klant_adresDAO.updatePostcodeByAdresId(adresID, postcode);
+								jOptionPane.showMessageDialog(null, "Postcode geupdatet!");
+								helpMe.getjFrame().dispose();
+								lijst = klantDAO.getAllByAchternaam(naam);
+								KlantWijzigenView.setLijst(lijst);
+								KlantWijzigenView.setKlantWijzigenControllerToNull();
+								view.changeView(KlantWijzigenView.initialize(view));
+							}
 						} catch (ArrayIndexOutOfBoundsException e2) {
 							helpMe.getjFrame().dispose();
 							jOptionPane.showMessageDialog(null,
 									"U heeft geen rij geselecteerd!\nSelecteer een rij die u wenst te wijzigen.");
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
 							view.changeView(KlantWijzigenView.initialize(view));
-						} catch (NumberFormatException e2) {
+						} catch (NumberFormatException e3) {
 							jOptionPane.showMessageDialog(null,
 									"Een postcode bestaat enkel uit cijfers.\nProbeer opnieuw!");
+						} catch (NietGeldigePostcodeException e4) {
+							jOptionPane.showMessageDialog(null, "Het ingevoerde postcode is ongeldig!");
 						}
 					}
 				});
@@ -329,18 +394,28 @@ public class KlantWijzigenController {
 							int adresID = Integer
 									.valueOf((String) KlantWijzigenView.getTable().getModel().getValueAt(row, 1));
 							String woonplaats = helpMe.getjTextField().getText();
-							Klant_adresDAO klant_adresDAO = new Klant_adresDAO();
-							klant_adresDAO.updateWoonplaatsByAdresId(adresID, woonplaats);
-							jOptionPane.showMessageDialog(null, "Woonplaats geupdatet!");
-							helpMe.getjFrame().dispose();
-							KlantWijzigenView.setKlantWijzigenControllerToNull();
-							view.changeView(KlantWijzigenView.initialize(view));
+							if (VeiligeInvoer.checkForOnlyLetters(woonplaats) == false) {
+								throw new EnkelLettersException();
+							} else {
+								Klant_adresDAO klant_adresDAO = new Klant_adresDAO();
+								klant_adresDAO.updateWoonplaatsByAdresId(adresID, woonplaats);
+								jOptionPane.showMessageDialog(null, "Woonplaats geupdatet!");
+								helpMe.getjFrame().dispose();
+								lijst = klantDAO.getAllByAchternaam(naam);
+								KlantWijzigenView.setLijst(lijst);
+								KlantWijzigenView.setKlantWijzigenControllerToNull();
+								view.changeView(KlantWijzigenView.initialize(view));
+							}
 						} catch (ArrayIndexOutOfBoundsException e2) {
 							helpMe.getjFrame().dispose();
 							jOptionPane.showMessageDialog(null,
 									"U heeft geen rij geselecteerd!\nSelecteer een rij die u wenst te wijzigen.");
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
 							view.changeView(KlantWijzigenView.initialize(view));
+						} catch (EnkelLettersException e3) {
+							helpMe.getjTextField().setText("");
+							jOptionPane.showMessageDialog(null,
+									"Dit veldje mag niet leeg zijn en/of andere\n karakters dan letters bevatten.");
 						}
 					}
 				});
@@ -370,18 +445,27 @@ public class KlantWijzigenController {
 							int adresID = Integer
 									.valueOf((String) KlantWijzigenView.getTable().getModel().getValueAt(row, 1));
 							String bus = helpMe.getjTextField().getText();
-							Klant_adresDAO klant_adresDAO = new Klant_adresDAO();
-							klant_adresDAO.updateBusByAdresId(adresID, bus);
-							jOptionPane.showMessageDialog(null, "Bus geupdatet!");
-							helpMe.getjFrame().dispose();
-							KlantWijzigenView.setKlantWijzigenControllerToNull();
-							view.changeView(KlantWijzigenView.initialize(view));
+							if (VeiligeInvoer.checkForOnlyNumbers(bus) == false) {
+								throw new EnkelCijfersException();
+							} else {
+								Klant_adresDAO klant_adresDAO = new Klant_adresDAO();
+								klant_adresDAO.updateBusByAdresId(adresID, bus);
+								jOptionPane.showMessageDialog(null, "Bus geupdatet!");
+								helpMe.getjFrame().dispose();
+								lijst = klantDAO.getAllByAchternaam(naam);
+								KlantWijzigenView.setLijst(lijst);
+								KlantWijzigenView.setKlantWijzigenControllerToNull();
+								view.changeView(KlantWijzigenView.initialize(view));
+							}
 						} catch (ArrayIndexOutOfBoundsException e2) {
 							helpMe.getjFrame().dispose();
 							jOptionPane.showMessageDialog(null,
 									"U heeft geen rij geselecteerd!\nSelecteer een rij die u wenst te wijzigen.");
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
 							view.changeView(KlantWijzigenView.initialize(view));
+						} catch (EnkelCijfersException e3) {
+							jOptionPane.showMessageDialog(null,
+									"Dit veldje mag niet leeg zijn en/of andere\n karakters dan cijfers bevatten.");
 						}
 					}
 				});
@@ -418,7 +502,6 @@ public class KlantWijzigenController {
 			@SuppressWarnings("static-access")
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String naam;
 				naam = KlantWijzigenView.getZoekText().getText();
 				if (naam.equals("")) {
 					jOptionPane.showMessageDialog(null, "Geen klanten gevonden.");
@@ -427,8 +510,6 @@ public class KlantWijzigenController {
 					KlantWijzigenView.setKlantWijzigenControllerToNull();
 					view.changeView(KlantWijzigenView.initialize(view));
 				} else {
-					ArrayList<Klant> lijst = new ArrayList<>();
-					KlantDAO klantDAO = new KlantDAO();
 					lijst = klantDAO.getAllByAchternaam(naam);
 					if (lijst.size() == 0) {
 						jOptionPane.showMessageDialog(null, "Geen klanten gevonden met deze achternaam.");
