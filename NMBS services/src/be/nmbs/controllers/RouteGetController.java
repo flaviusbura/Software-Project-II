@@ -15,7 +15,7 @@ public class RouteGetController {
 	public RouteGetController(View view, ArrayList<Route> routes) {
 		if (routes != null) {
 			RouteTableModel routeModel = new RouteTableModel();
-	        routeModel.setRoute(routes.get(0));
+	        routeModel.setRoutes(routes);
 	        
 	     	RouteGetView.getTable().setModel(routeModel);
 	     	RouteGetView.getTable().setVisible(true);

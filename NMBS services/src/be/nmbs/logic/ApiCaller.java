@@ -67,6 +67,8 @@ public class ApiCaller {
 			    ArrayList<Overstap> o = new ArrayList<Overstap>();
 			    ArrayList<Trein> t = new ArrayList<Trein>();
 			    
+			    Overstap endOverstap = null;
+			    
 			    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 				format.setTimeZone(TimeZone.getTimeZone("GMT+1"));
 				
@@ -81,6 +83,8 @@ public class ApiCaller {
 			    		JSONObject trein = treinen.optJSONObject(j);
 			    		JSONArray stations = trein.getJSONObject("Stops").getJSONArray("Stations");
 			    		List<Station> s = new ArrayList<Station>();
+			    		
+			    		JSONObject trainTime = trein.getJSONObject("Time");
 			    		
 			    		Date aDate = null, aaDate = null, dDate = null, adDate = null;
 			    		// Time checking
@@ -124,6 +128,10 @@ public class ApiCaller {
 			    				adDate = format.parse(sDate);
 			    			} else { dDate = null; adDate = null; }
 			    			
+			    			if (time.getString("Arrival") == trainTime.getString("Arrival")) {
+			    				endOverstap = new Overstap("", station.getString("Name"), station.getString("ArrivalPlatform"), "", format.parse(time.getString("Arrival")), null, "");
+			    			}
+			    			
 			    			if (k == 0)
 			    				s.add(new Station(station.getString("Name"), null, station.getString("DeparturePlatform"), aDate, aaDate, dDate, adDate));
 			    			else if (k == stations.length() - 1)
@@ -132,7 +140,6 @@ public class ApiCaller {
 			    				s.add(new Station(station.getString("Name"), station.getString("ArrivalPlatform"), station.getString("DeparturePlatform"), aDate, aaDate, dDate, adDate));
 			    		}
 			    		
-			    		JSONObject trainTime = trein.getJSONObject("Time");
 			    		Date tDate = format.parse(trainTime.getString("Arrival"));
 			    		t.add(new Trein(trein.getString("FullId"), trein.get("DepartureStation").toString(), trein.getString("TerminusStation"), s, trein.getBoolean("Cancelled"), tDate));
 			    	}
@@ -150,6 +157,8 @@ public class ApiCaller {
 			    		else 
 			    			o.add(new Overstap(overstap.get("FullId").toString(), overstap.get("TransferAt").toString(), overstap.getString("ArrivalPlatform"), overstap.getString("DeparturePlatform"), arrival, departure, overstap.getString("TerminusStation")));
 			    	}
+			    	
+			    	o.add(new Overstap("", endOverstap.getStation(), endOverstap.getStepOffPlatform(), "", endOverstap.getArrival(), null, ""));
 				    
 			    	r.add(new Route(route.getString("Departure"), route.getString("Arrival"), t, o));
 			    	o.clear();
@@ -194,11 +203,15 @@ public class ApiCaller {
 			    	JSONArray treinen = route.getJSONArray("Trains");
 			    	JSONArray overstappen = route.getJSONArray("TransferStations");
 			    	
+			    	Overstap endOverstap = null;
+			    	
 			    	// Checken voor treinen
 			    	for (int j = 0; j < treinen.length(); j++) {
 			    		JSONObject trein = treinen.optJSONObject(j);
 			    		JSONArray stations = trein.getJSONObject("Stops").getJSONArray("Stations");
 			    		List<Station> s = new ArrayList<Station>();
+			    		
+			    		JSONObject trainTime = trein.getJSONObject("Time");
 			    		
 			    		Date aDate = null, aaDate = null, dDate = null, adDate = null;
 			    		// Time checking
@@ -242,6 +255,11 @@ public class ApiCaller {
 			    				adDate = format.parse(sDate);
 			    			} else { dDate = null; adDate = null; }
 			    			
+			    			if (format.parse(trainTime.getString("Arrival")).equals(aDate)) {
+			    				endOverstap = new Overstap("", station.getString("Name"), station.getString("ArrivalPlatform"), "", format.parse(time.getString("Arrival")), null, "");
+			    				System.out.println(endOverstap);
+			    			}
+			    			
 			    			if (k == 0 && !station.isNull("DeparturePlatform"))
 			    				s.add(new Station(station.getString("Name"), null, station.getString("DeparturePlatform"), aDate, aaDate, dDate, adDate));
 			    			else if (k == stations.length() - 1 && !station.isNull("ArrivalPlatform"))
@@ -252,7 +270,6 @@ public class ApiCaller {
 			    				s.add(new Station(station.getString("Name"), station.getString("ArrivalPlatform"), station.getString("DeparturePlatform"), aDate, aaDate, dDate, adDate));
 			    		}
 			    		
-			    		JSONObject trainTime = trein.getJSONObject("Time");
 			    		Date tDate = format.parse(trainTime.getString("Arrival"));
 			    		t.add(new Trein(trein.getString("FullId"), trein.get("DepartureStation").toString(), trein.getString("TerminusStation"), s, trein.getBoolean("Cancelled"), tDate));
 			    	}
@@ -271,6 +288,8 @@ public class ApiCaller {
 			    		else 
 			    			o.add(new Overstap(overstap.get("FullId").toString(), overstap.get("TransferAt").toString(), (String) overstap.get("ArrivalPlatform"), overstap.getString("DeparturePlatform"), arrival, departure, overstap.getString("TerminusStation")));
 			    	}
+
+			    	o.add(new Overstap("", endOverstap.getStation(), endOverstap.getStepOffPlatform(), "", endOverstap.getArrival(), null, ""));
 				    
 			    	r.add(new Route(route.getString("Departure"), route.getString("Arrival"), t, o));
 			    	o.clear();
