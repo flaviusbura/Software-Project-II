@@ -1,5 +1,8 @@
 package be.nmbs.userInterface;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -12,8 +15,10 @@ public class View extends JFrame {
 
 	public View() {
 		this.setTitle("NMBS Services");
-		this.setSize(700, 500);
+		this.setSize(800, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
 	}
 
 	public JPanel getPanel() {

@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import be.nmbs.logic.Station;
+import be.nmbs.logic.StationNMBS;
 import be.nmbs.logic.Ticket;
 /**
  * Deze klasse is een DAO. Hiermee kunnen er Ticket-objecten naar de de database 
@@ -36,22 +37,22 @@ public class TicketDAO extends BaseDAO{
 			prep = getConnection().prepareStatement(sql);
 			res = prep.executeQuery();
 			lijst = new ArrayList<Ticket>();
-			Station startStation = new Station();
-			Station eindStation = new Station();
-			Station station = new Station();
+			StationNMBS startStation = new StationNMBS();
+			StationNMBS eindStation = new StationNMBS();
+			StationNMBS station = new StationNMBS();
 			
 			while (res.next()) {
 				int ticketId = res.getInt("ticket_id");
-				startStation.setName(res.getString("start_station"));
+				startStation.setNaam(res.getString("start_station"));
 				String soort = res.getString("soort");
 				Timestamp timestamp = res.getTimestamp("datum");
 				int klas = res.getInt("klas");
 				boolean actief = res.getBoolean("actief");
-				eindStation.setName(res.getString("eind_station"));
+				eindStation.setNaam(res.getString("eind_station"));
 				String omschrijving = res.getString("omschrijving");
 				int prijsId = res.getInt("prijs_id");
 				int kortingId = res.getInt("korting_id");
-				station.setName(res.getString("station"));
+				station.setNaam(res.getString("station"));
 				int gebrukerId = res.getInt("gebruiker_id");
 				Ticket ticket = new Ticket(ticketId, startStation, soort, timestamp, klas, actief, eindStation, omschrijving,
 						prijsId, kortingId, station, gebrukerId);
@@ -88,16 +89,16 @@ public class TicketDAO extends BaseDAO{
 				throw new IllegalStateException("Unexpected error!");
 			}
 			prep = getConnection().prepareStatement(sql);
-			prep.setString(1, ticket.getStartStation().getName());
+			prep.setString(1, ticket.getStartStation().getNaam());
 			prep.setString(2, ticket.getSoort());
 			prep.setTimestamp(3, ticket.getTimestamp());
 			prep.setInt(4, ticket.getKlas());
 			prep.setBoolean(5, ticket.isActief());
-			prep.setString(6, ticket.getEindStation().getName());
+			prep.setString(6, ticket.getEindStation().getNaam());
 			prep.setString(7, ticket.getOmschrijving());
 			prep.setInt(8, ticket.getPrijsId());
 			prep.setInt(9, ticket.getKortingId());
-			prep.setString(10, ticket.getStation().getName());
+			prep.setString(10, ticket.getStation().getNaam());
 			prep.setInt(11, ticket.getGebruikerId());
 			return prep.executeUpdate();
 		} catch (SQLException e) {

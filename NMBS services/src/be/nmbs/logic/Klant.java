@@ -1,6 +1,13 @@
 package be.nmbs.logic;
 
 public class Klant {
+	@Override
+	public String toString() {
+		return achternaam + " " + voornaam;
+	}
+	
+	
+
 	private int contactId;
 	private String voornaam;
 	private String achternaam;
@@ -22,6 +29,11 @@ public class Klant {
 	 * @param telefoon
 	 * @param actief
 	 */
+	public Klant(String achternaam, String voornaam) {
+		//this.contactId = contactId;
+		this.voornaam = voornaam;
+		this.achternaam = achternaam;
+	}
 	public Klant(int contactId, String voornaam, String achternaam, int adresId, String telefoon, boolean actief) {
 		super();
 		this.contactId = contactId;

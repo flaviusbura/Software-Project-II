@@ -22,6 +22,10 @@ public class Gebruiker {
 	 * @param rol
 	 * @param actief
 	 */
+	public Gebruiker(int id)
+	{
+		this.id=id;
+	}
 	public Gebruiker(int id, String voornaam, String achternaam, String username,String wachtwoord,
 			int rol, boolean actief) {
 		this.id = id;
@@ -56,6 +60,11 @@ public class Gebruiker {
 		return id;
 	}
 	
+	@Override
+	public String toString() {
+		return  id + " " + username;
+	}
+
 	/**
 	 * Deze methode sets mijn ID van de gebruiker
 	 * @param id

@@ -8,6 +8,11 @@ public class Korting {
 	private boolean actief;
 	private String typeKorting;
 	
+	public Korting(int korting_id)
+	{
+		this.korting_id=korting_id;
+	}
+	
 	public Korting(int korting_id,double hoeveelheid,String omschrijving,boolean actief,String type){
 		this.korting_id=korting_id;
 		this.hoeveelheid=hoeveelheid;
@@ -28,4 +33,9 @@ public class Korting {
 	public void setActief(boolean actief){this.actief=actief;}
 	public void setTypeKorting(String type){this.typeKorting=type;}
 	public void setId(int id){this.korting_id=id;}
+
+	@Override
+	public String toString() {
+		return hoeveelheid + " €" + " " + omschrijving;
+	}
 }

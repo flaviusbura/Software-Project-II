@@ -62,6 +62,7 @@ public class KlantDAOTest {
 	 * Deze test gaat de methode UpdateTelefoon() testen om te zien als de wijzigingen 
 	 * op de database gebeuren
 	 */
+	
 	@Test
 	public void testUpdateTelefoon() {
 		klant.setTelefoon("029487345");

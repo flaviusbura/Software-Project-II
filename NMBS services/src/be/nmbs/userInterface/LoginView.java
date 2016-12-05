@@ -16,8 +16,8 @@ public class LoginView {
 	private static JLabel passwordLabel;
 	private static JTextField gebruikerText;
 	private static JPasswordField passwordText;
-	private static JButton ok;
-	private static JButton cancel;
+	private static JButton login;
+	private static JButton closeApp;
 	private static JPanel panel;
 	@SuppressWarnings("unused")
 	private static LoginController loginController;
@@ -51,18 +51,22 @@ public class LoginView {
 		c.gridy = 1;
 		panel.add(passwordText, c);
 
-		ok = new JButton("Ok");
+		login = new JButton("Login");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 2;
-		panel.add(ok, c);
+		panel.add(login, c);
 
-		cancel = new JButton("cancel");
+		closeApp = new JButton("Close");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 2;
-		panel.add(cancel, c);
+		panel.add(closeApp, c);
 		loginController = new LoginController(view);
+		
+		//Dit zorgt ervoor dat de code die in de actionlistener staat wordt afgevuurd als enter ingeduwd wordt
+		view.getRootPane().setDefaultButton(login);
+		
 		return panel;
 	}
 
@@ -82,12 +86,12 @@ public class LoginView {
 		return passwordText;
 	}
 
-	public static JButton getOk() {
-		return ok;
+	public static JButton getLogin() {
+		return login;
 	}
 
-	public static JButton getCancel() {
-		return cancel;
+	public static JButton getCloseApp() {
+		return closeApp;
 	}
 	
 	public static void setLoginControllerToNull() {

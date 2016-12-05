@@ -19,7 +19,11 @@ public class Prijs {
 	 */
 	public Prijs() {
 	}
-
+	
+	public Prijs(int prijsId)
+	{
+		this.prijsId=prijsId;
+	}
 	/**
 	 * Constructor met alle nodige parameters.
 	 * 
@@ -168,8 +172,9 @@ public class Prijs {
 			return false;
 		return true;
 	}
-	
-	
 
-	
+	@Override
+	public String toString() {
+		return prijs + " €" + " " + omschrijving;
+	}	
 }

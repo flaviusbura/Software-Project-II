@@ -1,8 +1,11 @@
 package be.nmbs.logic;
 
+import java.util.Date;
+
 public class Overstap {
-	private String station;
-	private int stepOffPlatform, stepOnPlatform;
+	private String id, station;
+	private String stepOffPlatform, stepOnPlatform, terminus;
+	private Date arrival, departure;
 	
 	// Constructor
 	public Overstap(){}
@@ -14,10 +17,14 @@ public class Overstap {
 	 * @param stepOnPlatform is een int van het platform waar je opstapt
 
 	 */
-	public Overstap(String station, int stepOffPlatform, int stepOnPlatform) {
+	public Overstap(String id, String station, String stepOffPlatform, String stepOnPlatform, Date arrival, Date departure, String terminus) {
+		this.id = id;
 		this.station = station;
 		this.stepOffPlatform = stepOffPlatform;
 		this.stepOnPlatform = stepOnPlatform;
+		this.arrival = arrival;
+		this.departure = departure;
+		this.terminus = terminus;
 	}
 	
 	// toString
@@ -44,13 +51,25 @@ public class Overstap {
 	 * Deze methode gaat een StepOffPlatform terugsturen.
 	 * @return een int om het stapOffPlatform weer te geven
 	 */
-	public int getStepOffPlatform() { return stepOffPlatform; }
+	public String getStepOffPlatform() { return stepOffPlatform; }
 
 	/**
 	 * Deze methode gaat een StepOnPlatform terugsturen.
 	 * @return een int om het stapOnPlatform weer te geven
 	 */
-	public int getStepOnPlatform() { return stepOnPlatform; }
+	public String getStepOnPlatform() { return stepOnPlatform; }
+
+	public String getId() {
+		return id;
+	}
+
+	public Date getArrival() {
+		return arrival;
+	}
+
+	public Date getDeparture() {
+		return departure;
+	}
 
 	// Setters
 	/**
@@ -62,12 +81,24 @@ public class Overstap {
 	 * Deze methode sets het stepOffPlatform.
 	 * @param stepOffPlatform
 	 */
-	public void setStepOffPlatform(int stepOffPlatform) { this.stepOffPlatform = stepOffPlatform; }
+	public void setStepOffPlatform(String stepOffPlatform) { this.stepOffPlatform = stepOffPlatform; }
 	/**
 	 * Deze methode sets het stepOnPlatform.
 	 * @param stepOnPlatform
 	 */
-	public void setStepOnPlatform(int stepOnPlatform) { this.stepOnPlatform = stepOnPlatform; }	
+	public void setStepOnPlatform(String stepOnPlatform) { this.stepOnPlatform = stepOnPlatform; }	
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setArrival(Date arrival) {
+		this.arrival = arrival;
+	}
+
+	public void setDeparture(Date departure) {
+		this.departure = departure;
+	}
 	
 	/**
 	 * Deze methode overrides de Object.hashcode() methode.
@@ -77,8 +108,6 @@ public class Overstap {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((station == null) ? 0 : station.hashCode());
-		result = prime * result + stepOffPlatform;
-		result = prime * result + stepOnPlatform;
 		return result;
 	}
 	/**
@@ -103,5 +132,13 @@ public class Overstap {
 		if (stepOnPlatform != other.stepOnPlatform)
 			return false;
 		return true;
+	}
+
+	public String getTerminus() {
+		return terminus;
+	}
+
+	public void setTerminus(String terminus) {
+		this.terminus = terminus;
 	}
 }
