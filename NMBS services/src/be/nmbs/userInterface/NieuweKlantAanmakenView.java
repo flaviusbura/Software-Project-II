@@ -75,7 +75,7 @@ public class NieuweKlantAanmakenView {
 			c.gridy = 2;
 			panel.add(telefoon, c);
 			
-			telefoonText = new JTextField(15);
+			telefoonText = new JTextField(20);
 			c = new GridBagConstraints();
 			c.fill = new GridBagConstraints().HORIZONTAL;
 			c.gridx = 1;
@@ -89,7 +89,7 @@ public class NieuweKlantAanmakenView {
 			c.gridy = 3;
 			panel.add(straat, c);
 			
-			straatText = new JTextField(50);
+			straatText = new JTextField(20);
 			c = new GridBagConstraints();
 			c.fill = new GridBagConstraints().HORIZONTAL;
 			c.gridx = 1;
@@ -103,7 +103,7 @@ public class NieuweKlantAanmakenView {
 			c.gridy = 4;
 			panel.add(nr, c);
 			
-			nrText = new JTextField(4);
+			nrText = new JTextField(20);
 			c = new GridBagConstraints();
 			c.fill = new GridBagConstraints().HORIZONTAL;
 			c.gridx = 1;
@@ -117,7 +117,7 @@ public class NieuweKlantAanmakenView {
 			c.gridy = 5;
 			panel.add(bus, c);
 			
-			busText = new JTextField(10);
+			busText = new JTextField(20);
 			c = new GridBagConstraints();
 			c.fill = new GridBagConstraints().HORIZONTAL;
 			c.gridx = 1;
@@ -131,7 +131,7 @@ public class NieuweKlantAanmakenView {
 			c.gridy = 6;
 			panel.add(postcode, c);
 			
-			postcodeText = new JTextField(4);
+			postcodeText = new JTextField(20);
 			c = new GridBagConstraints();
 			c.fill = new GridBagConstraints().HORIZONTAL;
 			c.gridx = 1;
@@ -145,7 +145,7 @@ public class NieuweKlantAanmakenView {
 			c.gridy = 7;
 			panel.add(stad, c);
 			
-			stadText = new JTextField(30);
+			stadText = new JTextField(20);
 			c = new GridBagConstraints();
 			c.fill = new GridBagConstraints().HORIZONTAL;
 			c.gridx = 1;
@@ -159,7 +159,7 @@ public class NieuweKlantAanmakenView {
 			c.gridy = 8;
 			panel.add(land, c);
 			
-			landText = new JTextField(30);
+			landText = new JTextField(20);
 			c = new GridBagConstraints();
 			c.fill = new GridBagConstraints().HORIZONTAL;
 			c.gridx = 1;
