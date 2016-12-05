@@ -132,7 +132,9 @@ public class ApiCaller {
 			    				s.add(new Station(station.getString("Name"), station.getString("ArrivalPlatform"), station.getString("DeparturePlatform"), aDate, aaDate, dDate, adDate));
 			    		}
 			    		
-			    		t.add(new Trein(trein.getString("FullId"), trein.get("DepartureStation").toString(), trein.getString("TerminusStation"), s, trein.getBoolean("Cancelled")));
+			    		JSONObject trainTime = trein.getJSONObject("Time");
+			    		Date tDate = format.parse(trainTime.getString("Arrival"));
+			    		t.add(new Trein(trein.getString("FullId"), trein.get("DepartureStation").toString(), trein.getString("TerminusStation"), s, trein.getBoolean("Cancelled"), tDate));
 			    	}
 			    	
 			    	// Checken voor overstappen
@@ -250,7 +252,9 @@ public class ApiCaller {
 			    				s.add(new Station(station.getString("Name"), station.getString("ArrivalPlatform"), station.getString("DeparturePlatform"), aDate, aaDate, dDate, adDate));
 			    		}
 			    		
-			    		t.add(new Trein(trein.getString("FullId"), trein.get("DepartureStation").toString(), trein.getString("TerminusStation"), s, trein.getBoolean("Cancelled")));
+			    		JSONObject trainTime = trein.getJSONObject("Time");
+			    		Date tDate = format.parse(trainTime.getString("Arrival"));
+			    		t.add(new Trein(trein.getString("FullId"), trein.get("DepartureStation").toString(), trein.getString("TerminusStation"), s, trein.getBoolean("Cancelled"), tDate));
 			    	}
 			    	
 			    	// Checken voor overstappen
@@ -352,7 +356,9 @@ public class ApiCaller {
 	    				s.add(new Station(station.getString("Name"), station.getString("ArrivalPlatform"), station.getString("DeparturePlatform"), aDate, aaDate, dDate, adDate));
 	    		}
 	    		
-	    		Trein t = new Trein(trein.getString("FullId"), trein.get("DepartureStation").toString(), trein.getString("TerminusStation"), s, trein.getBoolean("Cancelled"));
+	    		JSONObject trainTime = trein.getJSONObject("Time");
+	    		Date tDate = format.parse(trainTime.getString("Arrival"));
+	    		Trein t = new Trein(trein.getString("FullId"), trein.get("DepartureStation").toString(), trein.getString("TerminusStation"), s, trein.getBoolean("Cancelled"), tDate);
 	
 			    return t;
 			} else {

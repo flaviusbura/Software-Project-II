@@ -4,27 +4,8 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 import be.nmbs.logic.Route;
-import be.nmbs.logic.Station;
 
-public class RouteTableModel implements TableModel {
-
-	/*
-	 * public String getColumnName(int col) {
-        return columnNames[col].toString();
-    }
-    public int getRowCount() { return rowData.length; }
-    public int getColumnCount() { return columnNames.length; }
-    public Object getValueAt(int row, int col) {
-        return rowData[row][col];
-    }
-    public boolean isCellEditable(int row, int col)
-        { return true; }
-    public void setValueAt(Object value, int row, int col) {
-        rowData[row][col] = value;
-        fireTableCellUpdated(row, col);
-    }
-	 */
-	
+public class RouteTableModel implements TableModel {	
 	private Route route;
 	
 	public void setRoute(Route route) {
@@ -76,31 +57,16 @@ public class RouteTableModel implements TableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		if (route.getOverstappen().size() <= rowIndex) {
-			Station station = null;
-			System.out.println(route.getStepOff());
-			for (int i = 0; i < route.getTreinen().get(route.getTreinen().size() - 1).getStops().size(); i++) {
-				if (route.getTreinen().get(route.getTreinen().size() - 1).getStops().get(i).getName() == route.getStepOff()) {
-					station = route.getTreinen().get(route.getTreinen().size() - 1).getStops().get(i);
-				}
-				System.out.println(route.getTreinen().get(route.getTreinen().size() - 1).getStops().get(i).getName());
-			}
-			
+		if (route.getOverstappen().size() <= rowIndex) {			
 			switch(columnIndex) {
 			case 0:
-					return route.getStepOff();
+				return route.getStepOff();
 			
 			case 1:
-				if (station != null)
-					return station.getArrival();
-				else
-					return "";
+				return route.getTreinen().get(route.getTreinen().size() - 1).getArrival();
 				
 			case 2:
-				if (station != null)
-					return station.getArrivalPlatform();
-				else
-					return "";
+				return "Aankomst";
 				
 			case 3: 
 				return "";
@@ -148,5 +114,4 @@ public class RouteTableModel implements TableModel {
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		
 	}
-	
 }
