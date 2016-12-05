@@ -51,7 +51,7 @@ public class DatabaseSingleton {
                 System.out.println("SQLVendorError: " + e.getErrorCode());
               	 // db parameters
                 String url1 = "jdbc:sqlite:C:/Users/leire_000/Desktop/NMBSServices.db";
-                // create a connection to the database
+                // create a connection to the local database
                 connection = DriverManager.getConnection(url1);
                 
             }            
