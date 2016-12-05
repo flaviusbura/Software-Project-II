@@ -49,10 +49,11 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 				StationNMBS station = new StationNMBS();
 				station.setNaam(stationNaam);
 				String omschrijving = res.getString("omschrijving");
+				String type = res.getString("type");
 				Timestamp timestamp = res.getTimestamp("datum");
 				boolean actief = res.getBoolean("actief");
 
-				VerlorenVoorwerp voorwerp = new VerlorenVoorwerp(id, station, omschrijving, timestamp, actief);
+				VerlorenVoorwerp voorwerp = new VerlorenVoorwerp(id, station, omschrijving,type, timestamp, actief);
 				lijst.add((voorwerp));
 			}
 
@@ -82,7 +83,7 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 		ArrayList<VerlorenVoorwerp> lijst = null;
 		PreparedStatement prep = null;
 		ResultSet res = null;
-		String sql = "SELECT * FROM verlorenvoorwerp where omschrijving=?";
+		String sql = "SELECT * FROM verlorenvoorwerp where type=? and actief=1";
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
@@ -98,10 +99,11 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 				StationNMBS station = new StationNMBS();
 				station.setNaam(stationNaam);
 				String omschrijving = res.getString("omschrijving");
+				String type = res.getString("type");
 				Timestamp timestamp = res.getTimestamp("datum");
 				boolean actief = res.getBoolean("actief");
 
-				VerlorenVoorwerp voorwerp = new VerlorenVoorwerp(id, station, omschrijving, timestamp, actief);
+				VerlorenVoorwerp voorwerp = new VerlorenVoorwerp(id, station, omschrijving, type,timestamp, actief);
 				lijst.add((voorwerp));
 			}
 
@@ -132,7 +134,7 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 	public VerlorenVoorwerp getById(int id) {
 		PreparedStatement prep = null;
 		ResultSet res = null;
-		String sql = "SELECT * FROM verlorenvoorwerpen WHERE ID = ?";
+		String sql = "SELECT * FROM verlorenvoorwerp WHERE ID = ?";
 		try {
 			if (getConnection().isClosed())
 				throw new IllegalStateException("Unexpected error!");
@@ -147,10 +149,11 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 			StationNMBS station = new StationNMBS();
 			station.setNaam(stationNaam);
 			String omschrijving = res.getString("omschrijving");
+			String type = res.getString("type");
 			Timestamp timestamp = res.getTimestamp("datum");
 			boolean actief = res.getBoolean("actief");
 
-			VerlorenVoorwerp voorwerp = new VerlorenVoorwerp(id, station, omschrijving, timestamp, actief);
+			VerlorenVoorwerp voorwerp = new VerlorenVoorwerp(id, station, omschrijving,type, timestamp, actief);
 
 			return voorwerp;
 		} catch (SQLException e) {
@@ -177,7 +180,7 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 	 */
 	public int insert(VerlorenVoorwerp voorwerp) {
 		PreparedStatement prep = null;
-		String sql = "INSERT INTO verlorenvoorwerp VALUES(null,?,?,?,?)";
+		String sql = "INSERT INTO verlorenvoorwerp VALUES(null,?,?,?,?,?)";
 
 		try {
 			if (getConnection().isClosed())
@@ -187,8 +190,9 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 			
 			prep.setString(1, voorwerp.getStation().getNaam());
 			prep.setString(2, voorwerp.getOmschrijving());
-			prep.setTimestamp(3, voorwerp.getTimestampNow());
-			prep.setBoolean(4, voorwerp.isActief());
+			prep.setString(3, voorwerp.getType());
+			prep.setTimestamp(4, voorwerp.getTimestampNow());
+			prep.setBoolean(5, voorwerp.isActief());
 			return prep.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -211,8 +215,8 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 	 * @param voorwerp
 	 * @return Een int om aan te geven hoeveel rijen aangepast zijn
 	 */
-	public int updateActief(VerlorenVoorwerp voorwerp) {
-		String sql = "UPDATE verlorenvoorwerpen SET actief = false WHERE voorwerp_id = ?";
+	public int updateActief(int voorwerpId) {
+		String sql = "UPDATE verlorenvoorwerp SET actief = false WHERE voorwerp_id = ?";
 		PreparedStatement prep = null;
 		try {
 			if (getConnection().isClosed())
@@ -220,7 +224,7 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 
 			prep = getConnection().prepareStatement(sql);
 
-			prep.setInt(1, voorwerp.getId());
+			prep.setInt(1, voorwerpId);
 			return prep.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
