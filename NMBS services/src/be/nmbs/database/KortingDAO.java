@@ -3,7 +3,10 @@ package be.nmbs.database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import be.nmbs.logic.Korting;
+import be.nmbs.logic.Prijs;
 
 public class KortingDAO extends BaseDAO {
 	/**
@@ -11,6 +14,50 @@ public class KortingDAO extends BaseDAO {
 	 */
 	public KortingDAO(){}
 	
+	
+	/**
+	 * Deze methode gaat aan de database alle gegevens vragen inde tabel korting.
+	 * 
+	 * @return Een ArrayList met alle korting-objecten in de tabel korting
+	 */
+	public ArrayList<Korting> getAll() {
+		ArrayList<Korting> lijst = null;
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		String sql = "SELECT * FROM korting";
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+			res = prep.executeQuery();
+			lijst = new ArrayList<Korting>();
+
+			while (res.next()) {
+				int korting_id2=res.getInt("korting_id");
+				double hoeveelheid=res.getDouble("hoeveelheid");
+				String omschrijving=res.getString("omschrijving");
+				boolean actief=res.getBoolean("actief");
+				String typeKorting=res.getString("typeKorting");
+				Korting k = new Korting(korting_id2,hoeveelheid,omschrijving,actief,typeKorting);
+				lijst.add((k));
+			}
+			return lijst;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+				if (res != null)
+					res.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
 	/**
 	 * @return
 	 */

@@ -24,7 +24,7 @@ public class TreinTest {
 		Date datum=new Date();
 		Station test = new Station("Vilvoorde","2", "2",datum,datum, datum, datum);
 		myList.add(test);
-		trein = new Trein("2", "Mechelen", "Brussel-Zuid",myList, false);
+		//trein = new Trein("2", "Mechelen", "Brussel-Zuid",myList, false);
 	}
 	/**
 	 * Deze methode test de constructor met parameters
