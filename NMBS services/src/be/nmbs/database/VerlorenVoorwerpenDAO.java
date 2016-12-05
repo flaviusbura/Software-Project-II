@@ -101,6 +101,7 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 				String omschrijving = res.getString("omschrijving");
 				String type = res.getString("type");
 				Timestamp timestamp = res.getTimestamp("datum");
+				
 				boolean actief = res.getBoolean("actief");
 
 				VerlorenVoorwerp voorwerp = new VerlorenVoorwerp(id, station, omschrijving, type,timestamp, actief);
