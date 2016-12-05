@@ -415,22 +415,31 @@ public class KlantWijzigenController {
 		});
 
 		KlantWijzigenView.getZoek().addActionListener(new ActionListener() {
-
 			@SuppressWarnings("static-access")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String naam;
 				naam = KlantWijzigenView.getZoekText().getText();
-				if (naam == null) {
-					jOptionPane.showMessageDialog(null, "Geen klanten gevonden met deze achternaam.");
+				if (naam.equals("")) {
+					jOptionPane.showMessageDialog(null, "Geen klanten gevonden.");
+					KlantWijzigenView.getLijst().clear();
 					KlantWijzigenView.getZoekText().setText("");
+					KlantWijzigenView.setKlantWijzigenControllerToNull();
+					view.changeView(KlantWijzigenView.initialize(view));
 				} else {
 					ArrayList<Klant> lijst = new ArrayList<>();
 					KlantDAO klantDAO = new KlantDAO();
 					lijst = klantDAO.getAllByAchternaam(naam);
-					KlantWijzigenView.setLijst(lijst);
-					KlantWijzigenView.setKlantWijzigenControllerToNull();
-					view.changeView(KlantWijzigenView.initialize(view));
+					if (lijst.size() == 0) {
+						jOptionPane.showMessageDialog(null, "Geen klanten gevonden met deze achternaam.");
+						KlantWijzigenView.setKlantWijzigenControllerToNull();
+						KlantWijzigenView.getLijst().clear();
+						view.changeView(KlantWijzigenView.initialize(view));
+					} else {
+						KlantWijzigenView.setLijst(lijst);
+						KlantWijzigenView.setKlantWijzigenControllerToNull();
+						view.changeView(KlantWijzigenView.initialize(view));
+					}
 				}
 			}
 		});

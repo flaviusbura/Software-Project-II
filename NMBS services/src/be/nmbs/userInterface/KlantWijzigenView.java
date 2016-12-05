@@ -270,6 +270,10 @@ public class KlantWijzigenView {
 		return back;
 	}
 
+	public static ArrayList<Klant> getLijst() {
+		return lijst;
+	}
+
 	public static void setKlantWijzigenControllerToNull() {
 		klantWijzigenController = null;
 	}

@@ -38,7 +38,7 @@ public class LoginController {
 				Hashing hashing = new Hashing();
 				try {
 					if (Objects.equals(gebruiker.getWachtwoord(), new String(
-						hashing.hashPaswoord(String.valueOf(LoginView.getPasswordText().getPassword()))))) {
+							hashing.hashPaswoord(String.valueOf(LoginView.getPasswordText().getPassword()))))) {
 						optionPane.showMessageDialog(null, "Je bent met succes ingelogd!");
 						view.setIngelogdGebruiker(gebruiker);
 						HomeView.setHomeControllerToNull();
@@ -51,9 +51,11 @@ public class LoginController {
 				} catch (HeadlessException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				} catch (NoSuchAlgorithmException e1) {
+				} catch (NoSuchAlgorithmException e2) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					e2.printStackTrace();
+				} catch (NullPointerException e3) {
+					optionPane.showMessageDialog(null, "Foutieve gegevens, probeer opniew!");
 				}
 			}
 		});
