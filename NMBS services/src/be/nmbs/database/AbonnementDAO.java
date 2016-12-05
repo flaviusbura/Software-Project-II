@@ -30,7 +30,7 @@ public class AbonnementDAO extends BaseDAO{
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
 			prep.setTimestamp(4, startDatum);
-			prep.setTimestamp(5, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getStartDatum()));
+			prep.setTimestamp(5, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getEindDatum()));
 			prep.setInt(6, abonnement.getPrijsId());
 			prep.setInt(7,abonnement.getKortingId());
 			prep.setBoolean(8, abonnement.isActief());
@@ -63,7 +63,7 @@ public class AbonnementDAO extends BaseDAO{
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
 			prep.setTimestamp(4, startDatum);
-			prep.setTimestamp(5, abonnement.getTimestampZesMaandAbonnemant(abonnement.getStartDatum()));
+			prep.setTimestamp(5, abonnement.getTimestampZesMaandAbonnemant(abonnement.getEindDatum()));
 			prep.setInt(6, abonnement.getPrijsId());
 			prep.setInt(7,abonnement.getKortingId());
 			prep.setBoolean(8, abonnement.isActief());
@@ -96,7 +96,7 @@ public class AbonnementDAO extends BaseDAO{
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
 			prep.setTimestamp(4, startDatum);
-			prep.setTimestamp(5, abonnement.getTimestampNegenMaandAbonnemant(abonnement.getStartDatum()));
+			prep.setTimestamp(5, abonnement.getTimestampNegenMaandAbonnemant(abonnement.getEindDatum()));
 			prep.setInt(6, abonnement.getPrijsId());
 			prep.setInt(7,abonnement.getKortingId());
 			prep.setBoolean(8, abonnement.isActief());
@@ -129,7 +129,7 @@ public class AbonnementDAO extends BaseDAO{
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
 			prep.setTimestamp(4, startDatum);
-			prep.setTimestamp(5, abonnement.getTimestampJaarAbonnemant(abonnement.getStartDatum()));
+			prep.setTimestamp(5, abonnement.getTimestampJaarAbonnemant(abonnement.getEindDatum()));
 			prep.setInt(6, abonnement.getPrijsId());
 			prep.setInt(7,abonnement.getKortingId());
 			prep.setBoolean(8, abonnement.isActief());

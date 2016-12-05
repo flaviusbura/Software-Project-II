@@ -30,7 +30,7 @@ public class RouteTest {
 		//overstappen.add(new Overstap("1", 1, 2));
 		
 		treinen = new ArrayList<Trein>();
-		treinen.add(new Trein("1", "2", "3", null, false));
+	//	treinen.add(new Trein("1", "2", "3", null, false));
 		
 		route3 = new Route("test1", "test2", treinen, overstappen);
 	}
@@ -79,7 +79,7 @@ public class RouteTest {
 
 	@Test
 	public void testSetTreinen() {
-		treinen.add(new Trein("4", "5", "6", null, true));
+		//treinen.add(new Trein("4", "5", "6", null, true));
 		route3.setTreinen(treinen);
 		assertEquals(treinen, route3.getTreinen());
 	}

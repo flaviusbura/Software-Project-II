@@ -9,6 +9,7 @@ public class VerlorenVoorwerp {
 	private int id;
 	private StationNMBS station;
 	private String omschrijving;
+	private String type;
 	private Timestamp timestamp;
 	private boolean actief;
 
@@ -21,14 +22,23 @@ public class VerlorenVoorwerp {
 		this.actief = actief;
 	}
 	
-	public VerlorenVoorwerp(int id, StationNMBS station, String omschrijving, Timestamp timestamp, boolean actief) {
+	public VerlorenVoorwerp(int id, StationNMBS station, String omschrijving, String type,Timestamp timestamp, boolean actief) {
 		this.id = id;
 		this.station = station;
 		this.omschrijving = omschrijving;
 		this.timestamp = timestamp;
 		this.actief = actief;
+		this.type=type;
 	}
 
+	public VerlorenVoorwerp( StationNMBS station, String omschrijving, String type,Timestamp timestamp, boolean actief) {
+		
+		this.station = station;
+		this.omschrijving = omschrijving;
+		this.timestamp = timestamp;
+		this.actief = actief;
+		this.type=type;
+	}
 	public int getId() {
 		return id;
 	}
@@ -39,6 +49,14 @@ public class VerlorenVoorwerp {
 
 	public String getOmschrijving() {
 		return omschrijving;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public boolean isActief() {
