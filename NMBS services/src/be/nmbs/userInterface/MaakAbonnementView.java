@@ -67,8 +67,9 @@ public class MaakAbonnementView {
 	private static GebruikerDAO gebruikerDao = new GebruikerDAO();
 	private static JComboBox<Gebruiker> gebruikerLijst;
 
-	private static JLabel lblRoute;
-	private static JTextField txtRoute;
+	private static JLabel lblZoek;
+	private static JTextField txtZoek;
+	private static JButton btnZoek;
 
 	private static JLabel lblStartDatum;
 	private static JTextField txtStartDatum;
@@ -90,10 +91,11 @@ public class MaakAbonnementView {
 	private static JComboBox departureField;
 	private static JLabel arrivalLabel;
 	private static JComboBox arrivalField;
+	private static ArrayList<Klant> lijst = new ArrayList<>();
 
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
-		
+
 		// TABLE TEST START
 		String[] kolommen = { "ContactID", "Achternaam", "Voornaam" };
 		KlantDAO klantDAO = new KlantDAO();
@@ -127,11 +129,15 @@ public class MaakAbonnementView {
 					c.setBackground(Color.YELLOW);
 				return c;
 			}
+
+			public long getSerialversionuid() {
+				return serialVersionUID;
+			}
 		};
 		
-		table.setPreferredScrollableViewportSize(new Dimension(250, 120));
+		table.setPreferredScrollableViewportSize(new Dimension(200, 200));
 		table.setFillsViewportHeight(true);
-		
+
 		GridBagConstraints c = new GridBagConstraints();
 
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -153,48 +159,63 @@ public class MaakAbonnementView {
 		for (int i1 = 0; i1 < allStations.size(); i1++) {
 			stationLijst[i1] = "" + allStations.get(i1).getNaam();
 		}
-		
+
 		tPanel = new JPanel(new GridBagLayout());
 		c.fill = new GridBagConstraints().HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 0;
 		panel.add(tPanel, c);
+		btnZoek = new JButton("Zoek Abonnement");
+		
+		txtZoek = new JTextField(10);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 1;
+		tPanel.add(txtZoek, c);
+
+
+		btnZoek = new JButton("Zoek Abonnement");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 1;
+		tPanel.add(btnZoek, c);
+		
 		
 		departureLabel = new JLabel("Vertrekstation ");
 		c.fill = new GridBagConstraints().HORIZONTAL;
 		c.gridx = 1;
-		c.gridy = 1;
+		c.gridy = 2;
 		tPanel.add(departureLabel, c);
 
 		departureField = new JComboBox(stationLijst);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
-		c.gridy = 1;
+		c.gridy = 2;
 		tPanel.add(departureField, c);
 
 		arrivalLabel = new JLabel("Bestemming");
 		c = new GridBagConstraints();
 		c.fill = new GridBagConstraints().HORIZONTAL;
 		c.gridx = 1;
-		c.gridy = 2;
+		c.gridy = 3;
 		tPanel.add(arrivalLabel, c);
 
 		arrivalField = new JComboBox(stationLijst);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
-		c.gridy = 2;
+		c.gridy = 3;
 		tPanel.add(arrivalField, c);
 
 		lblEindDatum = new JLabel("Eind datum ");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
-		c.gridy = 3;
+		c.gridy = 4;
 		tPanel.add(lblEindDatum, c);
 
 		txtEindDatum = new JTextField(10);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
-		c.gridy = 3;
+		c.gridy = 4;
 		txtEindDatum.setText(strDate);
 		tPanel.add(txtEindDatum, c);
 
@@ -207,18 +228,18 @@ public class MaakAbonnementView {
 		lblPrijs = new JLabel("Prijs ");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
-		c.gridy = 4;
+		c.gridy = 5;
 		tPanel.add(lblPrijs, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
-		c.gridy = 4;
+		c.gridy = 5;
 		tPanel.add(prijzenLijst, c);
 
 		lblKorting = new JLabel("Korting ");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
-		c.gridy = 5;
+		c.gridy = 6;
 		tPanel.add(lblKorting, c);
 
 		ArrayList<Korting> allKorting = kortingDao.getAll();
@@ -228,18 +249,18 @@ public class MaakAbonnementView {
 		}
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
-		c.gridy = 5;
+		c.gridy = 6;
 		tPanel.add(kortingLijst, c);
 
 		lblMaanden = new JLabel("Geldig ");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
-		c.gridy = 6;
+		c.gridy = 7;
 		tPanel.add(lblMaanden, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
-		c.gridy = 6;
+		c.gridy = 7;
 		tPanel.add(combo, c);
 
 		// buttons
@@ -247,19 +268,19 @@ public class MaakAbonnementView {
 		new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
-		c.gridy = 7;
+		c.gridy = 8;
 		tPanel.add(goBackToHome, c);
 		maakAbonnement = new JButton("Maak Abonnement");
 		new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
-		c.gridy = 7;
-		tPanel.add(maakAbonnement, c);		
+		c.gridy = 8;
+		tPanel.add(maakAbonnement, c);
 
 		homeController = new HomeController(view);
 		maakAbonnementController = new MaakAbonnementController(view);
 		return panel;
-		
+
 	}
 
 	public static JLabel getDepartureLabel() {
@@ -501,22 +522,6 @@ public class MaakAbonnementView {
 		MaakAbonnementView.gebruikerLijst = gebruikerLijst;
 	}
 
-	public static JLabel getLblRoute() {
-		return lblRoute;
-	}
-
-	public static void setLblRoute(JLabel lblRoute) {
-		MaakAbonnementView.lblRoute = lblRoute;
-	}
-
-	public static JTextField getTxtRoute() {
-		return txtRoute;
-	}
-
-	public static void setTxtRoute(JTextField txtRoute) {
-		MaakAbonnementView.txtRoute = txtRoute;
-	}
-
 	public static JLabel getLblStartDatum() {
 		return lblStartDatum;
 	}
@@ -599,6 +604,38 @@ public class MaakAbonnementView {
 
 	public static void setHomeControllerToNull() {
 		homeController = null;
+	}
+
+	public static JPanel gettPanel() {
+		return tPanel;
+	}
+
+	public static void settPanel(JPanel tPanel) {
+		MaakAbonnementView.tPanel = tPanel;
+	}
+
+	public static JTextField getTxtZoek() {
+		return txtZoek;
+	}
+
+	public static void setTxtZoek(JTextField txtZoek) {
+		MaakAbonnementView.txtZoek = txtZoek;
+	}
+
+	public static ArrayList<Klant> getLijst() {
+		return lijst;
+	}
+
+	public static void setLijst(ArrayList<Klant> lijst) {
+		MaakAbonnementView.lijst = lijst;
+	}
+
+	public static JButton getBtnzoek() {
+		return btnZoek;
+	}
+
+	public static void setBtnzoek(JButton btnzoek) {
+		MaakAbonnementView.btnZoek = btnzoek;
 	}
 
 }
