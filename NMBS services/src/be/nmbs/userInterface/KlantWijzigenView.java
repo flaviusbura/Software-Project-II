@@ -110,6 +110,7 @@ public class KlantWijzigenView {
 		panel.add(jPanel, c);
 
 		zoekText = new JTextField(5);
+		zoekText.setToolTipText("Voer hier in de achternaam van de klant die u wilt opzoeken.");
 		c.fill = new GridBagConstraints().HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
