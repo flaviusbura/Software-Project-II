@@ -7,16 +7,20 @@ import javax.swing.JOptionPane;
 import be.nmbs.userInterface.View;
 import java.sql.Timestamp;
 import be.nmbs.database.AbonnementDAO;
+import be.nmbs.database.KlantDAO;
 import be.nmbs.logic.Abonnement;
 import be.nmbs.logic.Gebruiker;
+import be.nmbs.logic.Klant;
 import be.nmbs.logic.Korting;
 import be.nmbs.logic.Prijs;
 import be.nmbs.userInterface.MaakAbonnementView;
 import be.nmbs.userInterface.HomeView;
+import be.nmbs.userInterface.KlantWijzigenView;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 //MaakAbonnementView
@@ -101,6 +105,36 @@ public class MaakAbonnementController {
 
 				HomeView.setHomeControllerToNull();
 				view.changeView(HomeView.initialize(view));
+			}
+		});
+		
+		MaakAbonnementView.getBtnzoek().addActionListener(new ActionListener() {
+			@SuppressWarnings("static-access")
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String naam;
+				naam = MaakAbonnementView.getTxtZoek().getText();
+				if (naam.equals("")) {
+					JOptionPane.showMessageDialog(null, "Geen klanten gevonden.");
+					MaakAbonnementView.getLijst().clear();
+					MaakAbonnementView.getTxtZoek().setText("");
+					MaakAbonnementView.setMaakAbonnementControllerToNull();
+					view.changeView(MaakAbonnementView.initialize(view));
+				} else {
+					ArrayList<Klant> lijst = new ArrayList<>();
+					KlantDAO klantDAO = new KlantDAO();
+					lijst = klantDAO.getAllByAchternaam(naam);
+					if (lijst.size() == 0) {
+						JOptionPane.showMessageDialog(null, "Geen klanten gevonden met deze achternaam.");
+						MaakAbonnementView.setMaakAbonnementControllerToNull();
+						MaakAbonnementView.getLijst().clear();
+						view.changeView(MaakAbonnementView.initialize(view));
+					} else {
+						MaakAbonnementView.setLijst(lijst);
+						MaakAbonnementView.setMaakAbonnementControllerToNull();
+						view.changeView(MaakAbonnementView.initialize(view));
+					}
+				}
 			}
 		});
 	}

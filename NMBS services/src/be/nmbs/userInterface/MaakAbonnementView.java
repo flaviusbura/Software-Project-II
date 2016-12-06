@@ -92,17 +92,16 @@ public class MaakAbonnementView {
 	private static JLabel arrivalLabel;
 	private static JComboBox arrivalField;
 	private static ArrayList<Klant> lijst = new ArrayList<>();
-
+	
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
 
 		// TABLE TEST START
 		String[] kolommen = { "ContactID", "Achternaam", "Voornaam" };
 		KlantDAO klantDAO = new KlantDAO();
-		ArrayList<Klant> lijst = new ArrayList<>();
-		lijst = klantDAO.getAll();
+		//lijst = klantDAO.getAll();
 		String[][] klantData = new String[lijst.size()][3];
-		new Klant_adresDAO();
+		
 		int i = 0;
 		while (i < lijst.size()) {
 			klantData[i][0] = String.valueOf(lijst.get(i).getContactId());
@@ -135,7 +134,7 @@ public class MaakAbonnementView {
 			}
 		};
 		
-		table.setPreferredScrollableViewportSize(new Dimension(200, 200));
+		table.setPreferredScrollableViewportSize(new Dimension(225, 200));
 		table.setFillsViewportHeight(true);
 
 		GridBagConstraints c = new GridBagConstraints();
@@ -281,6 +280,22 @@ public class MaakAbonnementView {
 		maakAbonnementController = new MaakAbonnementController(view);
 		return panel;
 
+	}
+
+	public static JLabel getLblZoek() {
+		return lblZoek;
+	}
+
+	public static void setLblZoek(JLabel lblZoek) {
+		MaakAbonnementView.lblZoek = lblZoek;
+	}
+
+	public static JButton getBtnZoek() {
+		return btnZoek;
+	}
+
+	public static void setBtnZoek(JButton btnZoek) {
+		MaakAbonnementView.btnZoek = btnZoek;
 	}
 
 	public static JLabel getDepartureLabel() {
