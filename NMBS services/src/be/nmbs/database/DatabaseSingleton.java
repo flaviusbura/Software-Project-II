@@ -41,7 +41,7 @@ public class DatabaseSingleton {
                 String password = "Groep8";
 
                 connection = DriverManager.getConnection(url, username, password);
-              
+            
         
                 
                 	
@@ -50,7 +50,7 @@ public class DatabaseSingleton {
                 System.out.println("SQLState: " + e.getSQLState());
                 System.out.println("SQLVendorError: " + e.getErrorCode());
               	 // db parameters
-                String url1 = "jdbc:sqlite:C:/Users/leire_000/Desktop/NMBSServices.db";
+                String url1 = "jdbc:sqlite:db/NMBSServices.db";
                 // create a connection to the local database
                 connection = DriverManager.getConnection(url1);
                 
