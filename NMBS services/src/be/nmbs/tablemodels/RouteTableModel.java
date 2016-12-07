@@ -1,5 +1,6 @@
 package be.nmbs.tablemodels;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.event.TableModelListener;
@@ -10,6 +11,7 @@ import be.nmbs.logic.Route;
 public class RouteTableModel implements TableModel {	
 	private ArrayList<Route> routes;
 	private ArrayList<Integer> whitespaces;
+	private SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 	
 	public void setRoutes(ArrayList<Route> routes) {
 		this.routes = routes;
@@ -36,7 +38,7 @@ public class RouteTableModel implements TableModel {
 				return "Station";
 			
 			case 1:
-				return "Tijdstip";
+				return "Aankomst";
 				
 			case 2:
 				return "Spoor";
@@ -45,10 +47,10 @@ public class RouteTableModel implements TableModel {
 				return "Trein";
 				
 			case 4:
-				return "Opstapspoor";
+				return "Overstap op";
 				
 			case 5:
-				return "Tijdstip";
+				return "Vertrek";
 		
 			default: return "";
 		}
@@ -60,12 +62,14 @@ public class RouteTableModel implements TableModel {
 		int counter = 0;
 		
 		for (int i = 0; i < routes.size(); i++) {
-			counter++;
+			if (i != 0)
+				counter++;
 			
 			for (int j = 0; j < routes.get(i).getOverstappen().size(); j++)
 				counter++;
 			
-			whitespaces.add(counter);
+			if (i < routes.size())
+				whitespaces.add(counter);
 		}
 		
 		return counter;
@@ -76,53 +80,53 @@ public class RouteTableModel implements TableModel {
 		if (whitespaces.contains(rowIndex)) {
 			switch(columnIndex) {
 				default: 
-					return "";
+					return "---";
 			}
 		} else {
 			for (int i = 0; i < whitespaces.size(); i++) {
 				if (rowIndex < whitespaces.get(i)) {
 					Route route = routes.get(i);
-					int pos = whitespaces.get(i) - route.getOverstappen().size() + rowIndex;
 					
-					System.out.println(pos + " - " + whitespaces.get(i) + " - " + route.getOverstappen().size());
+					int pos;
+					if (i == 0) {
+						pos = rowIndex;
+					} else
+						pos = rowIndex - whitespaces.get(i - 1) - 1;
+					
 					if (route.getOverstappen().size() > pos) {
 						switch(columnIndex) {
 							case 0:
-								if (route.getOverstappen().get(pos).getStation() == null || route.getOverstappen().get(pos).getStation() == "null")
-									return route.getStepOn();
-								else
-									return route.getOverstappen().get(pos).getStation();
+								return route.getOverstappen().get(pos).getStation();
 							
 							case 1:
-								if (route.getOverstappen().get(pos).getDeparture() != null)
-									return route.getOverstappen().get(pos).getDeparture().toString();
+								if (route.getOverstappen().get(pos).getArrival() != null)
+									return sdf.format(route.getOverstappen().get(pos).getArrival());
 								else
 									return "";
 								
 							case 2:
 								return route.getOverstappen().get(pos).getStepOffPlatform();
 								
-							case 3: 
+							case 3:
 								if (route.getOverstappen().size() > pos)
 									return route.getOverstappen().get(pos).getId();
 								else
 									return "";
 								
 							case 4:
-								return route.getOverstappen().get(pos).getStepOnPlatform();
+								if (route.getOverstappen().get(pos).getStepOnPlatform() != "null" && pos > 0)
+									return route.getOverstappen().get(pos).getStepOnPlatform();
+								else
+									return "";
 								
 							case 5:
-								if (route.getOverstappen().get(pos).getDeparture() != null)
-									return route.getOverstappen().get(pos).getDeparture().toString();
+								if (route.getOverstappen().get(pos).getDeparture() != null && pos > 0)
+									return sdf.format(route.getOverstappen().get(pos).getDeparture());
 								else
 									return "";
 						}
-					} else {
-						switch(columnIndex) {
-							default:
-								return "";
-						}
 					}
+					
 					break;
 				}
 			}

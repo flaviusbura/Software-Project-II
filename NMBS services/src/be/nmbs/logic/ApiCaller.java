@@ -183,7 +183,6 @@ public class ApiCaller {
 	public ArrayList<Route> getTimedRouteInfo(String stepOn, String stepOff, Date date) {
 		try {
 			long ms = (date.getTime() + 3600) / 1000;
-			System.out.println(ms);
 			String text = readUrl("https://traintracks.online/api/Route/" + stepOn + "/" + stepOff + "/" + ms);
 			if (text != "") {
 			    JSONObject json = new JSONObject(text);
@@ -255,10 +254,8 @@ public class ApiCaller {
 			    				adDate = format.parse(sDate);
 			    			} else { dDate = null; adDate = null; }
 			    			
-			    			if (format.parse(trainTime.getString("Arrival")).equals(aDate)) {
+			    			if (format.parse(trainTime.getString("Arrival")).equals(aDate))
 			    				endOverstap = new Overstap("", station.getString("Name"), station.getString("ArrivalPlatform"), "", format.parse(time.getString("Arrival")), null, "");
-			    				System.out.println(endOverstap);
-			    			}
 			    			
 			    			if (k == 0 && !station.isNull("DeparturePlatform"))
 			    				s.add(new Station(station.getString("Name"), null, station.getString("DeparturePlatform"), aDate, aaDate, dDate, adDate));
@@ -283,17 +280,29 @@ public class ApiCaller {
 			    		String dep = overstap.getString("DepartureTime");
 			    		Date departure = format.parse(dep);
 			    		
-			    		if (overstap.isNull("ArrivalPlatform"))
-			    			o.add(new Overstap(overstap.get("FullId").toString(), overstap.get("TransferAt").toString(), null, null, arrival, departure, overstap.getString("TerminusStation")));
-			    		else 
-			    			o.add(new Overstap(overstap.get("FullId").toString(), overstap.get("TransferAt").toString(), (String) overstap.get("ArrivalPlatform"), overstap.getString("DeparturePlatform"), arrival, departure, overstap.getString("TerminusStation")));
+			    		if (overstap.isNull("TransferAt")) {
+				    		if (overstap.isNull("ArrivalPlatform"))
+				    			o.add(new Overstap(overstap.get("FullId").toString(), route.get("Departure").toString(), null, null, arrival, departure, overstap.getString("TerminusStation")));
+				    		else 
+				    			o.add(new Overstap(overstap.get("FullId").toString(), route.get("Departure").toString(), (String) overstap.get("ArrivalPlatform"), overstap.getString("DeparturePlatform"), arrival, departure, overstap.getString("TerminusStation")));
+			    		} else {
+			    			if (overstap.isNull("ArrivalPlatform"))
+				    			o.add(new Overstap(overstap.get("FullId").toString(), overstap.get("TransferAt").toString(), null, null, arrival, departure, overstap.getString("TerminusStation")));
+				    		else 
+				    			o.add(new Overstap(overstap.get("FullId").toString(), overstap.get("TransferAt").toString(), (String) overstap.get("ArrivalPlatform"), overstap.getString("DeparturePlatform"), arrival, departure, overstap.getString("TerminusStation")));
+			    		}
 			    	}
-
-			    	o.add(new Overstap("", endOverstap.getStation(), endOverstap.getStepOffPlatform(), "", endOverstap.getArrival(), null, ""));
-				    
+			    	
+			    	if (endOverstap != null)
+			    		o.add(new Overstap("", endOverstap.getStation(), endOverstap.getStepOffPlatform(), "", endOverstap.getArrival(), null, ""));
+			    	
 			    	r.add(new Route(route.getString("Departure"), route.getString("Arrival"), t, o));
 			    	o.clear();
 			    	t.clear();
+			    }
+			    
+			    for (int i = 0; i < r.size(); i++) {
+			    	r.get(i).toString();
 			    }
 	
 			    return r;
