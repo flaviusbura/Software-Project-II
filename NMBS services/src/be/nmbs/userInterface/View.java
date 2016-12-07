@@ -2,10 +2,12 @@ package be.nmbs.userInterface;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import be.nmbs.database.DatabaseSingleton;
 import be.nmbs.logic.Gebruiker;
 
 public class View extends JFrame {
@@ -19,6 +21,16 @@ public class View extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+		addWindowListener(new java.awt.event.WindowAdapter() {
+			public void windowClosing(java.awt.event.WindowEvent e) {
+				try {
+					DatabaseSingleton.getDatabaseSingleton().getConnection().close();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+					System.out.println("Connectie met de database werd niet gesloten!");
+				}
+			}
+		});
 	}
 
 	public JPanel getPanel() {
