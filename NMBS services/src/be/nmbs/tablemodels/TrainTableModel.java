@@ -1,13 +1,16 @@
 package be.nmbs.tablemodels;
 
+import java.text.SimpleDateFormat;
+
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 import be.nmbs.logic.Trein;
 
 public class TrainTableModel implements TableModel {
-	
 	private Trein train;
+	
+	private SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 	
 	public void setTrain(Trein train) {
 		this.train = train;
@@ -67,9 +70,9 @@ public class TrainTableModel implements TableModel {
 				
 			case 2:
 				if (train.getStops().get(rowIndex).getArrivalPlatform() != null)
-					return train.getStops().get(rowIndex).getArrival();
+					return sdf.format(train.getStops().get(rowIndex).getArrival());
 				else
-					return train.getStops().get(rowIndex).getDeparture();
+					return sdf.format(train.getStops().get(rowIndex).getDeparture());
 		
 			default: 
 				return "";
