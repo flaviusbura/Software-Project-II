@@ -89,7 +89,7 @@ public class KlantWijzigenView {
 			}
 		};
 
-		table.setPreferredScrollableViewportSize(new Dimension(600, 450));
+		table.setPreferredScrollableViewportSize(new Dimension(600, 400));
 		table.setFillsViewportHeight(true);
 
 		GridBagConstraints c = new GridBagConstraints();

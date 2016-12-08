@@ -62,7 +62,7 @@ public class KlantWijzigenController {
 						} catch (EnkelLettersException e3) {
 							helpMe.getjTextField().setText("");
 							jOptionPane.showMessageDialog(null,
-									"Dit veldje mag niet leeg zijn en/of andere\n karakters dan letters bevatten.");
+									"Dit veldje mag niet leeg zijn en/of andere\nkarakters dan letters bevatten.");
 						}
 					}
 				});
@@ -113,7 +113,7 @@ public class KlantWijzigenController {
 						} catch (EnkelLettersException e3) {
 							helpMe.getjTextField().setText("");
 							jOptionPane.showMessageDialog(null,
-									"Dit veldje mag niet leeg zijn en/of andere\n karakters dan letters bevatten.");
+									"Dit veldje mag niet leeg zijn en/of andere\nkarakters dan letters bevatten.");
 						}
 					}
 				});
@@ -164,7 +164,7 @@ public class KlantWijzigenController {
 						} catch (EnkelCijfersException e3) {
 							helpMe.getjTextField().setText("");
 							jOptionPane.showMessageDialog(null,
-									"Dit veldje mag niet leeg zijn en/of andere\n karakters dan cijfers bevatten.");
+									"Dit veldje mag niet leeg zijn en/of andere\nkarakters dan cijfers bevatten.");
 						}
 					}
 				});
@@ -215,7 +215,7 @@ public class KlantWijzigenController {
 						} catch (EnkelLettersException e3) {
 							helpMe.getjTextField().setText("");
 							jOptionPane.showMessageDialog(null,
-									"Dit veldje mag niet leeg zijn en/of andere\n karakters dan letters bevatten.");
+									"Dit veldje mag niet leeg zijn en/of andere\nkarakters dan letters bevatten.");
 						}
 					}
 				});
@@ -266,7 +266,7 @@ public class KlantWijzigenController {
 						} catch (EnkelLettersException e3) {
 							helpMe.getjTextField().setText("");
 							jOptionPane.showMessageDialog(null,
-									"Dit veldje mag niet leeg zijn en/of andere\n karakters dan letters bevatten.");
+									"Dit veldje mag niet leeg zijn en/of andere\nkarakters dan letters bevatten.");
 						}
 					}
 				});
@@ -310,8 +310,9 @@ public class KlantWijzigenController {
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
 							view.changeView(KlantWijzigenView.initialize(view));
 						} catch (NumberFormatException e3) {
+							helpMe.getjTextField().setText("");
 							jOptionPane.showMessageDialog(null,
-									"Dit veldje mag niet leeg zijn en/of andere\n karakters dan cijfers bevatten.");
+									"Dit veldje mag niet leeg zijn en/of andere\nkarakters dan cijfers bevatten.");
 						}
 					}
 				});
@@ -361,9 +362,11 @@ public class KlantWijzigenController {
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
 							view.changeView(KlantWijzigenView.initialize(view));
 						} catch (NumberFormatException e3) {
+							helpMe.getjTextField().setText("");
 							jOptionPane.showMessageDialog(null,
 									"Een postcode bestaat enkel uit cijfers.\nProbeer opnieuw!");
 						} catch (NietGeldigePostcodeException e4) {
+							helpMe.getjTextField().setText("");
 							jOptionPane.showMessageDialog(null, "Het ingevoerde postcode is ongeldig!");
 						}
 					}
@@ -415,7 +418,7 @@ public class KlantWijzigenController {
 						} catch (EnkelLettersException e3) {
 							helpMe.getjTextField().setText("");
 							jOptionPane.showMessageDialog(null,
-									"Dit veldje mag niet leeg zijn en/of andere\n karakters dan letters bevatten.");
+									"Dit veldje mag niet leeg zijn en/of andere\nkarakters dan letters bevatten.");
 						}
 					}
 				});
@@ -464,8 +467,9 @@ public class KlantWijzigenController {
 							KlantWijzigenView.setKlantWijzigenControllerToNull();
 							view.changeView(KlantWijzigenView.initialize(view));
 						} catch (EnkelCijfersException e3) {
+							helpMe.getjTextField().setText("");
 							jOptionPane.showMessageDialog(null,
-									"Dit veldje mag niet leeg zijn en/of andere\n karakters dan cijfers bevatten.");
+									"Dit veldje mag niet leeg zijn en/of andere\nkarakters dan cijfers bevatten.");
 						}
 					}
 				});

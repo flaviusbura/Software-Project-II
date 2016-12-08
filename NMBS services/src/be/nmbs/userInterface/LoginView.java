@@ -65,7 +65,7 @@ public class LoginView {
 		loginController = new LoginController(view);
 		
 		//Dit zorgt ervoor dat de code die in de actionlistener staat wordt afgevuurd als enter ingeduwd wordt
-		view.getRootPane().setDefaultButton(login);
+		View.frame.getRootPane().setDefaultButton(login);
 		
 		return panel;
 	}
