@@ -32,16 +32,22 @@ public class BoeteController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				int boeteId = Integer.parseInt(BoeteView.getTxtBoeteId().getText());
+				Integer boeteId = Integer.parseInt(BoeteView.getTxtBoeteId().getText());
 
 				boolean betaald = BoeteView.getCbBetaald().isSelected();
 				BoeteDAO boetedao = new BoeteDAO();
-				while (boetedao.getBoeteIdBy_BoeteId(boeteId) == 0) {
-					javax.swing.JOptionPane.showMessageDialog(null,"Please enter an existing ID");
-					JFrame frame = new JFrame("InputDialog Example #1");
-					boeteId = Integer.parseInt(JOptionPane.showInputDialog(frame, "Try again"));
-					
+				while (boetedao.getBoeteIdBy_BoeteId(boeteId) == 0 ) {
+
+					try {
+						javax.swing.JOptionPane.showMessageDialog(null, "Please enter an existing ID");
+						JFrame frame = new JFrame("InputDialog Example #1");
+						boeteId = Integer.parseInt(JOptionPane.showInputDialog(frame, "Try again"));
+
+					} catch (NumberFormatException e1) {
+						boeteId = 0;
+					}
 				}
+
 				boetedao.updateBetaaldByBoeteId(boeteId, betaald);
 				JOptionPane.showMessageDialog(view.getPanel(), "Boete betaald");
 
