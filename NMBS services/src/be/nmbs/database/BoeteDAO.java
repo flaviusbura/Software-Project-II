@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import be.nmbs.logic.Adres;
 import be.nmbs.logic.Boete;
 import be.nmbs.logic.Prijs;
 
@@ -70,7 +71,40 @@ public class BoeteDAO extends BaseDAO {
 			}
 		}
 	}
+	public int getBoeteIdBy_BoeteId(int boeteId) {
+		
+		PreparedStatement prep = null;
+		int checkBoeteId=0;
+		ResultSet res = null;
+		String sql = "SELECT boeten_id FROM boeten where boeten_Id=?";
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+			prep.setInt(1, boeteId);
+			res = prep.executeQuery();
+			while (res.next()) {
+				
+				checkBoeteId = res.getInt("boeten_id");
 
+			}
+			return checkBoeteId;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+				if (res != null)
+					res.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
 	/**
 	 * Deze methode gaat een Boete-object naar de database schrijven.
 	 * 
@@ -170,5 +204,6 @@ public class BoeteDAO extends BaseDAO {
 			}
 		}
 	}
+	
 	
 }
