@@ -3,6 +3,7 @@ package be.nmbs.userInterface;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.Calendar;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -49,6 +50,13 @@ public class TrainGetView {
 			c.gridy = 1;
 			panel.add(back, c);	
 		} else {
+			info = new JLabel("Trein: " + id);
+			c = new GridBagConstraints();
+			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.gridx = 0;
+			c.gridy = 0;
+			panel.add(info, c);	
+			
 			table = new JTable();
 			table.setPreferredScrollableViewportSize(new Dimension(500, 200));
 			
@@ -67,11 +75,68 @@ public class TrainGetView {
 			c = new GridBagConstraints();
 			c.fill = new GridBagConstraints().HORIZONTAL;
 			c.gridx = 0;
-			c.gridy = 1;
+			c.gridy = 2;
 			panel.add(back, c);
 		}
 		
 		trainGetController = new TrainGetController(view, train);
+		return panel;
+	}
+	
+	@SuppressWarnings("static-access")
+	public static JPanel initialize(View view, String id, String departureStation, String arrivalStation, Calendar departure) {			
+		panel = new JPanel(new GridBagLayout());
+		GridBagConstraints c;
+		
+		ApiCaller caller = new ApiCaller();
+		
+		train = caller.getTreinInfo(id);
+		
+		if (train == null) {
+			info = new JLabel("Geen trein gevonden");
+			c = new GridBagConstraints();
+			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.gridx = 0;
+			c.gridy = 0;
+			panel.add(info, c);	
+			
+			back = new JButton("Terug naar zoeken");
+			c = new GridBagConstraints();
+			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.gridx = 0;
+			c.gridy = 1;
+			panel.add(back, c);	
+		} else {
+			info = new JLabel("Trein: " + id);
+			c = new GridBagConstraints();
+			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.gridx = 0;
+			c.gridy = 0;
+			panel.add(info, c);	
+			
+			table = new JTable();
+			table.setPreferredScrollableViewportSize(new Dimension(500, 200));
+			
+			c = new GridBagConstraints();
+			c.fill = GridBagConstraints.VERTICAL;
+			c.gridx = 0;
+			c.gridheight = 3;
+			
+			table.setVisible(false);
+			
+			JScrollPane scrollPane = new JScrollPane(table);
+			
+			panel.add(scrollPane);
+			
+			back = new JButton("Terug naar zoeken");
+			c = new GridBagConstraints();
+			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.gridx = 0;
+			c.gridy = 2;
+			panel.add(back, c);
+		}
+		
+		trainGetController = new TrainGetController(view, train, departureStation, arrivalStation, departure);
 		return panel;
 	}
 

@@ -1,15 +1,20 @@
 package be.nmbs.tablemodels;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 import be.nmbs.logic.Route;
 
 public class RouteTableModel implements TableModel {	
-	private Route route;
+	private ArrayList<Route> routes;
+	private ArrayList<Integer> whitespaces;
+	private SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 	
-	public void setRoute(Route route) {
-		this.route = route;
+	public void setRoutes(ArrayList<Route> routes) {
+		this.routes = routes;
 	}
 	
 	@Override
@@ -23,7 +28,7 @@ public class RouteTableModel implements TableModel {
 
 	@Override
 	public int getColumnCount() {
-		return 4;
+		return 6;
 	}
 	
 	@Override
@@ -33,13 +38,19 @@ public class RouteTableModel implements TableModel {
 				return "Station";
 			
 			case 1:
-				return "Tijdstip";
+				return "Aankomst";
 				
 			case 2:
 				return "Spoor";
 				
 			case 3:
 				return "Trein";
+				
+			case 4:
+				return "Overstap op";
+				
+			case 5:
+				return "Vertrek";
 		
 			default: return "";
 		}
@@ -47,58 +58,80 @@ public class RouteTableModel implements TableModel {
 
 	@Override
 	public int getRowCount() {
+		whitespaces = new ArrayList<Integer>();
 		int counter = 0;
 		
-		for (int i = 0; i < route.getOverstappen().size(); i++)
-			counter++;
+		for (int i = 0; i < routes.size(); i++) {
+			if (i != 0)
+				counter++;
+			
+			for (int j = 0; j < routes.get(i).getOverstappen().size(); j++)
+				counter++;
+			
+			if (i < routes.size())
+				whitespaces.add(counter);
+		}
 		
-		return counter + 1;
+		return counter;
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		if (route.getOverstappen().size() <= rowIndex) {			
+		if (whitespaces.contains(rowIndex)) {
 			switch(columnIndex) {
-			case 0:
-				return route.getStepOff();
-			
-			case 1:
-				return route.getTreinen().get(route.getTreinen().size() - 1).getArrival();
-				
-			case 2:
-				return "Aankomst";
-				
-			case 3: 
-				return "";
-		
-			default: 
-				return "";
+				default: 
+					return "---";
 			}
 		} else {
-			switch(columnIndex) {
-			case 0:
-				if (route.getOverstappen().get(rowIndex).getStation() == null || route.getOverstappen().get(rowIndex).getStation() == "null")
-					return route.getStepOn();
-				else
-					return route.getOverstappen().get(rowIndex).getStation();
-			
-			case 1:
-				return route.getOverstappen().get(rowIndex).getArrival().toString();
-				
-			case 2:
-				return route.getOverstappen().get(rowIndex).getStepOffPlatform();
-				
-			case 3: 
-				if (route.getOverstappen().size() <= rowIndex)
-					return "";
-				else
-					return route.getOverstappen().get(rowIndex).getId();
-		
-			default: 
-				return "";
+			for (int i = 0; i < whitespaces.size(); i++) {
+				if (rowIndex < whitespaces.get(i)) {
+					Route route = routes.get(i);
+					
+					int pos;
+					if (i == 0) {
+						pos = rowIndex;
+					} else
+						pos = rowIndex - whitespaces.get(i - 1) - 1;
+					
+					if (route.getOverstappen().size() > pos) {
+						switch(columnIndex) {
+							case 0:
+								return route.getOverstappen().get(pos).getStation();
+							
+							case 1:
+								if (route.getOverstappen().get(pos).getArrival() != null)
+									return sdf.format(route.getOverstappen().get(pos).getArrival());
+								else
+									return "";
+								
+							case 2:
+								return route.getOverstappen().get(pos).getStepOffPlatform();
+								
+							case 3:
+								if (route.getOverstappen().size() > pos)
+									return route.getOverstappen().get(pos).getId();
+								else
+									return "";
+								
+							case 4:
+								if (route.getOverstappen().get(pos).getStepOnPlatform() != "null" && pos > 0)
+									return route.getOverstappen().get(pos).getStepOnPlatform();
+								else
+									return "";
+								
+							case 5:
+								if (route.getOverstappen().get(pos).getDeparture() != null && pos > 0)
+									return sdf.format(route.getOverstappen().get(pos).getDeparture());
+								else
+									return "";
+						}
+					}
+					
+					break;
+				}
 			}
 		}
-		
+		return "";
 	}
 
 	@Override
