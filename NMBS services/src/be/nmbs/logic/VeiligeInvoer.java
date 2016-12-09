@@ -1,12 +1,9 @@
 package be.nmbs.logic;
 
-import java.text.NumberFormat;
-import java.text.ParsePosition;
-
-import javax.swing.InputVerifier;
-import javax.swing.JComponent;
+import java.util.regex.Pattern;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+
 import javax.swing.JOptionPane;
 /**
  * 
@@ -48,7 +45,17 @@ public class VeiligeInvoer    {
 	    return true;
 	}
 
+	public static boolean checkForOnlyNumbers(String strToCheck) {
+		String regex = "\\d+";
+		Pattern pattern = Pattern.compile(regex);
+		return pattern.matcher(strToCheck).matches();
+	}
 	
-	
-
+	public static boolean checkForOnlyLetters(String strToCheck) {
+		String regex = "[A-Za-z]+";
+		Pattern pattern = Pattern.compile(regex);
+		String str = strToCheck;
+		str = str.replaceAll(" ", "");
+		return pattern.matcher(str).matches();
+	}
 }

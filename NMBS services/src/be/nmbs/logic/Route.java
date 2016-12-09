@@ -1,7 +1,6 @@
 package be.nmbs.logic;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Route {
 	private String stepOn, stepOff;

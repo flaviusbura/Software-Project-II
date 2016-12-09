@@ -7,7 +7,7 @@ import java.sql.SQLException;
  * @author flaviusb
  *
  */
-public class BaseDAO {
+public abstract class BaseDAO {
 	private static Connection connection;
 	/**
 	 * Deze methode stuurt mijn connectie terug

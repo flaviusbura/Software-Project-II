@@ -64,7 +64,7 @@ public class LoginController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				view.dispose();
+				View.frame.dispose();
 			}
 		});
 	}

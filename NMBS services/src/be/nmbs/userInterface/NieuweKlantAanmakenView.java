@@ -34,7 +34,7 @@ public class NieuweKlantAanmakenView {
 	
 	private static JPanel panel;
 	@SuppressWarnings("unused")
-	private static NieuweKlantAanmakenController niuweKlantAanmakenController;
+	private static NieuweKlantAanmakenController nieuweKlantAanmakenController;
 	
 	@SuppressWarnings("static-access")
 	public static JPanel initialize(View view) {
@@ -110,7 +110,7 @@ public class NieuweKlantAanmakenView {
 			c.gridy = 4;
 			panel.add(nrText, c);
 			
-			bus = new JLabel("bus");
+			bus = new JLabel("Bus");
 			c = new GridBagConstraints();
 			c.fill = new GridBagConstraints().HORIZONTAL;
 			c.gridx = 0;
@@ -166,7 +166,7 @@ public class NieuweKlantAanmakenView {
 			c.gridy = 8;
 			panel.add(landText, c);
 			
-			klantAanmaken = new JButton("Klant Aanmaken");
+			klantAanmaken = new JButton("Klant aanmaken");
 			c = new GridBagConstraints();
 			c.fill = new GridBagConstraints().HORIZONTAL;
 			c.gridx = 0;
@@ -179,7 +179,7 @@ public class NieuweKlantAanmakenView {
 			c.gridy = 9;
 			panel.add(actieannuleren, c);
 			
-			niuweKlantAanmakenController = new NieuweKlantAanmakenController(view);
+			nieuweKlantAanmakenController = new NieuweKlantAanmakenController(view);
 			return panel;
 	}
 	
@@ -192,7 +192,7 @@ public class NieuweKlantAanmakenView {
 	}
 	
 	public static void setNieuweKlantAanmakenControllerToNull() {
-		niuweKlantAanmakenController = null;
+		nieuweKlantAanmakenController = null;
 	}
 	
 	public static JTextField getVoornaamText() {
