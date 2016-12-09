@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import be.nmbs.logic.Station;
 import be.nmbs.logic.StationNMBS;
 import be.nmbs.logic.VerlorenVoorwerp;
+import be.nmbs.userInterface.View;
 
 /**
  * Deze klasse is een DAO. Hiermee kunnen er Verlorenvoorwerpen-objecten naar de
@@ -100,7 +101,22 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 				station.setNaam(stationNaam);
 				String omschrijving = res.getString("omschrijving");
 				String type = res.getString("type");
-				Timestamp timestamp = res.getTimestamp("datum");
+				Timestamp timestamp;
+				
+				if(View.getIngelogdGebruiker().getUsername().equals("Offline"))
+				{
+					Long datumLong = res.getLong("datum");
+					System.out.println(datumLong);
+					timestamp = new Timestamp(datumLong);
+					System.out.println(timestamp);
+					
+				}
+				else
+				{
+					 timestamp = res.getTimestamp("datum");
+					 System.out.println(timestamp);
+				}
+				System.out.println(timestamp);
 				boolean actief = res.getBoolean("actief");
 
 				VerlorenVoorwerp voorwerp = new VerlorenVoorwerp(id, station, omschrijving, type,timestamp, actief);

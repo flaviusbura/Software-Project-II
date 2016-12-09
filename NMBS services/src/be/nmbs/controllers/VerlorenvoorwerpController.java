@@ -118,6 +118,7 @@ public class VerlorenvoorwerpController {
 			        
 			     	VerlorenvoorwerpView.getTabel().setModel(verlorenvoorwerpTableModel);
 			     	VerlorenvoorwerpView.getTabel().setVisible(true);
+			     	VerlorenvoorwerpView.clearFields();
 				}
 					
 				});
