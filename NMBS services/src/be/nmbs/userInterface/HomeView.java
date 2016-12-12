@@ -16,6 +16,7 @@ public class HomeView {
 	private static JButton btnTrains;
 	private static JButton logOut;
 	private static JButton klantenBeheer;
+	private static JButton btnPush;
 	private static JPanel panel;
 	@SuppressWarnings("unused")
 	private static HomeController homeController;
@@ -67,14 +68,28 @@ public class HomeView {
 		c.gridy = 3;
 		panel.add(btnTrains, c);
 		
-		logOut = new JButton("Log out");
+		btnPush = new JButton("Offline gegevens doorsturen");
 		c.fill = new GridBagConstraints().HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 3;
+		panel.add(btnPush, c);
+		
+		logOut = new JButton("Log out");
+		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 4;
 		panel.add(logOut, c);
 		
 		homeController = new HomeController(view);
 		return panel;
+	}
+
+	public static JButton getBtnPush() {
+		return btnPush;
+	}
+
+	public static void setBtnPush(JButton btnPush) {
+		HomeView.btnPush = btnPush;
 	}
 
 	public static JButton getKlantenBeheer() {

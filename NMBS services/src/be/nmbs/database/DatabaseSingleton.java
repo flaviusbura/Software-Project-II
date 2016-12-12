@@ -7,7 +7,8 @@ import java.sql.SQLException;
 public class DatabaseSingleton {
 	private static DatabaseSingleton databaseSingleton;
 	
-	private Connection connection;
+	private static Connection connection;
+	private static Connection connectionLocal;
     /**
      * Default constructor.
      */
@@ -46,13 +47,14 @@ public class DatabaseSingleton {
                 
                 	
             } catch (SQLException e) {
-                System.out.println("SQLException: " + e.getMessage());
-                System.out.println("SQLState: " + e.getSQLState());
-                System.out.println("SQLVendorError: " + e.getErrorCode());
+             //   System.out.println("SQLException: " + e.getMessage());
+             //   System.out.println("SQLState: " + e.getSQLState());
+             //	  System.out.println("SQLVendorError: " + e.getErrorCode());
+            	// geen internet/connecties dus ga naar lokale db
               	 // db parameters
-                String url1 = "jdbc:sqlite:db/NMBSServices.db";
+                String urlLocal = "jdbc:sqlite:db/NMBSServices.db";
                 // create a connection to the local database
-                connection = DriverManager.getConnection(url1);
+                connection = DriverManager.getConnection(urlLocal);
                 
             }            
         }
@@ -60,6 +62,36 @@ public class DatabaseSingleton {
     }
     
     /**
+     * Deze methode gaat de connectie met de local databank maken en stuurt deze terug.
+     * @return
+     * @throws SQLException
+     */
+    public Connection getLocalConnection() throws SQLException {
+        if (connectionLocal != null) {
+            return connectionLocal;
+        }
+        else {
+           
+
+             //   System.out.println("SQLException: " + e.getMessage());
+             //   System.out.println("SQLState: " + e.getSQLState());
+             //	  System.out.println("SQLVendorError: " + e.getErrorCode());
+            	// geen internet/connecties dus ga naar lokale db
+              	 // db parameters
+                String url1 = "jdbc:sqlite:db/NMBSServices.db";
+                // create a connection to the local database
+                connectionLocal = DriverManager.getConnection(url1);
+                
+                     
+        }
+		return connectionLocal;
+    }
+    
+    public static void setConnection(Connection connection) {
+		DatabaseSingleton.connection = connection;
+	}
+
+	/**
      * Deze methode sluit de connectie met de databank.
      * @throws SQLException
      */
@@ -71,6 +103,22 @@ public class DatabaseSingleton {
                 throw new SQLException(e);
             } finally {
                 connection = null;                
+            }
+        }
+    }
+    
+	/**
+     * Deze methode sluit de connectie met de databank.
+     * @throws SQLException
+     */
+    public void closeLocalConnection() throws SQLException {
+        if (connectionLocal != null) {
+            try {
+            	connectionLocal.close();
+            } catch (SQLException e) {
+                throw new SQLException(e);
+            } finally {
+            	connectionLocal = null;                
             }
         }
     }

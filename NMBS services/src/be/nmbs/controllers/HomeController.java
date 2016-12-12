@@ -2,7 +2,9 @@ package be.nmbs.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
+import be.nmbs.database.PushDAO;
 import be.nmbs.userInterface.AbonnementView;
 import be.nmbs.userInterface.BoeteView;
 import be.nmbs.userInterface.HomeView;
@@ -13,7 +15,7 @@ import be.nmbs.userInterface.TicketView;
 import be.nmbs.userInterface.TrainAskView;
 import be.nmbs.userInterface.VerlorenvoorwerpView;
 import be.nmbs.userInterface.View;
-
+import be.nmbs.database.PushDAO;
 public class HomeController {
 	public HomeController(View view) {
 		HomeView.getBtnAbonnement().addActionListener(new ActionListener() {
@@ -89,6 +91,21 @@ public class HomeController {
 			}
 		});
 		
+		HomeView.getBtnPush().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				PushDAO pushdao = new PushDAO();
+				try {
+					pushdao.Push();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			
+				
+			}
+		});
 		
 	}
 }
