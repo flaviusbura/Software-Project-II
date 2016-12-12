@@ -4,6 +4,12 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+/**
+ * Deze klasse wordt gebruikt om een abonnementobject aan te maken.
+ * 
+ * @author flaviusb
+ *
+ */
 public class Abonnement {
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private int abonnementId;
@@ -19,23 +25,19 @@ public class Abonnement {
 	private int prijsId;
 	private int kortingId;
 
-	public Abonnement(Object object) {
-	}
-
-	public Abonnement(int klant_contactId, int gebruikerId, String route,Timestamp startDatum,
-			Timestamp eindDatum, int prijsId, int kortingId,
-			boolean actief) {
-		super();
-		this.startDatum = startDatum;
-		this.eindDatum = eindDatum;
-		this.klant_contactId = klant_contactId;
-		this.gebruikerId = gebruikerId;
-		this.route = route;
-		this.prijsId = prijsId;
-		this.kortingId = kortingId;
-		this.actief = actief;
-	}
-
+	/**
+	 * Deze constructor wordt gebruikt om een abonnement aan te maken en de datamembers gelijk te stellen aan de waarden 
+	 * op de databse.
+	 * @param abonnementId
+	 * @param klant
+	 * @param gebruikerId
+	 * @param route
+	 * @param startDatum
+	 * @param eindDatum
+	 * @param prijs
+	 * @param korting
+	 * @param actief
+	 */
 	public Abonnement(int abonnementId, Klant klant, int gebruikerId, String route, Timestamp startDatum,
 			Timestamp eindDatum, Prijs prijs, Korting korting, boolean actief) {
 		super();
@@ -50,6 +52,19 @@ public class Abonnement {
 		this.actief = actief;
 	}
 
+	/**
+	 * Deze constructor wordt gebruikt om een abonnement aan te maken en de datamembers gelijk te stellen aan de waarden 
+	 * op de databse.
+	 * @param abonnementId
+	 * @param klant_contactId
+	 * @param gebruikerId
+	 * @param route
+	 * @param startDatum
+	 * @param eindDatum
+	 * @param prijsId
+	 * @param kortingId
+	 * @param actief
+	 */
 	public Abonnement(int abonnementId, int klant_contactId, int gebruikerId, String route, Timestamp startDatum,
 			Timestamp eindDatum, int prijsId, int kortingId, boolean actief) {
 		super();
@@ -63,39 +78,25 @@ public class Abonnement {
 		this.kortingId = kortingId;
 		this.actief = actief;
 	}
-	public Abonnement(Klant klant, int gebruikerId, String route, Timestamp startDatum, Timestamp eindDatum,
-			Prijs prijs, Korting korting, boolean actief) {
-		super();
-		
-		this.klant = klant;
-		this.gebruikerId = gebruikerId;
-		this.route = route;
-		this.startDatum = startDatum;
-		this.eindDatum = eindDatum;
-		this.prijs = prijs;
-		this.korting = korting;
-		this.actief = actief;
-	}
 
-	public Abonnement(int abonnementId, Klant klant, int gebruikerId, String route, Prijs prijs, Korting korting,
+	/**
+	 * Default constructor.
+	 */
+	public Abonnement() {}
+	
+	/**
+	 * Deze constructor wordt gebruikt om een nieuw abonnement aan te maken.
+	 * @param klantId
+	 * @param gebruikerId
+	 * @param route
+	 * @param eindDatum
+	 * @param prijsId
+	 * @param kortingId
+	 * @param actief
+	 */
+	public Abonnement(int klantId, int gebruikerId, String route, Timestamp eindDatum, int prijsId, int kortingId,
 			boolean actief) {
-		super();
-		this.abonnementId = abonnementId;
-		this.klant = klant;
-		this.gebruikerId = gebruikerId;
-		this.route = route;
-		this.prijs = prijs;
-		this.korting = korting;
-		this.actief = actief;
-	}
 
-
-	public Abonnement() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public Abonnement(int klantId, int gebruikerId, String route, Timestamp eindDatum, int prijsId, int kortingId,boolean actief) {
-		
 		this.eindDatum = eindDatum;
 		this.klant_contactId = klantId;
 		this.gebruikerId = gebruikerId;
@@ -103,9 +104,11 @@ public class Abonnement {
 		this.prijsId = prijsId;
 		this.kortingId = kortingId;
 		this.actief = actief;
-		// TODO Auto-generated constructor stub
 	}
-
+	/**
+	 * Deze methode wordt gebruikt om de tijd te bepalen om het moement dat deze methode wordt aangeroepen.
+	 * @return Een Timestampobject dat de tijd zal bevatten om  het moment van het aanroepen van deze methode.
+	 */
 	public Timestamp getTimestampNow() {
 		Calendar calendar = Calendar.getInstance();
 		java.util.Date now = calendar.getTime();
@@ -113,26 +116,30 @@ public class Abonnement {
 		return timestamp;
 	}
 
+	/**
+	 * Deze methode gaat de startdatum terugsturen zonder de nanoseconden.
+	 * @return Een Stringobject met datum en tijd zonder nanoseconden.
+	 */
 	public String getStartDatumWithoutNonoSec() {
 		String currentDate = sdf.format(startDatum);
 		return currentDate;
 	}
-
+	
+	/**
+	 * Deze methode gaat de einddatum terugsturen zonder de nanoseconden.
+	 * @return Een Stringobject met datum en tijd zonder nanoseconden.
+	 */
 	public String getEindDatumWithoutNonoSec() {
 		String currentDate = sdf.format(eindDatum);
 		return currentDate;
 	}
 
+	/**
+	 * Deze methode voegt drie maanden tijd toe aan het Timestampobject dat wordt megegeven.
+	 * @param timestamp De tijd waaraan je 3 maanden tijd wilt toevoegen.
+	 * @return Een Timestampobject dat drie maanden extra heeft gekregen.
+	 */
 	public Timestamp getTimestampDrieMaandAbonnemant(Timestamp timestamp) {
-		/*
-		java.sql.Timestamp ts = ...
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(ts);
-				cal.add(Calendar.DAY_OF_WEEK, 14);
-				ts.setTime(cal.getTime().getTime()); // or
-				ts = new Timestamp(cal.getTime().getTime());
-		*/
-		//Timestamp timestamp = AbonnementDAO.getEindDatum(abonnement);
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(timestamp);
 		cal.add(Calendar.MONTH, 3);
@@ -140,9 +147,14 @@ public class Abonnement {
 		timestamp = new Timestamp(cal.getTime().getTime());
 		return timestamp;
 	}
-
+	
+	/**
+	 * Deze methode voegt zes maanden tijd toe aan het Timestampobject dat wordt megegeven.
+	 * @param timestamp De tijd waaraan je 6 maanden tijd wilt toevoegen.
+	 * @return Een Timestampobject dat zes maanden extra heeft gekregen.
+	 */
 	public Timestamp getTimestampZesMaandAbonnemant(Timestamp timestamp) {
-		
+
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(timestamp);
 		cal.add(Calendar.MONTH, 6);
@@ -150,7 +162,11 @@ public class Abonnement {
 		timestamp = new Timestamp(cal.getTime().getTime());
 		return timestamp;
 	}
-
+	/**
+	 * Deze methode voegt negen maanden tijd toe aan het Timestampobject dat wordt megegeven.
+	 * @param timestamp De tijd waaraan je 9 maanden tijd wilt toevoegen.
+	 * @return Een Timestampobject dat negen maanden extra heeft gekregen.
+	 */
 	public Timestamp getTimestampNegenMaandAbonnemant(Timestamp timestamp) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(timestamp);
@@ -160,8 +176,13 @@ public class Abonnement {
 		return timestamp;
 	}
 
+	/**
+	 * Deze methode voegt een jaar tijd toe aan het Timestampobject dat wordt megegeven.
+	 * @param timestamp De tijd waaraan je 1 jaar tijd wilt toevoegen.
+	 * @return Een Timestampobject dat een jaar extra heeft gekregen.
+	 */
 	public Timestamp getTimestampJaarAbonnemant(Timestamp timestamp) {
-		
+
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(timestamp);
 		cal.add(Calendar.YEAR, 1);
@@ -177,7 +198,7 @@ public class Abonnement {
 	public String getRoute() {
 		return route;
 	}
-
+	
 	public Korting getKorting() {
 		return korting;
 	}
@@ -186,7 +207,6 @@ public class Abonnement {
 		return actief;
 	}
 
-	// Setters
 	public void setKlant(Klant klant) {
 		this.klant = klant;
 	}
@@ -207,7 +227,6 @@ public class Abonnement {
 		return abonnementId;
 	}
 
-	
 	@Override
 	public String toString() {
 		return " " + abonnementId;
@@ -290,5 +309,5 @@ public class Abonnement {
 
 		return prijsId;
 	}
-	
+
 }
