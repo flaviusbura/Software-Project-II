@@ -230,8 +230,9 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 		String sql = "INSERT INTO verlorenvoorwerp VALUES(null,?,?,?,?,?)";
 
 		try {
-			if (getConnection().isClosed())
+			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
+			}
 
 			prep = getConnection().prepareStatement(sql);
 			
@@ -350,6 +351,30 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 					prep.close();
 				if (res != null)
 					res.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
+	
+	public int deleteAlles() {
+		String sql = "DELETE from verlorenvoorwerp where actief=1";
+		PreparedStatement prep = null;
+		try {
+			if (DatabaseSingleton.getDatabaseSingleton().getLocalConnection().isClosed())
+				throw new IllegalStateException("Unexpected error!");
+
+			prep = DatabaseSingleton.getDatabaseSingleton().getLocalConnection().prepareStatement(sql);
+			return prep.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 				throw new RuntimeException("Unexpected error!");

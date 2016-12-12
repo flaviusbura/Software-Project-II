@@ -21,6 +21,8 @@ public void Push() throws SQLException{
 	
 	//get local data
     ArrayList<VerlorenVoorwerp> verlorenvoorwerpAll = verlorenvoorwerpdao.getAllForDatabase();
+    verlorenvoorwerpdao.deleteAlles();
+    
     System.out.println(verlorenvoorwerpAll.get(0).getTimestampWithoutNonoSec());
     
     //close local connection

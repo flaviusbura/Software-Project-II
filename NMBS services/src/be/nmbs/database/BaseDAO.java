@@ -14,6 +14,16 @@ public abstract class BaseDAO {
 	 * @return
 	 */
 	protected static Connection getConnection() {
+		try {
+			if(connection.isClosed()) {
+				refreshConnection();
+			}
+		} catch (SQLException e) {
+			//TODO: LOG couldn't access sql db 
+			
+			e.printStackTrace();
+		}
+			
 		return connection;
 	}
 	/**
@@ -28,8 +38,12 @@ public abstract class BaseDAO {
 	 * datamember connection van deze klasse 
 	 */
 	public BaseDAO() {
+		refreshConnection();
+	}
+	
+	private static void refreshConnection() {
 		try {
-			setConnection(DatabaseSingleton.getDatabaseSingleton().getConnection());
+			connection = DatabaseSingleton.getDatabaseSingleton().getConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

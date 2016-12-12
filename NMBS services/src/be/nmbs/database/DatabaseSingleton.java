@@ -32,7 +32,7 @@ public class DatabaseSingleton {
      * @throws SQLException
      */
     public Connection getConnection() throws SQLException {
-        if (connection != null) {
+        if (connection != null && !connection.isClosed()) {
             return connection;
         }
         else {
@@ -67,7 +67,7 @@ public class DatabaseSingleton {
      * @throws SQLException
      */
     public Connection getLocalConnection() throws SQLException {
-        if (connectionLocal != null) {
+        if (connectionLocal != null && !connectionLocal.isClosed()) {
             return connectionLocal;
         }
         else {
