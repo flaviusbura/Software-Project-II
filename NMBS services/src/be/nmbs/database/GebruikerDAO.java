@@ -77,7 +77,7 @@ public class GebruikerDAO extends BaseDAO {
 	 */
 	public int insert(Gebruiker gebruiker) {
 		PreparedStatement prep = null;
-		String sql = "INSERT INTO gebruiker VALUES(?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO gebruiker VALUES(null,?,?,?,?,?,?)";
 
 		try {
 			if (getConnection().isClosed()) {
@@ -85,13 +85,12 @@ public class GebruikerDAO extends BaseDAO {
 			}
 			prep = getConnection().prepareStatement(sql);
 
-			prep.setInt(1, gebruiker.getId());
-			prep.setString(2, gebruiker.getVoornaam());
-			prep.setString(3, gebruiker.getAchternaam());
-			prep.setString(4, gebruiker.getUsername());
-			prep.setString(5, gebruiker.getWachtwoord());
-			prep.setInt(6, gebruiker.getRol());
-			prep.setBoolean(7, gebruiker.isActief());
+			prep.setString(1, gebruiker.getVoornaam());
+			prep.setString(2, gebruiker.getAchternaam());
+			prep.setString(3, gebruiker.getUsername());
+			prep.setString(4, gebruiker.getWachtwoord());
+			prep.setInt(5, gebruiker.getRol());
+			prep.setBoolean(6, gebruiker.isActief());
 			return prep.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
