@@ -383,6 +383,39 @@ public class AbonnementDAO extends BaseDAO{
 			}
 		}
 	}
+	
+	public int getIdByStartDatum(Timestamp startDatum) {
+		String sql = "SELECT abonnement_id FROM abonnement WHERE start_datum = ?";
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		int id = 0;
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+			
+			prep.setTimestamp(1, startDatum);
+			res = prep.executeQuery();
+			while (res.next()) {
+			id= res.getInt("abonnement_id");
+			}
+			return id;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
+	
 	public ArrayList<Abonnement> getAll() {
 		ArrayList<Abonnement> lijst = null;
 		PreparedStatement prep = null;
