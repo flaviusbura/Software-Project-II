@@ -16,7 +16,14 @@ public class HomeView {
 	private static JButton btnTrains;
 	private static JButton logOut;
 	private static JButton klantenBeheer;
+	private static JButton gebruikersBeheer;
+	private static JButton statistieken;
+	private static JButton prijzenBeheer;
 	private static JPanel panel;
+	public static JButton getGebruikersBeheer() {
+		return gebruikersBeheer;
+	}
+
 	@SuppressWarnings("unused")
 	private static HomeController homeController;
 
@@ -66,6 +73,30 @@ public class HomeView {
 		c.gridx = 0;
 		c.gridy = 3;
 		panel.add(btnTrains, c);
+		
+		if (View.getIngelogdGebruiker().getRol() == 2) {
+			gebruikersBeheer = new JButton("Gebruikersbeheer");
+			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.gridx = 3;
+			c.gridy = 0;
+			panel.add(gebruikersBeheer, c);
+		}
+		
+		if (View.getIngelogdGebruiker().getRol() == 2) {
+			statistieken = new JButton("Statistieken");
+			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.gridx = 3;
+			c.gridy = 1;
+			panel.add(statistieken, c);
+		}
+		
+		if (View.getIngelogdGebruiker().getRol() == 2) {
+			prijzenBeheer = new JButton("Prijzenbeheer");
+			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.gridx = 3;
+			c.gridy = 2;
+			panel.add(prijzenBeheer, c);
+		}
 		
 		logOut = new JButton("Log out");
 		c.fill = new GridBagConstraints().HORIZONTAL;
@@ -123,6 +154,14 @@ public class HomeView {
 
 	public static void setBtnRoutes(JButton btnRoutes) {
 		HomeView.btnRoutes = btnRoutes;
+	}
+
+	public static JButton getStatistieken() {
+		return statistieken;
+	}
+
+	public static JButton getPrijzenBeheer() {
+		return prijzenBeheer;
 	}
 
 	public static JButton getBtnTrains() {

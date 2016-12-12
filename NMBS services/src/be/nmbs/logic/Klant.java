@@ -1,27 +1,22 @@
 package be.nmbs.logic;
 
 public class Klant {
-	@Override
-	public String toString() {
-		return achternaam + " " + voornaam;
-	}
-	
-	
-
 	private int contactId;
 	private String voornaam;
 	private String achternaam;
 	private int adresId;
 	private String telefoon;
 	private boolean actief;
-	
+
 	/**
 	 * Default constructor
 	 */
-	public Klant() {}
-	
+	public Klant() {
+	}
+
 	/**
 	 * Constructor met alle parameters
+	 * 
 	 * @param contactId
 	 * @param voornaam
 	 * @param achternaam
@@ -29,11 +24,6 @@ public class Klant {
 	 * @param telefoon
 	 * @param actief
 	 */
-	public Klant(String achternaam, String voornaam) {
-		//this.contactId = contactId;
-		this.voornaam = voornaam;
-		this.achternaam = achternaam;
-	}
 	public Klant(int contactId, String voornaam, String achternaam, int adresId, String telefoon, boolean actief) {
 		super();
 		this.contactId = contactId;
@@ -43,9 +33,10 @@ public class Klant {
 		this.telefoon = telefoon;
 		this.actief = actief;
 	}
-	
+
 	/**
 	 * Deze methode stuurt mijn contactId van de klant terug
+	 * 
 	 * @return
 	 */
 	public int getContactId() {
@@ -54,6 +45,7 @@ public class Klant {
 
 	/**
 	 * Deze methode sets mijn contactId
+	 * 
 	 * @param contactId
 	 */
 	public void setContactId(int contactId) {
@@ -62,6 +54,7 @@ public class Klant {
 
 	/**
 	 * Deze methode stuurt de voornaam van de klant terug
+	 * 
 	 * @return
 	 */
 	public String getVoornaam() {
@@ -70,6 +63,7 @@ public class Klant {
 
 	/**
 	 * Deze mothode sets mijn voornaam
+	 * 
 	 * @param voornaam
 	 */
 	public void setVoornaam(String voornaam) {
@@ -78,6 +72,7 @@ public class Klant {
 
 	/**
 	 * Deze methode stuurt mijn achternaam terug
+	 * 
 	 * @param achternaam
 	 */
 	public String getAchternaam() {
@@ -86,6 +81,7 @@ public class Klant {
 
 	/**
 	 * Deze methode sets mijn achternaam
+	 * 
 	 * @param achternaam
 	 */
 	public void setAchternaam(String achternaam) {
@@ -94,14 +90,16 @@ public class Klant {
 
 	/**
 	 * Deze methode stuurt mijn adresId terug
+	 * 
 	 * @return
 	 */
 	public int getAdresId() {
 		return adresId;
 	}
-	
+
 	/**
 	 * Deze methode sets mijn adresId
+	 * 
 	 * @param adresId
 	 */
 	public void setAdresId(int adresId) {
@@ -110,6 +108,7 @@ public class Klant {
 
 	/**
 	 * Deze methode stuurt de telefoonnummer van de klant terug
+	 * 
 	 * @return
 	 */
 	public String getTelefoon() {
@@ -122,9 +121,11 @@ public class Klant {
 	public void setTelefoon(String telefoon) {
 		this.telefoon = telefoon;
 	}
-	
+
 	/**
-	 * Stuurt een int terug. Een 1 als het actief is en een nul als niet actief is.
+	 * Stuurt een int terug. Een 1 als het actief is en een nul als niet actief
+	 * is.
+	 * 
 	 * @return
 	 */
 	public boolean isActief() {
@@ -133,12 +134,18 @@ public class Klant {
 
 	/**
 	 * Deze krijgt een boolean waarde als parameter en sets actief
+	 * 
 	 * @param actief
 	 */
 	public void setActief(boolean actief) {
 		this.actief = actief;
 	}
-	
+
+	@Override
+	public String toString() {
+		return achternaam + " " + voornaam;
+	}
+
 	/**
 	 * Deze methode overrides Object.hascode()
 	 */
@@ -153,7 +160,7 @@ public class Klant {
 
 	/**
 	 * Deze methode overrides Object.equals(). Deze methode stuurt true terug
-	 *  als achternaam en voornaam gelijk zijn.
+	 * als achternaam en voornaam gelijk zijn.
 	 */
 	@Override
 	public boolean equals(Object obj) {
