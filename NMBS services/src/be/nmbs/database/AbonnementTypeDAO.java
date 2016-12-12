@@ -19,7 +19,7 @@ public class AbonnementTypeDAO extends BaseDAO{
 	
 	public int insertTypeAbonnement(int id, String type) {
 		PreparedStatement prep = null;
-		String sql = "INSERT INTO abonnementType VALUES(?,?)";
+		String sql = "INSERT INTO abonnementType VALUES(null,?,?)";
 		
 		try {
 			if (getConnection().isClosed()) {
