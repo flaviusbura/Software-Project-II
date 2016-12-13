@@ -172,6 +172,75 @@ public class GebruikerDAO extends BaseDAO {
 			}
 		}
 	}
+	
+	/**
+	 * Deze methode gaat een gebruiker updaten
+	 * 
+	 * @param gebruiker
+	 * @return
+	 */
+	public int update(Gebruiker gebruiker) {
+		String sql = "UPDATE gebruiker SET voornaam=?, achternaam=?, username=?, paswoord=?, rol=?, actief=? WHERE gebruiker_id = ?";
+		PreparedStatement prep = null;
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+
+			prep.setString(1, gebruiker.getVoornaam());
+			prep.setString(2, gebruiker.getAchternaam());
+			prep.setString(3, gebruiker.getUsername());
+			prep.setString(4, gebruiker.getWachtwoord());
+			prep.setInt(5, gebruiker.getRol());
+			prep.setBoolean(6, gebruiker.isActief());
+			prep.setInt(7, gebruiker.getId());
+			return prep.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return 9999;
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
+	
+	public int updateWithoutPassword(Gebruiker gebruiker) {
+		String sql = "UPDATE gebruiker SET voornaam=?, achternaam=?, username=?, rol=?, actief=? WHERE gebruiker_id = ?";
+		PreparedStatement prep = null;
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+
+			prep.setString(1, gebruiker.getVoornaam());
+			prep.setString(2, gebruiker.getAchternaam());
+			prep.setString(3, gebruiker.getUsername());
+			prep.setInt(4, gebruiker.getRol());
+			prep.setBoolean(5, gebruiker.isActief());
+			prep.setInt(6, gebruiker.getId());
+			return prep.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return 9999;
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
 
 	/**
 	 * Deze methode gaat een GebruikerObject terug sturen op naam en voornaam
@@ -290,7 +359,7 @@ public class GebruikerDAO extends BaseDAO {
 			return gebruiker2;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return null;
 		} finally {
 			try {
 				if (prep != null)

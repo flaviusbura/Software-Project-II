@@ -8,6 +8,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import be.nmbs.controllers.GebruikerAanpassenController;
@@ -18,11 +19,10 @@ public class GebruikerAanpassenView {
 	private static JTextField firstName;
 	private static JTextField lastName;
 	private static JTextField username;
-	private static JTextField password;
+	private static JPasswordField password;
 	private static JComboBox<String> roleCombo;
 	private static JCheckBox active;
 	private static JButton save;
-
 	private static JButton back;
 	private static JPanel panel;
 	
@@ -104,7 +104,7 @@ public class GebruikerAanpassenView {
 		c.gridy = 2;
 		panel.add(username, c);
 		
-		password = new JTextField();
+		password = new JPasswordField();
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
@@ -175,7 +175,7 @@ public class GebruikerAanpassenView {
 		GebruikerAanpassenView.username = username;
 	}
 
-	public static void setPassword(JTextField password) {
+	public static void setPassword(JPasswordField password) {
 		GebruikerAanpassenView.password = password;
 	}
 
