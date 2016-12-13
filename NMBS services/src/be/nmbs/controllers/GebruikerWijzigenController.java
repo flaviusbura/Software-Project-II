@@ -14,7 +14,6 @@ import be.nmbs.tablemodels.GebruikerTableModel;
 import be.nmbs.userInterface.GebruikerAanpassenView;
 import be.nmbs.userInterface.GebruikerView;
 import be.nmbs.userInterface.GebruikerWijzigenView;
-import be.nmbs.userInterface.RouteGetView;
 import be.nmbs.userInterface.View;
 
 public class GebruikerWijzigenController {
@@ -46,9 +45,9 @@ public class GebruikerWijzigenController {
      	GebruikerWijzigenView.getEdit().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (RouteGetView.getTable().getSelectedRow() != -1) {
-					int selectedRow = RouteGetView.getTable().getSelectedRow();
-					String username = (String) RouteGetView.getTable().getValueAt(selectedRow, 3);
+				if (GebruikerWijzigenView.getTable().getSelectedRow() != -1) {
+					int selectedRow = GebruikerWijzigenView.getTable().getSelectedRow();
+					String username = (String) GebruikerWijzigenView.getTable().getValueAt(selectedRow, 3);
 					
 					GebruikerWijzigenView.getTable().setVisible(false);
 					GebruikerAanpassenView.setGebruikerAanpassenControllerToNull();
@@ -57,10 +56,10 @@ public class GebruikerWijzigenController {
 			}
 		});
      	
-     	GebruikerWijzigenView.getZoekText().getDocument().addDocumentListener(new DocumentListener() {
+     	GebruikerWijzigenView.getSearchField().getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                String text = GebruikerWijzigenView.getZoekText().getText();
+                String text = GebruikerWijzigenView.getSearchField().getText();
 
                 if (text.trim().length() == 0)
                     rowSorter.setRowFilter(null);
@@ -70,7 +69,7 @@ public class GebruikerWijzigenController {
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                String text = GebruikerWijzigenView.getZoekText().getText();
+                String text = GebruikerWijzigenView.getSearchField().getText();
 
                 if (text.trim().length() == 0)
                     rowSorter.setRowFilter(null);

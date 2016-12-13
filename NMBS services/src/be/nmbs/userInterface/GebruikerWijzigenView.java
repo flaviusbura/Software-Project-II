@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 import be.nmbs.controllers.GebruikerWijzigenController;
 
 public class GebruikerWijzigenView {
-	private static JTextField zoekText;
+	private static JTextField searchField;
 	private static JButton edit;
 	private static JButton back;
 	private static JPanel panel;
@@ -44,15 +44,14 @@ public class GebruikerWijzigenView {
 		
 		panel.add(scrollPane);
 
-		zoekText = new JTextField();
-		zoekText.setToolTipText("Voer username in van gebruiker");
+		searchField = new JTextField();
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 0;
-		panel.add(zoekText, c);
+		panel.add(searchField, c);
 		
-		edit = new JButton("Klant wijzigen");
+		edit = new JButton("Gebruiker aanpassen");
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
@@ -70,8 +69,8 @@ public class GebruikerWijzigenView {
 		return panel;
 	}
 
-	public static JTextField getZoekText() {
-		return zoekText;
+	public static JTextField getSearchField() {
+		return searchField;
 	}
 
 	public static JTable getTable() {
