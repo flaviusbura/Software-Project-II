@@ -80,17 +80,13 @@ public class HomeView {
 			c.gridx = 3;
 			c.gridy = 0;
 			panel.add(gebruikersBeheer, c);
-		}
-		
-		if (View.getIngelogdGebruiker().getRol() == 2) {
+	
 			statistieken = new JButton("Statistieken");
 			c.fill = new GridBagConstraints().HORIZONTAL;
 			c.gridx = 3;
 			c.gridy = 1;
 			panel.add(statistieken, c);
-		}
-		
-		if (View.getIngelogdGebruiker().getRol() == 2) {
+
 			prijzenBeheer = new JButton("Prijzenbeheer");
 			c.fill = new GridBagConstraints().HORIZONTAL;
 			c.gridx = 3;

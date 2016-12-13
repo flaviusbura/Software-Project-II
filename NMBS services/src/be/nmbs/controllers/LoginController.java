@@ -55,6 +55,7 @@ public class LoginController {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
 				} catch (NullPointerException e3) {
+					e3.printStackTrace();
 					optionPane.showMessageDialog(null, "Foutieve gegevens, probeer opniew!");
 				}
 			}

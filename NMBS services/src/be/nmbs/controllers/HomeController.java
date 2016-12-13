@@ -88,13 +88,15 @@ public class HomeController {
 			}
 		});
 		
-		HomeView.getGebruikersBeheer().addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				GebruikerView.setGebruikerControllerToNull();
-				view.changeView(GebruikerView.initialize(view));
-			}
-		});
+		if (View.getIngelogdGebruiker().getRol() == 2) {
+			HomeView.getGebruikersBeheer().addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					GebruikerView.setGebruikerControllerToNull();
+					view.changeView(GebruikerView.initialize(view));
+				}
+			});
+		}
 	}
 }
