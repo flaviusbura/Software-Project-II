@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import be.nmbs.userInterface.GebruikerView;
+import be.nmbs.userInterface.GebruikerWijzigenView;
 import be.nmbs.userInterface.HomeView;
 import be.nmbs.userInterface.NieuwGebruikerAanmakenView;
 import be.nmbs.userInterface.View;
@@ -16,6 +17,15 @@ public class GebruikerController {
 			public void actionPerformed(ActionEvent e) {
 				NieuwGebruikerAanmakenView.setNieuwGebruikerAanmakenControllerToNull();
 				view.changeView(NieuwGebruikerAanmakenView.initialize(view));
+			}
+		});
+		
+		GebruikerView.getGebruikerAanpassen().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GebruikerWijzigenView.setGebruikerWijzigenControllerToNull();
+				view.changeView(GebruikerWijzigenView.initialize(view));
 			}
 		});
 		

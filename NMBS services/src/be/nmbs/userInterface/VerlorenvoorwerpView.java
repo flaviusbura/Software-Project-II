@@ -41,14 +41,14 @@ public class VerlorenvoorwerpView {
 	private static JTable tabel;
 	private static JButton btnTerugGegeven;
 	
-	private static  boolean ALLOW_COLUMN_SELECTION = false;
+	private static boolean ALLOW_COLUMN_SELECTION = false;
 	private static boolean ALLOW_ROW_SELECTION = true;
 	private static VerlorenVoorwerpenDAO verlorenvoorwerpdao;
 	 
 	 
 	public static JPanel initialize(View view) {
 		
-	 verlorenvoorwerpdao = new VerlorenVoorwerpenDAO();
+		verlorenvoorwerpdao = new VerlorenVoorwerpenDAO();
 		panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
