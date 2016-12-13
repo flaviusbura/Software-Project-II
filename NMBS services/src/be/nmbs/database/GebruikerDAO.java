@@ -210,37 +210,6 @@ public class GebruikerDAO extends BaseDAO {
 			}
 		}
 	}
-	
-	public int updateWithoutPassword(Gebruiker gebruiker) {
-		String sql = "UPDATE gebruiker SET voornaam=?, achternaam=?, username=?, rol=?, actief=? WHERE gebruiker_id = ?";
-		PreparedStatement prep = null;
-		try {
-			if (getConnection().isClosed()) {
-				throw new IllegalStateException("Unexpected error!");
-			}
-			prep = getConnection().prepareStatement(sql);
-
-			prep.setString(1, gebruiker.getVoornaam());
-			prep.setString(2, gebruiker.getAchternaam());
-			prep.setString(3, gebruiker.getUsername());
-			prep.setInt(4, gebruiker.getRol());
-			prep.setBoolean(5, gebruiker.isActief());
-			prep.setInt(6, gebruiker.getId());
-			return prep.executeUpdate();
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			return 9999;
-		} finally {
-			try {
-				if (prep != null)
-					prep.close();
-
-			} catch (SQLException e) {
-				System.out.println(e.getMessage());
-				throw new RuntimeException("Unexpected error!");
-			}
-		}
-	}
 
 	/**
 	 * Deze methode gaat een GebruikerObject terug sturen op naam en voornaam

@@ -49,14 +49,15 @@ public class GebruikerAanpassenController {
 					g.setAchternaam(GebruikerAanpassenView.getLastName().getText());
 					g.setUsername(GebruikerAanpassenView.getUsername().getText());
 					
-					if (GebruikerAanpassenView.getPassword().getText() != "") {
+					if (!GebruikerAanpassenView.getPassword().getText().isEmpty()) {
 						try {
 							g.setWachtwoord(Hashing.hashPaswoord(GebruikerAanpassenView.getPassword().getText()));
 						} catch (NoSuchAlgorithmException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-					}
+					} else
+						g.setWachtwoord(gebruiker.getWachtwoord());
 					
 					if (GebruikerAanpassenView.getRoleCombo().getSelectedIndex() == 0)
 						g.setRol(1);
@@ -65,23 +66,14 @@ public class GebruikerAanpassenController {
 					
 					g.setActief(GebruikerAanpassenView.getActive().isSelected());
 					
-					if (g.getWachtwoord() != null) {
-						if (dao.update(g) != 9999) {
-							JOptionPane.showMessageDialog(null, "Gebruiker is succesvol aangepast!");
-							GebruikerWijzigenView.setGebruikerWijzigenControllerToNull();
-							view.changeView(GebruikerWijzigenView.initialize(view));
-						} else {
-							JOptionPane.showMessageDialog(null, "Er is iets foutgegaan bij het opslaan van de gebruiker.");
-						}
-					} else {
-						if (dao.updateWithoutPassword(g) != 9999) {
-							JOptionPane.showMessageDialog(null, "Gebruiker is succesvol aangepast!");
-							GebruikerWijzigenView.setGebruikerWijzigenControllerToNull();
-							view.changeView(GebruikerWijzigenView.initialize(view));
-						} else {
-							JOptionPane.showMessageDialog(null, "Er is iets foutgegaan bij het opslaan van de gebruiker.");
-						}
-					}
+					System.out.println(g.getWachtwoord());
+					
+					if (dao.update(g) != 9999) {
+						JOptionPane.showMessageDialog(null, "Gebruiker is succesvol aangepast!");
+						GebruikerWijzigenView.setGebruikerWijzigenControllerToNull();
+						view.changeView(GebruikerWijzigenView.initialize(view));
+					} else
+						JOptionPane.showMessageDialog(null, "Er is iets foutgegaan bij het opslaan van de gebruiker.");
 				}
 			}
 		});
