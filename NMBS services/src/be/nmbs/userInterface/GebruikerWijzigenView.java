@@ -42,7 +42,7 @@ public class GebruikerWijzigenView {
 		
 		JScrollPane scrollPane = new JScrollPane(table);
 		
-		panel.add(scrollPane);
+		panel.add(scrollPane, c);
 
 		searchField = new JTextField();
 		c = new GridBagConstraints();
