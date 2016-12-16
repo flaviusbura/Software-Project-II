@@ -31,7 +31,6 @@ public class GebruikerAanpassenView {
 	@SuppressWarnings("unused")
 	private static boolean ALLOW_ROW_SELECTION = true;
 	
-	@SuppressWarnings("unused")
 	private static GebruikerAanpassenController gebruikerAanpassenController;
 
 	public static JPanel initialize(View view, Gebruiker gebruiker) {

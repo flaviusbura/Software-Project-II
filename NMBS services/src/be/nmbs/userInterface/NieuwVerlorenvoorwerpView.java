@@ -1,6 +1,5 @@
 package be.nmbs.userInterface;
 
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.text.SimpleDateFormat;
@@ -11,14 +10,10 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import be.nmbs.controllers.NieuwVerlorenvoorwerpController;
-import be.nmbs.controllers.VerlorenvoorwerpController;
 import be.nmbs.database.StationDAO;
-import be.nmbs.database.VerlorenVoorwerpenDAO;
 import be.nmbs.logic.StationNMBS;
 
 public class NieuwVerlorenvoorwerpView {
@@ -28,14 +23,15 @@ public class NieuwVerlorenvoorwerpView {
 	private static JTextField txtType;
 	private static JButton btnToevoegen;
 	private static JLabel lblStation;
-	private static JComboBox cbStation;
+	private static JComboBox<String> cbStation;
 	private static JLabel lblOmschrijving;
 	private static JTextField txtOmschrijving;
 	private static JLabel lblDatum;
 	private static JTextField txtDatum;
-	private static NieuwVerlorenvoorwerpController nieuwVerlorenvoorwerpController;
 	private static JButton btnTerug;
 	
+	@SuppressWarnings("unused")
+	private static NieuwVerlorenvoorwerpController nieuwVerlorenvoorwerpController;	
 	
 	public static JPanel initialize(View view) {
 			SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy HH:mm");
@@ -55,13 +51,13 @@ public class NieuwVerlorenvoorwerpView {
 			}
 
 			lblStation = new JLabel("Station");
-			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 1;
 			c.gridy = 0;
 			panel.add(lblStation, c);
 			
-			cbStation = new JComboBox(stationLijst);
-			c.fill = new GridBagConstraints().HORIZONTAL;
+			cbStation = new JComboBox<String>(stationLijst);
+			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 2;
 			c.gridy = 0;
 			panel.add(cbStation, c);
@@ -121,8 +117,6 @@ public class NieuwVerlorenvoorwerpView {
 			c.gridy = 4;
 			panel.add(btnTerug, c);
 			
-			
-			
 			nieuwVerlorenvoorwerpController = new NieuwVerlorenvoorwerpController(view);
 			return panel;
 		}
@@ -167,11 +161,11 @@ public class NieuwVerlorenvoorwerpView {
 		NieuwVerlorenvoorwerpView.lblStation = lblStation;
 	}
 
-	public static JComboBox getCbStation() {
+	public static JComboBox<String> getCbStation() {
 		return cbStation;
 	}
 
-	public static void setCbStation(JComboBox cbStation) {
+	public static void setCbStation(JComboBox<String> cbStation) {
 		NieuwVerlorenvoorwerpView.cbStation = cbStation;
 	}
 
@@ -215,8 +209,5 @@ public class NieuwVerlorenvoorwerpView {
 	public static void clearFields() {
 		txtType.setText("");
 		txtOmschrijving.setText("");
-		
-		
 	}
-
 }

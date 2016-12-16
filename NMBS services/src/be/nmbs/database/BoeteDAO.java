@@ -6,9 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import be.nmbs.logic.Adres;
 import be.nmbs.logic.Boete;
-import be.nmbs.logic.Prijs;
 
 /**
  * Deze klasse is een DAO. Hiermee kunnen er Boete-objecten naar de de database
@@ -22,8 +20,7 @@ public class BoeteDAO extends BaseDAO {
 	/**
 	 * Default constructor.
 	 */
-	public BoeteDAO() {
-	}
+	public BoeteDAO() {	}
 
 	/**
 	 * Deze methode gaat een lijst terug sturen met alle data in mijn tabel
@@ -72,11 +69,10 @@ public class BoeteDAO extends BaseDAO {
 		}
 	}
 	public int getBoeteIdBy_BoeteId(int boeteId) {
-		
 		PreparedStatement prep = null;
 		int checkBoeteId=0;
 		ResultSet res = null;
-		String sql = "SELECT boeten_id FROM boeten where boeten_Id=?";
+		String sql = "SELECT boeten_id FROM boeten where boeten_Id=? LIMIT 1";
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
@@ -84,15 +80,12 @@ public class BoeteDAO extends BaseDAO {
 			prep = getConnection().prepareStatement(sql);
 			prep.setInt(1, boeteId);
 			res = prep.executeQuery();
-			while (res.next()) {
-				
-				checkBoeteId = res.getInt("boeten_id");
+			
+			checkBoeteId = res.getInt("boeten_id");
 
-			}
 			return checkBoeteId;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return 0;
 		} finally {
 			try {
 				if (prep != null)
@@ -178,8 +171,6 @@ public class BoeteDAO extends BaseDAO {
 	public int updateBetaaldByBoeteId(int boeteId, boolean betaald) {
 		
 		PreparedStatement prep = null;
-		ResultSet res = null;
-		//String sql = "SELECT * FROM boete WHERE boeten_id=?";
 		String sql = "UPDATE boeten SET betaald=? WHERE boeten_id=?";
 		try {
 			if (getConnection().isClosed()) {

@@ -2,9 +2,6 @@ package be.nmbs.database;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-
-import be.nmbs.logic.Abonnement;
 
 public class BasisprijsAbonnementenDAO extends BaseDAO{
 	public int insertPrijs(String type,double prijs,boolean actief) {

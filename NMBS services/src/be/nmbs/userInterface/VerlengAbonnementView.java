@@ -12,7 +12,6 @@ import javax.swing.JTextField;
 import be.nmbs.controllers.*;
 import be.nmbs.database.AbonnementDAO;
 import be.nmbs.logic.Abonnement;
-import be.nmbs.logic.Korting;
 
 /**
  * 
@@ -22,22 +21,17 @@ import be.nmbs.logic.Korting;
 public class VerlengAbonnementView {
 	private static JButton goBackToHome;
 	private static JButton verlengMaanden;
-	private static JButton verleng3Maanden;
-	private static JButton verleng6Maanden;
-	private static JButton verleng9Maanden;
-	private static JButton verleng12Maanden;
 	private static JPanel panel;
 	private static JLabel lblAbonnementID;
 	private static JTextField txtId;
-	private static JComboBox<?> cbxAbonnement;
 	private static JComboBox<Abonnement> AbonnementLijst;
-	static AbonnementDAO abonnementDao = new AbonnementDAO();
+	private static AbonnementDAO abonnementDao = new AbonnementDAO();
 	private static HomeController homeController;
 	private static VerlengAbonnementController verlengAbonnementController;
 	private static JLabel lblMaanden;
-	static String[] tab = {"3 maanden", "6 maanden", "9 maanden", "12 maanden"};
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private static JComboBox combo = new JComboBox(tab);
+	private static String[] tab = {"3 maanden", "6 maanden", "9 maanden", "12 maanden"};
+	
+	private static JComboBox<String> combo = new JComboBox<String>(tab);
 	
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
@@ -55,7 +49,6 @@ public class VerlengAbonnementView {
 		c.gridy = 1;
 		panel.add(lblAbonnementID, c);
 
-		
 		txtId = new JTextField(10);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
@@ -68,7 +61,6 @@ public class VerlengAbonnementView {
 		c.gridy = 2;
 		panel.add(lblMaanden, c);
 
-		
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 2;
@@ -88,8 +80,6 @@ public class VerlengAbonnementView {
 		c.gridy = 6;
 		panel.add(goBackToHome, c);
 		
-	
-		
 		homeController = new HomeController(view);
 		verlengAbonnementController = new VerlengAbonnementController(view);
 		return panel;
@@ -100,51 +90,41 @@ public class VerlengAbonnementView {
 		return txtId;
 	}
 
-
 	public static void setTxtId(JTextField txtId) {
 		VerlengAbonnementView.txtId = txtId;
 	}
-
 
 	public static JButton getVerlengMaanden() {
 		return verlengMaanden;
 	}
 
-
 	public static void setVerlengMaanden(JButton verlengMaanden) {
 		VerlengAbonnementView.verlengMaanden = verlengMaanden;
 	}
-
 
 	public static JLabel getLblMaanden() {
 		return lblMaanden;
 	}
 
-
 	public static void setLblMaanden(JLabel lblMaanden) {
 		VerlengAbonnementView.lblMaanden = lblMaanden;
 	}
-
 
 	public static String[] getTab() {
 		return tab;
 	}
 
-
 	public static void setTab(String[] tab) {
 		VerlengAbonnementView.tab = tab;
 	}
 
-
-	public static JComboBox getCombo() {
+	public static JComboBox<String> getCombo() {
 		return combo;
 	}
 
-
-	public static void setCombo(JComboBox combo) {
+	public static void setCombo(JComboBox<String> combo) {
 		VerlengAbonnementView.combo = combo;
 	}
-
 
 	public static JButton getGoBackToHome() {
 		return goBackToHome;
@@ -152,38 +132,6 @@ public class VerlengAbonnementView {
 
 	public static void setGoBackToHome(JButton goBackToHome) {
 		VerlengAbonnementView.goBackToHome = goBackToHome;
-	}
-
-	public static JButton getVerleng3Maanden() {
-		return verleng3Maanden;
-	}
-
-	public static void setVerleng3Maanden(JButton verleng3Maanden) {
-		VerlengAbonnementView.verleng3Maanden = verleng3Maanden;
-	}
-
-	public static JButton getVerleng6Maanden() {
-		return verleng6Maanden;
-	}
-
-	public static void setVerleng6Maanden(JButton verleng6Maanden) {
-		VerlengAbonnementView.verleng6Maanden = verleng6Maanden;
-	}
-
-	public static JButton getVerleng9Maanden() {
-		return verleng9Maanden;
-	}
-
-	public static void setVerleng9Maanden(JButton verleng9Maanden) {
-		VerlengAbonnementView.verleng9Maanden = verleng9Maanden;
-	}
-
-	public static JButton getVerleng12Maanden() {
-		return verleng12Maanden;
-	}
-
-	public static void setVerleng12Maanden(JButton verleng12Maanden) {
-		VerlengAbonnementView.verleng12Maanden = verleng12Maanden;
 	}
 
 	public static JPanel getPanel() {
@@ -202,24 +150,13 @@ public class VerlengAbonnementView {
 		VerlengAbonnementView.lblAbonnementID = lblAbonnementID;
 	}
 
-	public static JComboBox<?> getCbxAbonnement() {
-		return cbxAbonnement;
-	}
-
-	public static void setCbxAbonnement(JComboBox<?> cbxAbonnement) {
-		VerlengAbonnementView.cbxAbonnement = cbxAbonnement;
-	}
-
-
 	public static JComboBox<Abonnement> getAbonnementLijst() {
 		return AbonnementLijst;
 	}
 
-
 	public static void setAbonnementLijst(JComboBox<Abonnement> abonnementLijst) {
 		AbonnementLijst = abonnementLijst;
 	}
-
 
 	public static AbonnementDAO getAbonnementDao() {
 		return abonnementDao;
@@ -252,5 +189,4 @@ public class VerlengAbonnementView {
 	public static void setHomeControllerToNull() {
 		homeController = null;
 	}
-
 }

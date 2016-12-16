@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import be.nmbs.controllers.AbonnementController;
 import be.nmbs.controllers.BoeteController;
 import be.nmbs.controllers.HomeController;
 

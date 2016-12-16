@@ -352,7 +352,7 @@ public class AbonnementDAO extends BaseDAO{
 		}
 	}
 	
-	public static Timestamp getEindDatum(Abonnement abonnement) {
+	public Timestamp getEindDatum(Abonnement abonnement) {
 		String sql = "SELECT * FROM abonnement WHERE abonnement_id = ?";
 		PreparedStatement prep = null;
 		ResultSet res = null;

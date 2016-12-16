@@ -15,7 +15,6 @@ import be.nmbs.logic.Korting;
 import be.nmbs.logic.Prijs;
 import be.nmbs.userInterface.MaakAbonnementView;
 import be.nmbs.userInterface.HomeView;
-import be.nmbs.userInterface.KlantWijzigenView;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -109,7 +108,6 @@ public class MaakAbonnementController {
 		});
 		
 		MaakAbonnementView.getBtnzoek().addActionListener(new ActionListener() {
-			@SuppressWarnings("static-access")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String naam;
