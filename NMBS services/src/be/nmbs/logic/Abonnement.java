@@ -82,7 +82,11 @@ public class Abonnement {
 	/**
 	 * Default constructor.
 	 */
-	public Abonnement() {}
+	public Abonnement() 
+	{
+		
+	}
+	
 	
 	/**
 	 * Deze constructor wordt gebruikt om een nieuw abonnement aan te maken.
@@ -105,6 +109,7 @@ public class Abonnement {
 		this.kortingId = kortingId;
 		this.actief = actief;
 	}
+
 	/**
 	 * Deze methode wordt gebruikt om de tijd te bepalen om het moement dat deze methode wordt aangeroepen.
 	 * @return Een Timestampobject dat de tijd zal bevatten om  het moment van het aanroepen van deze methode.
@@ -140,11 +145,13 @@ public class Abonnement {
 	 * @return Een Timestampobject dat drie maanden extra heeft gekregen.
 	 */
 	public Timestamp getTimestampDrieMaandAbonnemant(Timestamp timestamp) {
+		System.out.println("1------1"+timestamp);
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(timestamp);
 		cal.add(Calendar.MONTH, 3);
 		cal.add(Calendar.SECOND, -1);
 		timestamp = new Timestamp(cal.getTime().getTime());
+		System.out.println("2------2"+timestamp);
 		return timestamp;
 	}
 	
@@ -160,6 +167,7 @@ public class Abonnement {
 		cal.add(Calendar.MONTH, 6);
 		cal.add(Calendar.SECOND, -1);
 		timestamp = new Timestamp(cal.getTime().getTime());
+		
 		return timestamp;
 	}
 	/**
@@ -226,16 +234,25 @@ public class Abonnement {
 	public int getAbonnementId() {
 		return abonnementId;
 	}
-
+	/*
 	@Override
 	public String toString() {
 		return " " + abonnementId;
+	}
+	*/
+	@Override
+	public String toString() {
+		return "Abonnement [sdf=" + sdf + ", abonnementId=" + abonnementId + ", klant=" + klant + ", gebruikerId="
+				+ gebruikerId + ", route=" + route + ", startDatum=" + startDatum + ", eindDatum=" + eindDatum
+				+ ", prijs=" + prijs + ", korting=" + korting + ", actief=" + actief + ", klant_contactId="
+				+ klant_contactId + ", prijsId=" + prijsId + ", kortingId=" + kortingId + "]";
 	}
 
 	public void setAbonnementId(int abonnementId) {
 		this.abonnementId = abonnementId;
 	}
 
+	
 	public int getGebruikerId() {
 		return gebruikerId;
 	}

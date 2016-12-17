@@ -22,26 +22,13 @@ public class VerlengAbonnementController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// Abonnement Abonnement = (Abonnement)
-				// VerlengAbonnementView.getAbonnementIDLijst().getSelectedItem();
-				// Abonnement Abonnement = new
-				// Abonnement(VerlengAbonnementView.getAbonnementIDLijst().getSelectedItem());
-				/*
-				 * 
-				 * String keuze = (String)
-				 * MaakAbonnementView.getCombo().getSelectedItem();
-				 * 
-				 * 
-				 */
-
 				
-				int aboId = VerlengAbonnementView.getTxtId().getX();
 				AbonnementDAO aboDao = new AbonnementDAO();
-				Abonnement abo = new Abonnement();
-				abo = aboDao.getAll_ByID(aboId);
-
+				
+				int aboId = Integer.parseInt(VerlengAbonnementView.getTxtId().getText());
+				
+				Abonnement abo = aboDao.getAbo_ByID(aboId);
 				String keuze = (String) VerlengAbonnementView.getCombo().getSelectedItem();
-
 				if (keuze == "3 maanden") {
 					aboDao.verlengAbonnementMetDrieMaand(abo);
 					JOptionPane.showMessageDialog(view.getPanel(), "Abonnement verlengt met drie maanden");

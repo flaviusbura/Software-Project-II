@@ -1,66 +1,34 @@
 package be.nmbs.database;
 
-import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import be.nmbs.logic.BasisprijsAbonnement;
-import be.nmbs.logic.Prijs;
+import be.nmbs.logic.CoefficientTicket;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+
+import be.nmbs.logic.Abonnement;
 
 
-public class BasisprijsAbonnementenDAO extends BaseDAO{
-	
-	public ArrayList<BasisprijsAbonnement> getAll() {
-		ArrayList<BasisprijsAbonnement> lijst = null;
+
+public class CoefficientTicketDAO extends BaseDAO {
+
+	public int insert(CoefficientTicket coefficientTicket) {
 		PreparedStatement prep = null;
-		ResultSet res = null;
-		String sql = "SELECT * FROM basisprijs_abonnement";
-		try {
-			if (getConnection().isClosed()) {
-				throw new IllegalStateException("Unexpected error!");
-			}
-			prep = getConnection().prepareStatement(sql);
-			res = prep.executeQuery();
-			lijst = new ArrayList<BasisprijsAbonnement>();
-
-			while (res.next()) {
-				
-				int id= res.getInt("basisprijs_abonnementId");
-				int aboId= res.getInt("basisprijs_abonnementId");
-				double prijs=res.getDouble("Prijs");
-				BasisprijsAbonnement bpa = new BasisprijsAbonnement(id,aboId,prijs);
-				
-				lijst.add((bpa));
-			}
-			return lijst;
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
-		} finally {
-			try {
-				if (prep != null)
-					prep.close();
-				if (res != null)
-					res.close();
-			} catch (SQLException e) {
-				System.out.println(e.getMessage());
-				throw new RuntimeException("Unexpected error!");
-			}
-		}
-	}
-	public int insert(BasisprijsAbonnement basisprijsAbonnement) {
-		PreparedStatement prep = null;
-		String sql = "INSERT INTO basisprijs_abonnement VALUES(null,?,?)";
+		String sql = "INSERT INTO coefficient_ticket VALUES(null,?,?)";
 
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
 			}
 			prep = getConnection().prepareStatement(sql);
-			prep.setInt(1, basisprijsAbonnement.getTypeAbonnementId());
-			prep.setDouble(2, basisprijsAbonnement.getPrijs());
+			prep.setInt(1, coefficientTicket.getTypeTicketId());
+			prep.setDouble(2, coefficientTicket.getCoefficient());
 			return prep.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -77,8 +45,8 @@ public class BasisprijsAbonnementenDAO extends BaseDAO{
 		}
 	}
 
-	public int delete(BasisprijsAbonnement basisprijsAbonnement) {
-		String sql = "DELETE FROM basisprijs_abonnement WHERE basisprijs_abonnementId=?";
+	public int delete(CoefficientTicket coefficientTicket) {
+		String sql = "DELETE FROM coefficient_ticket WHERE coefficient_ticketId=?";
 		PreparedStatement prep = null;
 		try {
 			if (getConnection().isClosed()) {
@@ -86,7 +54,7 @@ public class BasisprijsAbonnementenDAO extends BaseDAO{
 			}
 			prep = getConnection().prepareStatement(sql);
 
-			prep.setInt(1, basisprijsAbonnement.getId());
+			prep.setInt(1, coefficientTicket.getCoefficientTicketId());
 			return prep.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -103,16 +71,16 @@ public class BasisprijsAbonnementenDAO extends BaseDAO{
 		}
 	}
 
-	public int updateTypeAbo_ById(int typeAboId, int id) {
+	public int updateTypeTicket_ById(int typeTicketId, int id) {
 		PreparedStatement prep = null;
-		String sql = "UPDATE basisprijs_abonnement SET type_abonnementId=? WHERE basisprijs_abonnementId=?";
+		String sql = "UPDATE coefficient_ticket SET type_ticketId=? WHERE coefficient_ticketId=?";
 
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
 			}
 			prep = getConnection().prepareStatement(sql);
-			prep.setInt(1, typeAboId);
+			prep.setInt(1, typeTicketId);
 			prep.setInt(2, id);
 			return prep.executeUpdate();
 		} catch (SQLException e) {
@@ -130,16 +98,16 @@ public class BasisprijsAbonnementenDAO extends BaseDAO{
 		}
 	}
 
-	public int updatePrijs_ById(int id, double prijs) {
+	public int updateCoefficient_ById(int id, double coef) {
 		PreparedStatement prep = null;
-		String sql = "UPDATE basisprijs_abonnement SET prijs=? WHERE basisprijs_abonnementId=?";
+		String sql = "UPDATE coefficient_ticket SET coefficient=? WHERE coefficient_ticketId=?";
 
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
 			}
 			prep = getConnection().prepareStatement(sql);
-			prep.setDouble(1, prijs);
+			prep.setDouble(1, coef);
 			prep.setInt(2, id);
 			return prep.executeUpdate();
 		} catch (SQLException e) {
@@ -157,11 +125,11 @@ public class BasisprijsAbonnementenDAO extends BaseDAO{
 		}
 	}
 
-	public double getPrijs_ById(int id) {
+	public double getCoefficient_ById(int id) {
 		PreparedStatement prep = null;
 		ResultSet res = null;
-		double prijs = 0.00;
-		String sql = "SELECT prijs FROM basisprijs_abonnement WHERE basisprijs_abonnementId=?";
+		double coefficient = 0.00;
+		String sql = "SELECT Coefficient FROM coefficient_ticket WHERE type_ticketId=?";
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
@@ -173,10 +141,10 @@ public class BasisprijsAbonnementenDAO extends BaseDAO{
 
 			while (res.next()) {
 
-				prijs = res.getDouble("prijs");
+				coefficient = res.getDouble("coefficient");
 
 			}
-			return prijs;
+			return coefficient;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException(e.getMessage());
@@ -192,5 +160,4 @@ public class BasisprijsAbonnementenDAO extends BaseDAO{
 			}
 		}
 	}
-
 }

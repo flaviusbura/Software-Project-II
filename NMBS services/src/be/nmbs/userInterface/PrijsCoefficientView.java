@@ -10,8 +10,10 @@ import be.nmbs.controllers.HomeController;
 import be.nmbs.controllers.PrijsCoefficientController;
 
 public class PrijsCoefficientView {
-	
+
 	private static JButton goBackToHome;
+	private static JButton voorTicket;
+	private static JButton voorAbo;
 	private static JPanel panel;
 	private static HomeController homeController;
 	private static PrijsCoefficientController prijsCoefficientController;
@@ -19,16 +21,44 @@ public class PrijsCoefficientView {
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-	
-		goBackToHome = new JButton("Back");
+
+		voorTicket = new JButton("Voor Ticket");
 		c.fill = new GridBagConstraints().HORIZONTAL;
 		c.gridx = 0;
-		c.gridy = 4;
-		panel.add(goBackToHome, c);
+		c.gridy = 0;
+		panel.add(voorTicket, c);
 		
+		voorAbo = new JButton("Voor Abonnement");
+		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 0;
+		panel.add(voorAbo, c);
+		
+		goBackToHome = new JButton("Back");
+		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 0;
+		panel.add(goBackToHome, c);
+
 		homeController = new HomeController(view);
 		prijsCoefficientController = new PrijsCoefficientController(view);
 		return panel;
+	}
+
+	public static JButton getVoorTicket() {
+		return voorTicket;
+	}
+
+	public static void setVoorTicket(JButton voorTicket) {
+		PrijsCoefficientView.voorTicket = voorTicket;
+	}
+
+	public static JButton getVoorAbo() {
+		return voorAbo;
+	}
+
+	public static void setVoorAbo(JButton voorAbo) {
+		PrijsCoefficientView.voorAbo = voorAbo;
 	}
 
 	public static JButton getGoBackToHome() {
@@ -62,14 +92,13 @@ public class PrijsCoefficientView {
 	public static void setPrijsCoefficientController(PrijsCoefficientController prijsCoefficientController) {
 		PrijsCoefficientView.prijsCoefficientController = prijsCoefficientController;
 	}
-	
+
 	public static void setPrijsCoefficientControllerToNull() {
 		prijsCoefficientController = null;
 	}
 
 	public static void setHomeControllerToNull() {
 		homeController = null;
-		
+
 	}
 }
-

@@ -28,7 +28,7 @@ public class NieuwVerlorenvoorwerpView {
 	private static JTextField txtType;
 	private static JButton btnToevoegen;
 	private static JLabel lblStation;
-	private static JComboBox cbStation;
+	private static JComboBox<?> cbStation;
 	private static JLabel lblOmschrijving;
 	private static JTextField txtOmschrijving;
 	private static JLabel lblDatum;
@@ -60,7 +60,7 @@ public class NieuwVerlorenvoorwerpView {
 			c.gridy = 0;
 			panel.add(lblStation, c);
 			
-			cbStation = new JComboBox(stationLijst);
+			cbStation = new JComboBox<Object>(stationLijst);
 			c.fill = new GridBagConstraints().HORIZONTAL;
 			c.gridx = 2;
 			c.gridy = 0;
@@ -167,11 +167,11 @@ public class NieuwVerlorenvoorwerpView {
 		NieuwVerlorenvoorwerpView.lblStation = lblStation;
 	}
 
-	public static JComboBox getCbStation() {
+	public static JComboBox<?> getCbStation() {
 		return cbStation;
 	}
 
-	public static void setCbStation(JComboBox cbStation) {
+	public static void setCbStation(JComboBox<?> cbStation) {
 		NieuwVerlorenvoorwerpView.cbStation = cbStation;
 	}
 
