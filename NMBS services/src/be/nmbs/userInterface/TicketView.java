@@ -53,7 +53,10 @@ public class TicketView {
 		prijsdao = new PrijsDAO();
 		kortingdao = new KortingDAO();
 		stationdao = new StationDAO();
+		
 		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		
 		SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 		Date now = new Date();
 		String strDate = sdfDate.format(now);
@@ -67,140 +70,114 @@ public class TicketView {
 		}
 		
 		lblBeginStation = new JLabel("begin station");
-		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
 		panel.add(lblBeginStation, c);
 
 		beginstationlijst = new JComboBox<String>(stationLijst);
-		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 0;
 		panel.add(beginstationlijst, c);
 
 		lblEindStation = new JLabel("eind station");
-		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 1;
 		panel.add(lblEindStation, c);
 		
 		eindstationlijst = new JComboBox<String>(stationLijst);
-		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 1;
 		panel.add(eindstationlijst, c);
 		
 		lblSoort = new JLabel("soort ticket");
-		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 2;
 		panel.add(lblSoort, c);
 		
 		txtSoort = new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 2;
 		panel.add(txtSoort, c);
 
 		lblDatum = new JLabel("datum");
-		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 3;
 		panel.add(lblDatum, c);
 		
 		txtDatum = new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 3;
-		
 		txtDatum.setText(strDate);
 		panel.add(txtDatum, c);
 		
 		lblKlasse = new JLabel("klasse");
-		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 5;
 		panel.add(lblKlasse, c);
 		
 		txtKlasse = new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 5;
 		panel.add(txtKlasse, c);
 		
 		lblOmschrijving = new JLabel("omschrijving");
-		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 6;
 		panel.add(lblOmschrijving, c);
 		
 		txtOmschrijving = new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 6;
 		panel.add(txtOmschrijving, c);
 		
 		lblPrijs = new JLabel("prijs");
-		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 7;
 		panel.add(lblPrijs, c);
 		
-
 		ArrayList<Prijs> allPrijzen = prijsdao.getAll();
 
-		prijzenLijst = new JComboBox<>();
+		prijzenLijst = new JComboBox<Prijs>();
 		for(Prijs prijs : allPrijzen) {
 			prijzenLijst.addItem(prijs);
 		}
 				
-		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 7;
 		panel.add(prijzenLijst, c);
 		
-
+		lblKorting = new JLabel("korting");
+		c.gridx = 0;
+		c.gridy = 8;
+		panel.add(lblKorting, c);
+			
 		ArrayList<Korting> allKorting = kortingdao.getAll();
-		
-		//String[] kortingenLijst = new String[allKorting.size()];
-		kortingLijst = new JComboBox<>();
+		kortingLijst = new JComboBox<Korting>();
 		
 		for(Korting korting : allKorting) {
 			kortingLijst.addItem(korting);
 		}
 		
-		lblKorting = new JLabel("korting");
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
+		c.gridx = 1;
 		c.gridy = 8;
-		panel.add(lblKorting, c);
-			
-//		kortinglijst = new JComboBox<Korting>(kortingenLijst);
-//		c.fill = GridBagConstraints.HORIZONTAL;
-//		c.gridx = 1;
-//		c.gridy = 8;
-//		panel.add(kortingLijst, c);
+		panel.add(kortingLijst, c);
 		
 		lblStation = new JLabel("station");
-		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 9;
 		panel.add(lblStation, c);
 		
 		stationlijst = new JComboBox<String>(stationLijst);
-		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 9;
 		panel.add(stationlijst, c);
 		
-		btnKoopTicket = new JButton("koop ticket");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		btnKoopTicket = new JButton("Koop ticket");
 		c.gridx = 0;
 		c.gridy = 10;
 		panel.add(btnKoopTicket, c);
 		
-		btnVorigScherm = new JButton("vorig scherm");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		btnVorigScherm = new JButton("Vorig scherm");
 		c.gridx = 1;
 		c.gridy = 10;
 		panel.add(btnVorigScherm, c);

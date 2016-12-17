@@ -42,7 +42,7 @@ public class BoeteView {
 	static String strDate = sdfDate.format(now);
 	
 	private static BoeteController boeteController;
-	@SuppressWarnings("static-access")
+
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -85,14 +85,14 @@ public class BoeteView {
 		panel.add(cbBetaald, c);
 		
 		
-		betaalBoete = new JButton("betaal boete");
+		betaalBoete = new JButton("Boete betalen");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 4;
 		panel.add(betaalBoete, c);
 		
-		back = new JButton("Back");
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		back = new JButton("Terug");
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridy = 4;
 		panel.add(back, c);

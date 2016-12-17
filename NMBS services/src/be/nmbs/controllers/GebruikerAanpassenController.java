@@ -66,8 +66,6 @@ public class GebruikerAanpassenController {
 					
 					g.setActief(GebruikerAanpassenView.getActive().isSelected());
 					
-					System.out.println(g.getWachtwoord());
-					
 					if (dao.update(g) != 9999) {
 						JOptionPane.showMessageDialog(null, "Gebruiker is succesvol aangepast!");
 						GebruikerWijzigenView.setGebruikerWijzigenControllerToNull();
