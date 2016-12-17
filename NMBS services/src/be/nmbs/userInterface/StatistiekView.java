@@ -67,7 +67,7 @@ public class StatistiekView {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx=6;
 		c.gridy=4;
-		panel.add(datum1);
+		panel.add(getBetweenDates);
 		uitleg=new JLabel("Verkrijg de statistieken van:");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx=0;

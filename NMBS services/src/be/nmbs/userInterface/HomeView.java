@@ -17,7 +17,7 @@ public class HomeView {
 	private static JButton logOut;
 	private static JButton klantenBeheer;
 	private static JButton gebruikersBeheer;
-	private static JButton statistieken;
+	private static JButton btnStatistieken;
 	private static JButton prijzenBeheer;
 	private static JPanel panel;
 	public static JButton getGebruikersBeheer() {
@@ -81,11 +81,11 @@ public class HomeView {
 			c.gridy = 0;
 			panel.add(gebruikersBeheer, c);
 	
-			statistieken = new JButton("Statistieken");
+			btnStatistieken = new JButton("Statistieken");
 			c.fill = new GridBagConstraints().HORIZONTAL;
 			c.gridx = 3;
 			c.gridy = 1;
-			panel.add(statistieken, c);
+			panel.add(btnStatistieken, c);
 
 			prijzenBeheer = new JButton("Prijzenbeheer");
 			c.fill = new GridBagConstraints().HORIZONTAL;
@@ -152,8 +152,8 @@ public class HomeView {
 		HomeView.btnRoutes = btnRoutes;
 	}
 
-	public static JButton getStatistieken() {
-		return statistieken;
+	public static JButton getBtnStatistieken() {
+		return btnStatistieken;
 	}
 
 	public static JButton getPrijzenBeheer() {
