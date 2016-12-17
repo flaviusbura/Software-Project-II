@@ -22,8 +22,7 @@ public class Boete {
 	/**
 	 * Default constructor.
 	 */
-	public Boete() {
-	}
+	public Boete() {}
 
 	/**
 	 * Deze constructor gaat een object aanmaken met alle nodige parameters.
@@ -35,18 +34,9 @@ public class Boete {
 	 * @param betaalDatum
 	 * @param betaald
 	 */
-	public Boete(int boeteId, int klantContactId, 
-				double prijs, boolean betaald) {
-		super();
-		this.boeteId = boeteId;
-		this.klantContactId = klantContactId;
-		this.prijs = prijs;
-		this.betaald = betaald;
-	}
 	
-	public Boete(int boeteId, int klantContactId,
-			double prijs,Timestamp datum, 
-			Timestamp betaalDatum, boolean betaald) {
+	public Boete(int boeteId, int klantContactId, double prijs, Timestamp datum, Timestamp betaalDatum,
+			boolean betaald) {
 		super();
 		this.boeteId = boeteId;
 		this.klantContactId = klantContactId;
@@ -55,28 +45,44 @@ public class Boete {
 		this.betaalDatum = betaalDatum;
 		this.betaald = betaald;
 	}
-	
+
+	/**
+	 * Deze methode gaat het betaaldatum berekenen.
+	 * @return Een Timestampobject dat de tijd van het aanmaken bevat plus 14 dagen.
+	 */
 	public Timestamp getTimestampBetaalDatum() {
 		Timestamp timestamp = getTimestampNow();
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(timestamp);
-				cal.add(Calendar.DAY_OF_WEEK, 14);
-				timestamp = new Timestamp(cal.getTime().getTime());
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(timestamp);
+		cal.add(Calendar.DAY_OF_WEEK, 14);
+		timestamp = new Timestamp(cal.getTime().getTime());
 		return timestamp;
 	}
-	
+
+	/**
+	 * Deze methode wordt gebruikt om de tijd te bepalen om het moement dat deze methode wordt aangeroepen.
+	 * @return Een Timestampobject dat de tijd zal bevatten om  het moment van het aanroepen van deze methode.
+	 */
 	public Timestamp getTimestampNow() {
 		Calendar calendar = Calendar.getInstance();
 		java.util.Date now = calendar.getTime();
 		Timestamp timestamp = new Timestamp(now.getTime());
 		return timestamp;
 	}
-	
+
+	/**
+	 * Deze methode gaat de datum terugsturen zonder de nanoseconden.
+	 * @return Een Stringobject met datum en tijd zonder nanoseconden.
+	 */
 	public String getDatumWithoutNonoSec() {
 		String currentDate = sdf.format(datum);
 		return currentDate;
 	}
-	
+
+	/**
+	 * Deze methode gaat de betaaldatum terugsturen zonder de nanoseconden.
+	 * @return Een Stringobject met datum en tijd zonder nanoseconden.
+	 */
 	public String getBetaalDatumWithoutNonoSec() {
 		String currentDate = sdf.format(betaalDatum);
 		return currentDate;
@@ -135,13 +141,6 @@ public class Boete {
 	public void setPrijs(double prijs) {
 		this.prijs = prijs;
 	}
-
-	/**
-	 * Deze methode gaat een Date-object terugsturen om aan te geven wanneer de
-	 * boete aangemaakt is geweest.
-	 * 
-	 * @return Een Date-object die een datum zal bevatten
-	 */
 
 	/**
 	 * Deze methode gaat terugsturen of een bepaalde boete betaald of niet

@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import be.nmbs.logic.Korting;
-import be.nmbs.logic.Prijs;
 
 public class KortingDAO extends BaseDAO {
 	/**

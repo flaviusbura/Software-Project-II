@@ -28,9 +28,9 @@ public class RouteAskView {
 	private static JButton btnZoeken;
 	private static JPanel panel;
 	private static JLabel departureLabel;
-	private static JComboBox departureField;
+	private static JComboBox<String> departureField;
 	private static JLabel arrivalLabel;
-	private static JComboBox arrivalField;
+	private static JComboBox<String> arrivalField;
 	private static JDatePickerImpl datePicker;
 	private static JSpinner timeSpinner;
 	
@@ -64,9 +64,8 @@ public class RouteAskView {
 	
 			String[] stationLijst = new String[allStations.size()];
 			
-			for(int i=0; i < allStations.size(); i++) {
+			for(int i=0; i < allStations.size(); i++)
 				stationLijst[i] = "" + allStations.get(i).getNaam();
-			}
 		
 			panel = new JPanel(new GridBagLayout());
 			
@@ -77,7 +76,7 @@ public class RouteAskView {
 			c.gridy = 0;
 			panel.add(departureLabel, c);
 			
-			departureField = new JComboBox(stationLijst);
+			departureField = new JComboBox<String>(stationLijst);
 			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 1;
 			c.gridy = 0;
@@ -90,7 +89,7 @@ public class RouteAskView {
 			c.gridy = 1;
 			panel.add(arrivalLabel, c);
 			
-			arrivalField = new JComboBox(stationLijst);
+			arrivalField = new JComboBox<String>(stationLijst);
 			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 1;
 			c.gridy = 1;
@@ -144,7 +143,7 @@ public class RouteAskView {
 		return departureLabel;
 	}
 
-	public static JComboBox getDepartureField() {
+	public static JComboBox<String> getDepartureField() {
 		return departureField;
 	}
 
@@ -152,7 +151,7 @@ public class RouteAskView {
 		return arrivalLabel;
 	}
 
-	public static JComboBox getArrivalField() {
+	public static JComboBox<String> getArrivalField() {
 		return arrivalField;
 	}
 
@@ -189,7 +188,7 @@ public class RouteAskView {
 		RouteAskView.departureLabel = departureLabel;
 	}
 
-	public static void setDepartureField(JComboBox departureField) {
+	public static void setDepartureField(JComboBox<String> departureField) {
 		RouteAskView.departureField = departureField;
 	}
 
@@ -197,7 +196,7 @@ public class RouteAskView {
 		RouteAskView.arrivalLabel = arrivalLabel;
 	}
 
-	public static void setArrivalField(JComboBox arrivalField) {
+	public static void setArrivalField(JComboBox<String> arrivalField) {
 		RouteAskView.arrivalField = arrivalField;
 	}
 

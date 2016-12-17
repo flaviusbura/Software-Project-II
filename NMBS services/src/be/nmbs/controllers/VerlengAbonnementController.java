@@ -9,9 +9,7 @@ import javax.swing.JOptionPane;
 
 import be.nmbs.database.AbonnementDAO;
 import be.nmbs.logic.Abonnement;
-import be.nmbs.logic.Gebruiker;
 import be.nmbs.userInterface.HomeView;
-import be.nmbs.userInterface.MaakAbonnementView;
 import be.nmbs.userInterface.VerlengAbonnementView;
 
 //VerlengAbonnementView
@@ -22,19 +20,6 @@ public class VerlengAbonnementController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// Abonnement Abonnement = (Abonnement)
-				// VerlengAbonnementView.getAbonnementIDLijst().getSelectedItem();
-				// Abonnement Abonnement = new
-				// Abonnement(VerlengAbonnementView.getAbonnementIDLijst().getSelectedItem());
-				/*
-				 * 
-				 * String keuze = (String)
-				 * MaakAbonnementView.getCombo().getSelectedItem();
-				 * 
-				 * 
-				 */
-
-				
 				int aboId = VerlengAbonnementView.getTxtId().getX();
 				AbonnementDAO aboDao = new AbonnementDAO();
 				Abonnement abo = new Abonnement();

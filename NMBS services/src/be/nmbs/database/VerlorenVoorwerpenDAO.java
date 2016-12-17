@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import be.nmbs.logic.Station;
 import be.nmbs.logic.StationNMBS;
 import be.nmbs.logic.VerlorenVoorwerp;
 import be.nmbs.userInterface.View;

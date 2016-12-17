@@ -2,29 +2,12 @@ package be.nmbs.userInterface;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import be.nmbs.controllers.AbonnementController;
 import be.nmbs.controllers.HomeController;
-import be.nmbs.database.PrijsDAO;
-import be.nmbs.logic.Prijs;
-
-import be.nmbs.database.KlantDAO;
-import be.nmbs.logic.Klant;
-
-import be.nmbs.database.KortingDAO;
-import be.nmbs.logic.Korting;
-
-import be.nmbs.database.GebruikerDAO;
-import be.nmbs.logic.Gebruiker;
 
 /**
  * 
@@ -46,20 +29,20 @@ public class AbonnementView {
 
 		// buttons
 		maakAbonnement = new JButton("Abonnement aanmaken");
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
 		panel.add(maakAbonnement, c);
 		
 		//verlengDrieMaanden
 		verlengAbonnement = new JButton("Abonnement verlengen");
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 2;
 		panel.add(verlengAbonnement, c);
 		
 		goBackToHome = new JButton("Back");
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 4;
 		panel.add(goBackToHome, c);

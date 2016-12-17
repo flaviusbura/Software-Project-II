@@ -1,14 +1,11 @@
 package be.nmbs.database;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import be.nmbs.logic.Boete;
-import be.nmbs.logic.Klant;
 
 public class BoeteDAOTest {
 	private Boete boete1;
@@ -26,9 +23,9 @@ public class BoeteDAOTest {
 	@Before
 	public void setUp() throws Exception {
 		// klantenID's moeten overeen komen met een klant in de database! En met de Foreign Key constraint op Klant_contact. Anders insert error!
-		boete1 = new Boete(10, 8, 5,false);
-		boete2 = new Boete(20,8, 7,true);
-		boete3 = new Boete(30, 8, 7.5,false);
+		//boete1 = new Boete(10, 8, 5,false);
+		//boete2 = new Boete(20,8, 7,true);
+		//boete3 = new Boete(30, 8, 7.5,false);
 		dao = new BoeteDAO();
 	}
 	/**

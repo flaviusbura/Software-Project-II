@@ -19,14 +19,12 @@ import javax.swing.JTextField;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
-import be.nmbs.controllers.HomeController;
 import be.nmbs.controllers.MaakAbonnementController;
 import be.nmbs.database.PrijsDAO;
 import be.nmbs.database.StationDAO;
 import be.nmbs.logic.Prijs;
 import be.nmbs.logic.StationNMBS;
 import be.nmbs.database.KlantDAO;
-import be.nmbs.database.Klant_adresDAO;
 import be.nmbs.logic.Klant;
 
 import be.nmbs.database.KortingDAO;
@@ -48,22 +46,18 @@ public class MaakAbonnementView {
 	private static JPanel panel;
 	private static JPanel tPanel;
 	private static JLabel lblKlant_Contact;
-	private static JComboBox<?> cbxKlant_Contact;
 	private static JComboBox<Klant> klantenLijst;
-	static KlantDAO klantDao = new KlantDAO();
+	private static KlantDAO klantDao = new KlantDAO();
 
 	private static JLabel lblPrijs;
-	private static JComboBox<?> cbxPrijs;
 	private static JComboBox<Prijs> prijzenLijst;
 	private static PrijsDAO prijsDao = new PrijsDAO();
 
 	private static JLabel lblKorting;
-	private static JComboBox<?> cbxKorting;
 	private static KortingDAO kortingDao = new KortingDAO();
 	private static JComboBox<Korting> kortingLijst;
 
 	private static JLabel lblGebruiker;
-	private static JComboBox<?> cbxGebruiker;
 	private static GebruikerDAO gebruikerDao = new GebruikerDAO();
 	private static JComboBox<Gebruiker> gebruikerLijst;
 
@@ -79,27 +73,25 @@ public class MaakAbonnementView {
 	static Date now = new Date();
 	static String strDate = sdfDate.format(now);
 
-	private static HomeController homeController;
 	private static MaakAbonnementController maakAbonnementController;
 	private static JTable table;
 	private static JLabel lblMaanden;
-	static String[] tab = { "3 maanden", "6 maanden", "9 maanden", "12 maanden" };
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private static JComboBox combo = new JComboBox(tab);
+	
+	private static String[] tab = { "3 maanden", "6 maanden", "9 maanden", "12 maanden" };
+	private static JComboBox<String> combo = new JComboBox<String>(tab);
 
 	private static JLabel departureLabel;
-	private static JComboBox departureField;
+	private static JComboBox<String> departureField;
 	private static JLabel arrivalLabel;
-	private static JComboBox arrivalField;
+	private static JComboBox<String> arrivalField;
 	private static ArrayList<Klant> lijst = new ArrayList<>();
 	
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
 
-		// TABLE TEST START
 		String[] kolommen = { "ContactID", "Achternaam", "Voornaam" };
 		KlantDAO klantDAO = new KlantDAO();
-		//lijst = klantDAO.getAll();
+		lijst = klantDAO.getAll();
 		String[][] klantData = new String[lijst.size()][3];
 		
 		int i = 0;
@@ -109,6 +101,7 @@ public class MaakAbonnementView {
 			klantData[i][2] = lijst.get(i).getVoornaam();
 			i++;
 		}
+		
 		table = new JTable(klantData, kolommen) {
 			/**
 			 * 
@@ -127,10 +120,6 @@ public class MaakAbonnementView {
 				else
 					c.setBackground(Color.YELLOW);
 				return c;
-			}
-
-			public long getSerialversionuid() {
-				return serialVersionUID;
 			}
 		};
 		
@@ -160,7 +149,7 @@ public class MaakAbonnementView {
 		}
 
 		tPanel = new JPanel(new GridBagLayout());
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 0;
 		panel.add(tPanel, c);
@@ -181,12 +170,12 @@ public class MaakAbonnementView {
 		
 		
 		departureLabel = new JLabel("Vertrekstation ");
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 2;
 		tPanel.add(departureLabel, c);
 
-		departureField = new JComboBox(stationLijst);
+		departureField = new JComboBox<String>(stationLijst);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridy = 2;
@@ -194,12 +183,12 @@ public class MaakAbonnementView {
 
 		arrivalLabel = new JLabel("Bestemming");
 		c = new GridBagConstraints();
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 3;
 		tPanel.add(arrivalLabel, c);
 
-		arrivalField = new JComboBox(stationLijst);
+		arrivalField = new JComboBox<String>(stationLijst);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridy = 3;
@@ -242,7 +231,7 @@ public class MaakAbonnementView {
 		tPanel.add(lblKorting, c);
 
 		ArrayList<Korting> allKorting = kortingDao.getAll();
-		kortingLijst = new JComboBox<>();
+		kortingLijst = new JComboBox<Korting>();
 		for (Korting korting : allKorting) {
 			kortingLijst.addItem(korting);
 		}
@@ -269,6 +258,7 @@ public class MaakAbonnementView {
 		c.gridx = 1;
 		c.gridy = 8;
 		tPanel.add(goBackToHome, c);
+		
 		maakAbonnement = new JButton("Maak Abonnement");
 		new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -276,10 +266,8 @@ public class MaakAbonnementView {
 		c.gridy = 8;
 		tPanel.add(maakAbonnement, c);
 
-		homeController = new HomeController(view);
 		maakAbonnementController = new MaakAbonnementController(view);
 		return panel;
-
 	}
 
 	public static JLabel getLblZoek() {
@@ -306,11 +294,11 @@ public class MaakAbonnementView {
 		MaakAbonnementView.departureLabel = departureLabel;
 	}
 
-	public static JComboBox getDepartureField() {
+	public static JComboBox<String> getDepartureField() {
 		return departureField;
 	}
 
-	public static void setDepartureField(JComboBox departureField) {
+	public static void setDepartureField(JComboBox<String> departureField) {
 		MaakAbonnementView.departureField = departureField;
 	}
 
@@ -322,11 +310,11 @@ public class MaakAbonnementView {
 		MaakAbonnementView.arrivalLabel = arrivalLabel;
 	}
 
-	public static JComboBox getArrivalField() {
+	public static JComboBox<String> getArrivalField() {
 		return arrivalField;
 	}
 
-	public static void setArrivalField(JComboBox arrivalField) {
+	public static void setArrivalField(JComboBox<String> arrivalField) {
 		MaakAbonnementView.arrivalField = arrivalField;
 	}
 
@@ -354,11 +342,11 @@ public class MaakAbonnementView {
 		MaakAbonnementView.tab = tab;
 	}
 
-	public static JComboBox getCombo() {
+	public static JComboBox<String> getCombo() {
 		return combo;
 	}
 
-	public static void setCombo(JComboBox combo) {
+	public static void setCombo(JComboBox<String> combo) {
 		MaakAbonnementView.combo = combo;
 	}
 
@@ -417,14 +405,6 @@ public class MaakAbonnementView {
 		MaakAbonnementView.lblKlant_Contact = lblKlant_Contact;
 	}
 
-	public static JComboBox<?> getCbxKlant_Contact() {
-		return cbxKlant_Contact;
-	}
-
-	public static void setCbxKlant_Contact(JComboBox<?> cbxKlant_Contact) {
-		MaakAbonnementView.cbxKlant_Contact = cbxKlant_Contact;
-	}
-
 	public static JComboBox<Klant> getKlantenLijst() {
 		return klantenLijst;
 	}
@@ -447,14 +427,6 @@ public class MaakAbonnementView {
 
 	public static void setLblPrijs(JLabel lblPrijs) {
 		MaakAbonnementView.lblPrijs = lblPrijs;
-	}
-
-	public static JComboBox<?> getCbxPrijs() {
-		return cbxPrijs;
-	}
-
-	public static void setCbxPrijs(JComboBox<?> cbxPrijs) {
-		MaakAbonnementView.cbxPrijs = cbxPrijs;
 	}
 
 	public static JComboBox<Prijs> getPrijzenLijst() {
@@ -481,14 +453,6 @@ public class MaakAbonnementView {
 		MaakAbonnementView.lblKorting = lblKorting;
 	}
 
-	public static JComboBox<?> getCbxKorting() {
-		return cbxKorting;
-	}
-
-	public static void setCbxKorting(JComboBox<?> cbxKorting) {
-		MaakAbonnementView.cbxKorting = cbxKorting;
-	}
-
 	public static KortingDAO getKortingDao() {
 		return kortingDao;
 	}
@@ -511,14 +475,6 @@ public class MaakAbonnementView {
 
 	public static void setLblGebruiker(JLabel lblGebruiker) {
 		MaakAbonnementView.lblGebruiker = lblGebruiker;
-	}
-
-	public static JComboBox<?> getCbxGebruiker() {
-		return cbxGebruiker;
-	}
-
-	public static void setCbxGebruiker(JComboBox<?> cbxGebruiker) {
-		MaakAbonnementView.cbxGebruiker = cbxGebruiker;
 	}
 
 	public static GebruikerDAO getGebruikerDao() {
@@ -593,14 +549,6 @@ public class MaakAbonnementView {
 		MaakAbonnementView.strDate = strDate;
 	}
 
-	public static HomeController getHomeController() {
-		return homeController;
-	}
-
-	public static void setHomeController(HomeController homeController) {
-		MaakAbonnementView.homeController = homeController;
-	}
-
 	public static MaakAbonnementController getMaakAbonnementController() {
 		return maakAbonnementController;
 	}
@@ -615,10 +563,6 @@ public class MaakAbonnementView {
 
 	public static void setMaakAbonnementControllerToNull() {
 		maakAbonnementController = null;
-	}
-
-	public static void setHomeControllerToNull() {
-		homeController = null;
 	}
 
 	public static JPanel gettPanel() {
@@ -652,5 +596,4 @@ public class MaakAbonnementView {
 	public static void setBtnzoek(JButton btnzoek) {
 		MaakAbonnementView.btnZoek = btnzoek;
 	}
-
 }

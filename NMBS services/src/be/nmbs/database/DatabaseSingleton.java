@@ -31,10 +31,9 @@ public class DatabaseSingleton {
      * @throws SQLException
      */
     public Connection getConnection() throws SQLException {
-        if (connection != null) {
+        if (connection != null && !connection.isClosed()) {
             return connection;
-        }
-        else {
+        } else {
             try {
                 String url = "jdbc:mysql://dt5.ehb.be/SP2G8";
                 String username = "SP2G8";
@@ -42,9 +41,6 @@ public class DatabaseSingleton {
 
                 connection = DriverManager.getConnection(url, username, password);
             
-        
-                
-                	
             } catch (SQLException e) {
                 System.out.println("SQLException: " + e.getMessage());
                 System.out.println("SQLState: " + e.getSQLState());
@@ -53,8 +49,7 @@ public class DatabaseSingleton {
                 String url1 = "jdbc:sqlite:db/NMBSServices.db";
                 // create a connection to the local database
                 connection = DriverManager.getConnection(url1);
-                
-            }            
+            }
         }
 		return connection;
     }
