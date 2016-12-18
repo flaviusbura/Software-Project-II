@@ -14,6 +14,8 @@ public class PrijsView {
 	
 
 	private static JButton goBackToHome;
+	private static JButton voorAbo;
+	private static JButton voorTicket;
 	private static JPanel panel;
 	private static HomeController homeController;
 	private static PrijsController prijsController;
@@ -23,15 +25,22 @@ public class PrijsView {
 		GridBagConstraints c = new GridBagConstraints();
 		
 
-		// buttons
-		
-		//verlengDrieMaanden
-		
-		
-		goBackToHome = new JButton("Back");
+		voorTicket = new JButton("Voor Ticket");
 		c.fill = new GridBagConstraints().HORIZONTAL;
 		c.gridx = 0;
-		c.gridy = 4;
+		c.gridy = 0;
+		panel.add(voorTicket, c);
+		
+		voorAbo = new JButton("Voor Abonnement");
+		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 0;
+		panel.add(voorAbo, c);
+		
+		goBackToHome = new JButton("Home");
+		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 0;
 		panel.add(goBackToHome, c);
 		
 	
@@ -39,6 +48,22 @@ public class PrijsView {
 		homeController = new HomeController(view);
 		prijsController = new PrijsController(view);
 		return panel;
+	}
+
+	public static JButton getVoorAbo() {
+		return voorAbo;
+	}
+
+	public static void setVoorAbo(JButton abo) {
+		PrijsView.voorAbo = abo;
+	}
+
+	public static JButton getVoorTicket() {
+		return voorTicket;
+	}
+
+	public static void setVoorTicket(JButton ticket) {
+		PrijsView.voorTicket = ticket;
 	}
 
 	public static JButton getGoBackToHome() {

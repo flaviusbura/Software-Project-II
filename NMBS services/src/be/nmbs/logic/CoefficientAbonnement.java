@@ -14,6 +14,9 @@ public class CoefficientAbonnement {
 		this.typeAbonnementId = typeAbonnementId;
 		this.coefficient = coefficient;
 	}
+	public CoefficientAbonnement(int coefficientAbonnementId) {
+		this.coefficientAbonnementId = coefficientAbonnementId;
+	}
 	public int getCoefficientAbonnementId() {
 		return coefficientAbonnementId;
 	}

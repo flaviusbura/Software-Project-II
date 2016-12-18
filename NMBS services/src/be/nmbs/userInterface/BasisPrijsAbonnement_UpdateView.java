@@ -3,34 +3,31 @@ package be.nmbs.userInterface;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import be.nmbs.controllers.CoefficientAbonnement_AddController;
+import be.nmbs.controllers.BasisPrijsAbonnement_UpdateController;
+import be.nmbs.controllers.CoefficientAbonnement_UpdateController;
 import be.nmbs.controllers.HomeController;
-import be.nmbs.controllers.MaakAbonnementController;
-import be.nmbs.database.KlantDAO;
 import be.nmbs.database.TypeAbonnementDAO;
 import be.nmbs.logic.TypeAbonnement;
 
-public class CoefficientAbonnement_AddView {
-	private static JButton addCoeff;
+public class BasisPrijsAbonnement_UpdateView {
+	private static JButton updatePrijs;
 	private static JButton goBackToHome;
 	private static JPanel panel;
-	private static JPanel tPanel;
-	private static JLabel lblCoeff;
-	private static JTextField txtCoeff;
+	private static JLabel lblPrijs;
+	private static JTextField txtPrijs;
 	private static JLabel lblTypeId;
-	
 	private static JComboBox<TypeAbonnement> typeLijst;
 	private static TypeAbonnementDAO typeAboDao = new TypeAbonnementDAO();
 
 	private static HomeController homeController;
-	private static CoefficientAbonnement_AddController coefficientAbonnement_AddController;
-	
+	private static BasisPrijsAbonnement_UpdateController basisPrijsAbonnement_UpdateController;
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -52,47 +49,55 @@ public class CoefficientAbonnement_AddView {
 		c.gridy = 0;
 		panel.add(typeLijst, c);
 		
-		lblCoeff = new JLabel("Coefficient ");
+		
+		lblPrijs = new JLabel("Update naar: ");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
-		c.gridy = 1;
-		panel.add(lblCoeff, c);
+		c.gridy = 2;
+		panel.add(lblPrijs, c);
 		
-		txtCoeff = new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 1;
-		panel.add(txtCoeff, c);
-
-		
-
-		// buttons
-		addCoeff = new JButton("Coefficient Toevoegen");
-		new GridBagConstraints();
+		txtPrijs= new JTextField(10);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 2;
-		panel.add(addCoeff, c);
+		panel.add(txtPrijs, c);
+
+		// buttons
+		updatePrijs = new JButton("Prijs Updaten");
+		new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 3;
+		panel.add(updatePrijs, c);
 		
 		goBackToHome = new JButton("Home");
 		new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
-		c.gridy = 3;
+		c.gridy = 4;
 		panel.add(goBackToHome, c);
 
 		homeController = new HomeController(view);
-		coefficientAbonnement_AddController = new CoefficientAbonnement_AddController(view);
+		basisPrijsAbonnement_UpdateController = new BasisPrijsAbonnement_UpdateController(view);
 		return panel;
 
 	}
-
-	public static JButton getAddCoeff() {
-		return addCoeff;
+	
+	public static void setBasisPrijsAbonnement_UpdateControllerToNull()
+	{
+		basisPrijsAbonnement_UpdateController = null;
+	}
+	public static void setHomeControllerToNull()
+	{
+		homeController= null;
 	}
 
-	public static void setAddCoeff(JButton addCoeff) {
-		CoefficientAbonnement_AddView.addCoeff = addCoeff;
+	public static JButton getUpdatePrijs() {
+		return updatePrijs;
+	}
+
+	public static void setUpdatePrijs(JButton updatePrijs) {
+		BasisPrijsAbonnement_UpdateView.updatePrijs = updatePrijs;
 	}
 
 	public static JButton getGoBackToHome() {
@@ -100,7 +105,7 @@ public class CoefficientAbonnement_AddView {
 	}
 
 	public static void setGoBackToHome(JButton goBackToHome) {
-		CoefficientAbonnement_AddView.goBackToHome = goBackToHome;
+		BasisPrijsAbonnement_UpdateView.goBackToHome = goBackToHome;
 	}
 
 	public static JPanel getPanel() {
@@ -108,31 +113,23 @@ public class CoefficientAbonnement_AddView {
 	}
 
 	public static void setPanel(JPanel panel) {
-		CoefficientAbonnement_AddView.panel = panel;
+		BasisPrijsAbonnement_UpdateView.panel = panel;
 	}
 
-	public static JPanel gettPanel() {
-		return tPanel;
+	public static JLabel getLblPrijs() {
+		return lblPrijs;
 	}
 
-	public static void settPanel(JPanel tPanel) {
-		CoefficientAbonnement_AddView.tPanel = tPanel;
+	public static void setLblPrijs(JLabel lblPrijs) {
+		BasisPrijsAbonnement_UpdateView.lblPrijs = lblPrijs;
 	}
 
-	public static JLabel getLblCoeff() {
-		return lblCoeff;
+	public static JTextField getTxtPrijs() {
+		return txtPrijs;
 	}
 
-	public static void setLblCoeff(JLabel lblCoeff) {
-		CoefficientAbonnement_AddView.lblCoeff = lblCoeff;
-	}
-
-	public static JTextField getTxtCoeff() {
-		return txtCoeff;
-	}
-
-	public static void setTxtCoeff(JTextField txtCoeff) {
-		CoefficientAbonnement_AddView.txtCoeff = txtCoeff;
+	public static void setTxtPrijs(JTextField txtPrijs) {
+		BasisPrijsAbonnement_UpdateView.txtPrijs = txtPrijs;
 	}
 
 	public static JLabel getLblTypeId() {
@@ -140,7 +137,7 @@ public class CoefficientAbonnement_AddView {
 	}
 
 	public static void setLblTypeId(JLabel lblTypeId) {
-		CoefficientAbonnement_AddView.lblTypeId = lblTypeId;
+		BasisPrijsAbonnement_UpdateView.lblTypeId = lblTypeId;
 	}
 
 	public static JComboBox<TypeAbonnement> getTypeLijst() {
@@ -148,7 +145,7 @@ public class CoefficientAbonnement_AddView {
 	}
 
 	public static void setTypeLijst(JComboBox<TypeAbonnement> typeLijst) {
-		CoefficientAbonnement_AddView.typeLijst = typeLijst;
+		BasisPrijsAbonnement_UpdateView.typeLijst = typeLijst;
 	}
 
 	public static TypeAbonnementDAO getTypeAboDao() {
@@ -156,7 +153,7 @@ public class CoefficientAbonnement_AddView {
 	}
 
 	public static void setTypeAboDao(TypeAbonnementDAO typeAboDao) {
-		CoefficientAbonnement_AddView.typeAboDao = typeAboDao;
+		BasisPrijsAbonnement_UpdateView.typeAboDao = typeAboDao;
 	}
 
 	public static HomeController getHomeController() {
@@ -164,23 +161,18 @@ public class CoefficientAbonnement_AddView {
 	}
 
 	public static void setHomeController(HomeController homeController) {
-		CoefficientAbonnement_AddView.homeController = homeController;
+		BasisPrijsAbonnement_UpdateView.homeController = homeController;
 	}
 
-	public static CoefficientAbonnement_AddController getCoefficientAbonnement_AddController() {
-		return coefficientAbonnement_AddController;
+	public static BasisPrijsAbonnement_UpdateController getBasisPrijsAbonnement_UpdateController() {
+		return basisPrijsAbonnement_UpdateController;
 	}
 
-	public static void setCoefficientAbonnement_AddController(
-			CoefficientAbonnement_AddController coefficientAbonnement_AddController) {
-		CoefficientAbonnement_AddView.coefficientAbonnement_AddController = coefficientAbonnement_AddController;
+	public static void setBasisPrijsAbonnement_UpdateController(
+			BasisPrijsAbonnement_UpdateController basisPrijsAbonnement_UpdateController) {
+		BasisPrijsAbonnement_UpdateView.basisPrijsAbonnement_UpdateController = basisPrijsAbonnement_UpdateController;
 	}
-	public static void setCoefficientAbonnement_AddControllerToNull()
-	{
-		coefficientAbonnement_AddController = null;
-	}
-	public static void setHomeControllerToNull()
-	{
-		homeController= null;
-	}
+
+	
+	
 }

@@ -6,9 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 import be.nmbs.database.CoefficientAbonnementDAO;
-import be.nmbs.logic.CoefficientAbonnement;
 import be.nmbs.logic.TypeAbonnement;
-import be.nmbs.userInterface.CoefficientAbonnement_AddView;
 import be.nmbs.userInterface.CoefficientAbonnement_UpdateView;
 import be.nmbs.userInterface.HomeView;
 import be.nmbs.userInterface.View;
@@ -27,7 +25,7 @@ public class CoefficientAbonnement_UpdateController {
 
 				double coeff = Double.parseDouble(CoefficientAbonnement_UpdateView.getTxtCoeff().getText());
 				CoefficientAbonnementDAO caDao = new CoefficientAbonnementDAO();
-				System.out.println(typeAboId.getId());
+			
 				caDao.updateCoefficient_ById(typeAboId.getId(), coeff);
 
 				JOptionPane.showMessageDialog(view.getPanel(), "Coefficient upgedate");

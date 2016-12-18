@@ -10,6 +10,14 @@ public class BasisprijsAbonnement {
 		this.typeAbonnementId = typeAbonnementId;
 		this.prijs = prijs;
 	}
+	public BasisprijsAbonnement(int typeAbonnementId, double prijs) {
+		
+		this.typeAbonnementId = typeAbonnementId;
+		this.prijs = prijs;
+	}
+	public BasisprijsAbonnement(int id) {
+		this.id = id;
+	}
 	public int getId() {
 		return id;
 	}

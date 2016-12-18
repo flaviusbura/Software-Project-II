@@ -16,8 +16,6 @@ import be.nmbs.logic.Korting;
 import be.nmbs.logic.Prijs;
 import be.nmbs.userInterface.MaakAbonnementView;
 import be.nmbs.userInterface.HomeView;
-import be.nmbs.userInterface.KlantWijzigenView;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

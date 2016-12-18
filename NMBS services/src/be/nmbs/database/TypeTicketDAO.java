@@ -102,7 +102,7 @@ public class TypeTicketDAO extends BaseDAO{
 			lijst = new ArrayList<TypeTicket>();
 
 			while (res.next()) {
-				int id= res.getInt("type_abonnementId");
+				int id= res.getInt("type_ticketId");
 				String type = res.getString("type");
 				TypeTicket typeTicket = new TypeTicket(id,type);
 				lijst.add((typeTicket));

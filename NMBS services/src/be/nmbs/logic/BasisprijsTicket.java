@@ -10,6 +10,14 @@ public class BasisprijsTicket {
 		this.typeTicketId = typeTicketId;
 		this.prijs = prijs;
 	}
+	public BasisprijsTicket(int typeTicketId, double prijs) {
+		this.typeTicketId = typeTicketId;
+		this.prijs = prijs;
+	}
+	public BasisprijsTicket(Integer basisprijsId) {
+		this.basisprijsId = basisprijsId;
+		
+	}
 	public int getBasisprijsId() {
 		return basisprijsId;
 	}

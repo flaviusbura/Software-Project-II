@@ -11,6 +11,13 @@ public class CoefficientTicket {
 		this.typeTicketId = typeTicketId;
 		this.coefficient = coefficient;
 	}
+	public CoefficientTicket(int typeTicketId, double coefficient) {
+		this.typeTicketId = typeTicketId;
+		this.coefficient = coefficient;
+	}
+	public CoefficientTicket(int coefficientTicketId) {
+		this.coefficientTicketId = coefficientTicketId;
+	}
 	public int getCoefficientTicketId() {
 		return coefficientTicketId;
 	}

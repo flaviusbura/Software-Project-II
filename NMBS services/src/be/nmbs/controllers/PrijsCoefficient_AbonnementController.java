@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import be.nmbs.userInterface.CoefficientAbonnement_AddView;
+import be.nmbs.userInterface.CoefficientAbonnement_DelView;
 import be.nmbs.userInterface.CoefficientAbonnement_UpdateView;
 import be.nmbs.userInterface.HomeView;
 import be.nmbs.userInterface.PrijsCoefficient_AbonnementView;
@@ -20,7 +21,7 @@ public class PrijsCoefficient_AbonnementController {
 				PrijsCoefficient_AbonnementView.setPrijsCoefficient_AbonnementControllerToNull();;
 				PrijsCoefficient_AbonnementView.setHomeControllerToNull();
 				//change here
-				view.changeView(PrijsCoefficient_AbonnementView.initialize(view));
+				view.changeView(CoefficientAbonnement_DelView.initialize(view));
 			}
 		});
 		

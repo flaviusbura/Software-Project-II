@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import be.nmbs.logic.Abonnement;
+import be.nmbs.logic.Adres;
+import be.nmbs.logic.CoefficientAbonnement;
 
 
 
@@ -70,7 +72,6 @@ public class CoefficientTicketDAO extends BaseDAO {
 			}
 		}
 	}
-
 	public int updateTypeTicket_ById(int typeTicketId, int id) {
 		PreparedStatement prep = null;
 		String sql = "UPDATE coefficient_ticket SET type_ticketId=? WHERE coefficient_ticketId=?";
