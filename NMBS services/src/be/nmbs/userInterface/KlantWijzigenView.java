@@ -42,7 +42,7 @@ public class KlantWijzigenView {
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
 
-		String[] kolommen = { "ContactID", "AdresID", "Voornaam", "Achternaam", "Telefoon", "Land", "Straat",
+		String[] kolommen = { "ContactID", "Voornaam", "Achternaam", "Telefoon", "Land", "Straat",
 				"Huisnummer", "Postcode", "Woonplaats", "Bus", "Actief" };
 		String[][] klantData = new String[lijst.size()][12];
 		Klant_adresDAO klant_adresDAO = new Klant_adresDAO();
