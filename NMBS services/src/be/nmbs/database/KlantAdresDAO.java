@@ -130,64 +130,6 @@ public class KlantAdresDAO extends BaseDAO {
 		}
 	}
 
-	public int update(Adres adres) {
-		String sql = "UPDATE klant_adres SET actief=0 WHERE adres_id=?";
-		PreparedStatement prep = null;
-		try {
-			if (getConnection().isClosed()) {
-				throw new IllegalStateException("Unexpected error!");
-			}
-			prep = getConnection().prepareStatement(sql);
-
-			prep.setInt(1, adres.getId());
-			prep.executeUpdate();
-			PreparedStatement prep2 = null;
-			String sql2 = "INSERT INTO klant_adres VALUES(?,?,?,?,?,?,?,?)";
-
-			try {
-				if (getConnection().isClosed()) {
-					throw new IllegalStateException("Unexpected error!");
-				}
-				prep2 = getConnection().prepareStatement(sql2);
-
-				prep2.setInt(1, adres.getId());
-				prep2.setString(2, adres.getLand());
-				prep2.setString(3, adres.getWoonplaats());
-				prep2.setInt(4, adres.getPostcode());
-				prep2.setString(5, adres.getStraat());
-				prep2.setInt(6, adres.getHuisnummer());
-				prep2.setString(7, adres.getBus());
-				prep2.setBoolean(8, adres.getActief());
-				return prep2.executeUpdate();
-			} catch (SQLException e) {
-				System.out.println(e.getMessage());
-				throw new RuntimeException(e.getMessage());
-			} finally {
-				try {
-					if (prep2 != null)
-						prep2.close();
-
-				} catch (SQLException e) {
-					System.out.println(e.getMessage());
-					throw new RuntimeException("Unexpected error!");
-				}
-			}
-
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
-		} finally {
-			try {
-				if (prep != null)
-					prep.close();
-
-			} catch (SQLException e) {
-				System.out.println(e.getMessage());
-				throw new RuntimeException("Unexpected error!");
-			}
-		}
-	}
-
 	public int getAdresIdOpStraatEnHuisnummer(Adres adres) {
 		PreparedStatement prep = null;
 		ResultSet res = null;
