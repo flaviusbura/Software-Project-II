@@ -4,7 +4,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import be.nmbs.logic.StationNMBS;
 import be.nmbs.logic.VerlorenVoorwerp;
@@ -36,10 +39,17 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 		ResultSet res = null;
 		String sql = "SELECT * FROM verlorenvoorwerp";
 		try {
-			if (getConnection().isClosed()) {
+			if (getConnection().isClosed() && DatabaseSingleton.getDatabaseSingleton().getLocalConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
 			}
+			if(getConnection().isClosed())
+			{
+				prep = DatabaseSingleton.getDatabaseSingleton().getLocalConnection().prepareStatement(sql);
+			}
+			else
+			{
 			prep = getConnection().prepareStatement(sql);
+			}
 			res = prep.executeQuery();
 			lijst = new ArrayList<VerlorenVoorwerp>();
 
@@ -50,7 +60,28 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 				station.setNaam(stationNaam);
 				String omschrijving = res.getString("omschrijving");
 				String type = res.getString("type");
-				Timestamp timestamp = res.getTimestamp("datum");
+				Timestamp timestamp = new Timestamp(1);
+				if(View.getIngelogdGebruiker().getUsername().equals("offline"))
+				{
+				
+					    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+					    Date parsedDate;
+						try {
+							
+						  parsedDate = dateFormat.parse(res.getString("Datum"));
+						  timestamp = new Timestamp(parsedDate.getTime());
+						  
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					   
+				
+				}
+				else
+				{
+				 timestamp = res.getTimestamp("datum");
+				}
 				boolean actief = res.getBoolean("actief");
 
 				VerlorenVoorwerp voorwerp = new VerlorenVoorwerp(id, station, omschrijving,type, timestamp, actief);
@@ -102,7 +133,7 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 				String type = res.getString("type");
 				Timestamp timestamp;
 				
-				if(View.getIngelogdGebruiker().getUsername().equals("Offline"))
+				if(View.getIngelogdGebruiker().getUsername().equals("offline"))
 				{
 					Long datumLong = res.getLong("datum");
 					System.out.println(datumLong);
@@ -198,15 +229,29 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 		String sql = "INSERT INTO verlorenvoorwerp VALUES(null,?,?,?,?,?)";
 
 		try {
-			if (getConnection().isClosed())
+			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
+			}
 
 			prep = getConnection().prepareStatement(sql);
 			
 			prep.setString(1, voorwerp.getStation().getNaam());
 			prep.setString(2, voorwerp.getOmschrijving());
 			prep.setString(3, voorwerp.getType());
+			
+			if(View.getIngelogdGebruiker().getUsername().equals("offline"))
+			{
+		
+				Long datumLong = voorwerp.getTimestamp().getTime();
+				Timestamp timestamp = new Timestamp(datumLong);
+				System.out.println("datum timestamp insert dao " + timestamp);
+				String S = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(timestamp);
+				prep.setString(4, S);
+			}
+			else
+			{
 			prep.setTimestamp(4, voorwerp.getTimestampNow());
+			}
 			prep.setBoolean(5, voorwerp.isActief());
 			return prep.executeUpdate();
 		} catch (SQLException e) {
@@ -240,6 +285,86 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 			prep = getConnection().prepareStatement(sql);
 
 			prep.setInt(1, voorwerpId);
+			return prep.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
+	
+	public ArrayList<VerlorenVoorwerp> getAllForDatabase() {
+		ArrayList<VerlorenVoorwerp> lijst = null;
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		String sql = "SELECT * FROM verlorenvoorwerp";
+		try {
+			if (DatabaseSingleton.getDatabaseSingleton().getLocalConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			
+			prep = DatabaseSingleton.getDatabaseSingleton().getLocalConnection().prepareStatement(sql);
+			res = prep.executeQuery();
+			lijst = new ArrayList<VerlorenVoorwerp>();
+
+			while (res.next()) {
+				int id = res.getInt("voorwerp_id");
+				String stationNaam = res.getString("station");
+				StationNMBS station = new StationNMBS();
+				station.setNaam(stationNaam);
+				String omschrijving = res.getString("omschrijving");
+				String type = res.getString("type");
+				
+				Timestamp timestamp = new Timestamp(1);
+					    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+					    Date parsedDate;
+						try {
+						  parsedDate = dateFormat.parse(res.getString("Datum"));
+				 timestamp = new Timestamp(parsedDate.getTime());
+						  
+						} catch (ParseException e) {
+							e.printStackTrace();
+						}
+					   
+				boolean actief = res.getBoolean("actief");
+
+				VerlorenVoorwerp voorwerp = new VerlorenVoorwerp(id, station, omschrijving,type, timestamp, actief);
+				lijst.add((voorwerp));
+			}
+
+			return lijst;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+				if (res != null)
+					res.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
+	
+	public int deleteAlles() {
+		String sql = "DELETE from verlorenvoorwerp where actief=1";
+		PreparedStatement prep = null;
+		try {
+			if (DatabaseSingleton.getDatabaseSingleton().getLocalConnection().isClosed())
+				throw new IllegalStateException("Unexpected error!");
+
+			prep = DatabaseSingleton.getDatabaseSingleton().getLocalConnection().prepareStatement(sql);
 			return prep.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
