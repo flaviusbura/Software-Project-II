@@ -85,15 +85,6 @@ public class HomeController {
 				view.changeView(VerlorenvoorwerpView.initialize(view));
 			}
 		});
-		
-		HomeView.getPrijzenBeheer().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				PrijsBeheerView.setPrijsBeheerControllerToNull();
-				view.changeView(PrijsBeheerView.initialize(view));
-				
-			}
-		});
 		if (View.getIngelogdGebruiker().getRol() == 2) {
 			HomeView.getBtnStatistieken().addActionListener(new ActionListener() {
 				@Override
@@ -108,6 +99,15 @@ public class HomeController {
 				public void actionPerformed(ActionEvent e) {
 					GebruikerView.setGebruikerControllerToNull();
 					view.changeView(GebruikerView.initialize(view));
+				}
+			});
+			
+			HomeView.getPrijzenBeheer().addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					PrijsBeheerView.setPrijsBeheerControllerToNull();
+					view.changeView(PrijsBeheerView.initialize(view));
+					
 				}
 			});
 		}
