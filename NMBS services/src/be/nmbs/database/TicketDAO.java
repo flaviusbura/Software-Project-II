@@ -6,9 +6,9 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import be.nmbs.logic.Station;
 import be.nmbs.logic.StationNMBS;
 import be.nmbs.logic.Ticket;
+
 /**
  * Deze klasse is een DAO. Hiermee kunnen er Ticket-objecten naar de de database 
  * geschreven, gevraagd, gewijzigd en verwijderd worden.

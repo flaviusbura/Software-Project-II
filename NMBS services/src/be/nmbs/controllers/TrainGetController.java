@@ -2,8 +2,10 @@ package be.nmbs.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Calendar;
 
+import be.nmbs.logic.Route;
 import be.nmbs.logic.Trein;
 import be.nmbs.tablemodels.TrainTableModel;
 import be.nmbs.userInterface.TrainAskView;
@@ -32,7 +34,7 @@ public class TrainGetController {
 		});
 	}
 	
-	public TrainGetController(View view, Trein train, String departureStation, String arrivalStation, Calendar departure) {
+	public TrainGetController(View view, ArrayList<Route> routes, Trein train, String departureStation, String arrivalStation, Calendar departure) {
 		if (train != null) {
 			TrainTableModel trainModel = new TrainTableModel();
 	        trainModel.setTrain(train);
@@ -46,7 +48,7 @@ public class TrainGetController {
 			@Override
 			public void actionPerformed(ActionEvent e) {				
 				RouteGetView.setRouteGetControllerToNull();
-				view.changeView(RouteGetView.initialize(view, departureStation, arrivalStation, departure));
+				view.changeView(RouteGetView.initialize(view, routes, departureStation, arrivalStation, departure));
 			}
 		});
 	}

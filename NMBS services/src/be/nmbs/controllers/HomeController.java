@@ -2,6 +2,7 @@ package be.nmbs.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import be.nmbs.userInterface.AbonnementView;
 import be.nmbs.userInterface.BoeteView;
@@ -9,11 +10,14 @@ import be.nmbs.userInterface.GebruikerView;
 import be.nmbs.userInterface.HomeView;
 import be.nmbs.userInterface.KlantenBeheerView;
 import be.nmbs.userInterface.RouteAskView;
+import be.nmbs.userInterface.StatistiekView;
 import be.nmbs.userInterface.LoginView;
+import be.nmbs.userInterface.PrijsBeheerView;
 import be.nmbs.userInterface.TicketView;
 import be.nmbs.userInterface.TrainAskView;
 import be.nmbs.userInterface.VerlorenvoorwerpView;
 import be.nmbs.userInterface.View;
+import be.nmbs.database.PushDAO;
 
 public class HomeController {
 	public HomeController(View view) {
@@ -51,7 +55,6 @@ public class HomeController {
 		});
 		
 		HomeView.getLogOut().addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				HomeView.setHomeControllerToNull();
@@ -60,7 +63,6 @@ public class HomeController {
 		});
 		
 		HomeView.getKlantenBeheer().addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				KlantenBeheerView.setKlantenBeheerControllerToNull();
@@ -71,30 +73,60 @@ public class HomeController {
 		HomeView.getBtnTicket().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				TicketView.setTicketControllerToNull();
 				view.changeView(TicketView.initialize(view));
-				
 			}
 		});
 		
 		HomeView.getBtnVerlorenvoorwerpen().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				VerlorenvoorwerpView.setVerlorenvoorwerpControllerToNull();
 				view.changeView(VerlorenvoorwerpView.initialize(view));
+			}
+		});
+		if (View.getIngelogdGebruiker().getRol() == 2) {
+			HomeView.getBtnStatistieken().addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					StatistiekView.setStatistiekControllerToNull();
+					view.changeView(StatistiekView.initialize(view));
+				}
+			});
+			
+			HomeView.getGebruikersBeheer().addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					GebruikerView.setGebruikerControllerToNull();
+					view.changeView(GebruikerView.initialize(view));
+				}
+			});
+			
+			HomeView.getPrijzenBeheer().addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					PrijsBeheerView.setPrijsBeheerControllerToNull();
+					view.changeView(PrijsBeheerView.initialize(view));
+					
+				}
+			});
+		}
+		
+		HomeView.getBtnPush().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				PushDAO pushdao = new PushDAO();
+				try {
+					pushdao.Push();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			
 				
 			}
 		});
 		
-		HomeView.getGebruikersBeheer().addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				GebruikerView.setGebruikerControllerToNull();
-				view.changeView(GebruikerView.initialize(view));
-			}
-		});
 	}
 }

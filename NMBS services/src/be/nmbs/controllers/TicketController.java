@@ -13,12 +13,9 @@ import javax.swing.JOptionPane;
 import be.nmbs.database.TicketDAO;
 import be.nmbs.logic.Korting;
 import be.nmbs.logic.Prijs;
-import be.nmbs.logic.Station;
 import be.nmbs.logic.StationNMBS;
 import be.nmbs.logic.Ticket;
-import be.nmbs.userInterface.AbonnementView;
 import be.nmbs.userInterface.HomeView;
-import be.nmbs.userInterface.LoginView;
 import be.nmbs.userInterface.TicketView;
 import be.nmbs.userInterface.View;
 
@@ -71,12 +68,9 @@ public class TicketController {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-	
-						System.out.println("Gebruiker: " + View.getIngelogdGebruiker().getAchternaam());
-						HomeView.setHomeControllerToNull();
-						view.changeView(HomeView.initialize(view));
-					}
-				});
-	
+				HomeView.setHomeControllerToNull();
+				view.changeView(HomeView.initialize(view));
+			}
+		});
 	}
 }

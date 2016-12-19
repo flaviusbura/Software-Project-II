@@ -8,11 +8,9 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 public class ApiCallerTest {
-	private ApiCaller caller;
 	private Calendar cal;
 	
 	/**
@@ -20,10 +18,6 @@ public class ApiCallerTest {
 	 * in elke test opnieuw moeten aanmaken
 	 * @throws Exception
 	 */
-	@Before
-	public void setUp() throws Exception {
-		caller = new ApiCaller();
-	}
 
 	/**
 	 * Deze methode gaat testen of getRouteInfo werkt.
@@ -32,10 +26,10 @@ public class ApiCallerTest {
 	public void testGetRouteInfo() {
 		ArrayList<Route> routes = new ArrayList<Route>();
 		
-		routes = caller.getRouteInfo("Mechelen", "Brussel-Zuid");
+		routes = ApiCaller.getRouteInfo("Mechelen", "Brussel-Zuid");
 		assertTrue(routes.size() > 0);
 		
-		routes = caller.getRouteInfo("niks", "rip");
+		routes = ApiCaller.getRouteInfo("niks", "rip");
 		assertNull(routes);
 	}
 	
@@ -48,7 +42,7 @@ public class ApiCallerTest {
 		cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1"));
 		
 		cal.setTime(new Date(System.currentTimeMillis()));
-		routes = caller.getTimedRouteInfo("Mechelen", "Brussel-Zuid", cal.getTime());
+		routes = ApiCaller.getTimedRouteInfo("Mechelen", "Brussel-Zuid", cal.getTime());
 		assertTrue(routes.size() > 0);
 	}
 
@@ -58,13 +52,13 @@ public class ApiCallerTest {
 	@Test
 	public void testGetTreinInfo() {
 		Trein trein;
-		trein = caller.getTreinInfo("2309");
+		trein = ApiCaller.getTreinInfo("2309");
 		assertTrue(trein.getId().equals("IC 2309"));
 		assertTrue(trein.getDepartureStation().equals("Oostende"));
 		assertTrue(trein.getTerminusStation().equals("Brussels Airport - Zaventem"));
 		assertTrue(trein.getStops().size() > 0);
 		
-		trein = caller.getTreinInfo("3168");
+		trein = ApiCaller.getTreinInfo("3168");
 		assertNull(trein);
 	}
 
@@ -74,7 +68,6 @@ public class ApiCallerTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
-		caller = null;
 		cal = null;
 	}
 }

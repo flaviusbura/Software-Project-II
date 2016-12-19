@@ -85,12 +85,12 @@ public class MaakAbonnementView {
 	private static JLabel lblMaanden;
 	static String[] tab = { "3 maanden", "6 maanden", "9 maanden", "12 maanden" };
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private static JComboBox combo = new JComboBox(tab);
+	private static JComboBox<?> combo = new JComboBox<Object>(tab);
 
 	private static JLabel departureLabel;
-	private static JComboBox departureField;
+	private static JComboBox<?> departureField;
 	private static JLabel arrivalLabel;
-	private static JComboBox arrivalField;
+	private static JComboBox<?> arrivalField;
 	private static ArrayList<Klant> lijst = new ArrayList<>();
 	
 	public static JPanel initialize(View view) {
@@ -186,7 +186,7 @@ public class MaakAbonnementView {
 		c.gridy = 2;
 		tPanel.add(departureLabel, c);
 
-		departureField = new JComboBox(stationLijst);
+		departureField = new JComboBox<Object>(stationLijst);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridy = 2;
@@ -199,7 +199,7 @@ public class MaakAbonnementView {
 		c.gridy = 3;
 		tPanel.add(arrivalLabel, c);
 
-		arrivalField = new JComboBox(stationLijst);
+		arrivalField = new JComboBox<Object>(stationLijst);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridy = 3;
@@ -306,11 +306,11 @@ public class MaakAbonnementView {
 		MaakAbonnementView.departureLabel = departureLabel;
 	}
 
-	public static JComboBox getDepartureField() {
+	public static JComboBox<?> getDepartureField() {
 		return departureField;
 	}
 
-	public static void setDepartureField(JComboBox departureField) {
+	public static void setDepartureField(JComboBox<?> departureField) {
 		MaakAbonnementView.departureField = departureField;
 	}
 
@@ -322,11 +322,11 @@ public class MaakAbonnementView {
 		MaakAbonnementView.arrivalLabel = arrivalLabel;
 	}
 
-	public static JComboBox getArrivalField() {
+	public static JComboBox<?> getArrivalField() {
 		return arrivalField;
 	}
 
-	public static void setArrivalField(JComboBox arrivalField) {
+	public static void setArrivalField(JComboBox<?> arrivalField) {
 		MaakAbonnementView.arrivalField = arrivalField;
 	}
 
@@ -354,11 +354,11 @@ public class MaakAbonnementView {
 		MaakAbonnementView.tab = tab;
 	}
 
-	public static JComboBox getCombo() {
+	public static JComboBox<?> getCombo() {
 		return combo;
 	}
 
-	public static void setCombo(JComboBox combo) {
+	public static void setCombo(JComboBox<?> combo) {
 		MaakAbonnementView.combo = combo;
 	}
 
@@ -652,5 +652,4 @@ public class MaakAbonnementView {
 	public static void setBtnzoek(JButton btnzoek) {
 		MaakAbonnementView.btnZoek = btnzoek;
 	}
-
 }

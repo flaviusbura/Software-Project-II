@@ -2,6 +2,7 @@ package be.nmbs.userInterface;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,6 +13,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JSpinner.DateEditor;
 import javax.swing.SpinnerDateModel;
 
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -28,9 +30,9 @@ public class RouteAskView {
 	private static JButton btnZoeken;
 	private static JPanel panel;
 	private static JLabel departureLabel;
-	private static JComboBox departureField;
+	private static JComboBox<String> departureField;
 	private static JLabel arrivalLabel;
-	private static JComboBox arrivalField;
+	private static JComboBox<String> arrivalField;
 	private static JDatePickerImpl datePicker;
 	private static JSpinner timeSpinner;
 	
@@ -38,24 +40,21 @@ public class RouteAskView {
 	
 	private static RouteAskController routeAskController;
 
-	@SuppressWarnings("static-access")
 	public static JPanel initialize(View view) {
 			UtilDateModel model = new UtilDateModel();
 			Calendar cal = Calendar.getInstance();
-			model.setDate(cal.get(cal.YEAR), cal.get(cal.MONTH), cal.get(cal.DATE));
+			model.setDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
 			model.setSelected(true);
-			//model.setDate(20,04,2014);
-			// Need this...
+
 			Properties p = new Properties();
 			p.put("text.today", "Vandaag");
 			p.put("text.month", "Maand");
 			p.put("text.year", "Jaar");
 			JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
-			// Don't know about the formatter, but there it is...
 			datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 			
 			timeSpinner = new JSpinner(new SpinnerDateModel());
-			JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "HH:mm");
+			DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "HH:mm");
 			timeSpinner.setEditor(timeEditor);
 			timeSpinner.setValue(new Date());
 		
@@ -64,60 +63,58 @@ public class RouteAskView {
 	
 			String[] stationLijst = new String[allStations.size()];
 			
-			for(int i=0; i < allStations.size(); i++) {
+			for(int i=0; i < allStations.size(); i++)
 				stationLijst[i] = "" + allStations.get(i).getNaam();
-			}
 		
 			panel = new JPanel(new GridBagLayout());
 			
-			departureLabel = new JLabel("Vertrekstation");
 			GridBagConstraints c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			
+			departureLabel = new JLabel("Vertrekstation");
 			c.gridx = 0;
 			c.gridy = 0;
 			panel.add(departureLabel, c);
 			
-			departureField = new JComboBox(stationLijst);
-			c.fill = GridBagConstraints.HORIZONTAL;
+			departureField = new JComboBox<String>(stationLijst);
+			c.insets = new Insets(0, 5, 0, 0);
 			c.gridx = 1;
 			c.gridy = 0;
 			panel.add(departureField, c);
 			
 			arrivalLabel = new JLabel("Bestemming");
-			c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.insets = new Insets(5, 0, 0, 0);
 			c.gridx = 0;
 			c.gridy = 1;
 			panel.add(arrivalLabel, c);
 			
-			arrivalField = new JComboBox(stationLijst);
-			c.fill = GridBagConstraints.HORIZONTAL;
+			arrivalField = new JComboBox<String>(stationLijst);
+			c.insets = new Insets(5, 5, 0, 0);
 			c.gridx = 1;
 			c.gridy = 1;
 			panel.add(arrivalField, c);
 			
-			c.fill = GridBagConstraints.HORIZONTAL;
+			c.insets = new Insets(5, 0, 0, 0);
 			c.gridx = 0;
 			c.gridy = 2;
 			panel.add(timeSpinner, c);
 			
-			c.fill = GridBagConstraints.HORIZONTAL;
+			c.insets = new Insets(5, 5, 0, 0);
 			c.gridx = 1;
 			c.gridy = 2;
 			panel.add(datePicker, c);
 
-			home = new JButton("Terug naar menu");
-			c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
-			c.gridx = 1;
-			c.gridy = 3;
-			panel.add(home, c);
-
 			btnZoeken = new JButton("Route zoeken");
-			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.insets = new Insets(5, 0, 0, 0);
 			c.gridx = 0;
 			c.gridy = 3;
-			panel.add(btnZoeken, c);			
+			panel.add(btnZoeken, c);	
+
+			home = new JButton("Terug naar menu");
+			c.insets = new Insets(5, 5, 0, 0);
+			c.gridx = 1;
+			c.gridy = 3;
+			panel.add(home, c);		
 			
 			routeAskController = new RouteAskController(view);
 			return panel;
@@ -144,7 +141,7 @@ public class RouteAskView {
 		return departureLabel;
 	}
 
-	public static JComboBox getDepartureField() {
+	public static JComboBox<String> getDepartureField() {
 		return departureField;
 	}
 
@@ -152,7 +149,7 @@ public class RouteAskView {
 		return arrivalLabel;
 	}
 
-	public static JComboBox getArrivalField() {
+	public static JComboBox<String> getArrivalField() {
 		return arrivalField;
 	}
 
@@ -189,7 +186,7 @@ public class RouteAskView {
 		RouteAskView.departureLabel = departureLabel;
 	}
 
-	public static void setDepartureField(JComboBox departureField) {
+	public static void setDepartureField(JComboBox<String> departureField) {
 		RouteAskView.departureField = departureField;
 	}
 
@@ -197,7 +194,7 @@ public class RouteAskView {
 		RouteAskView.arrivalLabel = arrivalLabel;
 	}
 
-	public static void setArrivalField(JComboBox arrivalField) {
+	public static void setArrivalField(JComboBox<String> arrivalField) {
 		RouteAskView.arrivalField = arrivalField;
 	}
 

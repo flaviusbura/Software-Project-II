@@ -1,7 +1,6 @@
 package be.nmbs.database;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.fail;
 import java.sql.Timestamp;
 
 import org.junit.Before;
@@ -49,29 +48,7 @@ public class AbonnementDAOTest {
 	 */
 	@Test
 	public void testInsert() {
-		
-		/*
-		 * int flight_number = Integer.parseInt(search_flight); //convert to int
-           if(fl_number[i] == flight_number)//compare two ints
-		 */
-		//dao.insertDrieMaandAbonnement(abonnement1);
-		//dao.insertDrieMaandAbonnement(abonnement2);
-		//dao.insertDrieMaandAbonnement(abonnement3);
-		
-		/*
-		 * klant3 = dao.getKlantOpNaamEnVoornaam(klant);
-		assertTrue(klant.getVoornaam().equals(klant3.getVoornaam()));
-		assertTrue(klant.getAchternaam().equals(klant3.getAchternaam()));
-		klant3 = dao.getKlantOpNaamEnVoornaam(klant2);
-		assertTrue(klant2.getVoornaam().equals(klant3.getVoornaam()));
-		assertTrue(klant2.getAchternaam().equals(klant3.getAchternaam()));
-	}
-		 */
 		abonnement3 = dao.zoekAbonnement(abonnement1);
-		assertTrue(abonnement1.getKlant().getAchternaam().equals(abonnement3.getKlant().getAchternaam()));
-		
-			
+		assertTrue(abonnement1.getKlant().getAchternaam().equals(abonnement3.getKlant().getAchternaam()));	
 	}
-
-
 }

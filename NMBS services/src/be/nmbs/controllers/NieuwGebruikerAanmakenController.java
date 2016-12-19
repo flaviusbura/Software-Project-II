@@ -59,18 +59,24 @@ public class NieuwGebruikerAanmakenController {
 					} else {
 						rol = 1;
 					}
+					
 					gebruiker = new Gebruiker(1, voornaam, achternaam, username, secureWachtwoord, rol, true);
-					gebruikerDAO = new GebruikerDAO();
-					gebruikerDAO.insert(gebruiker);
 				} catch (EnkelLettersException ex) {
 					jOptionPane.showMessageDialog(null,
-							"De veldjes mogen niet leeg zijn en/of andere\nkarakters dan letters bevatten.");
+							"De velden mogen niet leeg zijn en/of andere\nkarakters dan letters bevatten.");
 				} catch (PasswordNotMatchException ex) {
 					jOptionPane.showMessageDialog(null, "Wachtwoorden matchen niet, probeer opnieuw!");
 				}
-				jOptionPane.showMessageDialog(null, "Uw gebruiker is toegevoegd geweest!");
-				GebruikerView.setGebruikerControllerToNull();
-				view.changeView(GebruikerView.initialize(view));
+				
+				gebruikerDAO = new GebruikerDAO();
+				
+				if (gebruikerDAO.insert(gebruiker) == 9999) {
+					jOptionPane.showMessageDialog(null, "Er bestaat reeds een gebruiker met deze username!");
+				} else {
+					jOptionPane.showMessageDialog(null, "Uw gebruiker is toegevoegd geweest!");
+					GebruikerView.setGebruikerControllerToNull();
+					view.changeView(GebruikerView.initialize(view));
+				}
 			}
 		});
 

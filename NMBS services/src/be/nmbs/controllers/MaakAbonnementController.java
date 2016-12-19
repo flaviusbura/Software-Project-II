@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import be.nmbs.userInterface.View;
 import java.sql.Timestamp;
 import be.nmbs.database.AbonnementDAO;
+import be.nmbs.database.AbonnementTypeDAO;
 import be.nmbs.database.KlantDAO;
 import be.nmbs.logic.Abonnement;
 import be.nmbs.logic.Gebruiker;
@@ -15,8 +16,6 @@ import be.nmbs.logic.Korting;
 import be.nmbs.logic.Prijs;
 import be.nmbs.userInterface.MaakAbonnementView;
 import be.nmbs.userInterface.HomeView;
-import be.nmbs.userInterface.KlantWijzigenView;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -53,6 +52,7 @@ public class MaakAbonnementController {
 
 					Korting korting = (Korting) MaakAbonnementView.getKortingLijst().getSelectedItem();
 					int kortingId = korting.getId();
+					AbonnementTypeDAO typeDAO = new AbonnementTypeDAO();
 
 					try {
 						int row = MaakAbonnementView.getTable().getSelectedRow();
@@ -83,7 +83,7 @@ public class MaakAbonnementController {
 							
 						}
 
-						
+						typeDAO.insertTypeAbonnement(aboDao.getIdByStartDatum(startDatum), keuze);
 					} catch (ArrayIndexOutOfBoundsException e2) {
 
 						JOptionPane.showMessageDialog(null,

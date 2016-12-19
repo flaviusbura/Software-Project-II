@@ -30,104 +30,103 @@ public class NieuwAdresView {
 	@SuppressWarnings("unused")
 	private static NieuwAdresController nieuwAdresController;
 	
-	@SuppressWarnings("static-access")
 	public static JPanel initialize(View view) {
 			panel = new JPanel(new GridBagLayout());
 
 			GridBagConstraints c = new GridBagConstraints();
 			straat = new JLabel("Straat");
 			c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 0;
 			c.gridy = 2;
 			panel.add(straat, c);
 			
 			straatText = new JTextField(10);
 			c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 1;
 			c.gridy = 2;
 			panel.add(straatText, c);
 			
 			nr = new JLabel("Huisnummer");
 			c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 0;
 			c.gridy = 3;
 			panel.add(nr, c);
 			
 			nrText = new JTextField(10);
 			c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 1;
 			c.gridy = 3;
 			panel.add(nrText, c);
 			
 			bus = new JLabel("bus");
 			c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 0;
 			c.gridy = 4;
 			panel.add(bus, c);
 			
 			busText = new JTextField(10);
 			c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 1;
 			c.gridy = 4;
 			panel.add(busText, c);
 			
 			postcode = new JLabel("Postcode");
 			c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 0;
 			c.gridy = 5;
 			panel.add(postcode, c);
 			
 			postcodeText = new JTextField(4);
 			c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 1;
 			c.gridy = 5;
 			panel.add(postcodeText, c);
 			
 			stad = new JLabel("Stad");
 			c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 0;
 			c.gridy = 6;
 			panel.add(stad, c);
 			
 			stadText = new JTextField(30);
 			c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 1;
 			c.gridy = 6;
 			panel.add(stadText, c);
 			
 			land = new JLabel("Land");
 			c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 0;
 			c.gridy = 7;
 			panel.add(land, c);
 			
 			landText = new JTextField(30);
 			c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 1;
 			c.gridy = 7;
 			panel.add(landText, c);
 			
 			klantAdresWijzigen = new JButton("Klant Adres Wijzigen");
 			c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 0;
 			c.gridy = 8;
 			panel.add(klantAdresWijzigen, c);
 
 			actieannuleren = new JButton("Actie annuleren");
-			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 1;
 			c.gridy = 8;
 			panel.add(actieannuleren, c);

@@ -2,13 +2,10 @@ package be.nmbs.database;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import be.nmbs.logic.Klant;
 import be.nmbs.logic.Korting;
 
 public class KortingDAOTest {

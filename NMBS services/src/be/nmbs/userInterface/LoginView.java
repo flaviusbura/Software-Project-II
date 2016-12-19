@@ -2,6 +2,7 @@ package be.nmbs.userInterface;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -27,7 +28,7 @@ public class LoginView {
 
 		GridBagConstraints c = new GridBagConstraints();
 
-		userLabel = new JLabel("username");
+		userLabel = new JLabel("Gebruikersnaam");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
@@ -35,30 +36,35 @@ public class LoginView {
 
 		gebruikerText = new JTextField(10);
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(0, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 0;
 		panel.add(gebruikerText, c);
 
-		passwordLabel = new JLabel("password");
+		passwordLabel = new JLabel("Wachtwoord");
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 1;
 		panel.add(passwordLabel, c);
 
 		passwordText = new JPasswordField(10);
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 1;
 		panel.add(passwordText, c);
 
-		login = new JButton("Login");
+		login = new JButton("Inloggen");
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 2;
 		panel.add(login, c);
 
-		closeApp = new JButton("Close");
+		closeApp = new JButton("Sluiten");
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 2;
 		panel.add(closeApp, c);

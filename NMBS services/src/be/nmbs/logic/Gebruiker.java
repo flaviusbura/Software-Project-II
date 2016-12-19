@@ -60,7 +60,7 @@ public class Gebruiker {
 
 	@Override
 	public String toString() {
-		return id + " " + username;
+		return id + " " + username + " " + wachtwoord;
 	}
 
 	/**
