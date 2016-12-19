@@ -351,7 +351,7 @@ public class AbonnementDAO extends BaseDAO {
 		}
 	}
 
-	public static Timestamp getEindDatum(Abonnement abonnement) {
+	public Timestamp getEindDatum(Abonnement abonnement) {
 		String sql = "SELECT * FROM abonnement WHERE abonnement_id = ?";
 		PreparedStatement prep = null;
 		ResultSet res = null;
@@ -540,6 +540,112 @@ public class AbonnementDAO extends BaseDAO {
 					prep.close();
 				if (res != null)
 					res.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
+	
+	public ArrayList<Abonnement> getAllBetweenDates(Timestamp date1, Timestamp date2){
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		Abonnement abo;
+		ArrayList<Abonnement> list = new ArrayList<Abonnement>();
+		String sql = "SELECT * FROM abonnement WHERE start_datum>=? AND start_datum<=?";
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+			//dit later veranderen naar getKlantContactId();
+			prep.setTimestamp(1, date1);
+			prep.setTimestamp(2, date2);
+
+			res = prep.executeQuery();
+			while (res.next()) {
+				int abonnementId=res.getInt("abbonement_id");
+				int klantContactId = res.getInt("klant_contact_id");
+				int gebruikerId = res.getInt("gebruiker_id");
+				String route=res.getString("route");
+				Timestamp startDatum = res.getTimestamp("start_datum");
+				Timestamp eindDatum = res.getTimestamp("eind_datum");
+				int prijsId=res.getInt("prijs_id");
+				int kortingId =res.getInt("korting_id");
+				boolean actief=res.getBoolean("actief");
+				
+				KortingDAO kortingdao = new KortingDAO();
+				Korting korting = kortingdao.getKorting(kortingId);
+				KlantDAO klantdao = new KlantDAO();
+				Klant klant = klantdao.getKlantById(klantContactId);
+				PrijsDAO prijsdao = new PrijsDAO();
+				Prijs prijs = prijsdao.getPrijsByPrijsId(prijsId);
+				
+				 abo = new Abonnement(abonnementId, klant, gebruikerId, route, startDatum, 
+						 eindDatum, prijs, korting, actief);
+				 list.add(abo);
+			}
+			return list;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
+	public ArrayList<Abonnement> getAllOnDate(Timestamp date){
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		Abonnement abo;
+		ArrayList<Abonnement> list= new ArrayList<Abonnement>();
+		String sql = "SELECT * FROM abonnement WHERE start_datum=?";
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+			//dit later veranderen naar getKlantContactId();
+			prep.setTimestamp(1, date);
+
+			res = prep.executeQuery();
+			while (res.next()) {
+				int abonnementId=res.getInt("abbonement_id");
+				int klantContactId = res.getInt("klant_contact_id");
+				int gebruikerId = res.getInt("gebruiker_id");
+				String route=res.getString("route");
+				Timestamp startDatum = res.getTimestamp("start_datum");
+				Timestamp eindDatum = res.getTimestamp("eind_datum");
+				int prijsId=res.getInt("prijs_id");
+				int kortingId =res.getInt("korting_id");
+				boolean actief=res.getBoolean("actief");
+				
+				KortingDAO kortingdao = new KortingDAO();
+				Korting korting = kortingdao.getKorting(kortingId);
+				KlantDAO klantdao = new KlantDAO();
+				Klant klant = klantdao.getKlantById(klantContactId);
+				PrijsDAO prijsdao = new PrijsDAO();
+				Prijs prijs = prijsdao.getPrijsByPrijsId(prijsId);
+				
+				 abo = new Abonnement(abonnementId, klant, gebruikerId, route, startDatum, 
+						 eindDatum, prijs, korting, actief);
+				 list.add(abo);
+			}
+			return list;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 				throw new RuntimeException("Unexpected error!");

@@ -9,6 +9,7 @@ import be.nmbs.userInterface.GebruikerView;
 import be.nmbs.userInterface.HomeView;
 import be.nmbs.userInterface.KlantenBeheerView;
 import be.nmbs.userInterface.RouteAskView;
+import be.nmbs.userInterface.StatistiekView;
 import be.nmbs.userInterface.LoginView;
 import be.nmbs.userInterface.PrijsBeheerView;
 import be.nmbs.userInterface.TicketView;
@@ -52,7 +53,6 @@ public class HomeController {
 		});
 		
 		HomeView.getLogOut().addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				HomeView.setHomeControllerToNull();
@@ -61,7 +61,6 @@ public class HomeController {
 		});
 		
 		HomeView.getKlantenBeheer().addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				KlantenBeheerView.setKlantenBeheerControllerToNull();
@@ -72,20 +71,16 @@ public class HomeController {
 		HomeView.getBtnTicket().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				TicketView.setTicketControllerToNull();
 				view.changeView(TicketView.initialize(view));
-				
 			}
 		});
 		
 		HomeView.getBtnVerlorenvoorwerpen().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				VerlorenvoorwerpView.setVerlorenvoorwerpControllerToNull();
 				view.changeView(VerlorenvoorwerpView.initialize(view));
-				
 			}
 		});
 		
@@ -98,8 +93,15 @@ public class HomeController {
 			}
 		});
 		if (View.getIngelogdGebruiker().getRol() == 2) {
+			HomeView.getBtnStatistieken().addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					StatistiekView.setStatistiekControllerToNull();
+					view.changeView(StatistiekView.initialize(view));
+				}
+			});
+			
 			HomeView.getGebruikersBeheer().addActionListener(new ActionListener() {
-				
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					GebruikerView.setGebruikerControllerToNull();
