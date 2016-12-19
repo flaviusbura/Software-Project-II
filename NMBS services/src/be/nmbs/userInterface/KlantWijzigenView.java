@@ -89,19 +89,20 @@ public class KlantWijzigenView {
 			}
 		};
 
-		table.setPreferredScrollableViewportSize(new Dimension(600, 400));
+		
 		table.setFillsViewportHeight(true);
 
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
+		c.gridheight = 5;
 		panel.add(table, c);
 		KlantWijzigenView.resizeColumnWidth(table);
 		JScrollPane jScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		panel.add(jScrollPane);
+		panel.add(jScrollPane, c);
 
 		JPanel jPanel = new JPanel(new GridBagLayout());
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -112,7 +113,7 @@ public class KlantWijzigenView {
 		zoekText = new JTextField(5);
 		zoekText.setToolTipText("Voer hier in de achternaam van de klant die u wilt opzoeken.");
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
+		c.gridx = 1;
 		c.gridy = 0;
 		jPanel.add(zoekText, c);
 		

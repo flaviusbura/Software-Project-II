@@ -503,12 +503,11 @@ public class KlantWijzigenController {
 		});
 
 		KlantWijzigenView.getZoek().addActionListener(new ActionListener() {
-			@SuppressWarnings("static-access")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				naam = KlantWijzigenView.getZoekText().getText();
 				if (naam.equals("")) {
-					jOptionPane.showMessageDialog(null, "Geen klanten gevonden.");
+					JOptionPane.showMessageDialog(null, "Geef een geldige invoer.");
 					KlantWijzigenView.getLijst().clear();
 					KlantWijzigenView.getZoekText().setText("");
 					KlantWijzigenView.setKlantWijzigenControllerToNull();
@@ -516,7 +515,7 @@ public class KlantWijzigenController {
 				} else {
 					lijst = klantDAO.getAllByAchternaam(naam);
 					if (lijst.size() == 0) {
-						jOptionPane.showMessageDialog(null, "Geen klanten gevonden met deze achternaam.");
+						JOptionPane.showMessageDialog(null, "Geen klanten gevonden met deze achternaam.");
 						KlantWijzigenView.setKlantWijzigenControllerToNull();
 						KlantWijzigenView.getLijst().clear();
 						view.changeView(KlantWijzigenView.initialize(view));
