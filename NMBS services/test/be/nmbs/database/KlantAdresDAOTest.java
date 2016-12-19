@@ -117,6 +117,17 @@ public class KlantAdresDAOTest {
 		assertTrue(adres.getLand().equals(adres3.getLand()));
 		assertTrue(adres.getActief() == adres3.getActief());
 	}
+	
+	/**
+	 * Deze methode gaat test of land gepdate wordt.
+	 */
+	@Test
+	public void testUpdateLandById() {
+		dao.updateLandByAdresId(22, "MijnLand");
+		adres3 = dao.getAdres(22);
+		
+		
+	}
 	/**
 	 * Hier gebeurt de clean-up
 	 * @throws Exception
