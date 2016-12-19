@@ -31,7 +31,7 @@ public class DatabaseSingleton {
      * @return
      * @throws SQLException
      */
-    public Connection getConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException {
         if (connection != null && !connection.isClosed()) {
             return connection;
         } else {
@@ -63,20 +63,12 @@ public class DatabaseSingleton {
     public Connection getLocalConnection() throws SQLException {
         if (connectionLocal != null && !connectionLocal.isClosed()) {
             return connectionLocal;
-        }
-        else {
-           
-
-             //   System.out.println("SQLException: " + e.getMessage());
-             //   System.out.println("SQLState: " + e.getSQLState());
-             //	  System.out.println("SQLVendorError: " + e.getErrorCode());
-            	// geen internet/connecties dus ga naar lokale db
-              	 // db parameters
-                String url1 = "jdbc:sqlite:db/NMBSServices.db";
-                // create a connection to the local database
-                connectionLocal = DriverManager.getConnection(url1);
-                
-                     
+        } else {
+        	// geen internet/connecties dus ga naar lokale db
+          	// db parameters
+            String url1 = "jdbc:sqlite:db/NMBSServices.db";
+            // create a connection to the local database
+            connectionLocal = DriverManager.getConnection(url1);          
         }
 		return connectionLocal;
     }

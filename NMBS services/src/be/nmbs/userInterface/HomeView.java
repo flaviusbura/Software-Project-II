@@ -105,7 +105,7 @@ public class HomeView {
 		c.gridy = 3;
 		panel.add(btnPush, c);
 		
-		logOut = new JButton("Log out");
+		logOut = new JButton("Uitloggen");
 		c.insets = new Insets(0, 0, 20, 0);
 		c.gridx = 0;
 		c.gridy = 0;

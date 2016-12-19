@@ -15,7 +15,25 @@ public abstract class BaseDAO {
 	 * @return
 	 */
 	protected Connection getConnection() {
+		try {
+			if(connection.isClosed()) {
+				refreshConnection();
+			}
+		} catch (SQLException e) {
+			//TODO: LOG couldn't access sql db 
+			
+			e.printStackTrace();
+		}
+			
 		return connection;
+	}
+	
+	private void refreshConnection() {
+		try {
+			connection = DatabaseSingleton.getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -32,7 +50,7 @@ public abstract class BaseDAO {
 	 */
 	public BaseDAO() {
 		try {
-			setConnection(DatabaseSingleton.getDatabaseSingleton().getConnection());
+			setConnection(DatabaseSingleton.getConnection());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
