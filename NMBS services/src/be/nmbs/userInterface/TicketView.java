@@ -16,9 +16,13 @@ import be.nmbs.controllers.TicketController;
 import be.nmbs.database.KortingDAO;
 import be.nmbs.database.PrijsDAO;
 import be.nmbs.database.StationDAO;
+import be.nmbs.database.TypeAbonnementDAO;
+import be.nmbs.database.TypeTicketDAO;
 import be.nmbs.logic.Korting;
 import be.nmbs.logic.Prijs;
 import be.nmbs.logic.StationNMBS;
+import be.nmbs.logic.TypeAbonnement;
+import be.nmbs.logic.TypeTicket;
 
 public class TicketView {
 	private static JPanel panel;
@@ -88,6 +92,11 @@ public class TicketView {
 	static SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 	static Date now = new Date();
 	static String strDate = sdfDate.format(now);
+	
+	private static JLabel lblType;
+	private static JComboBox<?> cbxType;
+	private static JComboBox<TypeTicket> typeLijst;
+	private static TypeTicketDAO typeDao = new TypeTicketDAO();
 	
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
@@ -229,31 +238,45 @@ public class TicketView {
 		c.gridy = 8;
 		panel.add(kortingLijst, c);
 		
+		ArrayList<TypeTicket> allType = typeDao.getAll();
+		typeLijst = new JComboBox<>();
+		for (TypeTicket typeTicket : allType) {
+			typeLijst.addItem(typeTicket);
+		}
 
+		lblType = new JLabel("Type ");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 9;
+		panel.add(lblType, c);
+
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 9;
+		panel.add(typeLijst, c);
 		
 		lblStation = new JLabel("station");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
-		c.gridy = 9;
+		c.gridy = 10;
 		panel.add(lblStation, c);
-
 		
 		stationlijst = new JComboBox(stationLijst);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
-		c.gridy = 9;
+		c.gridy = 10;
 		panel.add(stationlijst, c);
 		
 		btnKoopTicket = new JButton("koop ticket");
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 10;
+		c.gridx = 1;
+		c.gridy = 11;
 		panel.add(btnKoopTicket, c);
 		
 		btnVorigScherm = new JButton("vorig scherm");
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 10;
+		c.gridx = 0;
+		c.gridy = 11;
 		panel.add(btnVorigScherm, c);
 		
 		ticketController = new TicketController(view);

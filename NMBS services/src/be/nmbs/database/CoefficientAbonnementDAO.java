@@ -121,7 +121,7 @@ public class CoefficientAbonnementDAO extends BaseDAO {
 		PreparedStatement prep = null;
 		ResultSet res = null;
 		double coefficient = 0.00;
-		String sql = "SELECT Coefficient FROM coefficient_abonnement WHERE coefficient_abonnementId=?";
+		String sql = "SELECT Coefficient FROM coefficient_abonnement WHERE type_abonnementId=?";
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");

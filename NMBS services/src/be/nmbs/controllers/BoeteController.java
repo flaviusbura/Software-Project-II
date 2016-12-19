@@ -1,29 +1,13 @@
 package be.nmbs.controllers;
 
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import be.nmbs.database.BoeteDAO;
-import be.nmbs.database.TicketDAO;
-import be.nmbs.logic.Boete;
-import be.nmbs.logic.Korting;
-import be.nmbs.logic.Prijs;
-import be.nmbs.logic.Station;
-
-import be.nmbs.logic.Ticket;
 import be.nmbs.userInterface.BoeteView;
 import be.nmbs.userInterface.HomeView;
-import be.nmbs.userInterface.LoginView;
-
 import be.nmbs.userInterface.View;
 
 public class BoeteController {
