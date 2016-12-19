@@ -2,27 +2,23 @@ package be.nmbs.userInterface;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import be.nmbs.controllers.RouteGetController;
-import be.nmbs.logic.ApiCaller;
 import be.nmbs.logic.Route;
 
 public class RouteGetView {
 	private static JPanel panel;
 	private static JButton back;
 	private static JButton train;
-	private static JLabel info;
 	private static JTable table;
-
-	private static ArrayList<Route> routes;
 	
 	@SuppressWarnings("unused")
 	private static boolean ALLOW_COLUMN_SELECTION = false;
@@ -32,58 +28,36 @@ public class RouteGetView {
 	@SuppressWarnings("unused")
 	private static RouteGetController routeGetController;
 
-
-	@SuppressWarnings("static-access")
-	public static JPanel initialize(View view, String departureStation, String arrivalStation, Calendar departure) {			
+	public static JPanel initialize(View view, ArrayList<Route> routes, String departureStation, String arrivalStation, Calendar departure) {			
 		panel = new JPanel(new GridBagLayout());
-		GridBagConstraints c;
 		
-		ApiCaller caller = new ApiCaller();
+		GridBagConstraints c = new GridBagConstraints();
+
+		table = new JTable();
+		c.fill = GridBagConstraints.VERTICAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 2;
+		c.gridheight = 2;
 		
-		routes = caller.getTimedRouteInfo(departureStation, arrivalStation, departure.getTime());
-	
-		if (routes == null) {
-			info = new JLabel("Geen routes gevonden");
-			c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
-			c.gridx = 0;
-			c.gridy = 0;
-			panel.add(info, c);	
-			
-			back = new JButton("Terug naar zoeken");
-			c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
-			c.gridx = 0;
-			c.gridy = 1;
-			panel.add(back, c);	
-		} else {
-			table = new JTable();
-			
-			c = new GridBagConstraints();
-			c.fill = GridBagConstraints.VERTICAL;
-			c.gridx = 0;
-			c.gridheight = 3;
-			
-			table.setVisible(false);
-			
-			JScrollPane scrollPane = new JScrollPane(table);
-			
-			panel.add(scrollPane);
-			
-			setTrain(new JButton("Trein bekijken"));
-			c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
-			c.gridx = 0;
-			c.gridy = 1;
-			panel.add(train, c);
-			
-			back = new JButton("Terug naar zoeken");
-			c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
-			c.gridx = 1;
-			c.gridy = 1;
-			panel.add(back, c);
-		}
+		JScrollPane scrollPane = new JScrollPane(table);
+		panel.add(scrollPane, c);
+		
+		c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		
+		train = new JButton("Trein bekijken");
+		c.insets = new Insets(5, 0, 0, 0);
+		c.gridx = 0;
+		c.gridy = 2;
+		c.ipadx = 50;
+		panel.add(train, c);
+		
+		back = new JButton("Terug naar zoeken");
+		c.insets = new Insets(5, 5, 0, 0);
+		c.gridx = 1;
+		c.gridy = 2;
+		panel.add(back, c);
 		
 		routeGetController = new RouteGetController(view, routes, departureStation, arrivalStation, departure);
 		return panel;

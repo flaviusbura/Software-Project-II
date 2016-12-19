@@ -6,7 +6,6 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
@@ -14,11 +13,7 @@ import javax.swing.JOptionPane;
 import be.nmbs.database.VerlorenVoorwerpenDAO;
 import be.nmbs.logic.StationNMBS;
 import be.nmbs.logic.VerlorenVoorwerp;
-import be.nmbs.tablemodels.VerlorenvoorwerpTableModel;
-import be.nmbs.userInterface.HomeView;
-import be.nmbs.userInterface.LoginView;
 import be.nmbs.userInterface.NieuwVerlorenvoorwerpView;
-import be.nmbs.userInterface.TicketView;
 import be.nmbs.userInterface.VerlorenvoorwerpView;
 import be.nmbs.userInterface.View;
 
@@ -29,7 +24,6 @@ public class NieuwVerlorenvoorwerpController {
 	public NieuwVerlorenvoorwerpController(View view) {
 		
 		verlorenvoorwerpdao = new VerlorenVoorwerpenDAO();
-		JOptionPane optionPane = new JOptionPane();
 		NieuwVerlorenvoorwerpView.getBtnToevoegen().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -69,12 +63,8 @@ public class NieuwVerlorenvoorwerpController {
 		NieuwVerlorenvoorwerpView.getBtnTerug().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				//System.out.println("Gebruiker: " + View.getIngelogdGebruiker().getAchternaam());
 				VerlorenvoorwerpView.setVerlorenvoorwerpControllerToNull();
 				view.changeView(VerlorenvoorwerpView.initialize(view));
-
-		     	
 			}
 		});
 	}

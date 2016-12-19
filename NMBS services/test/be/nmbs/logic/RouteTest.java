@@ -12,7 +12,6 @@ public class RouteTest {
 	private Route route;
 	private Route route2;
 	private Route route3;
-	private ApiCaller caller;
 	ArrayList<Overstap> overstappen;
 	ArrayList<Trein> treinen;
 	
@@ -23,8 +22,7 @@ public class RouteTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		caller = new ApiCaller();
-		route = caller.getRouteInfo("Mechelen", "Brussel-Zuid").get(0);
+		route = ApiCaller.getRouteInfo("Mechelen", "Brussel-Zuid").get(0);
 		
 		overstappen = new ArrayList<Overstap>();
 		//overstappen.add(new Overstap("1", 1, 2));
@@ -97,7 +95,6 @@ public class RouteTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
-		caller = null;
 		route = null;
 		route2 = null;
 		overstappen = null;

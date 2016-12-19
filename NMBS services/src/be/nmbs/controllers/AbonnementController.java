@@ -13,11 +13,9 @@ public class AbonnementController {
 	public AbonnementController(View view) {
 
 		AbonnementView.getMaakAbonnement().addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MaakAbonnementView.setMaakAbonnementControllerToNull();
-				MaakAbonnementView.setHomeControllerToNull();
 				view.changeView(MaakAbonnementView.initialize(view));
 			}
 		});

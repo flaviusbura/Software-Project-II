@@ -1,14 +1,11 @@
 package be.nmbs.database;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import be.nmbs.logic.Boete;
-import be.nmbs.logic.Klant;
 
 public class BoeteDAOTest {
 	private Boete boete1;

@@ -2,7 +2,10 @@ package be.nmbs.userInterface;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
+
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import be.nmbs.controllers.HomeController;
@@ -17,97 +20,120 @@ public class HomeView {
 	private static JButton logOut;
 	private static JButton klantenBeheer;
 	private static JButton gebruikersBeheer;
-	private static JButton statistieken;
+	private static JButton btnStatistieken;
 	private static JButton prijzenBeheer;
+	private static JButton btnPush;
+	private static JLabel admin;
+	private static JLabel user;
 	private static JPanel panel;
-	public static JButton getGebruikersBeheer() {
-		return gebruikersBeheer;
-	}
-
+	
 	@SuppressWarnings("unused")
 	private static HomeController homeController;
 
-	@SuppressWarnings("static-access")
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
+		
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		
+		if (View.getIngelogdGebruiker().getRol() == 2) {
+			admin = new JLabel("Admin");
+			c.insets = new Insets(20, 0, 0, 0);
+			c.gridx = 0;
+			c.gridy = 4;
+			panel.add(admin, c);
+			
+			gebruikersBeheer = new JButton("Gebruikersbeheer");
+			c.insets = new Insets(5, 0, 0, 0);
+			c.gridx = 0;
+			c.gridy = 5;
+			panel.add(gebruikersBeheer, c);
+
+			prijzenBeheer = new JButton("Prijzenbeheer");
+			c.insets = new Insets(5, 5, 0, 0);
+			c.gridx = 1;
+			c.gridy = 5;
+			panel.add(prijzenBeheer, c);
+			
+			btnStatistieken = new JButton("Statistieken");
+			c.gridx = 2;
+			c.gridy = 5;
+			panel.add(btnStatistieken, c);
+		}
 
 		btnAbonnement = new JButton("Abonnementen");
-		GridBagConstraints c = new GridBagConstraints();
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.insets = new Insets(0, 0, 0, 0);
 		c.gridx = 0;
-		c.gridy = 0;
+		c.gridy = 2;
 		panel.add(btnAbonnement, c);
 
 		btnTicket = new JButton("Tickets");
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.insets = new Insets(0, 5, 0, 0);
 		c.gridx = 1;
-		c.gridy = 0;
+		c.gridy = 2;
 		panel.add(btnTicket, c);
 
-		btnVerlorenvoorwerpen = new JButton("Verlorenvoorwerpen");
-		c.fill = new GridBagConstraints().HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 1;
+		btnVerlorenvoorwerpen = new JButton("Verloren voorwerpen");
+		c.gridx = 2;
+		c.gridy = 2;
 		panel.add(btnVerlorenvoorwerpen, c);
 
 		btnBoete = new JButton("Boetes");
-		c.fill = new GridBagConstraints().HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 1;
+		c.gridx = 3;
+		c.gridy = 2;
 		panel.add(btnBoete, c);
 
 		btnRoutes = new JButton("Routes zoeken");
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
-		c.gridy = 2;
+		c.gridy = 3;
 		panel.add(btnRoutes, c);
 		
 		klantenBeheer = new JButton("Klantenbeheer");
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
-		c.gridy = 2;
+		c.gridy = 3;
 		panel.add(klantenBeheer, c);
 		
-		setBtnTrains(new JButton("Treinen zoeken"));
-		c.fill = new GridBagConstraints().HORIZONTAL;
-		c.gridx = 0;
+		btnTrains = new JButton("Treinen zoeken");
+		c.gridx = 2;
 		c.gridy = 3;
 		panel.add(btnTrains, c);
 		
-		if (View.getIngelogdGebruiker().getRol() == 2) {
-			gebruikersBeheer = new JButton("Gebruikersbeheer");
-			c.fill = new GridBagConstraints().HORIZONTAL;
-			c.gridx = 3;
-			c.gridy = 0;
-			panel.add(gebruikersBeheer, c);
-		}
-		
-		if (View.getIngelogdGebruiker().getRol() == 2) {
-			statistieken = new JButton("Statistieken");
-			c.fill = new GridBagConstraints().HORIZONTAL;
-			c.gridx = 3;
-			c.gridy = 1;
-			panel.add(statistieken, c);
-		}
-		
-		if (View.getIngelogdGebruiker().getRol() == 2) {
-			prijzenBeheer = new JButton("Prijzenbeheer");
-			c.fill = new GridBagConstraints().HORIZONTAL;
-			c.gridx = 3;
-			c.gridy = 2;
-			panel.add(prijzenBeheer, c);
-		}
+		btnPush = new JButton("Offline gegevens doorsturen");
+		c.gridx = 3;
+		c.gridy = 3;
+		panel.add(btnPush, c);
 		
 		logOut = new JButton("Log out");
-		c.fill = new GridBagConstraints().HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 3;
+		c.insets = new Insets(0, 0, 20, 0);
+		c.gridx = 0;
+		c.gridy = 0;
 		panel.add(logOut, c);
+		
+		user = new JLabel("Opties");
+		c.insets = new Insets(0, 0, 5, 0);
+		c.gridx = 0;
+		c.gridy = 1;
+		panel.add(user, c);
 		
 		homeController = new HomeController(view);
 		return panel;
 	}
 
+	public static JButton getBtnPush() {
+		return btnPush;
+	}
+
+	public static void setBtnPush(JButton btnPush) {
+		HomeView.btnPush = btnPush;
+	}
+
+	// Getters
+	public static JButton getGebruikersBeheer() {
+		return gebruikersBeheer;
+	}
+	
 	public static JButton getKlantenBeheer() {
 		return klantenBeheer;
 	}
@@ -116,18 +142,10 @@ public class HomeView {
 		return btnBoete;
 	}
 
-	public static void setBtnBoete(JButton btnBoete) {
-		HomeView.btnBoete = btnBoete;
-	}
-
-	public static void setHomeControllerToNull() {
-		homeController = null;
-	}
-
 	public static JButton getBtnAbonnement() {
 		return btnAbonnement;
 	}
-	
+
 	public static JButton getLogOut() {
 		return logOut;
 	}
@@ -136,28 +154,16 @@ public class HomeView {
 		return btnTicket;
 	}
 
-	public static void setBtnTicket(JButton btnTicket) {
-		HomeView.btnTicket = btnTicket;
-	}
-
 	public static JButton getBtnVerlorenvoorwerpen() {
 		return btnVerlorenvoorwerpen;
 	}
-
-	public static void setBtnVerlorenvoorwerpen(JButton btnVerlorenvoorwerpen) {
-		HomeView.btnVerlorenvoorwerpen = btnVerlorenvoorwerpen;
-	}
-
+	
 	public static JButton getBtnRoutes() {
 		return btnRoutes;
 	}
 
-	public static void setBtnRoutes(JButton btnRoutes) {
-		HomeView.btnRoutes = btnRoutes;
-	}
-
-	public static JButton getStatistieken() {
-		return statistieken;
+	public static JButton getBtnStatistieken() {
+		return btnStatistieken;
 	}
 
 	public static JButton getPrijzenBeheer() {
@@ -170,5 +176,9 @@ public class HomeView {
 
 	public static void setBtnTrains(JButton btnTrains) {
 		HomeView.btnTrains = btnTrains;
+	}
+	
+	public static void setHomeControllerToNull() {
+		homeController = null;
 	}
 }

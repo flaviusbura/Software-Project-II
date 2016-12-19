@@ -8,21 +8,24 @@ import java.sql.SQLException;
  *
  */
 public abstract class BaseDAO {
-	private static Connection connection;
+	private Connection connection;
+	
 	/**
 	 * Deze methode stuurt mijn connectie terug
 	 * @return
 	 */
-	protected static Connection getConnection() {
+	protected Connection getConnection() {
 		return connection;
 	}
+	
 	/**
 	 * Deze methode sets mijn connectie
 	 * @param connection
 	 */
 	protected void setConnection(Connection connection) {
-		BaseDAO.connection = connection;
+		this.connection = connection;
 	}
+	
 	/**
 	 * Deze constructor vraagt de connectie aan de DatabaseSigleton en initialiseert mijn
 	 * datamember connection van deze klasse 
