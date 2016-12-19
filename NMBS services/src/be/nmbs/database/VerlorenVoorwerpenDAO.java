@@ -104,6 +104,7 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 			}
 		}
 	}
+
 	/**
 	 * Deze methode gaat alle rijen gaan opvragen in de tabel
 	 * verloprenvoorwerpen.
@@ -133,19 +134,20 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 				String type = res.getString("type");
 				Timestamp timestamp;
 				
-				if(View.getIngelogdGebruiker().getUsername().equals("offline"))
-				{
-					Long datumLong = res.getLong("datum");
-					System.out.println(datumLong);
-					timestamp = new Timestamp(datumLong);
-					System.out.println(timestamp);
+				if (View.getIngelogdGebruiker().getUsername().equals("offline")) {
+					String datum = res.getString("datum");
 					
-				}
-				else
-				{
+					SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+					try {
+						timestamp = new Timestamp(f.parse(datum).getTime());
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						timestamp = null;
+					}
+				} else
 					 timestamp = res.getTimestamp("datum");
-					 System.out.println(timestamp);
-				}
+				
 				System.out.println(timestamp);
 				boolean actief = res.getBoolean("actief");
 
@@ -193,20 +195,20 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 				String type = res.getString("type");
 				Timestamp timestamp;
 				
-				if(View.getIngelogdGebruiker().getUsername().equals("offline"))
-				{
-					Long datumLong = res.getLong("datum");
-					System.out.println(datumLong);
-					timestamp = new Timestamp(datumLong);
-					System.out.println(timestamp);
+				if (View.getIngelogdGebruiker().getUsername().equals("offline")) {
+					String datum = res.getString("datum");
 					
-				}
-				else
-				{
+					SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+					try {
+						timestamp = new Timestamp(f.parse(datum).getTime());
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						timestamp = null;
+					}
+				} else
 					 timestamp = res.getTimestamp("datum");
-					 System.out.println(timestamp);
-				}
-				System.out.println(timestamp);
+				
 				boolean actief = res.getBoolean("actief");
 
 				VerlorenVoorwerp voorwerp = new VerlorenVoorwerp(id, station, omschrijving, type,timestamp, actief);
