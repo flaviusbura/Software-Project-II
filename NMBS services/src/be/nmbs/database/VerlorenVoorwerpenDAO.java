@@ -170,6 +170,65 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 		}
 	}
 
+	public ArrayList<VerlorenVoorwerp> getAllOpSoortLike(String soort) {
+		ArrayList<VerlorenVoorwerp> lijst = null;
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		String sql = "SELECT * FROM verlorenvoorwerp where type LIKE ? and actief=1";
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+			prep.setString(1, "%" + soort + "%");
+			res = prep.executeQuery();
+			lijst = new ArrayList<VerlorenVoorwerp>();
+
+			while (res.next()) {
+				int id = res.getInt("voorwerp_id");
+				String stationNaam = res.getString("station");
+				StationNMBS station = new StationNMBS();
+				station.setNaam(stationNaam);
+				String omschrijving = res.getString("omschrijving");
+				String type = res.getString("type");
+				Timestamp timestamp;
+				
+				if(View.getIngelogdGebruiker().getUsername().equals("offline"))
+				{
+					Long datumLong = res.getLong("datum");
+					System.out.println(datumLong);
+					timestamp = new Timestamp(datumLong);
+					System.out.println(timestamp);
+					
+				}
+				else
+				{
+					 timestamp = res.getTimestamp("datum");
+					 System.out.println(timestamp);
+				}
+				System.out.println(timestamp);
+				boolean actief = res.getBoolean("actief");
+
+				VerlorenVoorwerp voorwerp = new VerlorenVoorwerp(id, station, omschrijving, type,timestamp, actief);
+				lijst.add((voorwerp));
+			}
+
+			return lijst;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+				if (res != null)
+					res.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
 
 	/**
 	 * Deze methode gaat een verlorenvoorwerp opzoek op basis van een id.
