@@ -120,7 +120,7 @@ public class BasisprijsTicketDAO extends BaseDAO{
 		PreparedStatement prep = null;
 		ResultSet res = null;
 		double prijs = 0.00;
-		String sql = "SELECT prijs FROM basisprijs_ticket WHERE basisprijs_id=?";
+		String sql = "SELECT prijs FROM basisprijs_ticket WHERE type_ticketId=?";
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");

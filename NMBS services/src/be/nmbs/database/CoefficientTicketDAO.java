@@ -1,22 +1,9 @@
 package be.nmbs.database;
 
 import java.sql.SQLException;
-
-
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
 import be.nmbs.logic.CoefficientTicket;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-
-import be.nmbs.logic.Abonnement;
-import be.nmbs.logic.Adres;
-import be.nmbs.logic.CoefficientAbonnement;
-
-
 
 public class CoefficientTicketDAO extends BaseDAO {
 

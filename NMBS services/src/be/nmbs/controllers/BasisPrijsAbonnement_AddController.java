@@ -22,13 +22,10 @@ public class BasisPrijsAbonnement_AddController {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 				TypeAbonnement typeAboId = (TypeAbonnement) BasisPrijsAbonnement_AddView.getTypeLijst().getSelectedItem();
 				double prijs = Double.parseDouble(BasisPrijsAbonnement_AddView.getTxtPrijs().getText());
-				
 				BasisprijsAbonnement bpa = new BasisprijsAbonnement(typeAboId.getId(),prijs);
 				BasisprijsAbonnementenDAO bpaDao = new BasisprijsAbonnementenDAO();
-				
 				bpaDao.insert(bpa);
 				JOptionPane.showMessageDialog(view.getPanel(), "Prijs toegevoegd");
 				
