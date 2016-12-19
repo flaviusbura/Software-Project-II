@@ -35,8 +35,8 @@ public class KlantenBeheerView {
 			
 			home = new JButton("Home");
 			c.fill = new GridBagConstraints().HORIZONTAL;
-			c.gridx = 0;
-			c.gridy = 1;
+			c.gridx = 2;
+			c.gridy = 0;
 			panel.add(home, c);
 			
 			klantenBeheerController = new KlantenBeheerController(view);

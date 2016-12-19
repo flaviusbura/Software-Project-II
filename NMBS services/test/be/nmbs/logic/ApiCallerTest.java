@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import org.junit.After;
@@ -46,7 +45,7 @@ public class ApiCallerTest {
 	@Test
 	public void testGetTimedRouteInfo() {
 		ArrayList<Route> routes = new ArrayList<Route>();
-		cal = GregorianCalendar.getInstance(TimeZone.getTimeZone("GMT+1"));
+		cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1"));
 		
 		cal.setTime(new Date(System.currentTimeMillis()));
 		routes = caller.getTimedRouteInfo("Mechelen", "Brussel-Zuid", cal.getTime());

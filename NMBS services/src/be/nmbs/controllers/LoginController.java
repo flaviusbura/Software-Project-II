@@ -20,7 +20,7 @@ public class LoginController {
 	private GebruikerDAO gebruikerDAO;
 
 	public LoginController(View view) {
-		LoginView.getOk().addActionListener(new ActionListener() {
+		LoginView.getLogin().addActionListener(new ActionListener() {
 
 			@SuppressWarnings("static-access")
 			@Override
@@ -51,9 +51,11 @@ public class LoginController {
 				} catch (HeadlessException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				} catch (NoSuchAlgorithmException e1) {
+				} catch (NoSuchAlgorithmException e2) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					e2.printStackTrace();
+				} catch (NullPointerException e3) {
+					optionPane.showMessageDialog(null, "Foutieve gegevens, probeer opniew!");
 				}
 			}
 		});
@@ -62,7 +64,7 @@ public class LoginController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				view.dispose();
+				View.frame.dispose();
 			}
 		});
 	}

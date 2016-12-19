@@ -8,6 +8,11 @@ public class Korting {
 	private boolean actief;
 	private String typeKorting;
 	
+	public Korting(int korting_id)
+	{
+		this.korting_id=korting_id;
+	}
+	
 	public Korting(int korting_id,double hoeveelheid,String omschrijving,boolean actief,String type){
 		this.korting_id=korting_id;
 		this.hoeveelheid=hoeveelheid;

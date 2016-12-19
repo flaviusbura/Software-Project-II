@@ -1,4 +1,5 @@
 package be.nmbs.logic;
+
 public class Gebruiker {
 	private int id;
 	private String voornaam;
@@ -7,25 +8,26 @@ public class Gebruiker {
 	private String wachtwoord;
 	private int rol;
 	private boolean actief;
-	
+
 	/**
 	 * Default constructor
 	 */
 	public Gebruiker() {
 	}
-	
+
 	/**
-	 * Constructor met vijf parameters. Maakt een gebruiker object aan.
+	 * Constructor met zes parameters. Maakt een gebruiker object aan.
+	 * 
 	 * @param voornaam
 	 * @param achternaam
 	 * @param wachtwoord
 	 * @param rol
 	 * @param actief
 	 */
-	public Gebruiker(int id, String voornaam, String achternaam, String username,String wachtwoord,
-			int rol, boolean actief) {
+	public Gebruiker(int id, String voornaam, String achternaam, String username, String wachtwoord, int rol,
+			boolean actief) {
 		this.id = id;
-		this.voornaam =voornaam;
+		this.voornaam = voornaam;
 		this.achternaam = achternaam;
 		this.username = username;
 		this.wachtwoord = wachtwoord;
@@ -38,8 +40,7 @@ public class Gebruiker {
 		}
 		this.actief = actief;
 	}
-	
-	
+
 	public String getUsername() {
 		return username;
 	}
@@ -50,78 +51,93 @@ public class Gebruiker {
 
 	/**
 	 * Deze stuurt de ID van de gebruiker terug
+	 * 
 	 * @return
 	 */
 	public int getId() {
 		return id;
 	}
-	
+
+	@Override
+	public String toString() {
+		return id + " " + username;
+	}
+
 	/**
 	 * Deze methode sets mijn ID van de gebruiker
+	 * 
 	 * @param id
 	 */
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	/**
 	 * Stuurt voornaam terug
+	 * 
 	 * @return
 	 */
 	public String getVoornaam() {
 		return voornaam;
 	}
-	
+
 	/**
 	 * Deze methode sets mijn voornaam
+	 * 
 	 * @param voornaam
 	 */
 	public void setVoornaam(String voornaam) {
 		this.voornaam = voornaam;
 	}
-	
+
 	/**
 	 * Stuurt mijn achternaam terug
+	 * 
 	 * @return
 	 */
 	public String getAchternaam() {
 		return achternaam;
 	}
-	
+
 	/**
 	 * Deze methode sets mijn achternaam
+	 * 
 	 * @param achternaam
 	 */
 	public void setAchternaam(String achternaam) {
 		this.achternaam = achternaam;
 	}
-	
+
 	/**
 	 * Stuurt mijn wachtwoord terug
+	 * 
 	 * @return
 	 */
 	public String getWachtwoord() {
 		return wachtwoord;
 	}
-	
+
 	/**
 	 * Deze methode sets mijn wachtwoord
+	 * 
 	 * @param wachtwoord
 	 */
 	public void setWachtwoord(String wachtwoord) {
 		this.wachtwoord = wachtwoord;
 	}
-	
+
 	/**
 	 * Stuurt mijn rol terug als int
+	 * 
 	 * @return
 	 */
 	public int getRol() {
 		return rol;
 	}
-	
+
 	/**
 	 * Deze methode sets mijn rol
+	 * 
 	 * @param rol
 	 */
 	public void setRol(int rol) {
@@ -133,23 +149,25 @@ public class Gebruiker {
 			this.rol = rol;
 		}
 	}
-	
+
 	/**
 	 * Deze methode gaat terugsturen of mijn gerbuiker nog actief is.
+	 * 
 	 * @return
 	 */
 	public boolean isActief() {
 		return actief;
 	}
-	
+
 	/**
 	 * Deze methode sets mijn actief datamember
+	 * 
 	 * @param actief
 	 */
 	public void setActief(boolean actief) {
 		this.actief = actief;
 	}
-	
+
 	/**
 	 * Overrides Object.hashcode()
 	 */
@@ -163,7 +181,8 @@ public class Gebruiker {
 	}
 
 	/**
-	 * Overrides Object.equals(). Deze methode stuurt true terug als achternaam en voornaam gelijk zijn.
+	 * Overrides Object.equals(). Deze methode stuurt true terug als achternaam
+	 * en voornaam gelijk zijn.
 	 */
 	@Override
 	public boolean equals(Object obj) {

@@ -5,10 +5,14 @@ import java.awt.event.ActionListener;
 
 import be.nmbs.userInterface.AbonnementView;
 import be.nmbs.userInterface.BoeteView;
+import be.nmbs.userInterface.GebruikerView;
 import be.nmbs.userInterface.HomeView;
 import be.nmbs.userInterface.KlantenBeheerView;
+import be.nmbs.userInterface.RouteAskView;
 import be.nmbs.userInterface.LoginView;
 import be.nmbs.userInterface.TicketView;
+import be.nmbs.userInterface.TrainAskView;
+import be.nmbs.userInterface.VerlorenvoorwerpView;
 import be.nmbs.userInterface.View;
 
 public class HomeController {
@@ -30,6 +34,22 @@ public class HomeController {
 			}
 		});
 		
+		HomeView.getBtnRoutes().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				RouteAskView.setRouteAskControllerToNull();
+				view.changeView(RouteAskView.initialize(view));
+			}
+		});
+		
+		HomeView.getBtnTrains().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TrainAskView.setTrainAskControllerToNull();
+				view.changeView(TrainAskView.initialize(view));
+			}
+		});
+		
 		HomeView.getLogOut().addActionListener(new ActionListener() {
 			
 			@Override
@@ -46,18 +66,35 @@ public class HomeController {
 				KlantenBeheerView.setKlantenBeheerControllerToNull();
 				view.changeView(KlantenBeheerView.initialize(view));
 			}
-		});
+		});		
 		
 		HomeView.getBtnTicket().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				TicketView.setTicketControllerToNull();
-				TicketView.setHomeControllerToNull();
 				view.changeView(TicketView.initialize(view));
 				
 			}
 		});
 		
+		HomeView.getBtnVerlorenvoorwerpen().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				VerlorenvoorwerpView.setVerlorenvoorwerpControllerToNull();
+				view.changeView(VerlorenvoorwerpView.initialize(view));
+				
+			}
+		});
+		
+		HomeView.getGebruikersBeheer().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GebruikerView.setGebruikerControllerToNull();
+				view.changeView(GebruikerView.initialize(view));
+			}
+		});
 	}
 }
