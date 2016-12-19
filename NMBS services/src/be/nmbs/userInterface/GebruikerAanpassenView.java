@@ -3,6 +3,8 @@ package be.nmbs.userInterface;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -27,9 +29,9 @@ public class GebruikerAanpassenView {
 	private static JPanel panel;
 	
 	@SuppressWarnings("unused")
-	private static boolean ALLOW_COLUMN_SELECTION = false;
+	private boolean ALLOW_COLUMN_SELECTION = false;
 	@SuppressWarnings("unused")
-	private static boolean ALLOW_ROW_SELECTION = true;
+	private boolean ALLOW_ROW_SELECTION = true;
 	
 	private static GebruikerAanpassenController gebruikerAanpassenController;
 
@@ -42,6 +44,7 @@ public class GebruikerAanpassenView {
 		info = new JLabel("Voornaam");
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 0;
 		panel.add(info, c);
@@ -49,6 +52,7 @@ public class GebruikerAanpassenView {
 		info = new JLabel("Achternaam");
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 1;
 		panel.add(info, c);
@@ -56,6 +60,7 @@ public class GebruikerAanpassenView {
 		info = new JLabel("Gebruikersnaam");
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 2;
 		panel.add(info, c);
@@ -63,6 +68,7 @@ public class GebruikerAanpassenView {
 		info = new JLabel("Wachtwoord");
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 3;
 		panel.add(info, c);
@@ -70,6 +76,7 @@ public class GebruikerAanpassenView {
 		info = new JLabel("Rol");
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 4;
 		panel.add(info, c);
@@ -77,6 +84,7 @@ public class GebruikerAanpassenView {
 		info = new JLabel("Actief");
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 5;
 		panel.add(info, c);
@@ -85,6 +93,7 @@ public class GebruikerAanpassenView {
 		firstName = new JTextField();
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 0;
 		panel.add(firstName, c);
@@ -92,6 +101,7 @@ public class GebruikerAanpassenView {
 		lastName = new JTextField();
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 1;
 		panel.add(lastName, c);
@@ -99,6 +109,7 @@ public class GebruikerAanpassenView {
 		username = new JTextField();
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 2;
 		panel.add(username, c);
@@ -106,6 +117,7 @@ public class GebruikerAanpassenView {
 		password = new JPasswordField();
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 3;
 		panel.add(password, c);
@@ -113,6 +125,7 @@ public class GebruikerAanpassenView {
 		roleCombo = new JComboBox<String>();
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 4;
 		panel.add(roleCombo, c);
@@ -120,6 +133,7 @@ public class GebruikerAanpassenView {
 		active = new JCheckBox();
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 5;
 		panel.add(active, c);
@@ -127,6 +141,7 @@ public class GebruikerAanpassenView {
 		save = new JButton("Gebruiker opslaan");
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 6;
 		panel.add(save, c);
@@ -134,6 +149,7 @@ public class GebruikerAanpassenView {
 		back = new JButton("Terug");
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 6;
 		panel.add(back, c);

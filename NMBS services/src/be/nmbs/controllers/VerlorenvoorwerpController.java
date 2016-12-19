@@ -30,7 +30,7 @@ public class VerlorenvoorwerpController {
 			public void actionPerformed(ActionEvent e) {
 		        String oms = VerlorenvoorwerpView.getTxtType().getText();
 		        
-		        ArrayList<VerlorenVoorwerp> allVerlorenvoorwerp = verlorenvoorwerpdao.getAllOpSoort(oms);
+		        ArrayList<VerlorenVoorwerp> allVerlorenvoorwerp = verlorenvoorwerpdao.getAllOpSoortLike(oms);
 		        
 		        VerlorenvoorwerpTableModel verlorenvoorwerpTableModel = new VerlorenvoorwerpTableModel();
 		        verlorenvoorwerpTableModel.setVoorwerpen(allVerlorenvoorwerp);
@@ -66,11 +66,11 @@ public class VerlorenvoorwerpController {
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-					JOptionPane.showMessageDialog(null, "Kies een voorwerp in de tabel die je wilt terug geven en dus uit de inventaris halen");
+					JOptionPane.showMessageDialog(null, "Kies een voorwerp in de tabel dat je wilt terug geven en dus uit de inventaris halen");
 				}
 			
 				verlorenvoorwerpdao.updateActief(voorwerpID);
-				 String oms = VerlorenvoorwerpView.getTxtType().getText();
+				String oms = VerlorenvoorwerpView.getTxtType().getText();
 			      
 			        
 		        ArrayList<VerlorenVoorwerp> allVerlorenvoorwerp = verlorenvoorwerpdao.getAllOpSoort(oms);

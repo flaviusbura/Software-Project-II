@@ -1,8 +1,9 @@
 package be.nmbs.userInterface;
 
-
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -38,8 +39,6 @@ public class GebruikerWijzigenView {
 		c.gridy = 0;
 		c.gridheight = 4;
 		
-		table.setVisible(false);
-		
 		JScrollPane scrollPane = new JScrollPane(table);
 		
 		panel.add(scrollPane, c);
@@ -47,6 +46,7 @@ public class GebruikerWijzigenView {
 		searchField = new JTextField();
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(0, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 0;
 		panel.add(searchField, c);
@@ -54,6 +54,7 @@ public class GebruikerWijzigenView {
 		edit = new JButton("Gebruiker aanpassen");
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 1;
 		panel.add(edit, c);
@@ -61,6 +62,7 @@ public class GebruikerWijzigenView {
 		back = new JButton("Terug");
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 2;
 		panel.add(back, c);

@@ -34,11 +34,11 @@ public class KlantWijzigenView {
 	private static JButton back;
 	private static JPanel panel;
 	private static ArrayList<Klant> lijst = new ArrayList<>();
+	
 	@SuppressWarnings("unused")
 	private static KlantWijzigenController klantWijzigenController;
 	private static JTable table;
 
-	@SuppressWarnings("static-access")
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
 
@@ -93,7 +93,7 @@ public class KlantWijzigenView {
 		table.setFillsViewportHeight(true);
 
 		GridBagConstraints c = new GridBagConstraints();
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
 		panel.add(table, c);
@@ -104,86 +104,86 @@ public class KlantWijzigenView {
 		panel.add(jScrollPane);
 
 		JPanel jPanel = new JPanel(new GridBagLayout());
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 0;
 		panel.add(jPanel, c);
 
 		zoekText = new JTextField(5);
 		zoekText.setToolTipText("Voer hier in de achternaam van de klant die u wilt opzoeken.");
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
 		jPanel.add(zoekText, c);
 		
 		zoek = new JButton("Zoek");
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 0;
 		jPanel.add(zoek, c);
 		
 		voornaam = new JButton("Voornaam wijzigen");
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 1;
 		jPanel.add(voornaam, c);
 
 		naam = new JButton("Achternaam wijzigen");
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 1;
 		jPanel.add(naam, c);
 
 		telefoon = new JButton("Telefoon wijzigen");
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 2;
 		jPanel.add(telefoon, c);
 
 		adresButton = new JButton("Nieuw adres");
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 2;
 		jPanel.add(adresButton, c);
 
 		land = new JButton("Land wijzigen");
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 3;
 		jPanel.add(land, c);
 
 		straat = new JButton("Straat wijzigen");
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 3;
 		jPanel.add(straat, c);
 
 		huisnummer = new JButton("Huisnummer wijzigen");
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 4;
 		jPanel.add(huisnummer, c);
 
 		postcode = new JButton("Postcode wijzigen");
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 4;
 		jPanel.add(postcode, c);
 
 		woonplaats = new JButton("Woonplaats wijzigen");
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 5;
 		jPanel.add(woonplaats, c);
 
 		bus = new JButton("Bus wijzigen");
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 5;
 		jPanel.add(bus, c);
 
 		back = new JButton("Back");
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 6;
 		jPanel.add(back, c);

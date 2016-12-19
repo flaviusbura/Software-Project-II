@@ -2,6 +2,7 @@ package be.nmbs.userInterface;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -19,37 +20,38 @@ public class TrainAskView {
 	
 	private static TrainAskController trainAskController;
 
-	@SuppressWarnings("static-access")
 	public static JPanel initialize(View view) {
-		
 			panel = new JPanel(new GridBagLayout());
 			
 			trainLabel = new JLabel("Trein");
 			GridBagConstraints c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 0;
 			c.gridy = 0;
 			panel.add(trainLabel, c);
 			
 			trainField = new JTextField();
 			c.fill = GridBagConstraints.HORIZONTAL;
+			c.insets = new Insets(0, 5, 0, 0);
 			c.gridx = 1;
 			c.gridy = 0;
 			panel.add(trainField, c);
 
+			btnZoeken = new JButton("Trein zoeken");
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.insets = new Insets(5, 0, 0, 0);
+			c.gridx = 0;
+			c.gridy = 1;
+			panel.add(btnZoeken, c);	
+			
 			home = new JButton("Terug naar menu");
 			c = new GridBagConstraints();
-			c.fill = new GridBagConstraints().HORIZONTAL;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.insets = new Insets(5, 5, 0, 0);
 			c.gridx = 1;
 			c.gridy = 1;
 			panel.add(home, c);
-
-			btnZoeken = new JButton("Trein zoeken");
-			c.fill = new GridBagConstraints().HORIZONTAL;
-			c.gridx = 0;
-			c.gridy = 1;
-			panel.add(btnZoeken, c);			
-			
+		
 			trainAskController = new TrainAskController(view);
 			return panel;
 	}

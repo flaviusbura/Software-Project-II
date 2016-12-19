@@ -5,7 +5,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import javax.swing.JOptionPane;
+
+import be.nmbs.logic.ApiCaller;
 import be.nmbs.logic.Route;
+import be.nmbs.logic.Trein;
 import be.nmbs.tablemodels.RouteTableModel;
 import be.nmbs.userInterface.RouteAskView;
 import be.nmbs.userInterface.TrainGetView;
@@ -43,9 +47,13 @@ public class RouteGetController {
 						String[] idArray = id.split(" ");
 						RouteGetView.getTable().setVisible(false);
 						TrainGetView.setTrainGetControllerToNull();
-						view.changeView(TrainGetView.initialize(view, idArray[1], departureStation, arrivalStation, departure));
-					}
-				}
+						
+						Trein train = ApiCaller.getTreinInfo(idArray[1]);
+						view.changeView(TrainGetView.initialize(view, routes, train, departureStation, arrivalStation, departure));
+					} else
+						JOptionPane.showMessageDialog(null, "Geen trein geselecteerd.");
+				} else
+					JOptionPane.showMessageDialog(null, "Geen trein geselecteerd.");
 			}
 		});
 	}

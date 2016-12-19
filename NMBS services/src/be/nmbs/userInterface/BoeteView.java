@@ -2,6 +2,7 @@ package be.nmbs.userInterface;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -42,60 +43,61 @@ public class BoeteView {
 	static String strDate = sdfDate.format(now);
 	
 	private static BoeteController boeteController;
-	@SuppressWarnings("static-access")
+
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
+		
 		GridBagConstraints c = new GridBagConstraints();
-				
-		lblBetaalDatum = new JLabel("betaal datum");
 		c.fill = GridBagConstraints.HORIZONTAL;
+				
+		lblBetaalDatum = new JLabel("Betaaldatum");
 		c.gridx = 0;
 		c.gridy = 1;
 		panel.add(lblBetaalDatum, c);
 		
 		txtBetaalDatum = new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(0, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 1;
 		txtBetaalDatum.setText(strDate);
 		panel.add(txtBetaalDatum, c);
 		
-		lblBoeteId = new JLabel("boete id");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		lblBoeteId = new JLabel("Boete ID");
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 2;
 		panel.add(lblBoeteId, c);
 		
 		txtBoeteId = new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 2;
 		panel.add(txtBoeteId, c);
 			
-		lblBetaald = new JLabel("betaald");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		lblBetaald = new JLabel("Betaald");
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 3;
 		panel.add(lblBetaald, c);
 		
 		cbBetaald = new JCheckBox("Betaald", true);
-		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 3;
 		panel.add(cbBetaald, c);
 		
-		
-		betaalBoete = new JButton("betaal boete");
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
+		betaalBoete = new JButton("Boete betalen");
+		c.insets = new Insets(5, 0, 0, 0);
+		c.gridx = 0;
 		c.gridy = 4;
 		panel.add(betaalBoete, c);
 		
-		back = new JButton("Back");
-		c.fill = new GridBagConstraints().HORIZONTAL;
-		c.gridx = 2;
+		back = new JButton("Terug");
+		c.insets = new Insets(5, 5, 0, 0);
+		c.gridx = 1;
 		c.gridy = 4;
 		panel.add(back, c);
+		
 		boeteController = new BoeteController(view);
 		
 		return panel;
@@ -154,8 +156,6 @@ public class BoeteView {
 	public static void setCbBetaald(JCheckBox cbBetaald) {
 		BoeteView.cbBetaald = cbBetaald;
 	}
-
-	
 
 	public static JButton getBack() {
 		return back;
@@ -268,12 +268,12 @@ public class BoeteView {
 	public static void setBoeteController(BoeteController boeteController) {
 		BoeteView.boeteController = boeteController;
 	}
+	
 	public static void setHomeControllerToNull() {
 		homeController = null;
 	}
+	
 	public static void setBoeteControllerToNull() {
 		boeteController = null;
-		
 	}
-	
 }

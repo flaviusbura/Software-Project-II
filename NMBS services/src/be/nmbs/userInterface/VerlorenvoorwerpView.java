@@ -1,8 +1,8 @@
 package be.nmbs.userInterface;
 
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -33,55 +33,50 @@ public class VerlorenvoorwerpView {
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-
-		lblType = new JLabel("type");
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 0;
-		panel.add(lblType, c);
 
 		txtType = new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(0, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 0;
 		panel.add(txtType, c);
 
-		btnZoekOmschrijving = new JButton("zoek");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		btnZoekOmschrijving = new JButton("Zoeken");
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 1;
 		panel.add(btnZoekOmschrijving, c);
 		
-		btnTerugGegeven = new JButton("terug gegeven");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		btnTerugGegeven = new JButton("Markeer als teruggegeven");
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 2;
 		panel.add(btnTerugGegeven, c);
 		
-		btnNieuwVerlorenvoorwerp = new JButton("nieuw verlorenvoorwerp");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		btnNieuwVerlorenvoorwerp = new JButton("Nieuw verloren voorwerp");
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 3;
 		panel.add(btnNieuwVerlorenvoorwerp, c);
 
-		btnVorigScherm = new JButton("vorig scherm");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		btnVorigScherm = new JButton("Terug");
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 4;
 		panel.add(btnVorigScherm, c);
 		
 		tabel = new JTable();
-		tabel.setPreferredScrollableViewportSize(new Dimension(500, 200));
-    
 		c.fill = GridBagConstraints.VERTICAL;
-		c.gridx = 2;
-		c.gridheight = 3;
+		c.insets = new Insets(0, 0, 0, 0);
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridheight = 5;
 		
 		tabel.setVisible(false);
 		
 		JScrollPane scrollPane = new JScrollPane(tabel);
 				
-		panel.add(scrollPane);
+		panel.add(scrollPane, c);
 		
 		verlorenvoorwerpController = new VerlorenvoorwerpController(view);
 		return panel;

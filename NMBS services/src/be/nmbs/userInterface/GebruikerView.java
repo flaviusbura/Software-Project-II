@@ -2,6 +2,7 @@ package be.nmbs.userInterface;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -16,28 +17,29 @@ public class GebruikerView {
 	@SuppressWarnings("unused")
 	private static GebruikerController gebruikerController;
 	
-	@SuppressWarnings("static-access")
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
 
 		GridBagConstraints c = new GridBagConstraints();
 		
 		nieuweGebruiker = new JButton("Gebruiker toevoegen");
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
 		panel.add(nieuweGebruiker, c);
 		
 		gebruikerAanpassen = new JButton("Gebruikers wijzigen");
-		c.fill = new GridBagConstraints().HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 0;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 0, 0, 0);
+		c.gridx = 0;
+		c.gridy = 1;
 		panel.add(gebruikerAanpassen, c);
 		
-		home = new JButton("Home");
-		c.fill = new GridBagConstraints().HORIZONTAL;
-		c.gridx = 2;
-		c.gridy = 0;
+		home = new JButton("Terug");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 0, 0, 0);
+		c.gridx = 0;
+		c.gridy = 2;
 		panel.add(home, c);
 		
 		gebruikerController = new GebruikerController(view);

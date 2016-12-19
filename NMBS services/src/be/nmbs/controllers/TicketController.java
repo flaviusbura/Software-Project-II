@@ -68,12 +68,9 @@ public class TicketController {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-	
-						System.out.println("Gebruiker: " + View.getIngelogdGebruiker().getAchternaam());
-						HomeView.setHomeControllerToNull();
-						view.changeView(HomeView.initialize(view));
-					}
-				});
-	
+				HomeView.setHomeControllerToNull();
+				view.changeView(HomeView.initialize(view));
+			}
+		});
 	}
 }

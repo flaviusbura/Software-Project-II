@@ -63,12 +63,8 @@ public class NieuwVerlorenvoorwerpController {
 		NieuwVerlorenvoorwerpView.getBtnTerug().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				//System.out.println("Gebruiker: " + View.getIngelogdGebruiker().getAchternaam());
 				VerlorenvoorwerpView.setVerlorenvoorwerpControllerToNull();
 				view.changeView(VerlorenvoorwerpView.initialize(view));
-
-		     	
 			}
 		});
 	}

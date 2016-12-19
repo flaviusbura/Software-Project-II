@@ -39,6 +39,7 @@ public class NieuwVerlorenvoorwerpView {
 		
 			panel = new JPanel(new GridBagLayout());
 			GridBagConstraints c = new GridBagConstraints();
+			c.fill = GridBagConstraints.HORIZONTAL;
 			
 			StationDAO stationdao = new StationDAO();
 			ArrayList<StationNMBS> allStations = stationdao.getAll();
@@ -50,68 +51,52 @@ public class NieuwVerlorenvoorwerpView {
 			}
 
 			lblStation = new JLabel("Station");
-			c.fill = new GridBagConstraints().HORIZONTAL;
 			c.gridx = 1;
 			c.gridy = 0;
 			panel.add(lblStation, c);
 			
 			cbStation = new JComboBox<Object>(stationLijst);
-			c.fill = new GridBagConstraints().HORIZONTAL;
 			c.gridx = 2;
 			c.gridy = 0;
 			panel.add(cbStation, c);
 			
 			lblOmschrijving = new JLabel("omschrijving");
-			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 1;
 			c.gridy = 1;
 			panel.add(lblOmschrijving, c);
 
-			
 			txtOmschrijving = new JTextField(10);
-			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 2;
 			c.gridy = 1;
 			panel.add(txtOmschrijving, c);
 
 			lblType = new JLabel("type");
-			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 1;
 			c.gridy = 2;
 			panel.add(lblType, c);
 
-			
 			txtType = new JTextField(10);
-			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 2;
 			c.gridy = 2;
 			panel.add(txtType, c);
 			
 			lblDatum = new JLabel("datum");
-			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 1;
 			c.gridy = 3;
 			panel.add(lblDatum, c);
 			
 			txtDatum = new JTextField(10);
-			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 2;
 			c.gridy = 3;
-			
-			
 			txtDatum.setText(strDate);
 			panel.add(txtDatum, c);
-
 	
-			
 			btnToevoegen = new JButton("toevoegen");
-			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 2;
 			c.gridy = 4;
 			panel.add(btnToevoegen, c);
 			
 			btnTerug = new JButton("terug");
-			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 3;
 			c.gridy = 4;
 			panel.add(btnTerug, c);

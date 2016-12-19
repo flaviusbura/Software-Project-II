@@ -75,7 +75,7 @@ public class ApiCaller {
 	 * @param stepOff
 	 * @return
 	 */
-	public ArrayList<Route> getRouteInfo(String stepOn, String stepOff) {
+	public static ArrayList<Route> getRouteInfo(String stepOn, String stepOff) {
 		try {
 			String text = readUrl("https://traintracks.online/api/Route/" + stepOn + "/" + stepOff);
 			if (text != "") {
@@ -226,7 +226,7 @@ public class ApiCaller {
 	 * @param date
 	 * @return
 	 */
-	public ArrayList<Route> getTimedRouteInfo(String stepOn, String stepOff, Date date) {
+	public static ArrayList<Route> getTimedRouteInfo(String stepOn, String stepOff, Date date) {
 		try {
 			long ms = (date.getTime() + 3600) / 1000;
 			String text = readUrl("https://traintracks.online/api/Route/" + stepOn + "/" + stepOff + "/" + ms);
@@ -394,7 +394,7 @@ public class ApiCaller {
 	 * @param id
 	 * @return
 	 */
-	public Trein getTreinInfo(String id) {
+	public static Trein getTreinInfo(String id) {
 		try {
 			String text = readUrl("https://traintracks.online/api/Train/" + id);
 
@@ -456,12 +456,14 @@ public class ApiCaller {
 						adDate = null;
 					}
 
-					if (k == 0)
-						s.add(new Station(station.getString("Name"), null, station.getString("DeparturePlatform"),
+					if (k == 0 && !station.isNull("DeparturePlatform"))
+						s.add(new Station(station.getString("Name"), null,
+								station.getString("DeparturePlatform"), aDate, aaDate, dDate, adDate));
+					else if (k == stations.length() - 1 && !station.isNull("ArrivalPlatform"))
+						s.add(new Station(station.getString("Name"), station.getString("ArrivalPlatform"), null,
 								aDate, aaDate, dDate, adDate));
-					else if (k == stations.length() - 1)
-						s.add(new Station(station.getString("Name"), station.getString("ArrivalPlatform"), null, aDate,
-								aaDate, dDate, adDate));
+					else if (station.isNull("DeparturePlatform") && station.isNull("ArrivalPlatform"))
+						s.add(new Station(station.getString("Name"), null, null, aDate, aaDate, dDate, adDate));
 					else
 						s.add(new Station(station.getString("Name"), station.getString("ArrivalPlatform"),
 								station.getString("DeparturePlatform"), aDate, aaDate, dDate, adDate));
