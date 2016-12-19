@@ -1,8 +1,11 @@
 package be.nmbs.database;
 
+import java.sql.DriverManager;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import be.nmbs.logic.Klant;
 import be.nmbs.logic.VerlorenVoorwerp;
 
 public class PushDAO {
@@ -32,6 +35,7 @@ public void Push() throws SQLException{
 	//update remote connection with local data
     for(VerlorenVoorwerp vv : verlorenvoorwerpAll)
     {
+    	
     	verlorenvoorwerpdao.insert(vv);
     }
 	

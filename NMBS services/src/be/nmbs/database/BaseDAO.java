@@ -30,7 +30,7 @@ public abstract class BaseDAO {
 	
 	private void refreshConnection() {
 		try {
-			connection = DatabaseSingleton.getConnection();
+			connection = DatabaseSingleton.getDatabaseSingleton().getConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -50,7 +50,7 @@ public abstract class BaseDAO {
 	 */
 	public BaseDAO() {
 		try {
-			setConnection(DatabaseSingleton.getConnection());
+			setConnection(DatabaseSingleton.getDatabaseSingleton().getConnection());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
