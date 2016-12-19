@@ -10,6 +10,7 @@ import be.nmbs.userInterface.HomeView;
 import be.nmbs.userInterface.KlantenBeheerView;
 import be.nmbs.userInterface.RouteAskView;
 import be.nmbs.userInterface.LoginView;
+import be.nmbs.userInterface.PrijsBeheerView;
 import be.nmbs.userInterface.TicketView;
 import be.nmbs.userInterface.TrainAskView;
 import be.nmbs.userInterface.VerlorenvoorwerpView;
@@ -88,6 +89,14 @@ public class HomeController {
 			}
 		});
 		
+		HomeView.getPrijzenBeheer().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PrijsBeheerView.setPrijsBeheerControllerToNull();
+				view.changeView(PrijsBeheerView.initialize(view));
+				
+			}
+		});
 		if (View.getIngelogdGebruiker().getRol() == 2) {
 			HomeView.getGebruikersBeheer().addActionListener(new ActionListener() {
 				

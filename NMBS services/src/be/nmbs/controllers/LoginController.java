@@ -54,10 +54,16 @@ public class LoginController {
 				} catch (NoSuchAlgorithmException e2) {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
+<<<<<<< HEAD
 				} catch (NullPointerException e3) {
 					e3.printStackTrace();
 					optionPane.showMessageDialog(null, "Foutieve gegevens, probeer opniew!");
 				}
+=======
+				}/* catch (NullPointerException e3) {
+					optionPane.showMessageDialog(null, "Foutieve gegevens,  opniew!");
+				}*/
+>>>>>>> refs/heads/Abdelilah
 			}
 		});
 
