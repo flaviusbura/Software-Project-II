@@ -55,7 +55,7 @@ public class TicketDAO extends BaseDAO{
 				station.setNaam(res.getString("station"));
 				int gebrukerId = res.getInt("gebruiker_id");
 				Ticket ticket = new Ticket(ticketId, startStation, soort, timestamp, klas, actief, eindStation, omschrijving,
-						prijsId, kortingId, station, gebrukerId);
+						kortingId, station, gebrukerId);
 				lijst.add(ticket);
 			}
 			return lijst;

@@ -117,7 +117,7 @@ public class CoefficientTicketDAO extends BaseDAO {
 		PreparedStatement prep = null;
 		ResultSet res = null;
 		double coefficient = 0.00;
-		String sql = "SELECT Coefficient FROM coefficient_ticket WHERE type_ticketId=?";
+		String sql = "SELECT coefficient FROM coefficient_ticket WHERE type_ticketId=?";
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");

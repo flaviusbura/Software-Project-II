@@ -6,14 +6,19 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import be.nmbs.userInterface.View;
 import java.sql.Timestamp;
+
+import be.nmbs.database.CoefficientAbonnementDAO;
+import be.nmbs.database.BasisprijsAbonnementenDAO;
 import be.nmbs.database.AbonnementDAO;
 import be.nmbs.database.AbonnementTypeDAO;
 import be.nmbs.database.KlantDAO;
+import be.nmbs.database.KortingDAO;
 import be.nmbs.logic.Abonnement;
 import be.nmbs.logic.Gebruiker;
 import be.nmbs.logic.Klant;
 import be.nmbs.logic.Korting;
 import be.nmbs.logic.Prijs;
+import be.nmbs.logic.TypeAbonnement;
 import be.nmbs.userInterface.MaakAbonnementView;
 import be.nmbs.userInterface.HomeView;
 import java.text.DateFormat;
@@ -33,57 +38,86 @@ public class MaakAbonnementController {
 				try {
 
 					Gebruiker gebruiker = View.getIngelogdGebruiker();
-					
-					// gebruik van veiligeInvoer klasse
-					//String route = VeiligeInvoer.checkString(MaakAbonnementView.getTxtRoute(),MaakAbonnementView.getTxtRoute().getText());
-					
-					String route = (String) MaakAbonnementView.getDepartureField().getSelectedItem() + " - " + (String) MaakAbonnementView.getArrivalField().getSelectedItem();
-					Timestamp startDatum = new Timestamp(System.currentTimeMillis());
 
+					String route = (String) MaakAbonnementView.getDepartureField().getSelectedItem() + " - "
+							+ (String) MaakAbonnementView.getArrivalField().getSelectedItem();
+					Timestamp startDatum = new Timestamp(System.currentTimeMillis());
 					// eindDatum omzetten
 					DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 					String eindDatum = MaakAbonnementView.getTxtEindDatum().getText();
 					Date date2 = format.parse(eindDatum);
 					Long tijd2 = date2.getTime();
 					Timestamp ts2 = new Timestamp(tijd2);
-
-					Prijs prijs = (Prijs) MaakAbonnementView.getPrijzenLijst().getSelectedItem();
-					int prijsId = prijs.getPrijsId();
-
+					/*
+					 * Prijs prijs = (Prijs)
+					 * MaakAbonnementView.getPrijzenLijst().getSelectedItem();
+					 * int prijsId = prijs.getPrijsId();
+					 */
 					Korting korting = (Korting) MaakAbonnementView.getKortingLijst().getSelectedItem();
 					int kortingId = korting.getId();
 					AbonnementTypeDAO typeDAO = new AbonnementTypeDAO();
-
 					try {
 						int row = MaakAbonnementView.getTable().getSelectedRow();
 						int contactID = Integer
 								.valueOf((String) MaakAbonnementView.getTable().getModel().getValueAt(row, 0));
 
-						Abonnement abonnement = new Abonnement(contactID, gebruiker.getId(), route, ts2, prijsId,
-								kortingId, true);
+						Abonnement abonnement = new Abonnement(contactID, gebruiker.getId(), route, ts2, kortingId,
+								true);
 
 						AbonnementDAO aboDao = new AbonnementDAO();
 						String keuze = (String) MaakAbonnementView.getCombo().getSelectedItem();
 
 						if (keuze == "3 maanden") {
 							aboDao.insertDrieMaandAbonnement(abonnement, startDatum);
-							JOptionPane.showMessageDialog(view.getPanel(), "Abonnement aangemaakt voor drie maanden");
-							
+							// JOptionPane.showMessageDialog(view.getPanel(),
+							// "Abonnement aangemaakt voor drie maanden");
+
 						} else if (keuze == "6 maanden") {
 							aboDao.insertZesMaandAbonnement(abonnement, startDatum);
-							JOptionPane.showMessageDialog(view.getPanel(), "Abonnement aangemaakt voor zes maanden");
-							
+							// JOptionPane.showMessageDialog(view.getPanel(),
+							// "Abonnement aangemaakt voor zes maanden");
+
 						} else if (keuze == "9 maanden") {
 							aboDao.insertNegenMaandAbonnement(abonnement, startDatum);
-							JOptionPane.showMessageDialog(view.getPanel(), "Abonnement aangemaakt voor negen maanden");
-							
+							// JOptionPane.showMessageDialog(view.getPanel(),
+							// "Abonnement aangemaakt voor negen maanden");
+
 						} else if (keuze == "12 maanden") {
 							aboDao.insertEenJaarAbonnement(abonnement, startDatum);
-							JOptionPane.showMessageDialog(view.getPanel(), "Abonnement aangemaakt voor een jaar");
-							
+							// JOptionPane.showMessageDialog(view.getPanel(),
+							// "Abonnement aangemaakt voor een jaar");
+
 						}
 
-						typeDAO.insertTypeAbonnement(aboDao.getIdByStartDatum(startDatum), keuze);
+						// typeDAO.insertTypeAbonnement(aboDao.getIdByStartDatum(startDatum),
+						// keuze);
+						/**
+						 * Variabelen declarern om de prijs berekening mogelijk
+						 * maken
+						 */
+						TypeAbonnement type = (TypeAbonnement) MaakAbonnementView.getTypeLijst().getSelectedItem();
+						int typeId= type.getId();
+						
+						BasisprijsAbonnementenDAO bpaDAO = new BasisprijsAbonnementenDAO();
+						CoefficientAbonnementDAO caDAO = new CoefficientAbonnementDAO();
+						KortingDAO kortingDAO = new KortingDAO();
+						double prijs2 = bpaDAO.getPrijs_ById(typeId);
+						double coeff = caDAO.getCoefficient_ById(typeId);
+						Korting korting2 = kortingDAO.getKorting(kortingId);
+						double kortingPercentage;
+						double kortingHoeveelheid = korting2.getHoeveelheid();
+						double totaalZonderKorting = 0;
+						double totaalMetKorting = 0;
+						/**
+						 * Prijs berekening
+						 */
+						totaalZonderKorting = (prijs2 * coeff);
+						kortingPercentage = (totaalZonderKorting / 100) * kortingHoeveelheid;
+						totaalMetKorting = totaalZonderKorting - kortingPercentage;
+
+						JOptionPane.showMessageDialog(view.getPanel(),
+								"Abonnement aangemaakt voor " + keuze + "\n" + "Prijs is: €" + totaalMetKorting);
+
 					} catch (ArrayIndexOutOfBoundsException e2) {
 
 						JOptionPane.showMessageDialog(null,
@@ -107,7 +141,7 @@ public class MaakAbonnementController {
 				view.changeView(HomeView.initialize(view));
 			}
 		});
-		
+
 		MaakAbonnementView.getBtnzoek().addActionListener(new ActionListener() {
 			@SuppressWarnings("static-access")
 			@Override

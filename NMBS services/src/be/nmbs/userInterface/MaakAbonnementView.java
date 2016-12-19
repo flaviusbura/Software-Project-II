@@ -230,7 +230,7 @@ public class MaakAbonnementView {
 		for (Prijs prijs : allPrijzen) {
 			prijzenLijst.addItem(prijs);
 		}
-
+		/*
 		lblPrijs = new JLabel("Prijs ");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
@@ -241,7 +241,7 @@ public class MaakAbonnementView {
 		c.gridx = 2;
 		c.gridy = 5;
 		tPanel.add(prijzenLijst, c);
-
+		*/
 		lblKorting = new JLabel("Korting ");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;

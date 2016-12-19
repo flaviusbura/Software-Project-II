@@ -44,7 +44,7 @@ public class Ticket {
 	 * @param gebruikerId De gebruiker die een ticket aanmaakt
 	 */
 	public Ticket(int ticket_id, StationNMBS startStation, String soort, Timestamp timestamp, int klas, boolean actief,
-			StationNMBS eindStation, String omschrijving, int prijsId, int kortingId, StationNMBS station, int gebruikerId) {
+			StationNMBS eindStation, String omschrijving, int kortingId, StationNMBS station, int gebruikerId) {
 		super();
 		this.ticket_id = ticket_id;
 		this.startStation = startStation;
@@ -54,15 +54,14 @@ public class Ticket {
 		this.actief = actief;
 		this.eindStation = eindStation;
 		this.omschrijving = omschrijving;
-		this.prijsId = prijsId;
 		this.kortingId = kortingId;
 		this.station = station;
 		this.gebruikerId = gebruikerId;
 	}
 	
 	public Ticket(StationNMBS startStation, String soort, Timestamp timestamp, int klas, boolean actief,
-			StationNMBS eindStation, String omschrijving, int prijsId, int kortingId, StationNMBS station, int gebruikerId) {
-		this(0, startStation, soort, timestamp, klas, actief, eindStation, omschrijving, prijsId, kortingId, station, gebruikerId);
+			StationNMBS eindStation, String omschrijving,int kortingId, StationNMBS station, int gebruikerId) {
+		this(0, startStation, soort, timestamp, klas, actief, eindStation, omschrijving, kortingId, station, gebruikerId);
 	}
 	
 	
@@ -82,6 +81,7 @@ public class Ticket {
 		this.gebruikerId = gebruikerId;
 	}
 	
+
 	public int getGebruikerId() {
 		return gebruikerId;
 	}

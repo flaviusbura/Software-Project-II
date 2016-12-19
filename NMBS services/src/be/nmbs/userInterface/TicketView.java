@@ -194,7 +194,7 @@ public class TicketView {
 		c.gridx = 1;
 		c.gridy = 6;
 		panel.add(txtOmschrijving, c);
-		
+		/*
 		lblPrijs = new JLabel("prijs");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
@@ -214,7 +214,7 @@ public class TicketView {
 		c.gridy = 7;
 		panel.add(prijzenLijst, c);
 		
-
+		*/
 		ArrayList<Korting> allKorting = kortingdao.getAll();
 		
 		//String[] kortingenLijst = new String[allKorting.size()];
@@ -281,6 +281,216 @@ public class TicketView {
 		
 		ticketController = new TicketController(view);
 		return panel;
+	}
+
+
+	public static JLabel getLblBeginStation() {
+		return lblBeginStation;
+	}
+
+
+	public static void setLblBeginStation(JLabel lblBeginStation) {
+		TicketView.lblBeginStation = lblBeginStation;
+	}
+
+
+	public static JLabel getLblPrijs() {
+		return lblPrijs;
+	}
+
+
+	public static void setLblPrijs(JLabel lblPrijs) {
+		TicketView.lblPrijs = lblPrijs;
+	}
+
+
+	public static JLabel getLblOmschrijving() {
+		return lblOmschrijving;
+	}
+
+
+	public static void setLblOmschrijving(JLabel lblOmschrijving) {
+		TicketView.lblOmschrijving = lblOmschrijving;
+	}
+
+
+	public static JLabel getLblKlasse() {
+		return lblKlasse;
+	}
+
+
+	public static void setLblKlasse(JLabel lblKlasse) {
+		TicketView.lblKlasse = lblKlasse;
+	}
+
+
+	public static JLabel getLblSoort() {
+		return lblSoort;
+	}
+
+
+	public static void setLblSoort(JLabel lblSoort) {
+		TicketView.lblSoort = lblSoort;
+	}
+
+
+	public static JLabel getLblEindStation() {
+		return lblEindStation;
+	}
+
+
+	public static void setLblEindStation(JLabel lblEindStation) {
+		TicketView.lblEindStation = lblEindStation;
+	}
+
+
+	public static JLabel getLblDatum() {
+		return lblDatum;
+	}
+
+
+	public static void setLblDatum(JLabel lblDatum) {
+		TicketView.lblDatum = lblDatum;
+	}
+
+
+	public static JLabel getLblKorting() {
+		return lblKorting;
+	}
+
+
+	public static void setLblKorting(JLabel lblKorting) {
+		TicketView.lblKorting = lblKorting;
+	}
+
+
+	public static JLabel getLblStation() {
+		return lblStation;
+	}
+
+
+	public static void setLblStation(JLabel lblStation) {
+		TicketView.lblStation = lblStation;
+	}
+
+
+	public static JComboBox<Prijs> getPrijzenLijst() {
+		return prijzenLijst;
+	}
+
+
+	public static void setPrijzenLijst(JComboBox<Prijs> prijzenLijst) {
+		TicketView.prijzenLijst = prijzenLijst;
+	}
+
+
+	public static JComboBox<Korting> getKortingLijst() {
+		return kortingLijst;
+	}
+
+
+	public static void setKortingLijst(JComboBox<Korting> kortingLijst) {
+		TicketView.kortingLijst = kortingLijst;
+	}
+
+
+	public static PrijsDAO getPrijsdao() {
+		return prijsdao;
+	}
+
+
+	public static void setPrijsdao(PrijsDAO prijsdao) {
+		TicketView.prijsdao = prijsdao;
+	}
+
+
+	public static KortingDAO getKortingdao() {
+		return kortingdao;
+	}
+
+
+	public static void setKortingdao(KortingDAO kortingdao) {
+		TicketView.kortingdao = kortingdao;
+	}
+
+
+	public static StationDAO getStationdao() {
+		return stationdao;
+	}
+
+
+	public static void setStationdao(StationDAO stationdao) {
+		TicketView.stationdao = stationdao;
+	}
+
+
+	public static SimpleDateFormat getSdfDate() {
+		return sdfDate;
+	}
+
+
+	public static void setSdfDate(SimpleDateFormat sdfDate) {
+		TicketView.sdfDate = sdfDate;
+	}
+
+
+	public static Date getNow() {
+		return now;
+	}
+
+
+	public static void setNow(Date now) {
+		TicketView.now = now;
+	}
+
+
+	public static String getStrDate() {
+		return strDate;
+	}
+
+
+	public static void setStrDate(String strDate) {
+		TicketView.strDate = strDate;
+	}
+
+
+	public static JLabel getLblType() {
+		return lblType;
+	}
+
+
+	public static void setLblType(JLabel lblType) {
+		TicketView.lblType = lblType;
+	}
+
+
+	public static JComboBox<?> getCbxType() {
+		return cbxType;
+	}
+
+
+	public static void setCbxType(JComboBox<?> cbxType) {
+		TicketView.cbxType = cbxType;
+	}
+
+
+	public static JComboBox<TypeTicket> getTypeLijst() {
+		return typeLijst;
+	}
+
+
+	public static void setTypeLijst(JComboBox<TypeTicket> typeLijst) {
+		TicketView.typeLijst = typeLijst;
+	}
+
+
+	public static TypeTicketDAO getTypeDao() {
+		return typeDao;
+	}
+
+
+	public static void setTypeDao(TypeTicketDAO typeDao) {
+		TicketView.typeDao = typeDao;
 	}
 
 
