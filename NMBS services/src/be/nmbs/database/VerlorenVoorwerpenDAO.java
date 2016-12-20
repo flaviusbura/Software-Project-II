@@ -156,17 +156,18 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 		}
 	}
 
-	public ArrayList<VerlorenVoorwerp> getAllOpSoortLike(String soort) {
+	public ArrayList<VerlorenVoorwerp> getAllOpLike(String soort) {
 		ArrayList<VerlorenVoorwerp> lijst = null;
 		PreparedStatement prep = null;
 		ResultSet res = null;
-		String sql = "SELECT * FROM verlorenvoorwerp where type LIKE ? and actief=1";
+		String sql = "SELECT * FROM verlorenvoorwerp where (type LIKE ? OR omschrijving LIKE ?) AND actief = 1";
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
 			}
 			prep = getConnection().prepareStatement(sql);
 			prep.setString(1, "%" + soort + "%");
+			prep.setString(2, "%" + soort + "%");
 			res = prep.executeQuery();
 			lijst = new ArrayList<VerlorenVoorwerp>();
 

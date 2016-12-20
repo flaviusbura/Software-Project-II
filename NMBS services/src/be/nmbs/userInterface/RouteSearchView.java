@@ -212,11 +212,11 @@ public class RouteSearchView {
 				if (selectedDeparture != selectedArrival) {
 					// Calendar fixen
 					cal.setTime((Date) timeSpinner.getValue());
-					SimpleDateFormat firstDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+					SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 					String date = datePicker.getJFormattedTextField().getText();
 					Date d = null;
 					try {
-						d = firstDateFormat.parse(date);
+						d = format.parse(date);
 						cal.set(Calendar.YEAR, d.getYear() + 1900);
 						cal.set(Calendar.MONTH, d.getMonth());
 						cal.setTimeInMillis(cal.getTimeInMillis() + 3600000);

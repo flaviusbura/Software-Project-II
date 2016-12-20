@@ -15,7 +15,7 @@ import be.nmbs.userInterface.LoginView;
 import be.nmbs.userInterface.PrijsBeheerView;
 import be.nmbs.userInterface.TicketView;
 import be.nmbs.userInterface.TrainSearchView;
-import be.nmbs.userInterface.VerlorenvoorwerpView;
+import be.nmbs.userInterface.VerlorenVoorwerpView;
 import be.nmbs.userInterface.View;
 import be.nmbs.database.PushDAO;
 
@@ -81,8 +81,8 @@ public class HomeController {
 		HomeView.getBtnVerlorenvoorwerpen().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VerlorenvoorwerpView.setVerlorenvoorwerpControllerToNull();
-				view.changeView(VerlorenvoorwerpView.initialize(view));
+				VerlorenVoorwerpView newView = new VerlorenVoorwerpView();
+				view.changeView(newView.initialize(view));
 			}
 		});
 		if (View.getIngelogdGebruiker().getRol() == 2) {
