@@ -1,5 +1,6 @@
 package be.nmbs.userInterface;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -113,6 +114,7 @@ public class TrainSearchView {
 		trainSearchPanel.add(scrollPane, c);
 		
 		// Add Train Label
+		trainLabel.setPreferredSize(new Dimension(150, 20));
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(0, 5, 0, 0);
@@ -121,21 +123,18 @@ public class TrainSearchView {
 		trainSearchPanel.add(trainLabel, c);
 		
 		// Add Train Field
-		c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 1;
 		trainSearchPanel.add(trainTextField, c);
 
 		// Add Search Button
-		c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 2;
 		trainSearchPanel.add(searchButton, c);
 		
 		// Add Back Button
-		c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 3;
