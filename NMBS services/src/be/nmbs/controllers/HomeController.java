@@ -97,8 +97,8 @@ public class HomeController {
 			HomeView.getGebruikersBeheer().addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					GebruikerView.setGebruikerControllerToNull();
-					view.changeView(GebruikerView.initialize(view));
+					GebruikerView newView = new GebruikerView();
+					view.changeView(newView.initialize(view));
 				}
 			});
 			

@@ -84,7 +84,7 @@ public class GebruikerTableModel implements TableModel {
 				if (gebruikers.get(rowIndex).isActief())
 					return "Ja";
 				else
-					return "Nee";
+					return "Neen";
 		
 			default: 
 				return "";

@@ -4,249 +4,194 @@ package be.nmbs.userInterface;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.security.NoSuchAlgorithmException;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import be.nmbs.controllers.GebruikerAanpassenController;
 import be.nmbs.logic.Gebruiker;
+import be.nmbs.logic.Hashing;
 
 public class GebruikerAanpassenView {
-	private static JLabel info;
-	private static JTextField firstName;
-	private static JTextField lastName;
-	private static JTextField username;
-	private static JPasswordField password;
-	private static JComboBox<String> roleCombo;
-	private static JCheckBox active;
-	private static JButton save;
-	private static JButton back;
-	private static JPanel panel;
+	private final JPanel panel = new JPanel(new GridBagLayout());
 	
-	@SuppressWarnings("unused")
-	private boolean ALLOW_COLUMN_SELECTION = false;
-	@SuppressWarnings("unused")
-	private boolean ALLOW_ROW_SELECTION = true;
+	private final String[] labelTexts = { "Voornaam", "Achternaam", "Gebruikersnaam", "Wachtwoord", "Rol", "Actief" };
+	private JLabel infoLabel;
 	
-	private static GebruikerAanpassenController gebruikerAanpassenController;
+	private final JTextField firstNameTextField = new JTextField();
+	private final JTextField lastNameTextField = new JTextField();
+	private final JTextField usernameTextField = new JTextField();
+	private final JPasswordField passwordField = new JPasswordField();
+	private final JComboBox<String> roleComboBox = new JComboBox<String>();
+	private final JCheckBox activeCheckBox = new JCheckBox();
+	private final JButton saveButton = new JButton("Gebruiker opslaan");
+	private final JButton backButton = new JButton("Terug");
+	
+	private GebruikerAanpassenController gebruikerAanpassenController = new GebruikerAanpassenController();
 
-	public static JPanel initialize(View view, Gebruiker gebruiker) {
-		panel = new JPanel(new GridBagLayout());
+	public JPanel initialize(View view, Gebruiker gebruiker) {
+		// Alle info inladen
+		firstNameTextField.setText(gebruiker.getVoornaam());
+		lastNameTextField.setText(gebruiker.getAchternaam());
+		usernameTextField.setText(gebruiker.getUsername());
 		
-		GridBagConstraints c;
+		// Vanaf RoleCombo alles nog toevoegen
+		roleComboBox.addItem("Bediende");
+		roleComboBox.addItem("Admin");
+		
+		if (gebruiker.getRol() == 1)
+			roleComboBox.setSelectedIndex(0);
+		else
+			roleComboBox.setSelectedIndex(1);
+		
+		if (gebruiker.isActief())
+			activeCheckBox.setSelected(true);
+		
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
 
 		// Info labels toevoegen
-		info = new JLabel("Voornaam");
-		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		infoLabel = new JLabel(labelTexts[0]);
 		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 0;
-		panel.add(info, c);
+		panel.add(infoLabel, c);
 		
-		info = new JLabel("Achternaam");
-		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		infoLabel = new JLabel(labelTexts[1]);
 		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 1;
-		panel.add(info, c);
+		panel.add(infoLabel, c);
 		
-		info = new JLabel("Gebruikersnaam");
-		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		infoLabel = new JLabel(labelTexts[2]);
 		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 2;
-		panel.add(info, c);
+		panel.add(infoLabel, c);
 		
-		info = new JLabel("Wachtwoord");
-		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		infoLabel = new JLabel(labelTexts[3]);
 		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 3;
-		panel.add(info, c);
+		panel.add(infoLabel, c);
 		
-		info = new JLabel("Rol");
-		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		infoLabel = new JLabel(labelTexts[4]);
 		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 4;
-		panel.add(info, c);
+		panel.add(infoLabel, c);
 		
-		info = new JLabel("Actief");
-		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		infoLabel = new JLabel(labelTexts[5]);
 		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 5;
-		panel.add(info, c);
+		panel.add(infoLabel, c);
 		
-		// Velden toevoegen
-		firstName = new JTextField();
-		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add First Name Text Field
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 0;
-		panel.add(firstName, c);
+		panel.add(firstNameTextField, c);
 
-		lastName = new JTextField();
-		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Last Name Text Field
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 1;
-		panel.add(lastName, c);
+		panel.add(lastNameTextField, c);
 
-		username = new JTextField();
-		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Username Text Field
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 2;
-		panel.add(username, c);
+		panel.add(usernameTextField, c);
 		
-		password = new JPasswordField();
-		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Password Field
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 3;
-		panel.add(password, c);
+		panel.add(passwordField, c);
 
-		roleCombo = new JComboBox<String>();
-		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Role Combobox
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 4;
-		panel.add(roleCombo, c);
+		panel.add(roleComboBox, c);
 
-		active = new JCheckBox();
-		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Active Checkbox
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 5;
-		panel.add(active, c);
+		panel.add(activeCheckBox, c);
 		
-		save = new JButton("Gebruiker opslaan");
-		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Save Button
 		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 6;
-		panel.add(save, c);
+		panel.add(saveButton, c);
+		
+		saveButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Gebruiker g = gebruikerAanpassenController.getGebruiker(usernameTextField.getText());
+				
+				if (g != null && g.getId() != gebruiker.getId())
+					JOptionPane.showMessageDialog(null, "FOUT: Gebruikersnaam al in gebruik.");
+				else {
+					g = new Gebruiker();
+					g.setId(gebruiker.getId());
+					g.setVoornaam(firstNameTextField.getText());
+					g.setAchternaam(lastNameTextField.getText());
+					g.setUsername(usernameTextField.getText());
+					
+					if (!passwordField.getPassword().toString().isEmpty()) {
+						try {
+							g.setWachtwoord(Hashing.hashPaswoord(passwordField.getPassword().toString()));
+						} catch (NoSuchAlgorithmException e1) {
+							e1.printStackTrace();
+						}
+					} else
+						g.setWachtwoord(gebruiker.getWachtwoord());
+					
+					if (roleComboBox.getSelectedIndex() == 0)
+						g.setRol(1);
+					else
+						g.setRol(2);
+					
+					g.setActief(activeCheckBox.isSelected());
+					
+					if (gebruikerAanpassenController.updateGebruiker(g)) {
+						JOptionPane.showMessageDialog(null, "Gebruiker is succesvol aangepast!");
+						GebruikerWijzigenView newView = new GebruikerWijzigenView();
+						view.changeView(newView.initialize(view));
+					} else
+						JOptionPane.showMessageDialog(null, "Er is iets foutgegaan bij het opslaan van de gebruiker.");
+				}
+			}
+		});
 
-		back = new JButton("Terug");
-		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Back Button
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 6;
-		panel.add(back, c);
+		panel.add(backButton, c);
 
-		gebruikerAanpassenController = new GebruikerAanpassenController(view, gebruiker);
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GebruikerWijzigenView newView = new GebruikerWijzigenView();
+				view.changeView(newView.initialize(view));
+			}
+		});
+		
 		return panel;
-	}
-
-	public static JButton getSave() {
-		return save;
-	}
-
-	public static void setBack(JButton back) {
-		GebruikerAanpassenView.back = back;
-	}
-
-	public static JButton getBack() {
-		return back;
-	}
-
-	public static void setGebruikerAanpassenControllerToNull() {
-		gebruikerAanpassenController = null;
-	}
-
-	public static void setInfo(JLabel info) {
-		GebruikerAanpassenView.info = info;
-	}
-
-	public static void setFirstName(JTextField firstName) {
-		GebruikerAanpassenView.firstName = firstName;
-	}
-
-	public static void setLastName(JTextField lastName) {
-		GebruikerAanpassenView.lastName = lastName;
-	}
-
-	public static void setUsername(JTextField username) {
-		GebruikerAanpassenView.username = username;
-	}
-
-	public static void setPassword(JPasswordField password) {
-		GebruikerAanpassenView.password = password;
-	}
-
-	public static void setRoleCombo(JComboBox<String> roleCombo) {
-		GebruikerAanpassenView.roleCombo = roleCombo;
-	}
-
-	public static void setActive(JCheckBox active) {
-		GebruikerAanpassenView.active = active;
-	}
-
-	public static void setSave(JButton save) {
-		GebruikerAanpassenView.save = save;
-	}
-
-	public static void setPanel(JPanel panel) {
-		GebruikerAanpassenView.panel = panel;
-	}
-
-	public static void setGebruikerAanpassenController(GebruikerAanpassenController gebruikerAanpassenController) {
-		GebruikerAanpassenView.gebruikerAanpassenController = gebruikerAanpassenController;
-	}
-
-	public static JLabel getInfo() {
-		return info;
-	}
-
-	public static JTextField getFirstName() {
-		return firstName;
-	}
-
-	public static JTextField getLastName() {
-		return lastName;
-	}
-
-	public static JTextField getUsername() {
-		return username;
-	}
-
-	public static JTextField getPassword() {
-		return password;
-	}
-
-	public static JComboBox<String> getRoleCombo() {
-		return roleCombo;
-	}
-
-	public static JCheckBox getActive() {
-		return active;
-	}
-
-	public static JPanel getPanel() {
-		return panel;
-	}
-
-	public static GebruikerAanpassenController getGebruikerAanpassenController() {
-		return gebruikerAanpassenController;
 	}
 }

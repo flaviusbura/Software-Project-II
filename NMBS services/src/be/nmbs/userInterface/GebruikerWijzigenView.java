@@ -112,7 +112,8 @@ public class GebruikerWijzigenView {
 					int selectedRow = table.getSelectedRow();
 					String username = (String) table.getValueAt(selectedRow, 3);
 					
-					view.changeView(GebruikerAanpassenView.initialize(view, controller.getGebruiker(username)));
+					GebruikerAanpassenView newView = new GebruikerAanpassenView();
+					view.changeView(newView.initialize(view, controller.getGebruiker(username)));
 				}
 			}
 		});
@@ -126,8 +127,8 @@ public class GebruikerWijzigenView {
      	back.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {				
-				GebruikerView.setGebruikerControllerToNull();
-				view.changeView(GebruikerView.initialize(view));
+				GebruikerView newView = new GebruikerView();
+				view.changeView(newView.initialize(view));
 			}
 		});
 

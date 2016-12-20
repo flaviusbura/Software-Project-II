@@ -3,64 +3,63 @@ package be.nmbs.userInterface;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import be.nmbs.controllers.GebruikerController;
-
 public class GebruikerView {
-	private static JButton nieuweGebruiker;
-	private static JButton gebruikerAanpassen;
-	private static JButton home;
-	private static JPanel panel;
-	@SuppressWarnings("unused")
-	private static GebruikerController gebruikerController;
+	private final JPanel panel = new JPanel(new GridBagLayout());
+	private final JButton addGebruikerButton = new JButton("Gebruiker toevoegen");
+	private final JButton editGebruikerButton = new JButton("Gebruikers wijzigen");
+	private final JButton backButton = new JButton("Terug");
 	
-	public static JPanel initialize(View view) {
-		panel = new JPanel(new GridBagLayout());
-
+	public JPanel initialize(View view) {
 		GridBagConstraints c = new GridBagConstraints();
-		
-		nieuweGebruiker = new JButton("Gebruiker toevoegen");
 		c.fill = GridBagConstraints.HORIZONTAL;
+		
+		// Add AddGebruiker Button
 		c.gridx = 0;
 		c.gridy = 0;
-		panel.add(nieuweGebruiker, c);
+		panel.add(addGebruikerButton, c);
 		
-		gebruikerAanpassen = new JButton("Gebruikers wijzigen");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		addGebruikerButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				NieuwGebruikerAanmakenView newView = new NieuwGebruikerAanmakenView();
+				view.changeView(newView.initialize(view));
+			}
+		});
+		
+		// Add EditGebruiker Button
 		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 1;
-		panel.add(gebruikerAanpassen, c);
+		panel.add(editGebruikerButton, c);
 		
-		home = new JButton("Terug");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		editGebruikerButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GebruikerWijzigenView newView = new GebruikerWijzigenView();
+				view.changeView(newView.initialize(view));
+			}
+		});
+		
+		// Add Back Button
 		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 2;
-		panel.add(home, c);
+		panel.add(backButton, c);
 		
-		gebruikerController = new GebruikerController(view);
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				HomeView.setHomeControllerToNull();
+				view.changeView(HomeView.initialize(view));
+			}
+		});
 		
 		return panel;
 	}
-	
-	public static void setGebruikerControllerToNull() {
-		gebruikerController = null;
-	}
-	
-	public static JButton getNieuweGebruiker() {
-		return nieuweGebruiker;
-	}
-
-	public static JButton getGebruikerAanpassen() {
-		return gebruikerAanpassen;
-	}
-
-	public static JButton getHome() {
-		return home;
-	}
-	
 }
