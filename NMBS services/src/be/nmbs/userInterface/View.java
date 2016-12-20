@@ -10,17 +10,19 @@ import javax.swing.JPanel;
 import be.nmbs.database.DatabaseSingleton;
 import be.nmbs.logic.Gebruiker;
 
-public class View {
-	private JPanel panel;
+public class View extends JFrame {
+	private static final long serialVersionUID = 1L;
+	
+	private static JPanel panel;
 	private static Gebruiker ingelogdGebruiker;
-	public static JFrame frame;
+	
 	public View() {
-		frame = new JFrame("NMBS Services");
-		frame.setSize(800, 600);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		super("NMBS Services");
+		this.setSize(800, 600);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
-		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+		this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+		this.addWindowListener(new java.awt.event.WindowAdapter() {
 			public void windowClosing(java.awt.event.WindowEvent e) {
 				try {
 					DatabaseSingleton.getDatabaseSingleton().getConnection().close();
@@ -37,7 +39,7 @@ public class View {
 	}
 
 	public void setPanel(JPanel panel) {
-		this.panel = panel;
+		View.panel = panel;
 	}
 
 	public void setPanelToNull() {
@@ -53,18 +55,18 @@ public class View {
 	}
 
 	public void changeView(JPanel panel) {
-		if (this.panel != null) {
-			this.panel.removeAll();
-			frame.remove(this.panel);
-			this.panel.setVisible(false);
+		if (View.panel != null) {
+			View.panel.removeAll();
+			this.remove(View.panel);
+			View.panel.setVisible(false);
 			this.setPanelToNull();
 			this.setPanel(panel);
-			frame.add(panel);
-			frame.setVisible(true);
+			this.add(panel);
+			this.setVisible(true);
 		} else {
 			this.setPanel(panel);
-			frame.add(panel);
-			frame.setVisible(true);
+			this.add(panel);
+			this.setVisible(true);
 		}
 	}
 }

@@ -36,7 +36,7 @@ public class HomeView {
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		
-		if (View.getIngelogdGebruiker().getRol() == 2) {
+		if (view.getIngelogdGebruiker().getRol() == 2) {
 			admin = new JLabel("Admin");
 			c.insets = new Insets(20, 0, 0, 0);
 			c.gridx = 0;

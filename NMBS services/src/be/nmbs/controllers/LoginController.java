@@ -15,36 +15,36 @@ import be.nmbs.userInterface.LoginView;
 import be.nmbs.userInterface.View;
 import be.nmbs.logic.Hashing;
 
-public class LoginController {
+public class LoginController extends View {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Gebruiker gebruiker;
 	private GebruikerDAO gebruikerDAO;
 
 	public LoginController(View view) {
 		LoginView.getLogin().addActionListener(new ActionListener() {
 
-			@SuppressWarnings("static-access")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				gebruiker = new Gebruiker();
 				gebruikerDAO = new GebruikerDAO();
 				gebruiker = gebruikerDAO.getGebruikerOpUsername(LoginView.getGebruikerText().getText());
-				JOptionPane optionPane = new JOptionPane(LoginView.getGebruikerText().getText());
 
 				/*
 				 * Nakijken of het ingegeven paswoord overeen komt met het
 				 * paswoord van in de database
 				 */
-
-				Hashing hashing = new Hashing();
 				try {
 					if (Objects.equals(gebruiker.getWachtwoord(), new String(
-							hashing.hashPaswoord(String.valueOf(LoginView.getPasswordText().getPassword())))) && gebruiker.isActief()) {
-						optionPane.showMessageDialog(null, "Je bent met succes ingelogd!");
+							Hashing.hashPaswoord(String.valueOf(LoginView.getPasswordText().getPassword())))) && gebruiker.isActief()) {
+						JOptionPane.showMessageDialog(null, "Je bent met succes ingelogd!");
 						view.setIngelogdGebruiker(gebruiker);
 						HomeView.setHomeControllerToNull();
 						view.changeView(HomeView.initialize(view));
 					} else {
-						optionPane.showMessageDialog(null, "Foutieve gegevens, probeer opniew!");
+						JOptionPane.showMessageDialog(null, "Foutieve gegevens, probeer opniew!");
 						LoginView.getGebruikerText().setText("");
 						LoginView.getPasswordText().setText("");
 					}
@@ -56,16 +56,15 @@ public class LoginController {
 					e2.printStackTrace();
 				} catch (NullPointerException e3) {
 					e3.printStackTrace();
-					optionPane.showMessageDialog(null, "Foutieve gegevens, probeer opniew!");
+					JOptionPane.showMessageDialog(null, "Foutieve gegevens, probeer opniew!");
 				}
 			}
 		});
 
 		LoginView.getCloseApp().addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				View.frame.dispose();
+				view.dispose();
 			}
 		});
 	}

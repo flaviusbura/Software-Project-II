@@ -32,7 +32,7 @@ public class MaakAbonnementController {
 			public void actionPerformed(ActionEvent e) {
 				try {
 
-					Gebruiker gebruiker = View.getIngelogdGebruiker();
+					Gebruiker gebruiker = view.getIngelogdGebruiker();
 					
 					// gebruik van veiligeInvoer klasse
 					//String route = VeiligeInvoer.checkString(MaakAbonnementView.getTxtRoute(),MaakAbonnementView.getTxtRoute().getText());
@@ -109,7 +109,6 @@ public class MaakAbonnementController {
 		});
 		
 		MaakAbonnementView.getBtnzoek().addActionListener(new ActionListener() {
-			@SuppressWarnings("static-access")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String naam;

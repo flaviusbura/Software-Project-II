@@ -5,11 +5,14 @@ import java.util.ArrayList;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
+import be.nmbs.database.Klant_adresDAO;
+import be.nmbs.logic.Adres;
 import be.nmbs.logic.Klant;
 
 public class KlantTableModel implements TableModel {
-	
 	private ArrayList<Klant> klanten;
+	private Klant_adresDAO dao = new Klant_adresDAO();
+	private Adres adres;
 	
 	public void setKlanten(ArrayList<Klant> klanten) {
 		this.klanten = klanten;
@@ -26,7 +29,7 @@ public class KlantTableModel implements TableModel {
 
 	@Override
 	public int getColumnCount() {
-		return 6;
+		return 11;
 	}
 	
 	@Override
@@ -76,6 +79,8 @@ public class KlantTableModel implements TableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
+		adres = dao.getAdres(klanten.get(rowIndex).getAdresId());
+		
 		switch(columnIndex) {
 			case 0:
 				return klanten.get(rowIndex).getContactId();
@@ -88,6 +93,30 @@ public class KlantTableModel implements TableModel {
 				
 			case 3: 
 				return klanten.get(rowIndex).getTelefoon();
+				
+			case 4: 
+				return adres.getStraat();
+				
+			case 5: 
+				return adres.getHuisnummer();
+				
+			case 6: 
+				return adres.getBus();
+				
+			case 7: 
+				return adres.getPostcode();
+				
+			case 8: 
+				return adres.getWoonplaats();
+				
+			case 9: 
+				return adres.getLand();
+				
+			case 10: 
+				if (klanten.get(rowIndex).isActief())
+					return "Ja";
+				else
+					return "Neen";
 
 			default: 
 				return "";

@@ -48,7 +48,7 @@ public class TicketController {
 					Korting korting = (Korting) TicketView.getKortinglijst().getSelectedItem();
 					int kortingId = korting.getId();
 					StationNMBS station = new StationNMBS((String) TicketView.getStationlijst().getSelectedItem());
-					int gebruikerId = View.getIngelogdGebruiker().getId();
+					int gebruikerId = view.getIngelogdGebruiker().getId();
 					
 					Ticket ticket = new Ticket(startstation,soort,ts,klas,true,eindstation,omschrijving,prijsId,kortingId,station,gebruikerId);
 					TicketDAO ticketdao = new TicketDAO();

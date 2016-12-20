@@ -24,8 +24,8 @@ public class GebruikerController {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GebruikerWijzigenView.setGebruikerWijzigenControllerToNull();
-				view.changeView(GebruikerWijzigenView.initialize(view));
+				GebruikerWijzigenView newView = new GebruikerWijzigenView();
+				view.changeView(newView.initialize(view));
 			}
 		});
 		

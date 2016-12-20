@@ -5,10 +5,13 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import be.nmbs.database.VerlorenVoorwerpenDAO;
 import be.nmbs.logic.VerlorenVoorwerp;
 import be.nmbs.tablemodels.VerlorenvoorwerpTableModel;
+import be.nmbs.userInterface.GebruikerWijzigenView;
 import be.nmbs.userInterface.HomeView;
 import be.nmbs.userInterface.NieuwVerlorenvoorwerpView;
 import be.nmbs.userInterface.VerlorenvoorwerpView;
@@ -28,15 +31,19 @@ public class VerlorenvoorwerpController {
 		VerlorenvoorwerpView.getBtnZoekOmschrijving().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-		        String oms = VerlorenvoorwerpView.getTxtType().getText();
-		        
-		        ArrayList<VerlorenVoorwerp> allVerlorenvoorwerp = verlorenvoorwerpdao.getAllOpSoortLike(oms);
-		        
-		        VerlorenvoorwerpTableModel verlorenvoorwerpTableModel = new VerlorenvoorwerpTableModel();
-		        verlorenvoorwerpTableModel.setVoorwerpen(allVerlorenvoorwerp);
-		        
-		     	VerlorenvoorwerpView.getTabel().setModel(verlorenvoorwerpTableModel);
-		     	VerlorenvoorwerpView.getTabel().setVisible(true); 	
+				if (!VerlorenvoorwerpView.getTxtType().getText().isEmpty()) {
+			        String oms = VerlorenvoorwerpView.getTxtType().getText();
+			        
+			        ArrayList<VerlorenVoorwerp> allVerlorenvoorwerp = verlorenvoorwerpdao.getAllOpSoortLike(oms);
+			        
+			        VerlorenvoorwerpTableModel verlorenvoorwerpTableModel = new VerlorenvoorwerpTableModel();
+			        verlorenvoorwerpTableModel.setVoorwerpen(allVerlorenvoorwerp);
+			        
+			     	VerlorenvoorwerpView.getTabel().setModel(verlorenvoorwerpTableModel);
+			     	VerlorenvoorwerpView.getTabel().setVisible(true); 	
+				} else {
+					JOptionPane.showMessageDialog(null, "Geef een geldige waarde in.");
+				}
 			}
 		});
 			
@@ -52,6 +59,17 @@ public class VerlorenvoorwerpController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				view.changeView(NieuwVerlorenvoorwerpView.initialize(view));
+			}
+		});
+		
+		VerlorenvoorwerpView.getTabel().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if (VerlorenvoorwerpView.getTabel().getSelectedRow() > -1) {
+					VerlorenvoorwerpView.getBtnTerugGegeven().setEnabled(true);
+		        } else {
+		        	VerlorenvoorwerpView.getBtnTerugGegeven().setEnabled(false);
+		        }
 			}
 		});
 			

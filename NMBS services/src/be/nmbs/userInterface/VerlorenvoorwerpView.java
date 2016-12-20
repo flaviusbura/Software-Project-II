@@ -48,6 +48,7 @@ public class VerlorenvoorwerpView {
 		panel.add(btnZoekOmschrijving, c);
 		
 		btnTerugGegeven = new JButton("Markeer als teruggegeven");
+		btnTerugGegeven.setEnabled(false);
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 2;

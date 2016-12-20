@@ -405,7 +405,6 @@ public class KlantWijzigenController {
 								jOptionPane.showMessageDialog(null, "Woonplaats geupdatet!");
 								helpMe.getjFrame().dispose();
 								lijst = klantDAO.getAllByAchternaam(naam);
-								KlantWijzigenView.setLijst(lijst);
 								KlantWijzigenView.setKlantWijzigenControllerToNull();
 								view.changeView(KlantWijzigenView.initialize(view));
 							}
@@ -508,7 +507,6 @@ public class KlantWijzigenController {
 				naam = KlantWijzigenView.getZoekText().getText();
 				if (naam.equals("")) {
 					JOptionPane.showMessageDialog(null, "Geef een geldige invoer.");
-					KlantWijzigenView.getLijst().clear();
 					KlantWijzigenView.getZoekText().setText("");
 					KlantWijzigenView.setKlantWijzigenControllerToNull();
 					view.changeView(KlantWijzigenView.initialize(view));
@@ -517,10 +515,8 @@ public class KlantWijzigenController {
 					if (lijst.size() == 0) {
 						JOptionPane.showMessageDialog(null, "Geen klanten gevonden met deze achternaam.");
 						KlantWijzigenView.setKlantWijzigenControllerToNull();
-						KlantWijzigenView.getLijst().clear();
 						view.changeView(KlantWijzigenView.initialize(view));
 					} else {
-						KlantWijzigenView.setLijst(lijst);
 						KlantWijzigenView.setKlantWijzigenControllerToNull();
 						view.changeView(KlantWijzigenView.initialize(view));
 					}

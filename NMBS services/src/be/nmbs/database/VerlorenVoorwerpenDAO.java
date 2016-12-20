@@ -24,8 +24,7 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 	/**
 	 * Default constructor.
 	 */
-	public VerlorenVoorwerpenDAO() {
-	}
+	public VerlorenVoorwerpenDAO() {}
 
 	/**
 	 * Deze methode gaat alle rijen gaan opvragen in de tabel

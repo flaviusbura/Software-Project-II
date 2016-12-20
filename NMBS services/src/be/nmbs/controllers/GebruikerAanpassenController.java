@@ -68,8 +68,8 @@ public class GebruikerAanpassenController {
 					
 					if (dao.update(g) != 9999) {
 						JOptionPane.showMessageDialog(null, "Gebruiker is succesvol aangepast!");
-						GebruikerWijzigenView.setGebruikerWijzigenControllerToNull();
-						view.changeView(GebruikerWijzigenView.initialize(view));
+						GebruikerWijzigenView newView = new GebruikerWijzigenView();
+						view.changeView(newView.initialize(view));
 					} else
 						JOptionPane.showMessageDialog(null, "Er is iets foutgegaan bij het opslaan van de gebruiker.");
 				}
@@ -79,8 +79,8 @@ public class GebruikerAanpassenController {
      	GebruikerAanpassenView.getBack().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GebruikerWijzigenView.setGebruikerWijzigenControllerToNull();
-				view.changeView(GebruikerWijzigenView.initialize(view));
+				GebruikerWijzigenView newView = new GebruikerWijzigenView();
+				view.changeView(newView.initialize(view));
 			}
 		});
 	}

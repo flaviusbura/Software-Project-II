@@ -9,12 +9,12 @@ import be.nmbs.userInterface.BoeteView;
 import be.nmbs.userInterface.GebruikerView;
 import be.nmbs.userInterface.HomeView;
 import be.nmbs.userInterface.KlantenBeheerView;
-import be.nmbs.userInterface.RouteAskView;
+import be.nmbs.userInterface.RouteSearchView;
 import be.nmbs.userInterface.StatistiekView;
 import be.nmbs.userInterface.LoginView;
 import be.nmbs.userInterface.PrijsBeheerView;
 import be.nmbs.userInterface.TicketView;
-import be.nmbs.userInterface.TrainAskView;
+import be.nmbs.userInterface.TrainSearchView;
 import be.nmbs.userInterface.VerlorenvoorwerpView;
 import be.nmbs.userInterface.View;
 import be.nmbs.database.PushDAO;
@@ -41,16 +41,16 @@ public class HomeController {
 		HomeView.getBtnRoutes().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				RouteAskView.setRouteAskControllerToNull();
-				view.changeView(RouteAskView.initialize(view));
+				RouteSearchView newView = new RouteSearchView();
+				view.changeView(newView.initialize(view));
 			}
 		});
 		
 		HomeView.getBtnTrains().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TrainAskView.setTrainAskControllerToNull();
-				view.changeView(TrainAskView.initialize(view));
+				TrainSearchView newView = new TrainSearchView();
+				view.changeView(newView.initialize(view));
 			}
 		});
 		
