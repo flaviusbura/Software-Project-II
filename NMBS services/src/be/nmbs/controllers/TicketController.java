@@ -71,7 +71,7 @@ public class TicketController {
 					int coefid = coefdao.getCoefficientIdByTypeId(typeTicketId);
 
 					double coef = coefdao.getCoefficient_ById(coefid);
-
+					System.out.println(coef);
 					double totaal = basisprijs * coef;
 
 					Prijs_ticket prijs_ticket = new Prijs_ticket(typeTicketId, coefid, basisprijsid, totaal);
