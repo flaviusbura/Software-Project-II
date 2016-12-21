@@ -119,15 +119,65 @@ public class KlantAdresDAOTest {
 	}
 	
 	/**
-	 * Deze methode gaat test of land gepdate wordt.
+	 * Deze methode gaat testen of land gepdate wordt.
 	 */
 	@Test
 	public void testUpdateLandById() {
 		dao.updateLandByAdresId(22, "MijnLand");
 		adres3 = dao.getAdres(22);
-		
-		
+		assertTrue(adres3.getLand().equals("MijnLand"));
 	}
+	
+	/**
+	 * Deze methode gaat testen of straat gepdate wordt.
+	 */
+	@Test
+	public void testUpdateStraatByAdresId() {
+		dao.updateStraatByAdresId(22, "MijnStraat");
+		adres3 = dao.getAdres(22);
+		assertTrue(adres3.getStraat().equals("MijnStraat"));
+	}
+	
+	/**
+	 * Deze methode gaat testen of het huisnummer gepdate wordt.
+	 */
+	@Test
+	public void testUpdateNrByAdresId() {
+		dao.updateNrByAdresId(22, 10);
+		adres3 = dao.getAdres(22);
+		assertEquals(10, adres3.getHuisnummer());
+	}
+	
+	/**
+	 * Deze methode gaat testen of de postcode gepdate wordt.
+	 */
+	@Test
+	public void testUpdatePostcodeByAdresId() {
+		dao.updatePostcodeByAdresId(22, 1070);
+		adres3 = dao.getAdres(22);
+		assertEquals(1070, adres3.getPostcode());
+	}
+	
+	/**
+	 * Deze methode gaat testen of de woonplaats gepdate wordt.
+	 */
+	@Test
+	public void testUpdateWoonplaatsByAdresId() {
+		dao.updateWoonplaatsByAdresId(22, "MijnWoonplaats");
+		adres3 = dao.getAdres(22);
+		assertTrue(adres3.getWoonplaats().equals("MijnWoonplaats"));
+	}
+	
+	/**
+	 * Deze methode gaat testen of de bus gepdate wordt.
+	 */
+	@Test
+	public void testUpdateBusByAdresId() {
+		dao.updateBusByAdresId(22, "7");
+		adres3 = dao.getAdres(22);
+		assertTrue(adres3.getBus().equals("7"));
+	}
+	
 	/**
 	 * Hier gebeurt de clean-up
 	 * @throws Exception
