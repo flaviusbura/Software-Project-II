@@ -6,7 +6,6 @@ import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import be.nmbs.controllers.HomeController;
 import be.nmbs.controllers.PrijsCoefficient_AbonnementController;
 
 public class PrijsCoefficient_AbonnementView {
@@ -16,14 +15,12 @@ public class PrijsCoefficient_AbonnementView {
 	private static JButton delete;
 	private static JButton insert;
 	private static JPanel panel;
-	private static HomeController homeController;
 	private static PrijsCoefficient_AbonnementController prijsCoefficient_AbonnementController;
 
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-
 		// buttons
 		insert = new JButton("Coefficient toevoegen");
 		new GridBagConstraints();
@@ -53,9 +50,6 @@ public class PrijsCoefficient_AbonnementView {
 		c.gridy = 4;
 		panel.add(goBackToHome, c);
 		
-	
-		
-		homeController = new HomeController(view);
 		prijsCoefficient_AbonnementController = new PrijsCoefficient_AbonnementController(view);
 		return panel;
 	}
@@ -100,14 +94,6 @@ public class PrijsCoefficient_AbonnementView {
 		PrijsCoefficient_AbonnementView.panel = panel;
 	}
 
-	public static HomeController getHomeController() {
-		return homeController;
-	}
-
-	public static void setHomeController(HomeController homeController) {
-		PrijsCoefficient_AbonnementView.homeController = homeController;
-	}
-
 	public static PrijsCoefficient_AbonnementController getPrijsCoefficient_AbonnementController() {
 		return prijsCoefficient_AbonnementController;
 	}
@@ -120,10 +106,5 @@ public class PrijsCoefficient_AbonnementView {
 	public static void setPrijsCoefficient_AbonnementControllerToNull()
 	{
 		prijsCoefficient_AbonnementController = null;
-	}
-
-	public static void setHomeControllerToNull() {
-		homeController = null; 
-		
 	}
 }

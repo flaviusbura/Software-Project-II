@@ -1,12 +1,10 @@
 package be.nmbs.userInterface;
 
-
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.security.NoSuchAlgorithmException;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -19,7 +17,6 @@ import javax.swing.JTextField;
 
 import be.nmbs.controllers.GebruikerAanpassenController;
 import be.nmbs.logic.Gebruiker;
-import be.nmbs.logic.Hashing;
 
 public class GebruikerAanpassenView {
 	private final JPanel panel = new JPanel(new GridBagLayout());
@@ -48,13 +45,15 @@ public class GebruikerAanpassenView {
 		roleComboBox.addItem("Bediende");
 		roleComboBox.addItem("Admin");
 		
-		if (gebruiker.getRol() == 1)
+		if (gebruiker.getRol() == 1) {
 			roleComboBox.setSelectedIndex(0);
-		else
+		} else {
 			roleComboBox.setSelectedIndex(1);
+		}
 		
-		if (gebruiker.isActief())
+		if (gebruiker.isActief()) {
 			activeCheckBox.setSelected(true);
+		}
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -143,9 +142,9 @@ public class GebruikerAanpassenView {
 			public void actionPerformed(ActionEvent e) {
 				Gebruiker g = gebruikerAanpassenController.getGebruiker(usernameTextField.getText());
 				
-				if (g != null && g.getId() != gebruiker.getId())
+				if (g != null && g.getId() != gebruiker.getId()) {
 					JOptionPane.showMessageDialog(null, "FOUT: Gebruikersnaam al in gebruik.");
-				else {
+				} else {
 					g = new Gebruiker();
 					g.setId(gebruiker.getId());
 					g.setVoornaam(firstNameTextField.getText());
@@ -153,27 +152,26 @@ public class GebruikerAanpassenView {
 					g.setUsername(usernameTextField.getText());
 					
 					if (!passwordField.getPassword().toString().isEmpty()) {
-						try {
-							g.setWachtwoord(Hashing.hashPaswoord(passwordField.getPassword().toString()));
-						} catch (NoSuchAlgorithmException e1) {
-							e1.printStackTrace();
-						}
-					} else
+						g.setWachtwoord(gebruikerAanpassenController.hashPassword(passwordField.getPassword().toString()));
+					} else {
 						g.setWachtwoord(gebruiker.getWachtwoord());
+					}
 					
-					if (roleComboBox.getSelectedIndex() == 0)
+					if (roleComboBox.getSelectedIndex() == 0) {
 						g.setRol(1);
-					else
+					} else {
 						g.setRol(2);
+					}
 					
 					g.setActief(activeCheckBox.isSelected());
 					
 					if (gebruikerAanpassenController.updateGebruiker(g)) {
 						JOptionPane.showMessageDialog(null, "Gebruiker is succesvol aangepast!");
-						GebruikerWijzigenView newView = new GebruikerWijzigenView();
+						GebruikerBeheerView newView = new GebruikerBeheerView();
 						view.changeView(newView.initialize(view));
-					} else
+					} else {
 						JOptionPane.showMessageDialog(null, "Er is iets foutgegaan bij het opslaan van de gebruiker.");
+					}
 				}
 			}
 		});
@@ -187,7 +185,7 @@ public class GebruikerAanpassenView {
 		backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GebruikerWijzigenView newView = new GebruikerWijzigenView();
+				GebruikerBeheerView newView = new GebruikerBeheerView();
 				view.changeView(newView.initialize(view));
 			}
 		});

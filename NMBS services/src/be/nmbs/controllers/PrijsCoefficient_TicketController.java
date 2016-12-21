@@ -34,7 +34,6 @@ public class PrijsCoefficient_TicketController {
 			public void actionPerformed(ActionEvent e) {
 				PrijsCoefficient_TicketView.setPrijsCoefficient_TicketControllerToNull();
 
-				PrijsCoefficient_TicketView.setHomeControllerToNull();
 				// change here
 				view.changeView(CoefficientTicket_DelView.initialize(view));
 			}
@@ -45,7 +44,7 @@ public class PrijsCoefficient_TicketController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				PrijsCoefficient_TicketView.setPrijsCoefficient_TicketControllerToNull();
-				PrijsCoefficient_TicketView.setHomeControllerToNull();
+
 				// change here
 				view.changeView(CoefficientTicket_UpdateView.initialize(view));
 			}
@@ -56,7 +55,6 @@ public class PrijsCoefficient_TicketController {
 			public void actionPerformed(ActionEvent e) {
 				PrijsCoefficient_TicketView.setPrijsCoefficient_TicketControllerToNull();
 
-				PrijsCoefficient_TicketView.setHomeControllerToNull();
 				view.changeView(CoefficientTicket_AddView.initialize(view));
 			}
 		});
@@ -64,8 +62,8 @@ public class PrijsCoefficient_TicketController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				HomeView.setHomeControllerToNull();
-				view.changeView(HomeView.initialize(view));
+				HomeView newView = new HomeView();
+				view.changeView(newView.initialize(view));
 			}
 		});
 	}

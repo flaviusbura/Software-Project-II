@@ -23,15 +23,12 @@ public class CoefficientAbonnement_DelView {
 	private static JPanel panel;
 	private static JLabel lblCoeff;
 	private static JTextField txtCoeff;
-	private static HomeController homeController;
 	private static CoefficientAbonnement_DelController coefficientAbonnement_DelController;
 	
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 	
-		
-		
 		lblCoeff = new JLabel("Geef de Coefficient ID ");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
@@ -61,13 +58,8 @@ public class CoefficientAbonnement_DelView {
 		c.gridy = 3;
 		panel.add(goBackToHome, c);
 
-		homeController = new HomeController(view);
 		coefficientAbonnement_DelController = new CoefficientAbonnement_DelController(view);
 		return panel;
-	}
-	public static void setHomeControllerToNull()
-	{
-		homeController= null;
 	}
 	
 	public static void setCoefficientAbonnement_DelControllerToNull()
@@ -103,12 +95,6 @@ public class CoefficientAbonnement_DelView {
 	}
 	public static void setTxtCoeff(JTextField txtCoeff) {
 		CoefficientAbonnement_DelView.txtCoeff = txtCoeff;
-	}
-	public static HomeController getHomeController() {
-		return homeController;
-	}
-	public static void setHomeController(HomeController homeController) {
-		CoefficientAbonnement_DelView.homeController = homeController;
 	}
 	public static CoefficientAbonnement_DelController getCoefficientAbonnement_DelController() {
 		return coefficientAbonnement_DelController;

@@ -262,7 +262,7 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 	 * @param voorwerp
 	 * @return Een int om aan te geven hoeveel rijen aangepast zijn
 	 */
-	public int insert(VerlorenVoorwerp voorwerp) {
+	public boolean insert(VerlorenVoorwerp voorwerp) {
 		PreparedStatement prep = null;
 		String sql = "INSERT INTO verlorenvoorwerp VALUES(null,?,?,?,?,?)";
 
@@ -288,10 +288,10 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 				prep.setTimestamp(4, voorwerp.getTimestampNow());
 			}
 			prep.setBoolean(5, voorwerp.isActief());
-			return prep.executeUpdate();
+			prep.executeUpdate();
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)

@@ -26,8 +26,8 @@ public class BasisPrijsAbonnement_UpdateView {
 	private static JComboBox<TypeAbonnement> typeLijst;
 	private static TypeAbonnementDAO typeAboDao = new TypeAbonnementDAO();
 
-	private static HomeController homeController;
 	private static BasisPrijsAbonnement_UpdateController basisPrijsAbonnement_UpdateController;
+	
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -77,7 +77,6 @@ public class BasisPrijsAbonnement_UpdateView {
 		c.gridy = 4;
 		panel.add(goBackToHome, c);
 
-		homeController = new HomeController(view);
 		basisPrijsAbonnement_UpdateController = new BasisPrijsAbonnement_UpdateController(view);
 		return panel;
 
@@ -86,10 +85,6 @@ public class BasisPrijsAbonnement_UpdateView {
 	public static void setBasisPrijsAbonnement_UpdateControllerToNull()
 	{
 		basisPrijsAbonnement_UpdateController = null;
-	}
-	public static void setHomeControllerToNull()
-	{
-		homeController= null;
 	}
 
 	public static JButton getUpdatePrijs() {
@@ -154,14 +149,6 @@ public class BasisPrijsAbonnement_UpdateView {
 
 	public static void setTypeAboDao(TypeAbonnementDAO typeAboDao) {
 		BasisPrijsAbonnement_UpdateView.typeAboDao = typeAboDao;
-	}
-
-	public static HomeController getHomeController() {
-		return homeController;
-	}
-
-	public static void setHomeController(HomeController homeController) {
-		BasisPrijsAbonnement_UpdateView.homeController = homeController;
 	}
 
 	public static BasisPrijsAbonnement_UpdateController getBasisPrijsAbonnement_UpdateController() {

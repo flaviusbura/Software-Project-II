@@ -156,9 +156,13 @@ public class NieuwVerlorenVoorwerpView {
 				
 				VerlorenVoorwerp voorwerp = new VerlorenVoorwerp(station, omschrijving, type, ts, true);
 				
-				nieuwVerlorenVoorwerpController.insertVoorwerp(voorwerp);
-				
-				JOptionPane.showMessageDialog(null, "Nieuw voorwerp toegevoegd.");
+				if (nieuwVerlorenVoorwerpController.insertVoorwerp(voorwerp)) {
+					JOptionPane.showMessageDialog(null, "Nieuw voorwerp toegevoegd.");
+					VerlorenVoorwerpView newView = new VerlorenVoorwerpView();
+					view.changeView(newView.initialize(view));
+				} else {
+					JOptionPane.showMessageDialog(null, "Er ging iets fout bij het toevoegen van het voorwerp.");
+				}
 			}
 		});
 		

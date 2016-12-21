@@ -17,7 +17,6 @@ import be.nmbs.logic.Abonnement;
 public class StatistiekView {
 	private static JButton goBackToHome;
 	private static JPanel panel;
-	private static HomeController homeController;
 	private static StatistiekController statistiekController;
 	private static AbonnementDAO abonnementDAO;
 	private static AbonnementTypeDAO abonnementTypeDao;
@@ -99,7 +98,6 @@ public class StatistiekView {
 		c.gridy = 2;
 		panel.add(statistiekresultaat, c);
 		
-		homeController = new HomeController(view);
 		statistiekController =new StatistiekController(view);
 		return panel;
 	}
@@ -216,13 +214,6 @@ public class StatistiekView {
 	public static void setDate2(JTextField date2) {
 		StatistiekView.date2 = date2;
 	}
-	public static HomeController getHomeController() {
-		return homeController;
-	}
-
-	public static void setHomeController(HomeController homeController) {
-		StatistiekView.homeController = homeController;
-	}
 	public static StatistiekController getStatistiekController() {
 		return statistiekController;
 	}
@@ -233,9 +224,5 @@ public class StatistiekView {
 	public static void setStatistiekControllerToNull() {
 		statistiekController = null;
 	
-	}
-	
-	public static void setHomeControllerToNull() {
-		homeController = null;
 	}
 }

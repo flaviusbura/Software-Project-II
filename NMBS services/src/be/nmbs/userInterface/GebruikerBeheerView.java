@@ -19,37 +19,40 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import be.nmbs.controllers.GebruikerWijzigenController;
+import be.nmbs.controllers.GebruikerBeheerController;
 import be.nmbs.tablemodels.GebruikerTableModel;
 
-public class GebruikerWijzigenView {
-	private final JTextField searchField = new JTextField();
-	private final JButton edit = new JButton("Gebruiker aanpassen");
-	private final JButton back = new JButton("Terug");
+public class GebruikerBeheerView {
 	private final JPanel panel = new JPanel(new GridBagLayout());
-	private JTable table;
 	
-	private final GebruikerWijzigenController controller = new GebruikerWijzigenController();
+	private final JTextField searchField = new JTextField();
+	
+	private final JButton editButton = new JButton("Gebruiker aanpassen");
+	private final JButton addUserButton = new JButton("Gebruiker toevoegen");
+	private final JButton backButton = new JButton("Terug");
+	
+	private final JTable userTable = new JTable();
+	
+	private final GebruikerBeheerController controller = new GebruikerBeheerController();
 	
 	public JPanel initialize(View view) {
 		GridBagConstraints c;
 
 		// Add User Table
-		table = new JTable();
 		GebruikerTableModel model = new GebruikerTableModel();
 		model.setGebruikers(controller.getAllGebruikers());
-		table.setModel(model);
+		userTable.setModel(model);
      	
-    	TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(table.getModel());
-     	table.setRowSorter(rowSorter);
+    	TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(userTable.getModel());
+     	userTable.setRowSorter(rowSorter);
      	
-     	table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+     	userTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				if (table.getSelectedRow() > -1) {
-		            edit.setEnabled(true);
+				if (userTable.getSelectedRow() > -1) {
+		            editButton.setEnabled(true);
 		        } else {
-		        	edit.setEnabled(false);
+		        	editButton.setEnabled(false);
 		        }
 			}
 		});
@@ -60,7 +63,7 @@ public class GebruikerWijzigenView {
 		c.gridy = 0;
 		c.gridheight = 4;
 		
-		JScrollPane scrollPane = new JScrollPane(table);
+		JScrollPane scrollPane = new JScrollPane(userTable);
 		panel.add(scrollPane, c);
 		
 		// Add Search Field
@@ -99,18 +102,18 @@ public class GebruikerWijzigenView {
         });
 		
 		// Add Edit Button
-		edit.setEnabled(false);
+		editButton.setEnabled(false);
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 1;
-		panel.add(edit, c);
+		panel.add(editButton, c);
 		
-     	edit.addActionListener(new ActionListener() {
+     	editButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (table.getSelectedRow() != -1) {
-					int selectedRow = table.getSelectedRow();
-					String username = (String) table.getValueAt(selectedRow, 3);
+				if (userTable.getSelectedRow() != -1) {
+					int selectedRow = userTable.getSelectedRow();
+					String username = userTable.getValueAt(selectedRow, 3).toString();
 					
 					GebruikerAanpassenView newView = new GebruikerAanpassenView();
 					view.changeView(newView.initialize(view, controller.getGebruiker(username)));
@@ -118,16 +121,29 @@ public class GebruikerWijzigenView {
 			}
 		});
 
+     	// Add AddGebruiker Button
+ 		c.gridx = 1;
+ 		c.gridy = 2;
+ 		panel.add(addUserButton, c);
+ 		
+ 		addUserButton.addActionListener(new ActionListener() {
+ 			@Override
+ 			public void actionPerformed(ActionEvent e) {
+ 				NieuwGebruikerAanmakenView newView = new NieuwGebruikerAanmakenView();
+ 				view.changeView(newView.initialize(view));
+ 			}
+ 		});
+     	
 		// Add Back Button
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
-		c.gridy = 2;
-		panel.add(back, c);
+		c.gridy = 3;
+		panel.add(backButton, c);
 		
-     	back.addActionListener(new ActionListener() {
+     	backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {				
-				GebruikerView newView = new GebruikerView();
+				HomeView newView = new HomeView();
 				view.changeView(newView.initialize(view));
 			}
 		});
@@ -140,14 +156,14 @@ public class GebruikerWijzigenView {
 	}
 
 	public JTable getTable() {
-		return table;
+		return userTable;
 	}
 
 	public JButton getBack() {
-		return back;
+		return backButton;
 	}
 	
 	public JButton getEdit() {
-		return edit;
+		return editButton;
 	}
 }

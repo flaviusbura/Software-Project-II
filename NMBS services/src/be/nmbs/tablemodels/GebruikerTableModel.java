@@ -8,7 +8,6 @@ import javax.swing.table.TableModel;
 import be.nmbs.logic.Gebruiker;
 
 public class GebruikerTableModel implements TableModel {
-	
 	private ArrayList<Gebruiker> gebruikers;
 	
 	public void setGebruikers(ArrayList<Gebruiker> gebruikers) {

@@ -5,7 +5,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.security.NoSuchAlgorithmException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,7 +18,6 @@ import be.nmbs.controllers.NieuwGebruikerAanmakenController;
 import be.nmbs.exceptions.EnkelLettersException;
 import be.nmbs.exceptions.PasswordNotMatchException;
 import be.nmbs.logic.Gebruiker;
-import be.nmbs.logic.Hashing;
 import be.nmbs.logic.VeiligeInvoer;
 
 public class NieuwGebruikerAanmakenView {
@@ -133,25 +131,25 @@ public class NieuwGebruikerAanmakenView {
 					if (VeiligeInvoer.checkForOnlyLetters(voornaam) == false) {
 						throw new EnkelLettersException();
 					}
+					
 					achternaam = lastNameTextField.getText();
 					if (VeiligeInvoer.checkForOnlyLetters(achternaam) == false) {
 						throw new EnkelLettersException();
 					}
+					
 					username = usernameTextField.getText();
 					if (VeiligeInvoer.checkForOnlyLetters(username) == false) {
 						throw new EnkelLettersException();
 					}
+					
 					wachtwoord1 = String.valueOf(passwordField.getPassword());
 					wachtwoord2 = String.valueOf(passwordConfirmField.getPassword());
 					if (!(wachtwoord1.equals(wachtwoord2))) {
 						throw new PasswordNotMatchException();
 					} else {
-						try {
-							secureWachtwoord = Hashing.hashPaswoord(wachtwoord1);
-						} catch (NoSuchAlgorithmException e1) {
-							e1.printStackTrace();
-						}
+						secureWachtwoord = nieuwGebruikerAanmakenController.hashPassword(wachtwoord1);
 					}
+					
 					String selectedItem = roleComboBox.getSelectedItem().toString();
 					if (selectedItem.equals("Administrator")) {
 						rol = 2;
@@ -171,7 +169,7 @@ public class NieuwGebruikerAanmakenView {
 					JOptionPane.showMessageDialog(null, "Er bestaat reeds een gebruiker met deze username!");
 				} else {
 					JOptionPane.showMessageDialog(null, "Uw gebruiker is toegevoegd geweest!");
-					GebruikerView newView = new GebruikerView();
+					GebruikerBeheerView newView = new GebruikerBeheerView();
 					view.changeView(newView.initialize(view));
 				}
 			}
@@ -186,7 +184,7 @@ public class NieuwGebruikerAanmakenView {
 		backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GebruikerView newView = new GebruikerView();
+				GebruikerBeheerView newView = new GebruikerBeheerView();
 				view.changeView(newView.initialize(view));
 			}
 		});

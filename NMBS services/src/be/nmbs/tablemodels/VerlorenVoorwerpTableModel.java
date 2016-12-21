@@ -9,7 +9,7 @@ import javax.swing.table.TableModel;
 import be.nmbs.logic.VerlorenVoorwerp;
 
 public class VerlorenVoorwerpTableModel implements TableModel {
-	private SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+	private final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd/MM/yyyy");
 	
 	private ArrayList<VerlorenVoorwerp> voorwerpen;
 	

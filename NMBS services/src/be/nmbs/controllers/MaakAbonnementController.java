@@ -31,8 +31,7 @@ public class MaakAbonnementController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-
-					Gebruiker gebruiker = view.getIngelogdGebruiker();
+					Gebruiker gebruiker = View.getIngelogdGebruiker();
 					
 					// gebruik van veiligeInvoer klasse
 					//String route = VeiligeInvoer.checkString(MaakAbonnementView.getTxtRoute(),MaakAbonnementView.getTxtRoute().getText());
@@ -102,9 +101,8 @@ public class MaakAbonnementController {
 		MaakAbonnementView.getGoBackToHome().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				HomeView.setHomeControllerToNull();
-				view.changeView(HomeView.initialize(view));
+				HomeView newView = new HomeView();
+				view.changeView(newView.initialize(view));
 			}
 		});
 		

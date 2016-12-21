@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import be.nmbs.database.GebruikerDAO;
 import be.nmbs.logic.Gebruiker;
 
-public class GebruikerWijzigenController {
+public class GebruikerBeheerController {
 	private final GebruikerDAO dao = new GebruikerDAO();
 	
 	public ArrayList<Gebruiker> getAllGebruikers() {

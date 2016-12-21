@@ -16,7 +16,7 @@ public class BasisPrijsTicketView {
 	private static JButton delete;
 	private static JButton insert;
 	private static JPanel panel;
-	private static HomeController homeController;
+
 	private static BasisPrijsTicketController basisPrijsTicketController;
 
 	public static JPanel initialize(View view) {
@@ -52,17 +52,12 @@ public class BasisPrijsTicketView {
 		c.gridy = 4;
 		panel.add(goBackToHome, c);
 
-		homeController = new HomeController(view);
 		basisPrijsTicketController = new BasisPrijsTicketController(view);
 		return panel;
 	}
 
 	public static void setBasisPrijsTicketControllerToNull() {
 		basisPrijsTicketController = null;
-	}
-
-	public static void setHomeControllerToNull() {
-		homeController = null;
 	}
 
 	public static JButton getUpdate() {
@@ -103,14 +98,6 @@ public class BasisPrijsTicketView {
 
 	public static void setPanel(JPanel panel) {
 		BasisPrijsTicketView.panel = panel;
-	}
-
-	public static HomeController getHomeController() {
-		return homeController;
-	}
-
-	public static void setHomeController(HomeController homeController) {
-		BasisPrijsTicketView.homeController = homeController;
 	}
 
 	public static BasisPrijsTicketController getBasisPrijsTicketController() {

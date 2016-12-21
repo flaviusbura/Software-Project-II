@@ -16,8 +16,8 @@ public class NieuwVerlorenVoorwerpController {
 		return stationDAO.getAll();
 	}
 	
-	public void insertVoorwerp(VerlorenVoorwerp voorwerp) {
-		verlorenvoorwerpdao.insert(voorwerp);
+	public boolean insertVoorwerp(VerlorenVoorwerp voorwerp) {
+		return verlorenvoorwerpdao.insert(voorwerp);
 	}
 	
 	public Calendar getCurrentDate() {

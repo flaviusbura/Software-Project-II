@@ -31,7 +31,7 @@ public class Klant_adresDAO extends BaseDAO {
 			res = prep.executeQuery();
 			while (res.next()) {
 				String straat = res.getString("straat");
-				int huisnummer = res.getInt("nr");
+				String huisnummer = res.getString("nr");
 				int postcode = res.getInt("postcode");
 				String bus = res.getString("bus");
 				String woonplaats = res.getString("stad");
@@ -65,7 +65,7 @@ public class Klant_adresDAO extends BaseDAO {
 	 * @param gebruiker
 	 * @return
 	 */
-	public int insert(Adres adres) {
+	public boolean insert(Adres adres) {
 		PreparedStatement prep = null;
 		String sql = "INSERT INTO klant_adres VALUES(null,?,?,?,?,?,?,?)";
 
@@ -79,13 +79,13 @@ public class Klant_adresDAO extends BaseDAO {
 			prep.setString(2, adres.getWoonplaats());
 			prep.setInt(3, adres.getPostcode());
 			prep.setString(4, adres.getStraat());
-			prep.setInt(5, adres.getHuisnummer());
+			prep.setString(5, adres.getHuisnummer());
 			prep.setString(6, adres.getBus());
 			prep.setBoolean(7, adres.getActief());
-			return prep.executeUpdate();
+			prep.executeUpdate();
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)
@@ -104,7 +104,7 @@ public class Klant_adresDAO extends BaseDAO {
 	 * @param adres
 	 * @return
 	 */
-	public int delete(Adres adres) {
+	public boolean delete(Adres adres) {
 		String sql = "UPDATE klant_adres SET actief=0 WHERE adres_id=?";
 		PreparedStatement prep = null;
 		try {
@@ -114,10 +114,11 @@ public class Klant_adresDAO extends BaseDAO {
 			prep = getConnection().prepareStatement(sql);
 
 			prep.setInt(1, adres.getId());
-			return prep.executeUpdate();
+			prep.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)
@@ -155,7 +156,7 @@ public class Klant_adresDAO extends BaseDAO {
 				prep2.setString(3, adres.getWoonplaats());
 				prep2.setInt(4, adres.getPostcode());
 				prep2.setString(5, adres.getStraat());
-				prep2.setInt(6, adres.getHuisnummer());
+				prep2.setString(6, adres.getHuisnummer());
 				prep2.setString(7, adres.getBus());
 				prep2.setBoolean(8, adres.getActief());
 				return prep2.executeUpdate();
@@ -199,7 +200,7 @@ public class Klant_adresDAO extends BaseDAO {
 			}
 			prep = getConnection().prepareStatement(sql);
 			prep.setString(1, adres.getStraat());
-			prep.setInt(2, adres.getHuisnummer());
+			prep.setString(2, adres.getHuisnummer());
 			res = prep.executeQuery();
 			while (res.next()) {
 				adresId = res.getInt("adres_id");
@@ -221,7 +222,7 @@ public class Klant_adresDAO extends BaseDAO {
 		}
 	}
 	
-	public int updateAdresKlant(Adres adres) {
+	public boolean updateAdresKlant(Adres adres) {
 		String sql = "UPDATE klant_adres SET land = ?, stad = ?, postcode = ?, straat = ?, nr = ?, bus = ?, actief = ? WHERE adres_id = ?";
 		PreparedStatement prep = null;
 		try {
@@ -234,14 +235,15 @@ public class Klant_adresDAO extends BaseDAO {
 			prep.setString(2, adres.getWoonplaats());
 			prep.setInt(3, adres.getPostcode());
 			prep.setString(4, adres.getStraat());
-			prep.setInt(5, adres.getHuisnummer());
+			prep.setString(5, adres.getHuisnummer());
 			prep.setString(6, adres.getBus());
 			prep.setBoolean(7, true);
 			prep.setInt(8, adres.getAdresId());
-			return prep.executeUpdate();
+			prep.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)

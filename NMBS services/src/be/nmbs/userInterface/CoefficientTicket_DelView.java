@@ -25,7 +25,6 @@ public class CoefficientTicket_DelView {
 	private static JComboBox<TypeTicket> typeLijst;
 	private static TypeTicketDAO typeTypeDao = new TypeTicketDAO();
 
-	private static HomeController homeController;
 	private static CoefficientTicket_DelController coefficientTicket_DelController;
 	
 	public static JPanel initialize(View view) {
@@ -59,13 +58,8 @@ public class CoefficientTicket_DelView {
 		c.gridy = 3;
 		panel.add(goBackToHome, c);
 
-		homeController = new HomeController(view);
 		coefficientTicket_DelController = new CoefficientTicket_DelController(view);
 		return panel;
-	}
-	public static void setHomeControllerToNull()
-	{
-		homeController= null;
 	}
 	
 	public static void setPrijsCoefficient_TicketControllerToNull() {
@@ -121,18 +115,10 @@ public class CoefficientTicket_DelView {
 	public static void setTypeTypeDao(TypeTicketDAO typeTypeDao) {
 		CoefficientTicket_DelView.typeTypeDao = typeTypeDao;
 	}
-	public static HomeController getHomeController() {
-		return homeController;
-	}
-	public static void setHomeController(HomeController homeController) {
-		CoefficientTicket_DelView.homeController = homeController;
-	}
 	public static CoefficientTicket_DelController getCoefficientTicket_DelController() {
 		return coefficientTicket_DelController;
 	}
 	public static void setCoefficientTicket_DelController(CoefficientTicket_DelController coefficientTicket_DelController) {
 		CoefficientTicket_DelView.coefficientTicket_DelController = coefficientTicket_DelController;
 	}
-	
-
 }

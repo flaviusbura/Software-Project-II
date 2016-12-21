@@ -25,7 +25,6 @@ public class CoefficientTicket_UpdateView {
 	private static JComboBox<TypeTicket> typeLijst;
 	private static TypeTicketDAO typeTicketDao = new TypeTicketDAO();
 
-	private static HomeController homeController;
 	private static CoefficientTicket_UpdateController coefficientTicket_UpdateController;
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
@@ -76,7 +75,6 @@ public class CoefficientTicket_UpdateView {
 		c.gridy = 4;
 		panel.add(goBackToHome, c);
 
-		homeController = new HomeController(view);
 		coefficientTicket_UpdateController = new CoefficientTicket_UpdateController(view);
 		return panel;
 
@@ -84,10 +82,6 @@ public class CoefficientTicket_UpdateView {
 	public static void setPrijsCoefficient_TicketControllerToNull() {
 		coefficientTicket_UpdateController = null;
 		
-	}
-	public static void setHomeControllerToNull()
-	{
-		homeController= null;
 	}
 
 	public static JButton getUpdateCoeff() {
@@ -154,14 +148,6 @@ public class CoefficientTicket_UpdateView {
 		CoefficientTicket_UpdateView.typeTicketDao = typeTicketDao;
 	}
 
-	public static HomeController getHomeController() {
-		return homeController;
-	}
-
-	public static void setHomeController(HomeController homeController) {
-		CoefficientTicket_UpdateView.homeController = homeController;
-	}
-
 	public static CoefficientTicket_UpdateController getCoefficientTicket_UpdateController() {
 		return coefficientTicket_UpdateController;
 	}
@@ -170,9 +156,4 @@ public class CoefficientTicket_UpdateView {
 			CoefficientTicket_UpdateController coefficientTicket_UpdateController) {
 		CoefficientTicket_UpdateView.coefficientTicket_UpdateController = coefficientTicket_UpdateController;
 	}
-	
-
-	
-	
-	
 }

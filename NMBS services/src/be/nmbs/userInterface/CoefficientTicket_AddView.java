@@ -28,7 +28,6 @@ public class CoefficientTicket_AddView {
 	private static JComboBox<TypeTicket> typeLijst;
 	private static TypeTicketDAO typeTicketDao = new TypeTicketDAO();
 
-	private static HomeController homeController;
 	private static CoefficientTicket_AddController coefficientTicket_AddController;
 	
 	public static JPanel initialize(View view) {
@@ -64,8 +63,6 @@ public class CoefficientTicket_AddView {
 		c.gridy = 1;
 		panel.add(txtCoeff, c);
 
-		
-
 		// buttons
 		addCoeff = new JButton("Coefficient Toevoegen");
 		new GridBagConstraints();
@@ -81,7 +78,6 @@ public class CoefficientTicket_AddView {
 		c.gridy = 3;
 		panel.add(goBackToHome, c);
 
-		homeController = new HomeController(view);
 		coefficientTicket_AddController = new CoefficientTicket_AddController(view);
 		return panel;
 
@@ -89,10 +85,6 @@ public class CoefficientTicket_AddView {
 	public static void setCoefficientTicket_AddControllerToNull()
 	{
 		coefficientTicket_AddController= null;
-	}
-	public static void setHomeControllerToNull()
-	{
-		homeController= null;
 	}
 	public static JButton getAddCoeff() {
 		return addCoeff;
@@ -141,12 +133,6 @@ public class CoefficientTicket_AddView {
 	}
 	public static void setTypeAboDao(TypeTicketDAO typeTicketDao) {
 		CoefficientTicket_AddView.typeTicketDao = typeTicketDao;
-	}
-	public static HomeController getHomeController() {
-		return homeController;
-	}
-	public static void setHomeController(HomeController homeController) {
-		CoefficientTicket_AddView.homeController = homeController;
 	}
 	public static CoefficientTicket_AddController getCoefficientTicket_AddController() {
 		return coefficientTicket_AddController;

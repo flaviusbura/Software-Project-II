@@ -27,7 +27,6 @@ public class CoefficientAbonnement_UpdateView {
 	private static JComboBox<TypeAbonnement> typeLijst;
 	private static TypeAbonnementDAO typeAboDao = new TypeAbonnementDAO();
 
-	private static HomeController homeController;
 	private static CoefficientAbonnement_UpdateController coefficientAbonnement_UpdateController;
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
@@ -49,7 +48,6 @@ public class CoefficientAbonnement_UpdateView {
 		c.gridx = 1;
 		c.gridy = 0;
 		panel.add(typeLijst, c);
-		
 		
 		lblCoeff = new JLabel("Update naar: ");
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -78,7 +76,6 @@ public class CoefficientAbonnement_UpdateView {
 		c.gridy = 4;
 		panel.add(goBackToHome, c);
 
-		homeController = new HomeController(view);
 		coefficientAbonnement_UpdateController = new CoefficientAbonnement_UpdateController(view);
 		return panel;
 
@@ -87,10 +84,6 @@ public class CoefficientAbonnement_UpdateView {
 	public static void setCoefficientAbonnement_UpdateControllerToNull()
 	{
 		coefficientAbonnement_UpdateController = null;
-	}
-	public static void setHomeControllerToNull()
-	{
-		homeController= null;
 	}
 
 	public static JButton getUpdateCoeff() {
@@ -171,14 +164,6 @@ public class CoefficientAbonnement_UpdateView {
 
 	public static void setTypeAboDao(TypeAbonnementDAO typeAboDao) {
 		CoefficientAbonnement_UpdateView.typeAboDao = typeAboDao;
-	}
-
-	public static HomeController getHomeController() {
-		return homeController;
-	}
-
-	public static void setHomeController(HomeController homeController) {
-		CoefficientAbonnement_UpdateView.homeController = homeController;
 	}
 
 	public static CoefficientAbonnement_UpdateController getCoefficientAbonnement_UpdateController() {

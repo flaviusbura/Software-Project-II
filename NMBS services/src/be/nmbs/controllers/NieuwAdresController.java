@@ -11,7 +11,7 @@ import be.nmbs.exceptions.NietGeldigePostcodeException;
 import be.nmbs.logic.Adres;
 import be.nmbs.logic.VeiligeInvoer;
 import be.nmbs.userInterface.NieuwAdresView;
-import be.nmbs.userInterface.KlantWijzigenView;
+import be.nmbs.userInterface.KlantAanpassenView;
 import be.nmbs.userInterface.View;
 
 public class NieuwAdresController {
@@ -27,8 +27,8 @@ public class NieuwAdresController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					int row = KlantWijzigenView.getTable().getSelectedRow();
-					adresId = Integer.valueOf((String) KlantWijzigenView.getTable().getModel().getValueAt(row, 1));
+					int row = KlantAanpassenView.getTable().getSelectedRow();
+					adresId = Integer.valueOf((String) KlantAanpassenView.getTable().getModel().getValueAt(row, 1));
 					String straat = NieuwAdresView.getStraatText().getText();
 					if (VeiligeInvoer.checkForOnlyLetters(straat) == false) {
 						throw new EnkelLettersException();
@@ -56,14 +56,14 @@ public class NieuwAdresController {
 					klant_adresDAO.updateAdresKlant(adres);
 					JOptionPane optionPane = new JOptionPane();
 					optionPane.showMessageDialog(null, "Adres geupdatet!");
-					KlantWijzigenView.setKlantWijzigenControllerToNull();
-					view.changeView(KlantWijzigenView.initialize(view));
+					KlantAanpassenView.setKlantWijzigenControllerToNull();
+					view.changeView(KlantAanpassenView.initialize(view));
 				} catch (ArrayIndexOutOfBoundsException indexE) {
 					jOptionPane = new JOptionPane();
 					jOptionPane.showMessageDialog(null,
 							"U heeft geen rij geselecteerd!\nSelecteer een rij die u wenst te wijzigen.");
-					KlantWijzigenView.setKlantWijzigenControllerToNull();
-					view.changeView(KlantWijzigenView.initialize(view));
+					KlantAanpassenView.setKlantWijzigenControllerToNull();
+					view.changeView(KlantAanpassenView.initialize(view));
 				} catch (NumberFormatException e1) {
 					jOptionPane = new JOptionPane();
 					jOptionPane.showMessageDialog(null, "Gelieve alle velden correct in te vullen!");
@@ -82,8 +82,8 @@ public class NieuwAdresController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				KlantWijzigenView.setKlantWijzigenControllerToNull();
-				view.changeView(KlantWijzigenView.initialize(view));
+				KlantAanpassenView.setKlantWijzigenControllerToNull();
+				view.changeView(KlantAanpassenView.initialize(view));
 			}
 		});
 	}

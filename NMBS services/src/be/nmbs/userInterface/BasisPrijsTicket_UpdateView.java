@@ -26,8 +26,8 @@ public class BasisPrijsTicket_UpdateView {
 	private static JComboBox<TypeTicket> typeLijst;
 	private static TypeTicketDAO typeTicketDao = new TypeTicketDAO();
 
-	private static HomeController homeController;
 	private static BasisPrijsTicket_UpdateController basisPrijsTicket_UpdateController;
+	
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -64,20 +64,17 @@ public class BasisPrijsTicket_UpdateView {
 
 		// buttons
 		updatePrijs = new JButton("Coefficient Updaten");
-		new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 3;
 		panel.add(updatePrijs, c);
 		
 		goBackToHome = new JButton("Home");
-		new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 4;
 		panel.add(goBackToHome, c);
 
-		homeController = new HomeController(view);
 		basisPrijsTicket_UpdateController = new BasisPrijsTicket_UpdateController(view);
 		return panel;
 
@@ -85,10 +82,6 @@ public class BasisPrijsTicket_UpdateView {
 	public static void setBasisPrijsTicket_UpdateControllerToNull() {
 		basisPrijsTicket_UpdateController = null;
 		
-	}
-	public static void setHomeControllerToNull()
-	{
-		homeController= null;
 	}
 	public static JButton getUpdatePrijs() {
 		return updatePrijs;
@@ -137,12 +130,6 @@ public class BasisPrijsTicket_UpdateView {
 	}
 	public static void setTypeTicketDao(TypeTicketDAO typeTicketDao) {
 		BasisPrijsTicket_UpdateView.typeTicketDao = typeTicketDao;
-	}
-	public static HomeController getHomeController() {
-		return homeController;
-	}
-	public static void setHomeController(HomeController homeController) {
-		BasisPrijsTicket_UpdateView.homeController = homeController;
 	}
 	public static BasisPrijsTicket_UpdateController getBasisPrijsTicket_UpdateController() {
 		return basisPrijsTicket_UpdateController;

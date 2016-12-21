@@ -34,9 +34,8 @@ public class BasisPrijsAbonnement_DelController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				HomeView.setHomeControllerToNull();
-				view.changeView(HomeView.initialize(view));
+				HomeView newView = new HomeView();
+				view.changeView(newView.initialize(view));
 			}
 		});
 	}

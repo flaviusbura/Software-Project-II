@@ -35,7 +35,6 @@ public class VerlorenVoorwerpView {
 	 
 	public JPanel initialize(View view) {		
 		GridBagConstraints c = new GridBagConstraints();
-		
 		c.fill = GridBagConstraints.HORIZONTAL;
 
 		// Add Type Text Field
@@ -43,7 +42,6 @@ public class VerlorenVoorwerpView {
 		c.gridx = 1;
 		c.gridy = 0;
 		panel.add(typeTextField, c);
-
 		
 		// Add Search Button
 		c.insets = new Insets(5, 5, 0, 0);
@@ -127,8 +125,8 @@ public class VerlorenVoorwerpView {
 		backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				HomeView.setHomeControllerToNull();
-				view.changeView(HomeView.initialize(view));
+				HomeView newView = new HomeView();
+				view.changeView(newView.initialize(view));
 			}
 		});
 		

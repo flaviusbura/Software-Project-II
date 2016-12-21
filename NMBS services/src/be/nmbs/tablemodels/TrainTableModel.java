@@ -8,9 +8,9 @@ import javax.swing.table.TableModel;
 import be.nmbs.logic.Trein;
 
 public class TrainTableModel implements TableModel {
-	private Trein train;
+	private final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 	
-	private SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+	private Trein train;
 	
 	public void setTrain(Trein train) {
 		this.train = train;

@@ -10,8 +10,9 @@ import be.nmbs.logic.Adres;
 import be.nmbs.logic.Klant;
 
 public class KlantTableModel implements TableModel {
+	private final Klant_adresDAO dao = new Klant_adresDAO();
+	
 	private ArrayList<Klant> klanten;
-	private Klant_adresDAO dao = new Klant_adresDAO();
 	private Adres adres;
 	
 	public void setKlanten(ArrayList<Klant> klanten) {
@@ -36,8 +37,8 @@ public class KlantTableModel implements TableModel {
 	public String getColumnName(int columnIndex) {
 		switch(columnIndex) {
 			case 0:
-				return "Klant ID";
-			
+				return "ID";
+				
 			case 1:
 				return "Voornaam";
 				
@@ -81,10 +82,10 @@ public class KlantTableModel implements TableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		adres = dao.getAdres(klanten.get(rowIndex).getAdresId());
 		
-		switch(columnIndex) {
+		switch(columnIndex) {	
 			case 0:
 				return klanten.get(rowIndex).getContactId();
-			
+				
 			case 1:
 				return klanten.get(rowIndex).getVoornaam();
 				

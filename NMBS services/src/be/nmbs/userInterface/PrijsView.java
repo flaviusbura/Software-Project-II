@@ -11,13 +11,10 @@ import be.nmbs.controllers.HomeController;
 import be.nmbs.controllers.PrijsController;
 
 public class PrijsView {
-	
-
 	private static JButton goBackToHome;
 	private static JButton voorAbo;
 	private static JButton voorTicket;
 	private static JPanel panel;
-	private static HomeController homeController;
 	private static PrijsController prijsController;
 
 	public static JPanel initialize(View view) {
@@ -43,9 +40,6 @@ public class PrijsView {
 		c.gridy = 0;
 		panel.add(goBackToHome, c);
 		
-	
-		
-		homeController = new HomeController(view);
 		prijsController = new PrijsController(view);
 		return panel;
 	}
@@ -82,16 +76,6 @@ public class PrijsView {
 		PrijsView.panel = panel;
 	}
 
-	public static HomeController getHomeController() {
-		return homeController;
-	}
-
-	public static void setHomeController(HomeController homeController) {
-		PrijsView.homeController = homeController;
-	}
-	public static void setHomeControllerToNull() {
-		homeController = null;
-	}
 	public static void setPrijsControllerToNull() {
 		prijsController = null;
 	}

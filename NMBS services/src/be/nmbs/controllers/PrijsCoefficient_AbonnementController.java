@@ -19,7 +19,7 @@ public class PrijsCoefficient_AbonnementController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				PrijsCoefficient_AbonnementView.setPrijsCoefficient_AbonnementControllerToNull();;
-				PrijsCoefficient_AbonnementView.setHomeControllerToNull();
+
 				//change here
 				view.changeView(CoefficientAbonnement_DelView.initialize(view));
 			}
@@ -30,7 +30,7 @@ public class PrijsCoefficient_AbonnementController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				PrijsCoefficient_AbonnementView.setPrijsCoefficient_AbonnementControllerToNull();;
-				PrijsCoefficient_AbonnementView.setHomeControllerToNull();
+
 				//change here
 				view.changeView(CoefficientAbonnement_UpdateView.initialize(view));
 			}
@@ -40,7 +40,7 @@ public class PrijsCoefficient_AbonnementController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				PrijsCoefficient_AbonnementView.setPrijsCoefficient_AbonnementControllerToNull();;
-				PrijsCoefficient_AbonnementView.setHomeControllerToNull();
+
 				view.changeView(CoefficientAbonnement_AddView.initialize(view));
 			}
 		});
@@ -48,8 +48,8 @@ public class PrijsCoefficient_AbonnementController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				HomeView.setHomeControllerToNull();
-				view.changeView(HomeView.initialize(view));
+				HomeView newView = new HomeView();
+				view.changeView(newView.initialize(view));
 			}
 		});
 	}

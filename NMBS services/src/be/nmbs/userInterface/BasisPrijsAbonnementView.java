@@ -15,7 +15,7 @@ public class BasisPrijsAbonnementView {
 	private static JButton delete;
 	private static JButton insert;
 	private static JPanel panel;
-	private static HomeController homeController;
+
 	private static BasisPrijsAbonnementController basisPrijsAbonnementController;
 
 	public static JPanel initialize(View view) {
@@ -51,17 +51,13 @@ public class BasisPrijsAbonnementView {
 		c.gridy = 4;
 		panel.add(goBackToHome, c);
 
-		homeController = new HomeController(view);
 		basisPrijsAbonnementController = new BasisPrijsAbonnementController(view);
+		
 		return panel;
 	}
 
 	public static void setBasisPrijsAbonnementControllerToNull() {
 		basisPrijsAbonnementController = null;
-	}
-
-	public static void setHomeControllerToNull() {
-		homeController = null;
 	}
 
 	public static JButton getUpdate() {
@@ -102,14 +98,6 @@ public class BasisPrijsAbonnementView {
 
 	public static void setPanel(JPanel panel) {
 		BasisPrijsAbonnementView.panel = panel;
-	}
-
-	public static HomeController getHomeController() {
-		return homeController;
-	}
-
-	public static void setHomeController(HomeController homeController) {
-		BasisPrijsAbonnementView.homeController = homeController;
 	}
 
 	public static BasisPrijsAbonnementController getBasisPrijsAbonnementController() {

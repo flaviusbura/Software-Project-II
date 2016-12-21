@@ -80,7 +80,7 @@ public class TicketDAO extends BaseDAO{
 	 * @param ticket
 	 * @return Een int om aan te geven dat het succesvol is
 	 */
-	public int insert(Ticket ticket) {
+	public boolean insert(Ticket ticket) {
 		PreparedStatement prep = null;
 		String sql = "INSERT INTO ticket VALUES(null,?,?,?,?,?,?,?,?,?,?,?)";
 		
@@ -100,10 +100,10 @@ public class TicketDAO extends BaseDAO{
 			prep.setInt(9, ticket.getKortingId());
 			prep.setString(10, ticket.getStation().getNaam());
 			prep.setInt(11, ticket.getGebruikerId());
-			return prep.executeUpdate();
+			prep.executeUpdate();
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)

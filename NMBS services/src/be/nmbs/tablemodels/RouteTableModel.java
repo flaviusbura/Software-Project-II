@@ -9,9 +9,10 @@ import javax.swing.table.TableModel;
 import be.nmbs.logic.Route;
 
 public class RouteTableModel implements TableModel {	
+	private final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+	
 	private ArrayList<Route> routes;
 	private ArrayList<Integer> whitespaces;
-	private SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 	
 	public void setRoutes(ArrayList<Route> routes) {
 		this.routes = routes;

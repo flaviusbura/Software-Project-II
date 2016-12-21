@@ -79,12 +79,11 @@ public class MaakAbonnementView {
 	static Date now = new Date();
 	static String strDate = sdfDate.format(now);
 
-	private static HomeController homeController;
 	private static MaakAbonnementController maakAbonnementController;
 	private static JTable table;
 	private static JLabel lblMaanden;
 	static String[] tab = { "3 maanden", "6 maanden", "9 maanden", "12 maanden" };
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+
 	private static JComboBox<?> combo = new JComboBox<Object>(tab);
 
 	private static JLabel departureLabel;
@@ -276,7 +275,6 @@ public class MaakAbonnementView {
 		c.gridy = 8;
 		tPanel.add(maakAbonnement, c);
 
-		homeController = new HomeController(view);
 		maakAbonnementController = new MaakAbonnementController(view);
 		return panel;
 
@@ -593,14 +591,6 @@ public class MaakAbonnementView {
 		MaakAbonnementView.strDate = strDate;
 	}
 
-	public static HomeController getHomeController() {
-		return homeController;
-	}
-
-	public static void setHomeController(HomeController homeController) {
-		MaakAbonnementView.homeController = homeController;
-	}
-
 	public static MaakAbonnementController getMaakAbonnementController() {
 		return maakAbonnementController;
 	}
@@ -615,10 +605,6 @@ public class MaakAbonnementView {
 
 	public static void setMaakAbonnementControllerToNull() {
 		maakAbonnementController = null;
-	}
-
-	public static void setHomeControllerToNull() {
-		homeController = null;
 	}
 
 	public static JPanel gettPanel() {

@@ -27,7 +27,6 @@ public class BasisPrijsAbonnement_AddView {
 	private static JComboBox<TypeAbonnement> typeLijst;
 	private static TypeAbonnementDAO typeAboDao = new TypeAbonnementDAO();
 
-	private static HomeController homeController;
 	private static BasisPrijsAbonnement_AddController basisPrijsAbonnement_AddController;
 
 	public static JPanel initialize(View view) {
@@ -78,15 +77,11 @@ public class BasisPrijsAbonnement_AddView {
 		c.gridy = 3;
 		panel.add(goBackToHome, c);
 
-		homeController = new HomeController(view);
 		basisPrijsAbonnement_AddController = new BasisPrijsAbonnement_AddController(view);
 		return panel;
 
 	}
-	public static void setHomeControllerToNull()
-	{	
-		homeController = null; 
-	}
+
 	public static void setBasisPrijsAbonnement_AddControllerToNull() {
 		basisPrijsAbonnement_AddController = null;
 	}
@@ -138,12 +133,6 @@ public class BasisPrijsAbonnement_AddView {
 	public static void setTypeAboDao(TypeAbonnementDAO typeAboDao) {
 		BasisPrijsAbonnement_AddView.typeAboDao = typeAboDao;
 	}
-	public static HomeController getHomeController() {
-		return homeController;
-	}
-	public static void setHomeController(HomeController homeController) {
-		BasisPrijsAbonnement_AddView.homeController = homeController;
-	}
 	public static BasisPrijsAbonnement_AddController getBasisPrijsAbonnement_AddController() {
 		return basisPrijsAbonnement_AddController;
 	}
@@ -153,13 +142,3 @@ public class BasisPrijsAbonnement_AddView {
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
