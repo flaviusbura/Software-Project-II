@@ -161,7 +161,7 @@ public class BasisprijsAbonnementenDAO extends BaseDAO{
 		PreparedStatement prep = null;
 		ResultSet res = null;
 		double prijs = 0.00;
-		String sql = "SELECT prijs FROM basisprijs_abonnement WHERE basisprijs_abonnementId=?";
+		String sql = "SELECT prijs FROM basisprijs_abonnement WHERE type_abonnementId=?";
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");

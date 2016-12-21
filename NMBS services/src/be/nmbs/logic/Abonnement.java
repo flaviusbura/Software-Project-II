@@ -98,14 +98,13 @@ public class Abonnement {
 	 * @param kortingId
 	 * @param actief
 	 */
-	public Abonnement(int klantId, int gebruikerId, String route, Timestamp eindDatum, int prijsId, int kortingId,
+	public Abonnement(int klantId, int gebruikerId, String route, Timestamp eindDatum, int kortingId,
 			boolean actief) {
 
 		this.eindDatum = eindDatum;
 		this.klant_contactId = klantId;
 		this.gebruikerId = gebruikerId;
 		this.route = route;
-		this.prijsId = prijsId;
 		this.kortingId = kortingId;
 		this.actief = actief;
 	}
