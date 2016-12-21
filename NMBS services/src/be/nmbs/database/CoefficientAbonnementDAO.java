@@ -152,5 +152,7 @@ public class CoefficientAbonnementDAO extends BaseDAO {
 			}
 		}
 	}
+	
+	
 
 }

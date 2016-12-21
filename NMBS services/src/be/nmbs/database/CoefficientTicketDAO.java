@@ -116,7 +116,7 @@ public class CoefficientTicketDAO extends BaseDAO {
 	public double getCoefficient_ById(int id) {
 		PreparedStatement prep = null;
 		ResultSet res = null;
-		double coefficient = 0.00;
+		double coefficient = 0.5;
 		String sql = "SELECT coefficient FROM coefficient_ticket WHERE type_ticketId=?";
 		try {
 			if (getConnection().isClosed()) {
@@ -130,9 +130,45 @@ public class CoefficientTicketDAO extends BaseDAO {
 			while (res.next()) {
 
 				coefficient = res.getDouble("coefficient");
-
+				System.out.println(res.getDouble("coefficient"));
 			}
 			return coefficient;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+				if (res != null)
+					res.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
+	
+	public int getCoefficientIdByTypeId(int id) {
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		int coefficientId = 0;
+		String sql = "SELECT coefficient_ticketId FROM coefficient_ticket WHERE type_ticketId=?";
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+
+			prep.setInt(1, id);
+			res = prep.executeQuery();
+
+			while (res.next()) {
+
+				coefficientId = res.getInt("coefficient_ticketId");
+
+			}
+			return coefficientId;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException(e.getMessage());

@@ -151,5 +151,44 @@ public class BasisprijsTicketDAO extends BaseDAO{
 			}
 		}
 	}
+	
+	public int getBasisPrijsIdbyTypeId(int id) {
+		
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		int prijsid = 0;
+		String sql = "SELECT basisprijs_id FROM basisprijs_ticket WHERE type_ticketId=?";
+		
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+
+			prep.setInt(1, id);
+			res = prep.executeQuery();
+
+			while (res.next()) {
+				
+				prijsid = res.getInt("basisprijs_id");
+				System.out.println("prijs id " + prijsid);
+			}
+			return prijsid;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+				if (res != null)
+					res.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
+
 
 }

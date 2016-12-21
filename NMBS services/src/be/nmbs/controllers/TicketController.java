@@ -16,8 +16,10 @@ import be.nmbs.database.CoefficientAbonnementDAO;
 import be.nmbs.database.CoefficientTicketDAO;
 import be.nmbs.database.KortingDAO;
 import be.nmbs.database.TicketDAO;
+import be.nmbs.database.TicketPrijsDAO;
 import be.nmbs.logic.Korting;
 import be.nmbs.logic.Prijs;
+import be.nmbs.logic.Prijs_ticket;
 import be.nmbs.logic.StationNMBS;
 import be.nmbs.logic.Ticket;
 import be.nmbs.logic.TypeAbonnement;
@@ -56,48 +58,88 @@ public class TicketController {
 
 					//Prijs prijs = (Prijs) TicketView.getPrijzenlijst().getSelectedItem();
 					//int prijsId = prijs.getPrijsId();
-
+					TypeTicket typeTicket = (TypeTicket) TicketView.getTypeLijst().getSelectedItem();
+					int typeTicketId = typeTicket.getId();
+					System.out.println("typeticketid " + typeTicketId);
+					
+					BasisprijsTicketDAO bptdao = new BasisprijsTicketDAO();
+					int basisprijsid = bptdao.getBasisPrijsIdbyTypeId(typeTicketId);
+					System.out.println("basisprijsid " + basisprijsid);
+					
+					double basisprijs = bptdao.getPrijs_ById(typeTicketId);
+					System.out.println("basisprijs " + basisprijs);
+					
+					CoefficientTicketDAO coefdao = new CoefficientTicketDAO();
+					int coefid = coefdao.getCoefficientIdByTypeId(typeTicketId);
+					System.out.println("coefid " + coefid);
+					
+					double coef = coefdao.getCoefficient_ById(coefid);
+					System.out.println("coef " + coef);
+					
+					double totaal = basisprijs*coef;
+					System.out.println("totaal " + totaal);
+					
+					Prijs_ticket prijs_ticket = new Prijs_ticket(typeTicketId,coefid,basisprijsid,totaal);
+					TicketPrijsDAO ptdao = new TicketPrijsDAO();
+					
+					int idvoorprijs = ptdao.insert(prijs_ticket);
+					prijs_ticket.setPrijs_ticketid(idvoorprijs);
 					Korting korting = (Korting) TicketView.getKortinglijst().getSelectedItem();
 					int kortingId = korting.getId();
 					StationNMBS station = new StationNMBS((String) TicketView.getStationlijst().getSelectedItem());
 					int gebruikerId = View.getIngelogdGebruiker().getId();
-
-					Ticket ticket = new Ticket(startstation, soort, ts, klas, true, eindstation, omschrijving,kortingId, station, gebruikerId);
+					
+					Ticket ticket = new Ticket(startstation, soort, ts, klas, true, eindstation, omschrijving, prijs_ticket,kortingId, station, gebruikerId);
 					TicketDAO ticketdao = new TicketDAO();
 					ticketdao.insert(ticket);
 
 					/**
 					 * Variabelen declarern om de prijs berekening mogelijk
-					 * maken
+					 * maken	
 					 */
 					TypeTicket type = (TypeTicket) TicketView.getTypeLijst().getSelectedItem();
 					int typeId = type.getId();
-
-					BasisprijsTicketDAO bptDAO = new BasisprijsTicketDAO();
-					CoefficientTicketDAO ctDAO = new CoefficientTicketDAO();
-					KortingDAO kortingDAO = new KortingDAO();
-					double prijs2 = bptDAO.getPrijs_ById(typeId);
-					double coeff = ctDAO.getCoefficient_ById(typeId);
-					Korting korting2 = kortingDAO.getKorting(kortingId);
-					double kortingPercentage;
-					double kortingHoeveelheid = korting2.getHoeveelheid();
-					double totaalZonderKorting = 0;
-					double totaalMetKorting = 0;
+//
+//					BasisprijsTicketDAO bptDAO = new BasisprijsTicketDAO();
+//					CoefficientTicketDAO ctDAO = new CoefficientTicketDAO();
+//					KortingDAO kortingDAO = new KortingDAO();
+//					double prijs2 = bptDAO.getPrijs_ById(typeId);
+//					double coeff = ctDAO.getCoefficient_ById(typeId);
+//					Korting korting2 = kortingDAO.getKorting(kortingId);
+//					double kortingPercentage;
+//					double kortingHoeveelheid = korting2.getHoeveelheid();
+//					double totaalZonderKorting = 0;
+//					double totaalMetKorting = 0;
 					
 					/**
 					 * Prijs berekening
 					 */
-					totaalZonderKorting = (prijs2 * coeff);
-					kortingPercentage = (totaalZonderKorting / 100) * kortingHoeveelheid;
-					totaalMetKorting = totaalZonderKorting - kortingPercentage;
+//					totaalZonderKorting = (prijs2 * coeff);
+//					kortingPercentage = (totaalZonderKorting / 100) * kortingHoeveelheid;
+//					totaalMetKorting = totaalZonderKorting - kortingPercentage;
 
-					JOptionPane.showMessageDialog(view.getPanel(),
-							"Ticket aangemaakt" + "\n" + "Prijs is: €" + totaalMetKorting);
+//					JOptionPane.showMessageDialog(view.getPanel(),
+//							"Ticket aangemaakt" + "\n" + "Prijs is: €" + totaalMetKorting);
 					TicketView.clearFields();
 
 				} catch (ParseException e1) {
 					e1.printStackTrace();
 				}
+			}
+
+			private CoefficientTicketDAO CoefficientTicketDAO() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			private CoefficientAbonnementDAO CoefficientAbonnementDAO() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			private BasisprijsTicketDAO BasisprijsTicketDAO() {
+				// TODO Auto-generated method stub
+				return null;
 			}
 
 		});
