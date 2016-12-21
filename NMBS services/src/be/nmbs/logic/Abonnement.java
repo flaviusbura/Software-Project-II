@@ -22,9 +22,9 @@ public class Abonnement {
 	private Korting korting;
 	private boolean actief;
 	private int klant_contactId;
-	private int prijsId;
+	
 	private int kortingId;
-
+	private Prijs_abonnement prijsId;
 	/**
 	 * Deze constructor wordt gebruikt om een abonnement aan te maken en de datamembers gelijk te stellen aan de waarden 
 	 * op de databse.
@@ -66,7 +66,7 @@ public class Abonnement {
 	 * @param actief
 	 */
 	public Abonnement(int abonnementId, int klant_contactId, int gebruikerId, String route, Timestamp startDatum,
-			Timestamp eindDatum, int prijsId, int kortingId, boolean actief) {
+			Timestamp eindDatum, Prijs_abonnement prijsId, int kortingId, boolean actief) {
 		super();
 		this.abonnementId = abonnementId;
 		this.klant_contactId = klant_contactId;
@@ -101,6 +101,16 @@ public class Abonnement {
 	public Abonnement(int klantId, int gebruikerId, String route, Timestamp eindDatum, int kortingId,
 			boolean actief) {
 
+		this.eindDatum = eindDatum;
+		this.klant_contactId = klantId;
+		this.gebruikerId = gebruikerId;
+		this.route = route;
+		this.kortingId = kortingId;
+		this.actief = actief;
+	}
+
+	public Abonnement(int klantId, int gebruikerId, String route, Timestamp eindDatum, int kortingId,
+			Prijs_abonnement prijs_abonnement, boolean actief) {
 		this.eindDatum = eindDatum;
 		this.klant_contactId = klantId;
 		this.gebruikerId = gebruikerId;
@@ -144,13 +154,13 @@ public class Abonnement {
 	 * @return Een Timestampobject dat drie maanden extra heeft gekregen.
 	 */
 	public Timestamp getTimestampDrieMaandAbonnemant(Timestamp timestamp) {
-		System.out.println("1------1"+timestamp);
+		System.out.println("1------1  "+timestamp);
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(timestamp);
 		cal.add(Calendar.MONTH, 3);
 		cal.add(Calendar.SECOND, -1);
 		timestamp = new Timestamp(cal.getTime().getTime());
-		System.out.println("2------2"+timestamp);
+		System.out.println("2------2  "+timestamp);
 		return timestamp;
 	}
 	
@@ -196,6 +206,14 @@ public class Abonnement {
 		cal.add(Calendar.SECOND, -1);
 		timestamp = new Timestamp(cal.getTime().getTime());
 		return timestamp;
+	}
+
+	public Prijs_abonnement getPrijsId() {
+		return prijsId;
+	}
+
+	public void setPrijsId(Prijs_abonnement prijsId) {
+		this.prijsId = prijsId;
 	}
 
 	public Klant getKlant() {
@@ -316,14 +334,4 @@ public class Abonnement {
 	public void setKortingId(int kortingId) {
 		this.kortingId = kortingId;
 	}
-
-	public void setPrijsId(int prijsId) {
-		this.prijsId = prijsId;
-	}
-
-	public int getPrijsId() {
-
-		return prijsId;
-	}
-
 }

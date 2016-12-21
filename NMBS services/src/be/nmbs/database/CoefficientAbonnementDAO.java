@@ -121,7 +121,7 @@ public class CoefficientAbonnementDAO extends BaseDAO {
 		PreparedStatement prep = null;
 		ResultSet res = null;
 		double coefficient = 0.00;
-		String sql = "SELECT Coefficient FROM coefficient_abonnement WHERE type_abonnementId=?";
+		String sql = "SELECT Coefficient FROM coefficient_abonnement WHERE coefficient_abonnementId=?";
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
@@ -134,7 +134,7 @@ public class CoefficientAbonnementDAO extends BaseDAO {
 			while (res.next()) {
 
 				coefficient = res.getDouble("coefficient");
-
+				System.out.println("coefficient= " +res.getDouble("coefficient"));
 			}
 			return coefficient;
 		} catch (SQLException e) {
@@ -152,7 +152,39 @@ public class CoefficientAbonnementDAO extends BaseDAO {
 			}
 		}
 	}
-	
-	
+	public int getCoefficientIdByTypeId(int id) {
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		int coefficientId = 0;
+		String sql = "SELECT coefficient_abonnementId FROM coefficient_abonnement WHERE type_abonnementId=?";
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
 
+			prep.setInt(1, id);
+			res = prep.executeQuery();
+
+			while (res.next()) {
+
+				coefficientId = res.getInt("coefficient_abonnementId");
+
+			}
+			return coefficientId;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+				if (res != null)
+					res.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
 }

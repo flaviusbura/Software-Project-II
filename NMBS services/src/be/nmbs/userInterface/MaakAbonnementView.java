@@ -224,12 +224,13 @@ public class MaakAbonnementView {
 		txtEindDatum.setText(strDate);
 		tPanel.add(txtEindDatum, c);
 		
-		
+		/*
 		ArrayList<Prijs> allPrijzen = prijsDao.getAll();
 		prijzenLijst = new JComboBox<>();
 		for (Prijs prijs : allPrijzen) {
 			prijzenLijst.addItem(prijs);
 		}
+		*/
 		/*
 		lblPrijs = new JLabel("Prijs ");
 		c.fill = GridBagConstraints.HORIZONTAL;
