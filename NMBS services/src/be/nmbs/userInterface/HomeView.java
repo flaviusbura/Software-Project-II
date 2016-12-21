@@ -109,9 +109,8 @@ public class HomeView {
 		boeteButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				BoeteView.setBoeteControllerToNull();
-				BoeteView.setHomeControllerToNull();
-				view.changeView(BoeteView.initialize(view));
+				BoeteView newView = new BoeteView();
+				view.changeView(newView.initialize(view));
 			}
 		});
 

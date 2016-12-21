@@ -168,8 +168,7 @@ public class BoeteDAO extends BaseDAO {
 		}
 	}
 	
-	public int updateBetaaldByBoeteId(int boeteId, boolean betaald) {
-		
+	public boolean updateBetaaldByBoeteId(int boeteId, boolean betaald) {
 		PreparedStatement prep = null;
 		String sql = "UPDATE boeten SET betaald=? WHERE boeten_id=?";
 		try {
@@ -179,11 +178,11 @@ public class BoeteDAO extends BaseDAO {
 			prep = getConnection().prepareStatement(sql);
 			prep.setInt(2, boeteId);
 			prep.setBoolean(1, betaald);
-			return prep.executeUpdate();
+			prep.executeUpdate();
 			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)
