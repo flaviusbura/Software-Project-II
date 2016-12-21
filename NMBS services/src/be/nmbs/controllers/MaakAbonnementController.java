@@ -8,18 +8,25 @@ import be.nmbs.userInterface.View;
 import java.sql.Timestamp;
 
 import be.nmbs.database.CoefficientAbonnementDAO;
+import be.nmbs.database.CoefficientTicketDAO;
 import be.nmbs.database.BasisprijsAbonnementenDAO;
+import be.nmbs.database.BasisprijsTicketDAO;
 import be.nmbs.database.AbonnementDAO;
+import be.nmbs.database.AbonnementPrijsDAO;
 import be.nmbs.database.AbonnementTypeDAO;
 import be.nmbs.database.KlantDAO;
 import be.nmbs.database.KortingDAO;
+import be.nmbs.database.TicketPrijsDAO;
 import be.nmbs.logic.Abonnement;
 import be.nmbs.logic.Gebruiker;
 import be.nmbs.logic.Klant;
 import be.nmbs.logic.Korting;
 import be.nmbs.logic.Prijs;
+import be.nmbs.logic.Prijs_abonnement;
+import be.nmbs.logic.StationNMBS;
 import be.nmbs.logic.TypeAbonnement;
 import be.nmbs.userInterface.MaakAbonnementView;
+import be.nmbs.userInterface.TicketView;
 import be.nmbs.userInterface.HomeView;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -48,11 +55,7 @@ public class MaakAbonnementController {
 					Date date2 = format.parse(eindDatum);
 					Long tijd2 = date2.getTime();
 					Timestamp ts2 = new Timestamp(tijd2);
-					/*
-					 * Prijs prijs = (Prijs)
-					 * MaakAbonnementView.getPrijzenLijst().getSelectedItem();
-					 * int prijsId = prijs.getPrijsId();
-					 */
+
 					Korting korting = (Korting) MaakAbonnementView.getKortingLijst().getSelectedItem();
 					int kortingId = korting.getId();
 					AbonnementTypeDAO typeDAO = new AbonnementTypeDAO();
@@ -61,34 +64,6 @@ public class MaakAbonnementController {
 						int contactID = Integer
 								.valueOf((String) MaakAbonnementView.getTable().getModel().getValueAt(row, 0));
 
-						Abonnement abonnement = new Abonnement(contactID, gebruiker.getId(), route, ts2, kortingId,
-								true);
-
-						AbonnementDAO aboDao = new AbonnementDAO();
-						String keuze = (String) MaakAbonnementView.getCombo().getSelectedItem();
-
-						if (keuze == "3 maanden") {
-							aboDao.insertDrieMaandAbonnement(abonnement, startDatum);
-							// JOptionPane.showMessageDialog(view.getPanel(),
-							// "Abonnement aangemaakt voor drie maanden");
-
-						} else if (keuze == "6 maanden") {
-							aboDao.insertZesMaandAbonnement(abonnement, startDatum);
-							// JOptionPane.showMessageDialog(view.getPanel(),
-							// "Abonnement aangemaakt voor zes maanden");
-
-						} else if (keuze == "9 maanden") {
-							aboDao.insertNegenMaandAbonnement(abonnement, startDatum);
-							// JOptionPane.showMessageDialog(view.getPanel(),
-							// "Abonnement aangemaakt voor negen maanden");
-
-						} else if (keuze == "12 maanden") {
-							aboDao.insertEenJaarAbonnement(abonnement, startDatum);
-							// JOptionPane.showMessageDialog(view.getPanel(),
-							// "Abonnement aangemaakt voor een jaar");
-
-						}
-
 						// typeDAO.insertTypeAbonnement(aboDao.getIdByStartDatum(startDatum),
 						// keuze);
 						/**
@@ -96,27 +71,66 @@ public class MaakAbonnementController {
 						 * maken
 						 */
 						TypeAbonnement type = (TypeAbonnement) MaakAbonnementView.getTypeLijst().getSelectedItem();
-						int typeId= type.getId();
-						
 						BasisprijsAbonnementenDAO bpaDAO = new BasisprijsAbonnementenDAO();
 						CoefficientAbonnementDAO caDAO = new CoefficientAbonnementDAO();
 						KortingDAO kortingDAO = new KortingDAO();
-						double prijs2 = bpaDAO.getPrijs_ById(typeId);
-						double coeff = caDAO.getCoefficient_ById(typeId);
-						Korting korting2 = kortingDAO.getKorting(kortingId);
-						double kortingPercentage;
-						double kortingHoeveelheid = korting2.getHoeveelheid();
-						double totaalZonderKorting = 0;
-						double totaalMetKorting = 0;
+
+						int typeAbonnementId = type.getId();
+
+						int basisprijsid = bpaDAO.getBasisPrijsIdbyTypeId(typeAbonnementId);
+
+						double basisprijs = bpaDAO.getPrijs_ById(typeAbonnementId);
+
+						int coefid = caDAO.getCoefficientIdByTypeId(typeAbonnementId);
+						System.out.println("coefid: " + coefid);
+
+						double coef = caDAO.getCoefficient_ById(coefid);
+						System.out.println("coef: " + coef);
+
+						double totaal = basisprijs * coef;
+						System.out.println("totaal: " + totaal);
+
+						Prijs_abonnement prijs_abonnement = new Prijs_abonnement(typeAbonnementId, coefid, basisprijsid,
+								totaal);
+						Abonnement abonnement = new Abonnement(contactID, gebruiker.getId(), route, ts2, kortingId,
+								prijs_abonnement, true);
+						
+						AbonnementPrijsDAO apdao = new AbonnementPrijsDAO();
+
+						int idvoorprijs = apdao.insert(prijs_abonnement);
+						prijs_abonnement.setPrijs_abonnementid(idvoorprijs);
+						abonnement.setPrijsId(prijs_abonnement);
+						System.out.println("idvoorprijs: " + idvoorprijs);
+						System.out.println("Prijs abonnement ID: " + prijs_abonnement.getPrijs_abonnementid());
+						
+					
+
+						// System.out.println("abonnementid: " +
+						// abonnement.getPrijsAboId().getPrijs_abonnementid());
+						AbonnementDAO aboDao = new AbonnementDAO();
+						String keuze = (String) MaakAbonnementView.getCombo().getSelectedItem();
+
+						
+						if (keuze == "3 maanden") {
+							aboDao.insertDrieMaandAbonnement(abonnement, startDatum);
+
+						} else if (keuze == "6 maanden") {
+							aboDao.insertZesMaandAbonnement(abonnement, startDatum);
+
+						} else if (keuze == "9 maanden") {
+							aboDao.insertNegenMaandAbonnement(abonnement, startDatum);
+
+						} else if (keuze == "12 maanden") {
+							aboDao.insertEenJaarAbonnement(abonnement, startDatum);
+
+						}
 						/**
 						 * Prijs berekening
 						 */
-						totaalZonderKorting = (prijs2 * coeff);
-						kortingPercentage = (totaalZonderKorting / 100) * kortingHoeveelheid;
-						totaalMetKorting = totaalZonderKorting - kortingPercentage;
 
-						JOptionPane.showMessageDialog(view.getPanel(),
-								"Abonnement aangemaakt voor " + keuze + "\n" + "Prijs is: €" + totaalMetKorting);
+						// JOptionPane.showMessageDialog(view.getPanel(),
+						// "Abonnement aangemaakt voor " + keuze + "\n" + "Prijs
+						// is: €" + totaalMetKorting);
 
 					} catch (ArrayIndexOutOfBoundsException e2) {
 
