@@ -4,11 +4,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import be.nmbs.logic.Prijs_ticket;
 import be.nmbs.logic.StationNMBS;
 import be.nmbs.logic.Ticket;
+import be.nmbs.userInterface.View;
 
 /**
  * Deze klasse is een DAO. Hiermee kunnen er Ticket-objecten naar de de database 
@@ -96,7 +98,20 @@ public class TicketDAO extends BaseDAO{
 			prep = getConnection().prepareStatement(sql);
 			prep.setString(1, ticket.getStartStation().getNaam());
 			prep.setString(2, ticket.getSoort());
-			prep.setTimestamp(3, ticket.getTimestamp());
+			if(View.getIngelogdGebruiker().getUsername().equals("offline"))
+			{
+		
+				Long datumLong = ticket.getTimestamp().getTime();
+				Timestamp timestamp = new Timestamp(datumLong);
+				System.out.println("datum timestamp insert dao " + timestamp);
+				String S = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss").format(timestamp);
+				System.out.println(S);
+				prep.setString(3, S);
+			}
+			else
+			{
+			prep.setTimestamp(3, ticket.getTimestampNow());
+			}
 			prep.setInt(4, ticket.getKlas());
 			prep.setBoolean(5, ticket.isActief());
 			prep.setString(6, ticket.getEindStation().getNaam());
