@@ -47,10 +47,10 @@ public class AbonnementPrijsDAO extends BaseDAO{
 		}
 	}
 	
-	public Prijs_abonnement getPrijs_ticketObjectOpPrijs_ticketId(int id) {
+	public Prijs_abonnement getPrijs_AbonnementObjectOpPrijs_AbonnementId(int id) {
 		PreparedStatement prep = null;
 		ResultSet res = null;
-		String sql = "SELECT * FROM prijs_abonnement where prijs_abonnementtid = ?";
+		String sql = "SELECT * FROM prijs_abonnement where prijs_abonnementid = ?";
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");

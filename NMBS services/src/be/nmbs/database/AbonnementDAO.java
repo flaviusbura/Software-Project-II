@@ -26,7 +26,7 @@ public class AbonnementDAO extends BaseDAO {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
 			}
-			
+
 			prep = getConnection().prepareStatement(sql);
 			prep.setInt(1, abonnement.getKlant_contactId());
 			prep.setInt(2, abonnement.getGebruikerId());
@@ -34,9 +34,9 @@ public class AbonnementDAO extends BaseDAO {
 			prep.setTimestamp(4, startDatum);
 			prep.setTimestamp(5, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getEindDatum()));
 			prep.setInt(6, abonnement.getKortingId());
-			
-			System.out.println("Prijs ID DAO" +abonnement.getPrijsId());
-			System.out.println("Prijs abonnement ID DAO:"+abonnement.getPrijsId().getPrijs_abonnementid());
+
+			System.out.println("Prijs ID DAO" + abonnement.getPrijsId());
+			System.out.println("Prijs abonnement ID DAO:" + abonnement.getPrijsId().getPrijs_abonnementid());
 			prep.setInt(7, abonnement.getPrijsId().getPrijs_abonnementid());
 			prep.setBoolean(8, abonnement.isActief());
 
@@ -165,7 +165,7 @@ public class AbonnementDAO extends BaseDAO {
 			prep = getConnection().prepareStatement(sql);
 
 			abonnement.getEindDatum().setTime(abonnement.getEindDatum().getTime() + (1 * 1000));
-			
+
 			prep.setTimestamp(1, abonnement.getEindDatum());
 			prep.setTimestamp(2, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getEindDatum()));
 			prep.setInt(3, abonnement.getAbonnementId());
@@ -426,7 +426,7 @@ public class AbonnementDAO extends BaseDAO {
 		PreparedStatement prep = null;
 		ResultSet res = null;
 		String sql = "SELECT * FROM abonnement WHERE abonnement_id=?";
-		
+
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
@@ -445,14 +445,14 @@ public class AbonnementDAO extends BaseDAO {
 				Timestamp startDatum = res.getTimestamp("start_datum");
 				Timestamp eindDatum = res.getTimestamp("eind_datum");
 				int prijsId = res.getInt("prijs_id");
-				prijsAbonnement = apDao.getPrijs_ticketObjectOpPrijs_ticketId(prijsId);
+				//prijsAbonnement = apDao.getPrijs_AbonnementObjectOpPrijs_AbonnementId(prijsId);
 				int kortingId = res.getInt("korting_id");
 				boolean actief = res.getBoolean("actief");
 
-				abo = new Abonnement(abonnementId, klantContactId, gebruikerId, route, startDatum,
-								eindDatum, prijsAbonnement, kortingId, actief);
-				System.out.println("---"+abo);
-				
+				abo = new Abonnement(abonnementId, klantContactId, gebruikerId, route, startDatum, eindDatum,
+						prijsId, kortingId, actief);
+				System.out.println("---" + abo);
+
 			}
 			return abo;
 		} catch (SQLException e) {
@@ -482,7 +482,7 @@ public class AbonnementDAO extends BaseDAO {
 			prep = getConnection().prepareStatement(sql);
 			res = prep.executeQuery();
 			lijst = new ArrayList<Abonnement>();
-			
+
 			Prijs_abonnement prijsAbonnement = new Prijs_abonnement();
 			AbonnementPrijsDAO apDao = new AbonnementPrijsDAO();
 			while (res.next()) {
@@ -493,12 +493,14 @@ public class AbonnementDAO extends BaseDAO {
 				Timestamp startDatum = res.getTimestamp("start_datum");
 				Timestamp eindDatum = res.getTimestamp("eind_datum");
 				int prijsId = res.getInt("prijs_id");
-				prijsAbonnement = apDao.getPrijs_ticketObjectOpPrijs_ticketId(prijsId);
+				System.out.println("prijsId: " + prijsId);
+				//prijsAbonnement = apDao.getPrijs_AbonnementObjectOpPrijs_AbonnementId(prijsId);
+
 				int kortingId = res.getInt("korting_id");
 				boolean actief = res.getBoolean("actief");
 
 				Abonnement abonnement = new Abonnement(abonnementId, klantContactId, gebruikerId, route, startDatum,
-						eindDatum, prijsAbonnement, kortingId, actief);
+						eindDatum, prijsId, kortingId, actief);
 
 				lijst.add((abonnement));
 			}
@@ -554,8 +556,8 @@ public class AbonnementDAO extends BaseDAO {
 			}
 		}
 	}
-	
-	public ArrayList<Abonnement> getAllBetweenDates(Timestamp date1, Timestamp date2){
+
+	public ArrayList<Abonnement> getAllBetweenDates(Timestamp date1, Timestamp date2) {
 		PreparedStatement prep = null;
 		ResultSet res = null;
 		Abonnement abo;
@@ -566,34 +568,34 @@ public class AbonnementDAO extends BaseDAO {
 				throw new IllegalStateException("Unexpected error!");
 			}
 			prep = getConnection().prepareStatement(sql);
-			//dit later veranderen naar getKlantContactId();
+			// dit later veranderen naar getKlantContactId();
 			prep.setTimestamp(1, date1);
 			prep.setTimestamp(2, date2);
 			Prijs_abonnement prijsAbonnement = new Prijs_abonnement();
 			AbonnementPrijsDAO apDao = new AbonnementPrijsDAO();
 			res = prep.executeQuery();
 			while (res.next()) {
-				int abonnementId=res.getInt("abbonement_id");
+				int abonnementId = res.getInt("abbonement_id");
 				int klantContactId = res.getInt("klant_contact_id");
 				int gebruikerId = res.getInt("gebruiker_id");
-				String route=res.getString("route");
+				String route = res.getString("route");
 				Timestamp startDatum = res.getTimestamp("start_datum");
 				Timestamp eindDatum = res.getTimestamp("eind_datum");
-				int prijsId=res.getInt("prijs_id");
-				prijsAbonnement = apDao.getPrijs_ticketObjectOpPrijs_ticketId(prijsId);
-				int kortingId =res.getInt("korting_id");
-				boolean actief=res.getBoolean("actief");
-				
+				int prijsId = res.getInt("prijs_id");
+				prijsAbonnement = apDao.getPrijs_AbonnementObjectOpPrijs_AbonnementId(prijsId);
+				int kortingId = res.getInt("korting_id");
+				boolean actief = res.getBoolean("actief");
+
 				KortingDAO kortingdao = new KortingDAO();
 				Korting korting = kortingdao.getKorting(kortingId);
 				KlantDAO klantdao = new KlantDAO();
 				Klant klant = klantdao.getKlantById(klantContactId);
 				PrijsDAO prijsdao = new PrijsDAO();
 				Prijs prijs = prijsdao.getPrijsByPrijsId(prijsId);
-				
-				 abo = new Abonnement(abonnementId, klant, gebruikerId, route, startDatum, 
-						 eindDatum, prijs, korting, actief);
-				 list.add(abo);
+
+				abo = new Abonnement(abonnementId, klant, gebruikerId, route, startDatum, eindDatum, prijs, korting,
+						actief);
+				list.add(abo);
 			}
 			return list;
 		} catch (SQLException e) {
@@ -610,45 +612,43 @@ public class AbonnementDAO extends BaseDAO {
 			}
 		}
 	}
-	
-	
-	
-	public ArrayList<Abonnement> getAllOnDate(Timestamp date){
+
+	public ArrayList<Abonnement> getAllOnDate(Timestamp date) {
 		PreparedStatement prep = null;
 		ResultSet res = null;
 		Abonnement abo;
-		ArrayList<Abonnement> list= new ArrayList<Abonnement>();
+		ArrayList<Abonnement> list = new ArrayList<Abonnement>();
 		String sql = "SELECT * FROM abonnement WHERE start_datum=?";
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
 			}
 			prep = getConnection().prepareStatement(sql);
-			//dit later veranderen naar getKlantContactId();
+			// dit later veranderen naar getKlantContactId();
 			prep.setTimestamp(1, date);
 
 			res = prep.executeQuery();
 			while (res.next()) {
-				int abonnementId=res.getInt("abbonement_id");
+				int abonnementId = res.getInt("abbonement_id");
 				int klantContactId = res.getInt("klant_contact_id");
 				int gebruikerId = res.getInt("gebruiker_id");
-				String route=res.getString("route");
+				String route = res.getString("route");
 				Timestamp startDatum = res.getTimestamp("start_datum");
 				Timestamp eindDatum = res.getTimestamp("eind_datum");
-				int prijsId=res.getInt("prijs_id");
-				int kortingId =res.getInt("korting_id");
-				boolean actief=res.getBoolean("actief");
-				
+				int prijsId = res.getInt("prijs_id");
+				int kortingId = res.getInt("korting_id");
+				boolean actief = res.getBoolean("actief");
+
 				KortingDAO kortingdao = new KortingDAO();
 				Korting korting = kortingdao.getKorting(kortingId);
 				KlantDAO klantdao = new KlantDAO();
 				Klant klant = klantdao.getKlantById(klantContactId);
 				PrijsDAO prijsdao = new PrijsDAO();
 				Prijs prijs = prijsdao.getPrijsByPrijsId(prijsId);
-				
-				 abo = new Abonnement(abonnementId, klant, gebruikerId, route, startDatum, 
-						 eindDatum, prijs, korting, actief);
-				 list.add(abo);
+
+				abo = new Abonnement(abonnementId, klant, gebruikerId, route, startDatum, eindDatum, prijs, korting,
+						actief);
+				list.add(abo);
 			}
 			return list;
 		} catch (SQLException e) {
@@ -665,5 +665,5 @@ public class AbonnementDAO extends BaseDAO {
 			}
 		}
 	}
-	
+
 }
