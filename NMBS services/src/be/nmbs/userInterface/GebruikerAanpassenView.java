@@ -152,7 +152,7 @@ public class GebruikerAanpassenView {
 					g.setUsername(usernameTextField.getText());
 					
 					if (!passwordField.getPassword().toString().isEmpty()) {
-						g.setWachtwoord(gebruikerAanpassenController.hashPassword(passwordField.getPassword().toString()));
+						g.setWachtwoord(gebruikerAanpassenController.hashPassword(String.valueOf(passwordField.getPassword())));
 					} else {
 						g.setWachtwoord(gebruiker.getWachtwoord());
 					}
