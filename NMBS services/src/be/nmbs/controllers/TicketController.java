@@ -51,13 +51,11 @@ public class TicketController {
 					int klas = Integer.parseInt(TicketView.getTxtKlasse().getText());
 
 					StationNMBS eindstation = new StationNMBS(
-							(String) TicketView.getEindstationlijst().getSelectedItem());
-					// String eindstation = (String)
-					// TicketView.getEindstationlijst().getSelectedItem();
+					(String) TicketView.getEindstationlijst().getSelectedItem());
+				
 					String omschrijving = TicketView.getTxtOmschrijving().getText();
 
-					//Prijs prijs = (Prijs) TicketView.getPrijzenlijst().getSelectedItem();
-					//int prijsId = prijs.getPrijsId();
+				
 					TypeTicket typeTicket = (TypeTicket) TicketView.getTypeLijst().getSelectedItem();
 					int typeTicketId = typeTicket.getId();
 					System.out.println("typeticketid " + typeTicketId);
@@ -100,26 +98,7 @@ public class TicketController {
 					TypeTicket type = (TypeTicket) TicketView.getTypeLijst().getSelectedItem();
 					int typeId = type.getId();
 //
-//					BasisprijsTicketDAO bptDAO = new BasisprijsTicketDAO();
-//					CoefficientTicketDAO ctDAO = new CoefficientTicketDAO();
-//					KortingDAO kortingDAO = new KortingDAO();
-//					double prijs2 = bptDAO.getPrijs_ById(typeId);
-//					double coeff = ctDAO.getCoefficient_ById(typeId);
-//					Korting korting2 = kortingDAO.getKorting(kortingId);
-//					double kortingPercentage;
-//					double kortingHoeveelheid = korting2.getHoeveelheid();
-//					double totaalZonderKorting = 0;
-//					double totaalMetKorting = 0;
-					
-					/**
-					 * Prijs berekening
-					 */
-//					totaalZonderKorting = (prijs2 * coeff);
-//					kortingPercentage = (totaalZonderKorting / 100) * kortingHoeveelheid;
-//					totaalMetKorting = totaalZonderKorting - kortingPercentage;
-
-//					JOptionPane.showMessageDialog(view.getPanel(),
-//							"Ticket aangemaakt" + "\n" + "Prijs is: €" + totaalMetKorting);
+//				
 					TicketView.clearFields();
 
 				} catch (ParseException e1) {
