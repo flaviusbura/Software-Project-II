@@ -60,7 +60,7 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 				Timestamp timestamp = new Timestamp(1);
 				if (View.getIngelogdGebruiker().getUsername().equals("offline")) {
 
-					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
 					Date parsedDate;
 					try {
 
@@ -133,6 +133,31 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 					timestamp = res.getTimestamp("datum");
 				}
 				
+				if(View.getIngelogdGebruiker().getUsername().equals("offline"))
+				{
+//					Long datumLong = res.getLong("datum");
+//					System.out.println(datumLong);
+//					timestamp = new Timestamp(datumLong);
+//					System.out.println(timestamp);
+					  SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+					    Date parsedDate;
+						try {
+							
+						  parsedDate = dateFormat.parse(res.getString("Datum"));
+						  timestamp = new Timestamp(parsedDate.getTime());
+						  
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					
+				}
+				else
+				{
+					 timestamp = res.getTimestamp("datum");
+					 System.out.println(timestamp);
+				}
+				
 				boolean actief = res.getBoolean("actief");
 
 				VerlorenVoorwerp voorwerp = new VerlorenVoorwerp(id, station, omschrijving, type, timestamp, actief);
@@ -171,6 +196,7 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 			res = prep.executeQuery();
 			lijst = new ArrayList<VerlorenVoorwerp>();
 
+			
 			while (res.next()) {
 				int id = res.getInt("voorwerp_id");
 				String stationNaam = res.getString("station");
@@ -178,14 +204,28 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 				station.setNaam(stationNaam);
 				String omschrijving = res.getString("omschrijving");
 				String type = res.getString("type");
-				Timestamp timestamp;
+				Timestamp timestamp = null;
 
-				if (View.getIngelogdGebruiker().getUsername().equals("offline")) {
-					timestamp = new Timestamp(res.getLong("datum"));
-				} else {
-					timestamp = res.getTimestamp("datum");
+				if(View.getIngelogdGebruiker().getUsername().equals("offline"))
+				{
+					  SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+					    Date parsedDate;
+						try {
+							
+						  parsedDate = dateFormat.parse(res.getString("Datum"));
+						  timestamp = new Timestamp(parsedDate.getTime());
+						  
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					
 				}
-				
+				else
+				{
+					 timestamp = res.getTimestamp("datum");
+					 System.out.println(timestamp);
+				}
 				boolean actief = res.getBoolean("actief");
 
 				VerlorenVoorwerp voorwerp = new VerlorenVoorwerp(id, station, omschrijving, type, timestamp, actief);
@@ -282,7 +322,7 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 				Long datumLong = voorwerp.getTimestamp().getTime();
 				Timestamp timestamp = new Timestamp(datumLong);
 				System.out.println("datum timestamp insert dao " + timestamp);
-				String S = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(timestamp);
+				String S = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss").format(timestamp);
 				prep.setString(4, S);
 			} else {
 				prep.setTimestamp(4, voorwerp.getTimestampNow());

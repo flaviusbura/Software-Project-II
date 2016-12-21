@@ -23,10 +23,11 @@ import be.nmbs.controllers.HomeController;
 import be.nmbs.controllers.MaakAbonnementController;
 import be.nmbs.database.PrijsDAO;
 import be.nmbs.database.StationDAO;
+import be.nmbs.database.TypeAbonnementDAO;
 import be.nmbs.logic.Prijs;
 import be.nmbs.logic.StationNMBS;
+import be.nmbs.logic.TypeAbonnement;
 import be.nmbs.database.KlantDAO;
-import be.nmbs.database.Klant_adresDAO;
 import be.nmbs.logic.Klant;
 
 import be.nmbs.database.KortingDAO;
@@ -57,6 +58,11 @@ public class MaakAbonnementView {
 	private static JComboBox<Prijs> prijzenLijst;
 	private static PrijsDAO prijsDao = new PrijsDAO();
 
+	private static JLabel lblType;
+	private static JComboBox<?> cbxType;
+	private static JComboBox<TypeAbonnement> typeLijst;
+	private static TypeAbonnementDAO typeDao = new TypeAbonnementDAO();
+	
 	private static JLabel lblKorting;
 	private static JComboBox<?> cbxKorting;
 	private static KortingDAO kortingDao = new KortingDAO();
@@ -260,19 +266,36 @@ public class MaakAbonnementView {
 		c.gridx = 2;
 		c.gridy = 7;
 		tPanel.add(combo, c);
+		
+		ArrayList<TypeAbonnement> allType = typeDao.getAll();
+		typeLijst = new JComboBox<>();
+		for (TypeAbonnement typeAbonnement : allType) {
+			typeLijst.addItem(typeAbonnement);
+		}
 
+		lblType = new JLabel("Type ");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 8;
+		tPanel.add(lblType, c);
+
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 8;
+		tPanel.add(typeLijst, c);
+		
 		// buttons
 		goBackToHome = new JButton("Back");
 		new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
-		c.gridy = 8;
+		c.gridy = 9;
 		tPanel.add(goBackToHome, c);
 		maakAbonnement = new JButton("Maak Abonnement");
 		new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
-		c.gridy = 8;
+		c.gridy = 9;
 		tPanel.add(maakAbonnement, c);
 
 		maakAbonnementController = new MaakAbonnementController(view);

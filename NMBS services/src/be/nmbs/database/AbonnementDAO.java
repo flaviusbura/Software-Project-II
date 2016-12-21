@@ -14,6 +14,7 @@ import be.nmbs.database.KortingDAO;
 import be.nmbs.database.PrijsDAO;
 import be.nmbs.logic.Klant;
 import be.nmbs.logic.Prijs;
+import be.nmbs.logic.Prijs_abonnement;
 
 public class AbonnementDAO extends BaseDAO {
 
@@ -25,14 +26,18 @@ public class AbonnementDAO extends BaseDAO {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
 			}
+			
 			prep = getConnection().prepareStatement(sql);
 			prep.setInt(1, abonnement.getKlant_contactId());
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
 			prep.setTimestamp(4, startDatum);
 			prep.setTimestamp(5, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getEindDatum()));
-			prep.setInt(6, abonnement.getPrijsId());
-			prep.setInt(7, abonnement.getKortingId());
+			prep.setInt(6, abonnement.getKortingId());
+			
+			System.out.println("Prijs ID DAO" +abonnement.getPrijsId());
+			System.out.println("Prijs abonnement ID DAO:"+abonnement.getPrijsId().getPrijs_abonnementid());
+			prep.setInt(7, abonnement.getPrijsId().getPrijs_abonnementid());
 			prep.setBoolean(8, abonnement.isActief());
 
 			return prep.executeUpdate();
@@ -64,8 +69,8 @@ public class AbonnementDAO extends BaseDAO {
 			prep.setString(3, abonnement.getRoute());
 			prep.setTimestamp(4, startDatum);
 			prep.setTimestamp(5, abonnement.getTimestampZesMaandAbonnemant(abonnement.getEindDatum()));
-			prep.setInt(6, abonnement.getPrijsId());
-			prep.setInt(7, abonnement.getKortingId());
+			prep.setInt(6, abonnement.getKortingId());
+			prep.setInt(7, abonnement.getPrijsId().getPrijs_abonnementid());
 			prep.setBoolean(8, abonnement.isActief());
 
 			return prep.executeUpdate();
@@ -97,8 +102,8 @@ public class AbonnementDAO extends BaseDAO {
 			prep.setString(3, abonnement.getRoute());
 			prep.setTimestamp(4, startDatum);
 			prep.setTimestamp(5, abonnement.getTimestampNegenMaandAbonnemant(abonnement.getEindDatum()));
-			prep.setInt(6, abonnement.getPrijsId());
-			prep.setInt(7, abonnement.getKortingId());
+			prep.setInt(6, abonnement.getKortingId());
+			prep.setInt(7, abonnement.getPrijsId().getPrijs_abonnementid());
 			prep.setBoolean(8, abonnement.isActief());
 
 			return prep.executeUpdate();
@@ -130,8 +135,8 @@ public class AbonnementDAO extends BaseDAO {
 			prep.setString(3, abonnement.getRoute());
 			prep.setTimestamp(4, startDatum);
 			prep.setTimestamp(5, abonnement.getTimestampJaarAbonnemant(abonnement.getEindDatum()));
-			prep.setInt(6, abonnement.getPrijsId());
-			prep.setInt(7, abonnement.getKortingId());
+			prep.setInt(6, abonnement.getKortingId());
+			prep.setInt(7, abonnement.getPrijsId().getPrijs_abonnementid());
 			prep.setBoolean(8, abonnement.isActief());
 
 			return prep.executeUpdate();
@@ -430,7 +435,8 @@ public class AbonnementDAO extends BaseDAO {
 
 			prep.setInt(1, id);
 			res = prep.executeQuery();
-			
+			Prijs_abonnement prijsAbonnement = new Prijs_abonnement();
+			AbonnementPrijsDAO apDao = new AbonnementPrijsDAO();
 			while (res.next()) {
 				int abonnementId = res.getInt("abonnement_id");
 				int klantContactId = res.getInt("klant_contact_id");
@@ -439,11 +445,12 @@ public class AbonnementDAO extends BaseDAO {
 				Timestamp startDatum = res.getTimestamp("start_datum");
 				Timestamp eindDatum = res.getTimestamp("eind_datum");
 				int prijsId = res.getInt("prijs_id");
+				prijsAbonnement = apDao.getPrijs_ticketObjectOpPrijs_ticketId(prijsId);
 				int kortingId = res.getInt("korting_id");
 				boolean actief = res.getBoolean("actief");
 
 				abo = new Abonnement(abonnementId, klantContactId, gebruikerId, route, startDatum,
-								eindDatum, prijsId, kortingId, actief);
+								eindDatum, prijsAbonnement, kortingId, actief);
 				System.out.println("---"+abo);
 				
 			}
@@ -475,9 +482,9 @@ public class AbonnementDAO extends BaseDAO {
 			prep = getConnection().prepareStatement(sql);
 			res = prep.executeQuery();
 			lijst = new ArrayList<Abonnement>();
-			// public Abonnement(int abonnementId, int klant_contactId, int
-			// gebruikerId, String route, Timestamp startDatum,
-			// Timestamp eindDatum, int prijsId, int kortingId, boolean actief)
+			
+			Prijs_abonnement prijsAbonnement = new Prijs_abonnement();
+			AbonnementPrijsDAO apDao = new AbonnementPrijsDAO();
 			while (res.next()) {
 				int abonnementId = res.getInt("abonnement_id");
 				int klantContactId = res.getInt("klant_contact_id");
@@ -486,11 +493,12 @@ public class AbonnementDAO extends BaseDAO {
 				Timestamp startDatum = res.getTimestamp("start_datum");
 				Timestamp eindDatum = res.getTimestamp("eind_datum");
 				int prijsId = res.getInt("prijs_id");
+				prijsAbonnement = apDao.getPrijs_ticketObjectOpPrijs_ticketId(prijsId);
 				int kortingId = res.getInt("korting_id");
 				boolean actief = res.getBoolean("actief");
 
 				Abonnement abonnement = new Abonnement(abonnementId, klantContactId, gebruikerId, route, startDatum,
-						eindDatum, prijsId, kortingId, actief);
+						eindDatum, prijsAbonnement, kortingId, actief);
 
 				lijst.add((abonnement));
 			}
@@ -561,7 +569,8 @@ public class AbonnementDAO extends BaseDAO {
 			//dit later veranderen naar getKlantContactId();
 			prep.setTimestamp(1, date1);
 			prep.setTimestamp(2, date2);
-
+			Prijs_abonnement prijsAbonnement = new Prijs_abonnement();
+			AbonnementPrijsDAO apDao = new AbonnementPrijsDAO();
 			res = prep.executeQuery();
 			while (res.next()) {
 				int abonnementId=res.getInt("abbonement_id");
@@ -571,6 +580,7 @@ public class AbonnementDAO extends BaseDAO {
 				Timestamp startDatum = res.getTimestamp("start_datum");
 				Timestamp eindDatum = res.getTimestamp("eind_datum");
 				int prijsId=res.getInt("prijs_id");
+				prijsAbonnement = apDao.getPrijs_ticketObjectOpPrijs_ticketId(prijsId);
 				int kortingId =res.getInt("korting_id");
 				boolean actief=res.getBoolean("actief");
 				
@@ -600,6 +610,9 @@ public class AbonnementDAO extends BaseDAO {
 			}
 		}
 	}
+	
+	
+	
 	public ArrayList<Abonnement> getAllOnDate(Timestamp date){
 		PreparedStatement prep = null;
 		ResultSet res = null;
@@ -652,4 +665,5 @@ public class AbonnementDAO extends BaseDAO {
 			}
 		}
 	}
+	
 }

@@ -6,15 +6,27 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import be.nmbs.userInterface.View;
 import java.sql.Timestamp;
+
+import be.nmbs.database.CoefficientAbonnementDAO;
+import be.nmbs.database.CoefficientTicketDAO;
+import be.nmbs.database.BasisprijsAbonnementenDAO;
+import be.nmbs.database.BasisprijsTicketDAO;
 import be.nmbs.database.AbonnementDAO;
+import be.nmbs.database.AbonnementPrijsDAO;
 import be.nmbs.database.AbonnementTypeDAO;
 import be.nmbs.database.KlantDAO;
+import be.nmbs.database.KortingDAO;
+import be.nmbs.database.TicketPrijsDAO;
 import be.nmbs.logic.Abonnement;
 import be.nmbs.logic.Gebruiker;
 import be.nmbs.logic.Klant;
 import be.nmbs.logic.Korting;
 import be.nmbs.logic.Prijs;
+import be.nmbs.logic.Prijs_abonnement;
+import be.nmbs.logic.StationNMBS;
+import be.nmbs.logic.TypeAbonnement;
 import be.nmbs.userInterface.MaakAbonnementView;
+import be.nmbs.userInterface.TicketView;
 import be.nmbs.userInterface.HomeView;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -32,13 +44,10 @@ public class MaakAbonnementController {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Gebruiker gebruiker = View.getIngelogdGebruiker();
-					
-					// gebruik van veiligeInvoer klasse
-					//String route = VeiligeInvoer.checkString(MaakAbonnementView.getTxtRoute(),MaakAbonnementView.getTxtRoute().getText());
-					
-					String route = (String) MaakAbonnementView.getDepartureField().getSelectedItem() + " - " + (String) MaakAbonnementView.getArrivalField().getSelectedItem();
-					Timestamp startDatum = new Timestamp(System.currentTimeMillis());
 
+					String route = (String) MaakAbonnementView.getDepartureField().getSelectedItem() + " - "
+							+ (String) MaakAbonnementView.getArrivalField().getSelectedItem();
+					Timestamp startDatum = new Timestamp(System.currentTimeMillis());
 					// eindDatum omzetten
 					DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 					String eindDatum = MaakAbonnementView.getTxtEindDatum().getText();
@@ -46,43 +55,82 @@ public class MaakAbonnementController {
 					Long tijd2 = date2.getTime();
 					Timestamp ts2 = new Timestamp(tijd2);
 
-					Prijs prijs = (Prijs) MaakAbonnementView.getPrijzenLijst().getSelectedItem();
-					int prijsId = prijs.getPrijsId();
-
 					Korting korting = (Korting) MaakAbonnementView.getKortingLijst().getSelectedItem();
 					int kortingId = korting.getId();
 					AbonnementTypeDAO typeDAO = new AbonnementTypeDAO();
-
 					try {
 						int row = MaakAbonnementView.getTable().getSelectedRow();
 						int contactID = Integer
 								.valueOf((String) MaakAbonnementView.getTable().getModel().getValueAt(row, 0));
 
-						Abonnement abonnement = new Abonnement(contactID, gebruiker.getId(), route, ts2, prijsId,
-								kortingId, true);
+						// typeDAO.insertTypeAbonnement(aboDao.getIdByStartDatum(startDatum),
+						// keuze);
+						/**
+						 * Variabelen declarern om de prijs berekening mogelijk
+						 * maken
+						 */
+						TypeAbonnement type = (TypeAbonnement) MaakAbonnementView.getTypeLijst().getSelectedItem();
+						BasisprijsAbonnementenDAO bpaDAO = new BasisprijsAbonnementenDAO();
+						CoefficientAbonnementDAO caDAO = new CoefficientAbonnementDAO();
+						KortingDAO kortingDAO = new KortingDAO();
 
+						int typeAbonnementId = type.getId();
+
+						int basisprijsid = bpaDAO.getBasisPrijsIdbyTypeId(typeAbonnementId);
+
+						double basisprijs = bpaDAO.getPrijs_ById(typeAbonnementId);
+
+						int coefid = caDAO.getCoefficientIdByTypeId(typeAbonnementId);
+						System.out.println("coefid: " + coefid);
+
+						double coef = caDAO.getCoefficient_ById(coefid);
+						System.out.println("coef: " + coef);
+
+						double totaal = basisprijs * coef;
+						System.out.println("totaal: " + totaal);
+
+						Prijs_abonnement prijs_abonnement = new Prijs_abonnement(typeAbonnementId, coefid, basisprijsid,
+								totaal);
+						Abonnement abonnement = new Abonnement(contactID, gebruiker.getId(), route, ts2, kortingId,
+								prijs_abonnement, true);
+						
+						AbonnementPrijsDAO apdao = new AbonnementPrijsDAO();
+
+						int idvoorprijs = apdao.insert(prijs_abonnement);
+						prijs_abonnement.setPrijs_abonnementid(idvoorprijs);
+						abonnement.setPrijsId(prijs_abonnement);
+						System.out.println("idvoorprijs: " + idvoorprijs);
+						System.out.println("Prijs abonnement ID: " + prijs_abonnement.getPrijs_abonnementid());
+						
+					
+
+						// System.out.println("abonnementid: " +
+						// abonnement.getPrijsAboId().getPrijs_abonnementid());
 						AbonnementDAO aboDao = new AbonnementDAO();
 						String keuze = (String) MaakAbonnementView.getCombo().getSelectedItem();
 
+						
 						if (keuze == "3 maanden") {
 							aboDao.insertDrieMaandAbonnement(abonnement, startDatum);
-							JOptionPane.showMessageDialog(view.getPanel(), "Abonnement aangemaakt voor drie maanden");
-							
+
 						} else if (keuze == "6 maanden") {
 							aboDao.insertZesMaandAbonnement(abonnement, startDatum);
-							JOptionPane.showMessageDialog(view.getPanel(), "Abonnement aangemaakt voor zes maanden");
-							
+
 						} else if (keuze == "9 maanden") {
 							aboDao.insertNegenMaandAbonnement(abonnement, startDatum);
-							JOptionPane.showMessageDialog(view.getPanel(), "Abonnement aangemaakt voor negen maanden");
-							
+
 						} else if (keuze == "12 maanden") {
 							aboDao.insertEenJaarAbonnement(abonnement, startDatum);
-							JOptionPane.showMessageDialog(view.getPanel(), "Abonnement aangemaakt voor een jaar");
-							
-						}
 
-						typeDAO.insertTypeAbonnement(aboDao.getIdByStartDatum(startDatum), keuze);
+						}
+						/**
+						 * Prijs berekening
+						 */
+
+						// JOptionPane.showMessageDialog(view.getPanel(),
+						// "Abonnement aangemaakt voor " + keuze + "\n" + "Prijs
+						// is: €" + totaalMetKorting);
+
 					} catch (ArrayIndexOutOfBoundsException e2) {
 
 						JOptionPane.showMessageDialog(null,
@@ -105,7 +153,7 @@ public class MaakAbonnementController {
 				view.changeView(newView.initialize(view));
 			}
 		});
-		
+
 		MaakAbonnementView.getBtnzoek().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

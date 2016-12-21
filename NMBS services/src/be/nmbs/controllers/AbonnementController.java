@@ -21,7 +21,6 @@ public class AbonnementController {
 		});
 		
 		AbonnementView.getVerlengAbonnement().addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				VerlengAbonnementView.setVerlengAbonnementControllerToNull();

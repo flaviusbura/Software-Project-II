@@ -4,10 +4,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import be.nmbs.logic.Prijs_ticket;
 import be.nmbs.logic.StationNMBS;
 import be.nmbs.logic.Ticket;
+import be.nmbs.userInterface.View;
 
 /**
  * Deze klasse is een DAO. Hiermee kunnen er Ticket-objecten naar de de database 
@@ -40,6 +43,8 @@ public class TicketDAO extends BaseDAO{
 			StationNMBS startStation = new StationNMBS();
 			StationNMBS eindStation = new StationNMBS();
 			StationNMBS station = new StationNMBS();
+			Prijs_ticket prijsticket = new Prijs_ticket();
+			TicketPrijsDAO tpdao = new TicketPrijsDAO();
 			
 			while (res.next()) {
 				int ticketId = res.getInt("ticket_id");
@@ -51,11 +56,13 @@ public class TicketDAO extends BaseDAO{
 				eindStation.setNaam(res.getString("eind_station"));
 				String omschrijving = res.getString("omschrijving");
 				int prijsId = res.getInt("prijs_id");
+				prijsticket = tpdao.getPrijs_ticketObjectOpPrijs_ticketId(prijsId);
 				int kortingId = res.getInt("korting_id");
 				station.setNaam(res.getString("station"));
 				int gebrukerId = res.getInt("gebruiker_id");
-				Ticket ticket = new Ticket(ticketId, startStation, soort, timestamp, klas, actief, eindStation, omschrijving,
-						prijsId, kortingId, station, gebrukerId);
+				Ticket ticket = new Ticket(ticketId, startStation, soort, timestamp, klas, actief, eindStation, omschrijving,prijsticket,
+						kortingId, station, gebrukerId);
+			
 				lijst.add(ticket);
 			}
 			return lijst;
@@ -91,12 +98,25 @@ public class TicketDAO extends BaseDAO{
 			prep = getConnection().prepareStatement(sql);
 			prep.setString(1, ticket.getStartStation().getNaam());
 			prep.setString(2, ticket.getSoort());
-			prep.setTimestamp(3, ticket.getTimestamp());
+			if(View.getIngelogdGebruiker().getUsername().equals("offline"))
+			{
+		
+				Long datumLong = ticket.getTimestamp().getTime();
+				Timestamp timestamp = new Timestamp(datumLong);
+				System.out.println("datum timestamp insert dao " + timestamp);
+				String S = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss").format(timestamp);
+				System.out.println(S);
+				prep.setString(3, S);
+			}
+			else
+			{
+			prep.setTimestamp(3, ticket.getTimestampNow());
+			}
 			prep.setInt(4, ticket.getKlas());
 			prep.setBoolean(5, ticket.isActief());
 			prep.setString(6, ticket.getEindStation().getNaam());
 			prep.setString(7, ticket.getOmschrijving());
-			prep.setInt(8, ticket.getPrijsId());
+			prep.setInt(8, ticket.getPrijsId().getPrijs_ticketid());
 			prep.setInt(9, ticket.getKortingId());
 			prep.setString(10, ticket.getStation().getNaam());
 			prep.setInt(11, ticket.getGebruikerId());

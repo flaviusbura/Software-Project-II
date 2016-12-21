@@ -11,6 +11,11 @@ public class TypeTicket {
 		this.id = id;
 		this.type = type;
 	}
+	public TypeTicket(int id) {
+		
+		this.id = id;
+		
+	}
 	public int getId() {
 		return id;
 	}
