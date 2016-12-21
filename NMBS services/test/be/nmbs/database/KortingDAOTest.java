@@ -53,8 +53,10 @@ public class KortingDAOTest {
 		korting3 = dao.getKorting(korting.getId());
 		assertTrue(korting.getOmschrijving().equals(korting3.getOmschrijving()));
 	}
+
 	/**
 	 * Hier gebeurt de clean-up
+	 * 
 	 * @throws Exception
 	 */
 	@After
