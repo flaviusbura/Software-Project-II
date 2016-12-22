@@ -5,11 +5,10 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.test.annotation.Rollback;
+import org.junit.runner.RunWith;
 
 import be.nmbs.logic.StationNMBS;
 import be.nmbs.logic.VerlorenVoorwerp;
-
 public class VerlorenVoorwerpenDAOTest {
 	private VerlorenVoorwerp voorwerp;
 	private VerlorenVoorwerp voorwerp2;
@@ -36,9 +35,10 @@ public class VerlorenVoorwerpenDAOTest {
 	}
 
 	@Test
-	@Rollback(true)
-	public void test() {
-		fail("Not yet implemented");
+	public void testInsert() {
+		dao.updateActief(32);
+		voorwerp = dao.getById(32);
+		assertFalse(voorwerp.isActief());
 	}
 
 	/**
