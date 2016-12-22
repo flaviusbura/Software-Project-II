@@ -94,7 +94,7 @@ public class MaakAbonnementController {
 								totaal);
 						Abonnement abonnement = new Abonnement(contactID, gebruiker.getId(), route, ts2, kortingId,
 								prijs_abonnement, true);
-						
+
 						AbonnementPrijsDAO apdao = new AbonnementPrijsDAO();
 
 						int idvoorprijs = apdao.insert(prijs_abonnement);
@@ -102,15 +102,12 @@ public class MaakAbonnementController {
 						abonnement.setPrijsId(prijs_abonnement);
 						System.out.println("idvoorprijs: " + idvoorprijs);
 						System.out.println("Prijs abonnement ID: " + prijs_abonnement.getPrijs_abonnementid());
-						
-					
 
 						// System.out.println("abonnementid: " +
 						// abonnement.getPrijsAboId().getPrijs_abonnementid());
 						AbonnementDAO aboDao = new AbonnementDAO();
 						String keuze = (String) MaakAbonnementView.getCombo().getSelectedItem();
 
-						
 						if (keuze == "3 maanden") {
 							aboDao.insertDrieMaandAbonnement(abonnement, startDatum);
 
@@ -128,9 +125,7 @@ public class MaakAbonnementController {
 						 * Prijs berekening
 						 */
 
-						// JOptionPane.showMessageDialog(view.getPanel(),
-						// "Abonnement aangemaakt voor " + keuze + "\n" + "Prijs
-						// is: €" + totaalMetKorting);
+						JOptionPane.showMessageDialog(view.getPanel(), "Abonnement aangemaakt voor " + keuze);
 
 					} catch (ArrayIndexOutOfBoundsException e2) {
 
@@ -146,7 +141,44 @@ public class MaakAbonnementController {
 
 			}
 		});
+		MaakAbonnementView.getToonPrijs().addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TypeAbonnement type = (TypeAbonnement) MaakAbonnementView.getTypeLijst().getSelectedItem();
+				Korting korting = (Korting) MaakAbonnementView.getKortingLijst().getSelectedItem();
+				int kortingId = korting.getId();
+				System.out.println("KortingId: " + kortingId);
+				int typeId = type.getId();
+				System.out.println("typeId: " + typeId);
+				BasisprijsAbonnementenDAO bpaDAO = new BasisprijsAbonnementenDAO();
+				CoefficientAbonnementDAO caDAO = new CoefficientAbonnementDAO();
+				KortingDAO kortingDAO = new KortingDAO();
+				double prijs2 = bpaDAO.getPrijs_ById(typeId);
+				System.out.println("prijs2: " + prijs2);
+				double coeff = caDAO.getCoefficient_ById(typeId);
+				System.out.println("coeff: " + coeff);
+				Korting korting2 = kortingDAO.getKorting(kortingId);
+				System.out.println("korting2: " + korting2);
+				double kortingPercentage;
+				double kortingHoeveelheid = korting2.getHoeveelheid();
+				double totaalZonderKorting = 0;
+				double totaalMetKorting = 0;
+
+				/**
+				 * Prijs berekening
+				 */
+				totaalZonderKorting = (prijs2 * coeff);
+				kortingPercentage = (totaalZonderKorting / 100) * kortingHoeveelheid;
+				totaalMetKorting = totaalZonderKorting - kortingPercentage;
+				System.out.println("totaalZonderKorting: " + totaalZonderKorting);
+				System.out.println("kortingPercentage: " + kortingPercentage);
+				System.out.println("totaalMetKorting: " + totaalMetKorting);
+				JOptionPane.showMessageDialog(view.getPanel(),
+						"Abonnement aangemaakt" + "\n" + "Prijs is: €" + totaalMetKorting);
+
+			}
+		});
 		MaakAbonnementView.getGoBackToHome().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -185,5 +217,6 @@ public class MaakAbonnementController {
 				}
 			}
 		});
+
 	}
 }

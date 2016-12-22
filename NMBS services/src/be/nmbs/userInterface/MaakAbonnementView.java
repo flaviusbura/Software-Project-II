@@ -43,7 +43,7 @@ import be.nmbs.logic.Gebruiker;
  */
 public class MaakAbonnementView {
 	private static JButton maakAbonnement;
-
+	private static JButton toonPrijs;
 	private static JButton goBackToHome;
 	private static JButton verlengDrieMaanden;
 	private static JPanel panel;
@@ -288,23 +288,43 @@ public class MaakAbonnementView {
 		tPanel.add(typeLijst, c);
 		
 		// buttons
-		goBackToHome = new JButton("Back");
-		new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 9;
-		tPanel.add(goBackToHome, c);
+		
+		
+		
 		maakAbonnement = new JButton("Maak Abonnement");
 		new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridy = 9;
 		tPanel.add(maakAbonnement, c);
-
+		
+		toonPrijs = new JButton("Prijs Tonen");
+		new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 10;
+		tPanel.add(toonPrijs, c);
+		
+		goBackToHome = new JButton("Back");
+		new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 10;
+		tPanel.add(goBackToHome, c);
+		
+		
 		homeController = new HomeController(view);
 		maakAbonnementController = new MaakAbonnementController(view);
 		return panel;
 
+	}
+
+	public static JButton getToonPrijs() {
+		return toonPrijs;
+	}
+
+	public static void setToonPrijs(JButton toonPrijs) {
+		MaakAbonnementView.toonPrijs = toonPrijs;
 	}
 
 	public static JLabel getLblType() {

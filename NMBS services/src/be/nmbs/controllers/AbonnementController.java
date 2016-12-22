@@ -19,23 +19,25 @@ public class AbonnementController {
 				view.changeView(MaakAbonnementView.initialize(view));
 			}
 		});
-		
+
 		AbonnementView.getVerlengAbonnement().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				VerlengAbonnementView.setVerlengAbonnementControllerToNull();
 				VerlengAbonnementView.setHomeControllerToNull();
-				view.changeView(VerlengAbonnementView.initialize(view));
+
 			}
 		});
-		
+
 		AbonnementView.getGoBackToHome().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				HomeView.setHomeControllerToNull();
 				view.changeView(HomeView.initialize(view));
 			}
 		});
+
+	
 	}
 }
