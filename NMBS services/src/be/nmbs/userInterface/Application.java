@@ -8,7 +8,7 @@ public class Application {
 	}
 	
 	public void run() {
-		LoginView.setLoginControllerToNull();
-		view.changeView(LoginView.initialize(view));
+		LoginView newView = new LoginView();
+		view.changeView(newView.initialize(view));
 	}
 }

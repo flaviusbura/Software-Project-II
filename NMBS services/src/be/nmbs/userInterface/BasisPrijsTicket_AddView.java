@@ -27,7 +27,6 @@ public class BasisPrijsTicket_AddView {
 	private static JComboBox<TypeTicket> typeLijst;
 	private static TypeTicketDAO typeTicketDao = new TypeTicketDAO();
 
-	private static HomeController homeController;
 	private static BasisPrijsTicket_AddController basisPrijsTicket_AddController;
 	
 	public static JPanel initialize(View view) {
@@ -63,8 +62,6 @@ public class BasisPrijsTicket_AddView {
 		c.gridy = 1;
 		panel.add(txtPrijs, c);
 
-		
-
 		// buttons
 		addPrijs = new JButton("Prijs Toevoegen");
 		new GridBagConstraints();
@@ -80,18 +77,14 @@ public class BasisPrijsTicket_AddView {
 		c.gridy = 3;
 		panel.add(goBackToHome, c);
 
-		homeController = new HomeController(view);
 		basisPrijsTicket_AddController = new BasisPrijsTicket_AddController(view);
+		
 		return panel;
 
 	}
 	public static void setBasisPrijsTicket_AddControllerToNull()
 	{
 		basisPrijsTicket_AddController= null;
-	}
-	public static void setHomeControllerToNull()
-	{
-		homeController= null;
 	}
 	public static JButton getAddPrijs() {
 		return addPrijs;
@@ -140,12 +133,6 @@ public class BasisPrijsTicket_AddView {
 	}
 	public static void setTypeTicketDao(TypeTicketDAO typeTicketDao) {
 		BasisPrijsTicket_AddView.typeTicketDao = typeTicketDao;
-	}
-	public static HomeController getHomeController() {
-		return homeController;
-	}
-	public static void setHomeController(HomeController homeController) {
-		BasisPrijsTicket_AddView.homeController = homeController;
 	}
 	public static BasisPrijsTicket_AddController getBasisPrijsTicket_AddController() {
 		return basisPrijsTicket_AddController;

@@ -8,7 +8,6 @@ import javax.swing.table.TableModel;
 import be.nmbs.logic.Gebruiker;
 
 public class GebruikerTableModel implements TableModel {
-	
 	private ArrayList<Gebruiker> gebruikers;
 	
 	public void setGebruikers(ArrayList<Gebruiker> gebruikers) {
@@ -84,7 +83,7 @@ public class GebruikerTableModel implements TableModel {
 				if (gebruikers.get(rowIndex).isActief())
 					return "Ja";
 				else
-					return "Nee";
+					return "Neen";
 		
 			default: 
 				return "";

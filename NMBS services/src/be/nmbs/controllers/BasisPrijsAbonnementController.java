@@ -18,7 +18,7 @@ public class BasisPrijsAbonnementController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				BasisPrijsAbonnement_DelView.setBasisPrijsAbonnement_DelControllerToNull();
-				BasisPrijsAbonnement_DelView.setHomeControllerToNull();
+
 				//change here
 				view.changeView(BasisPrijsAbonnement_DelView.initialize(view));
 			}
@@ -29,7 +29,7 @@ public class BasisPrijsAbonnementController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				BasisPrijsAbonnement_UpdateView.setBasisPrijsAbonnement_UpdateControllerToNull();
-				BasisPrijsAbonnement_UpdateView.setHomeControllerToNull();
+
 				//change here
 				view.changeView(BasisPrijsAbonnement_UpdateView.initialize(view));
 			}
@@ -39,16 +39,15 @@ public class BasisPrijsAbonnementController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				BasisPrijsAbonnementView.setBasisPrijsAbonnementControllerToNull();
-				BasisPrijsAbonnementView.setHomeControllerToNull();
+
 				view.changeView(BasisPrijsAbonnement_AddView.initialize(view));
 			}
 		});
 		BasisPrijsAbonnementView.getGoBackToHome().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				HomeView.setHomeControllerToNull();
-				view.changeView(HomeView.initialize(view));
+				HomeView newView = new HomeView();
+				view.changeView(newView.initialize(view));
 			}
 		});
 	}

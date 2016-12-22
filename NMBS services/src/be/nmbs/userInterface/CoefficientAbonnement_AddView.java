@@ -28,7 +28,6 @@ public class CoefficientAbonnement_AddView {
 	private static JComboBox<TypeAbonnement> typeLijst;
 	private static TypeAbonnementDAO typeAboDao = new TypeAbonnementDAO();
 
-	private static HomeController homeController;
 	private static CoefficientAbonnement_AddController coefficientAbonnement_AddController;
 	
 	public static JPanel initialize(View view) {
@@ -64,8 +63,6 @@ public class CoefficientAbonnement_AddView {
 		c.gridy = 1;
 		panel.add(txtCoeff, c);
 
-		
-
 		// buttons
 		addCoeff = new JButton("Coefficient Toevoegen");
 		new GridBagConstraints();
@@ -81,7 +78,6 @@ public class CoefficientAbonnement_AddView {
 		c.gridy = 3;
 		panel.add(goBackToHome, c);
 
-		homeController = new HomeController(view);
 		coefficientAbonnement_AddController = new CoefficientAbonnement_AddController(view);
 		return panel;
 
@@ -159,14 +155,6 @@ public class CoefficientAbonnement_AddView {
 		CoefficientAbonnement_AddView.typeAboDao = typeAboDao;
 	}
 
-	public static HomeController getHomeController() {
-		return homeController;
-	}
-
-	public static void setHomeController(HomeController homeController) {
-		CoefficientAbonnement_AddView.homeController = homeController;
-	}
-
 	public static CoefficientAbonnement_AddController getCoefficientAbonnement_AddController() {
 		return coefficientAbonnement_AddController;
 	}
@@ -178,9 +166,5 @@ public class CoefficientAbonnement_AddView {
 	public static void setCoefficientAbonnement_AddControllerToNull()
 	{
 		coefficientAbonnement_AddController = null;
-	}
-	public static void setHomeControllerToNull()
-	{
-		homeController= null;
 	}
 }

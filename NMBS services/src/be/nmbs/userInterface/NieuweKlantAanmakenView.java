@@ -3,242 +3,207 @@ package be.nmbs.userInterface;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import be.nmbs.controllers.NieuweKlantAanmakenController;
+import be.nmbs.exceptions.EnkelCijfersException;
+import be.nmbs.exceptions.EnkelLettersException;
+import be.nmbs.exceptions.NietGeldigePostcodeException;
+import be.nmbs.logic.Adres;
+import be.nmbs.logic.JTextFieldLimit;
+import be.nmbs.logic.Klant;
+import be.nmbs.logic.VeiligeInvoer;
 
 public class NieuweKlantAanmakenView {
-	private static JLabel info;
-	private static JButton klantAanmaken;
-	private static JButton actieannuleren;
-	private static JTextField voornaamText;
-	private static JTextField naamText;
-	private static JTextField telefoonText;
-	private static JTextField straatText;
-	private static JTextField nrText;
-	private static JTextField busText;
-	private static JTextField postcodeText;
-	private static JTextField stadText;
-	private static JTextField landText;
+	private final JPanel panel = new JPanel(new GridBagLayout());
 	
-	private static JPanel panel;
-	@SuppressWarnings("unused")
-	private static NieuweKlantAanmakenController nieuweKlantAanmakenController;
+	private final String[] labelTexts = { "Voornaam", "Naam", "Telefoon", "Straat", "Huisnummer", "Bus", "Stad", "Postcode", "Land" };
+	private JLabel infoLabel;
 	
-	public static JPanel initialize(View view) {
-			panel = new JPanel(new GridBagLayout());
-			
-			info = new JLabel("Voornaam");
-			GridBagConstraints c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridx = 0;
-			c.gridy = 0;
-			panel.add(info, c);
-			
-			voornaamText = new JTextField(20);
-			c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.insets = new Insets(0, 5, 0, 0);
-			c.gridx = 1;
-			c.gridy = 0;
-			panel.add(voornaamText, c);
-			
-			info = new JLabel("Naam");
-			c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.insets = new Insets(5, 0, 0, 0);
-			c.gridx = 0;
-			c.gridy = 1;
-			panel.add(info, c);
-			
-			naamText = new JTextField(20);
-			c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.insets = new Insets(5, 5, 0, 0);
-			c.gridx = 1;
-			c.gridy = 1;
-			panel.add(naamText, c);
-			
-			info = new JLabel("Telefoon");
-			c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.insets = new Insets(5, 0, 0, 0);
-			c.gridx = 0;
-			c.gridy = 2;
-			panel.add(info, c);
-			
-			telefoonText = new JTextField(20);
-			c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.insets = new Insets(5, 5, 0, 0);
-			c.gridx = 1;
-			c.gridy = 2;
-			panel.add(telefoonText, c);
-			
-			info = new JLabel("Straat");
-			c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.insets = new Insets(5, 0, 0, 0);
-			c.gridx = 0;
-			c.gridy = 3;
-			panel.add(info, c);
-			
-			straatText = new JTextField(20);
-			c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.insets = new Insets(5, 5, 0, 0);
-			c.gridx = 1;
-			c.gridy = 3;
-			panel.add(straatText, c);
-			
-			info = new JLabel("Huisnummer");
-			c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.insets = new Insets(5, 0, 0, 0);
-			c.gridx = 0;
-			c.gridy = 4;
-			panel.add(info, c);
-			
-			nrText = new JTextField(20);
-			c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.insets = new Insets(5, 5, 0, 0);
-			c.gridx = 1;
-			c.gridy = 4;
-			panel.add(nrText, c);
-			
-			info = new JLabel("Bus");
-			c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.insets = new Insets(5, 0, 0, 0);
-			c.gridx = 0;
-			c.gridy = 5;
-			panel.add(info, c);
-			
-			busText = new JTextField(20);
-			c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.insets = new Insets(5, 5, 0, 0);
-			c.gridx = 1;
-			c.gridy = 5;
-			panel.add(busText, c);
-			
-			info = new JLabel("Postcode");
-			c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.insets = new Insets(5, 0, 0, 0);
-			c.gridx = 0;
-			c.gridy = 6;
-			panel.add(info, c);
-			
-			postcodeText = new JTextField(20);
-			c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.insets = new Insets(5, 5, 0, 0);
-			c.gridx = 1;
-			c.gridy = 6;
-			panel.add(postcodeText, c);
-			
-			info = new JLabel("Stad");
-			c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.insets = new Insets(5, 0, 0, 0);
-			c.gridx = 0;
-			c.gridy = 7;
-			panel.add(info, c);
-			
-			stadText = new JTextField(20);
-			c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.insets = new Insets(5, 5, 0, 0);
-			c.gridx = 1;
-			c.gridy = 7;
-			panel.add(stadText, c);
-			
-			info = new JLabel("Land");
-			c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.insets = new Insets(5, 0, 0, 0);
-			c.gridx = 0;
-			c.gridy = 8;
-			panel.add(info, c);
-			
-			landText = new JTextField(20);
-			c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.insets = new Insets(5, 5, 0, 0);
-			c.gridx = 1;
-			c.gridy = 8;
-			panel.add(landText, c);
-			
-			klantAanmaken = new JButton("Klant aanmaken");
-			c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.insets = new Insets(5, 0, 0, 0);
-			c.gridx = 0;
-			c.gridy = 9;
-			panel.add(klantAanmaken, c);
-
-			actieannuleren = new JButton("Actie annuleren");
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.insets = new Insets(5, 5, 0, 0);
-			c.gridx = 1;
-			c.gridy = 9;
-			panel.add(actieannuleren, c);
-			
-			nieuweKlantAanmakenController = new NieuweKlantAanmakenController(view);
-			return panel;
-	}
+	private final JTextField firstNameTextField = new JTextField(20);
+	private final JTextField lastNameTextField = new JTextField(20);
+	private final JTextField phoneTextField = new JTextField(20);
+	private final JTextField streetTextField = new JTextField(20);
+	private final JTextField streetNumberTextField = new JTextField(20);
+	private final JTextField busTextField = new JTextField(20);
+	private final JTextField postCodeTextField = new JTextField(20);
+	private final JTextField cityTextField = new JTextField(20);
+	private final JTextField countryTextField = new JTextField(20);
 	
-	public static JButton getKlantAanmaken() {
-		return klantAanmaken;
-	}
+	private final JButton addKlantButton = new JButton("Klant aanmaken");
+	private final JButton backButton = new JButton("Terug");
 
-	public static JButton getActieannuleren() {
-		return actieannuleren;
-	}
+	private final NieuweKlantAanmakenController nieuweKlantAanmakenController = new NieuweKlantAanmakenController();
 	
-	public static void setNieuweKlantAanmakenControllerToNull() {
-		nieuweKlantAanmakenController = null;
-	}
-	
-	public static JTextField getVoornaamText() {
-		return voornaamText;
-	}
+	public JPanel initialize(View view) {
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		
+		// Add Info Labels
+		for (int i = 0; i < labelTexts.length; i++) {
+			infoLabel = new JLabel(labelTexts[i]);
+			c.insets = new Insets(5, 0, 0, 0);
+			c.gridx = 0;
+			c.gridy = i;
+			panel.add(infoLabel, c);
+		}
+		
+		// Add First Name Text Field
+		c.insets = new Insets(0, 5, 0, 0);
+		c.gridx = 1;
+		c.gridy = 0;
+		panel.add(firstNameTextField, c);
+		
+		// Add Last Name Text Field
+		c.insets = new Insets(5, 5, 0, 0);
+		c.gridx = 1;
+		c.gridy = 1;
+		panel.add(lastNameTextField, c);
+		
+		// Add Phone Text Field
+		c.insets = new Insets(5, 5, 0, 0);
+		c.gridx = 1;
+		c.gridy = 2;
+		phoneTextField.setDocument(new JTextFieldLimit(13));
+		panel.add(phoneTextField, c);
+		
+		// Add Street Text Field
+		c.insets = new Insets(5, 5, 0, 0);
+		c.gridx = 1;
+		c.gridy = 3;
+		panel.add(streetTextField, c);
+		
+		// Add Street Number Text Field
+		c.insets = new Insets(5, 5, 0, 0);
+		c.gridx = 1;
+		c.gridy = 4;
+		streetNumberTextField.setDocument(new JTextFieldLimit(5));
+		panel.add(streetNumberTextField, c);
+		
+		// Add Bus Text Field
+		c.insets = new Insets(5, 5, 0, 0);
+		c.gridx = 1;
+		c.gridy = 5;
+		busTextField.setDocument(new JTextFieldLimit(5));
+		panel.add(busTextField, c);
+		
+		// Add Post Code Text Field
+		c.insets = new Insets(5, 5, 0, 0);
+		c.gridx = 1;
+		c.gridy = 6;
+		postCodeTextField.setDocument(new JTextFieldLimit(4));
+		panel.add(postCodeTextField, c);
+		
+		// Add City Text Field
+		c.insets = new Insets(5, 5, 0, 0);
+		c.gridx = 1;
+		c.gridy = 7;
+		panel.add(cityTextField, c);
+		
+		// Add Country Text Field
+		c.insets = new Insets(5, 5, 0, 0);
+		c.gridx = 1;
+		c.gridy = 8;
+		panel.add(countryTextField, c);
+		
+		// Add Add Klant Button
+		c.insets = new Insets(5, 0, 0, 0);
+		c.gridx = 0;
+		c.gridy = 9;
+		panel.add(addKlantButton, c);
+		
+		addKlantButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String straat = streetTextField.getText();
+					if (VeiligeInvoer.checkForOnlyLetters(straat) == false) {
+						throw new EnkelLettersException();
+					}
+					
+					String huisnummer = streetNumberTextField.getText();
+					String bus = busTextField.getText();
+					
+					int postcode = Integer.parseInt(postCodeTextField.getText());
+					if (postcode < 1000 || postcode > 9999) {
+						throw new NietGeldigePostcodeException();
+					}
+					
+					String stad = cityTextField.getText();
+					if (VeiligeInvoer.checkForOnlyLetters(stad) == false) {
+						throw new EnkelLettersException();
+					}
+					
+					String land = countryTextField.getText();
+					if (VeiligeInvoer.checkForOnlyLetters(land) == false) {
+						throw new EnkelLettersException();
+					}
+					
+					Adres adres = new Adres(straat, huisnummer, postcode, bus, stad, land, true);
+					
+					if (nieuweKlantAanmakenController.insertAdres(adres)) {
+						int adresId = nieuweKlantAanmakenController.getAdresId(adres);
+						
+						String firstName = firstNameTextField.getText();
+						if (VeiligeInvoer.checkForOnlyLetters(firstName) == false) {
+							throw new EnkelLettersException();
+						}
+						
+						String lastName = lastNameTextField.getText();
+						if (VeiligeInvoer.checkForOnlyLetters(lastName) == false) {
+							throw new EnkelLettersException();
+						}
+						
+						String phone = phoneTextField.getText();
+						if (VeiligeInvoer.checkForOnlyNumbers(phone) == false) {
+							throw new EnkelCijfersException();
+						}
+						
+						Klant klant = new Klant(1, firstName, lastName, adresId, phone, true);
+						if (nieuweKlantAanmakenController.insertKlant(klant)) {
+							JOptionPane.showMessageDialog(null, "Nieuwe klant met succes aamgemaakt!");
+							
+							KlantBeheerView newView = new KlantBeheerView();
+							view.changeView(newView.initialize(view));
+						} else {
+							JOptionPane.showMessageDialog(null, "Er is iets foutgegaan bij het opslaan van de klant, probeer opnieuw.");
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "Er is iets foutgegaan bij het opslaan van het adres van de klant, probeer opnieuw.");
+					}
+				} catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(null, "Gelieve alle velden correct in te vullen.");
+				} catch (EnkelLettersException e2) {
+					JOptionPane.showMessageDialog(null, "U mocht velden niet leeg laten of speciale karakters gebruiken als invoer.");
+				} catch (NietGeldigePostcodeException e3) {
+					JOptionPane.showMessageDialog(null, "De ingevoerde postcode is ongeldig.");
+				} catch (EnkelCijfersException e4) {
+					JOptionPane.showMessageDialog(null, "Gelieve cijfers in te vullen waar cijfers verwacht worden.");
+				}
+			}
+		});
 
-	public static JTextField getNaamText() {
-		return naamText;
-	}
-
-	public static JTextField getTelefoonText() {
-		return telefoonText;
-	}
-
-	public static JTextField getStraatText() {
-		return straatText;
-	}
-
-	public static JTextField getNrText() {
-		return nrText;
-	}
-
-	public static JTextField getBusText() {
-		return busText;
-	}
-
-	public static JTextField getPostcodeText() {
-		return postcodeText;
-	}
-
-	public static JTextField getStadText() {
-		return stadText;
-	}
-
-	public static JTextField getLandText() {
-		return landText;
+		// Add Back Button
+		c.insets = new Insets(5, 5, 0, 0);
+		c.gridx = 1;
+		c.gridy = 9;
+		panel.add(backButton, c);
+		
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				KlantBeheerView newView = new KlantBeheerView();
+				view.changeView(newView.initialize(view));
+			}
+		});
+		
+		return panel;
 	}
 }

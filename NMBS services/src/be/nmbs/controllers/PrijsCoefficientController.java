@@ -19,7 +19,6 @@ public class PrijsCoefficientController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				PrijsCoefficient_AbonnementView.setPrijsCoefficient_AbonnementControllerToNull();
-				PrijsCoefficient_AbonnementView.setHomeControllerToNull();
 				view.changeView(PrijsCoefficient_AbonnementView.initialize(view));
 			}
 		});
@@ -28,7 +27,6 @@ public class PrijsCoefficientController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				PrijsCoefficient_TicketView.setPrijsCoefficient_TicketControllerToNull();
-				PrijsCoefficient_TicketView.setHomeControllerToNull();
 				view.changeView(PrijsCoefficient_TicketView.initialize(view));
 			}
 		});
@@ -37,8 +35,8 @@ public class PrijsCoefficientController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				HomeView.setHomeControllerToNull();
-				view.changeView(HomeView.initialize(view));
+				HomeView newView = new HomeView();
+				view.changeView(newView.initialize(view));
 			}
 		});
 	}

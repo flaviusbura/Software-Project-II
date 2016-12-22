@@ -10,6 +10,8 @@ import java.util.TimeZone;
 import org.junit.After;
 import org.junit.Test;
 
+import be.nmbs.controllers.ApiCaller;
+
 public class ApiCallerTest {
 	private Calendar cal;
 	

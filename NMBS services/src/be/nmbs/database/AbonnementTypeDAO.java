@@ -11,7 +11,7 @@ import be.nmbs.logic.Korting;
 import be.nmbs.database.BaseDAO;
 import be.nmbs.database.KlantDAO;
 import be.nmbs.database.KortingDAO;
-import be.nmbs.database.PrijsDAO;
+
 import be.nmbs.logic.Klant;
 import be.nmbs.logic.Prijs;
 

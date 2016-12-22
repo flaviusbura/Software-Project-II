@@ -75,7 +75,7 @@ public class GebruikerDAO extends BaseDAO {
 	 * @param gebruiker
 	 * @return
 	 */
-	public int insert(Gebruiker gebruiker) {
+	public boolean insert(Gebruiker gebruiker) {
 			PreparedStatement prep = null;
 			String sql = "INSERT INTO gebruiker VALUES(null,?,?,?,?,?,?)";
 			
@@ -91,10 +91,11 @@ public class GebruikerDAO extends BaseDAO {
 				prep.setString(4, gebruiker.getWachtwoord());
 				prep.setInt(5, gebruiker.getRol());
 				prep.setBoolean(6, gebruiker.isActief());
-				return prep.executeUpdate();
+				prep.executeUpdate();
+				return true;
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
-				return 9999;
+				return false;
 			} finally {
 				try {
 					if (prep != null)
@@ -179,7 +180,7 @@ public class GebruikerDAO extends BaseDAO {
 	 * @param gebruiker
 	 * @return
 	 */
-	public int update(Gebruiker gebruiker) {
+	public boolean update(Gebruiker gebruiker) {
 		String sql = "UPDATE gebruiker SET voornaam=?, achternaam=?, username=?, paswoord=?, rol=?, actief=? WHERE gebruiker_id = ?";
 		PreparedStatement prep = null;
 		try {
@@ -195,10 +196,11 @@ public class GebruikerDAO extends BaseDAO {
 			prep.setInt(5, gebruiker.getRol());
 			prep.setBoolean(6, gebruiker.isActief());
 			prep.setInt(7, gebruiker.getId());
-			return prep.executeUpdate();
+			prep.executeUpdate();
+			return true;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			return 9999;
+			return false;
 		} finally {
 			try {
 				if (prep != null)

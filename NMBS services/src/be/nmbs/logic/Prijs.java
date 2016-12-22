@@ -1,5 +1,8 @@
 package be.nmbs.logic;
 
+import be.nmbs.database.BasisprijsTicketDAO;
+import be.nmbs.database.CoefficientTicketDAO;
+
 /**
  * Deze klasse gaat gebruikt worden om Prijs-objecten aan te maken.
  * 
@@ -39,6 +42,16 @@ public class Prijs {
 		this.prijs = prijs;
 		this.type = type;
 		this.actief = actief;
+	}
+
+	public double berekenPrijs(int coefficient_ticketid , int basisprijs_ticketid) {
+		CoefficientTicketDAO coef = new CoefficientTicketDAO();
+		BasisprijsTicketDAO basis = new BasisprijsTicketDAO();
+		
+		double coefi = coef.getCoefficient_ById(coefficient_ticketid);
+		double basisprijs = basis.getPrijs_ById(basisprijs_ticketid);
+		double totaal = coefi * basisprijs;
+		return totaal;
 	}
 
 	/**

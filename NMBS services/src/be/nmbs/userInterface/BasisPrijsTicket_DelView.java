@@ -18,15 +18,13 @@ public class BasisPrijsTicket_DelView {
 	private static JPanel panel;
 	private static JLabel lblPrijs;
 	private static JTextField txtPrijs;
-	private static HomeController homeController;
+
 	private static BasisPrijsTicket_DelController basisPrijsTicket_DelController;
 	
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 	
-		
-		
 		lblPrijs = new JLabel("Geef de Basisprijs ID ");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
@@ -56,13 +54,8 @@ public class BasisPrijsTicket_DelView {
 		c.gridy = 3;
 		panel.add(goBackToHome, c);
 
-		homeController = new HomeController(view);
 		basisPrijsTicket_DelController = new BasisPrijsTicket_DelController(view);
 		return panel;
-	}
-	public static void setHomeControllerToNull()
-	{
-		homeController= null;
 	}
 	
 	public static void setBasisPrijsTicket_DelControllerToNull()
@@ -98,12 +91,6 @@ public class BasisPrijsTicket_DelView {
 	}
 	public static void setTxtPrijs(JTextField txtPrijs) {
 		BasisPrijsTicket_DelView.txtPrijs = txtPrijs;
-	}
-	public static HomeController getHomeController() {
-		return homeController;
-	}
-	public static void setHomeController(HomeController homeController) {
-		BasisPrijsTicket_DelView.homeController = homeController;
 	}
 	public static BasisPrijsTicket_DelController getBasisPrijsTicket_DelController() {
 		return basisPrijsTicket_DelController;

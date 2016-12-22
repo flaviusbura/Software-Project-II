@@ -15,14 +15,12 @@ public class PrijsBeheerView {
 	private static JButton goBackToHome;
 	private static JButton coefficient;
 	private static JPanel panel;
-	private static HomeController homeController;
 	private static PrijsBeheerController prijsBeheerController;
 
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-
 		// buttons
 		prijs = new JButton("Prijzen");
 		c.fill = new GridBagConstraints().HORIZONTAL;
@@ -42,9 +40,6 @@ public class PrijsBeheerView {
 		c.gridy = 4;
 		panel.add(goBackToHome, c);
 		
-	
-		
-		homeController = new HomeController(view);
 		prijsBeheerController = new PrijsBeheerController(view);
 		return panel;
 	}
@@ -80,15 +75,7 @@ public class PrijsBeheerView {
 	public static void setPanel(JPanel panel) {
 		PrijsBeheerView.panel = panel;
 	}
-
-	public static HomeController getHomeController() {
-		return homeController;
-	}
-
-	public static void setHomeController(HomeController homeController) {
-		PrijsBeheerView.homeController = homeController;
-	}
-
+	
 	public static PrijsBeheerController getPrijsBeheerController() {
 		return prijsBeheerController;
 	}

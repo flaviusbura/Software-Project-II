@@ -161,7 +161,7 @@ public class BasisprijsAbonnementenDAO extends BaseDAO{
 		PreparedStatement prep = null;
 		ResultSet res = null;
 		double prijs = 0.00;
-		String sql = "SELECT prijs FROM basisprijs_abonnement WHERE basisprijs_abonnementId=?";
+		String sql = "SELECT prijs FROM basisprijs_abonnement WHERE type_abonnementId=?";
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
@@ -177,6 +177,43 @@ public class BasisprijsAbonnementenDAO extends BaseDAO{
 
 			}
 			return prijs;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+				if (res != null)
+					res.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
+public int getBasisPrijsIdbyTypeId(int id) {
+		
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		int prijsid = 0;
+		String sql = "SELECT basisprijs_abonnementId FROM basisprijs_abonnement WHERE type_abonnementId=?";
+		
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+
+			prep.setInt(1, id);
+			res = prep.executeQuery();
+
+			while (res.next()) {
+				
+				prijsid = res.getInt("basisprijs_abonnementId");
+				System.out.println("prijs id " + prijsid);
+			}
+			return prijsid;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException(e.getMessage());

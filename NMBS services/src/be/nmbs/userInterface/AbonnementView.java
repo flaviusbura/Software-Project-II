@@ -19,7 +19,7 @@ public class AbonnementView {
 	private static JButton goBackToHome;
 	private static JButton verlengAbonnement;
 	private static JPanel panel;
-	private static HomeController homeController;
+
 	private static AbonnementController abonnementController;
 
 	public static JPanel initialize(View view) {
@@ -47,9 +47,6 @@ public class AbonnementView {
 		c.gridy = 4;
 		panel.add(goBackToHome, c);
 		
-	
-		
-		homeController = new HomeController(view);
 		abonnementController = new AbonnementController(view);
 		return panel;
 	}
@@ -90,14 +87,6 @@ public class AbonnementView {
 		AbonnementView.panel = panel;
 	}
 
-	public static HomeController getHomeController() {
-		return homeController;
-	}
-
-	public static void setHomeController(HomeController homeController) {
-		AbonnementView.homeController = homeController;
-	}
-
 	public static AbonnementController getAbonnementController() {
 		return abonnementController;
 	}
@@ -109,10 +98,4 @@ public class AbonnementView {
 	public static void setAbonnementControllerToNull() {
 		abonnementController = null;
 	}
-	
-	public static void setHomeControllerToNull() {
-		homeController = null;
-	}
-
-
 }

@@ -11,6 +11,11 @@ public class TypeAbonnement {
 		this.id = id;
 		this.type = type;
 	}
+	public TypeAbonnement(int id) {
+		
+		this.id = id;
+		
+	}
 	
 	public int getId() {
 		return id;

@@ -21,7 +21,6 @@ public class PrijsController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				PrijsView.setPrijsControllerToNull();
-				PrijsView.setHomeControllerToNull();
 				view.changeView(BasisPrijsAbonnementView.initialize(view));
 			}
 		});
@@ -30,7 +29,6 @@ public class PrijsController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				PrijsView.setPrijsControllerToNull();
-				PrijsView.setHomeControllerToNull();
 				view.changeView(BasisPrijsTicketView.initialize(view));
 			}
 		});
@@ -39,8 +37,8 @@ public class PrijsController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				HomeView.setHomeControllerToNull();
-				view.changeView(HomeView.initialize(view));
+				HomeView newView = new HomeView();
+				view.changeView(newView.initialize(view));
 			}
 		});
 	}

@@ -26,7 +26,6 @@ public class VerlengAbonnementView {
 	private static JTextField txtId;
 	private static JComboBox<Abonnement> AbonnementLijst;
 	private static AbonnementDAO abonnementDao = new AbonnementDAO();
-	private static HomeController homeController;
 	private static VerlengAbonnementController verlengAbonnementController;
 	private static JLabel lblMaanden;
 	private static String[] tab = {"3 maanden", "6 maanden", "9 maanden", "12 maanden"};
@@ -80,7 +79,6 @@ public class VerlengAbonnementView {
 		c.gridy = 6;
 		panel.add(goBackToHome, c);
 		
-		homeController = new HomeController(view);
 		verlengAbonnementController = new VerlengAbonnementController(view);
 		return panel;
 	}
@@ -166,14 +164,6 @@ public class VerlengAbonnementView {
 		VerlengAbonnementView.abonnementDao = abonnementDao;
 	}
 
-	public static HomeController getHomeController() {
-		return homeController;
-	}
-
-	public static void setHomeController(HomeController homeController) {
-		VerlengAbonnementView.homeController = homeController;
-	}
-
 	public static VerlengAbonnementController getVerlengAbonnementController() {
 		return verlengAbonnementController;
 	}
@@ -184,9 +174,5 @@ public class VerlengAbonnementView {
 	
 	public static void setVerlengAbonnementControllerToNull() {
 		verlengAbonnementController = null;
-	}
-	
-	public static void setHomeControllerToNull() {
-		homeController = null;
 	}
 }

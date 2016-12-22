@@ -99,6 +99,51 @@ public class KlantDAO extends BaseDAO {
 			}
 		}
 	}
+	
+	public ArrayList<Klant> getAllByLike(String naam) {
+		ArrayList<Klant> lijst = null;
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		String sql = "SELECT * FROM klant_contact where naam LIKE ? OR voornaam LIKE ? OR telefoon LIKE ?";
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+			prep.setString(1, "%" + naam + "%");
+			prep.setString(2, "%" + naam + "%");
+			prep.setString(3, "%" + naam + "%");
+			res = prep.executeQuery();
+			lijst = new ArrayList<Klant>();
+
+			while (res.next()) {
+				int contactId = res.getInt("contact_id");
+				String voornaam = res.getString("voornaam");
+				String achternaam = res.getString("naam");
+				int adresId = res.getInt("adres_id");
+				String telefoon = res.getString("telefoon");
+				boolean actief = res.getBoolean("actief");
+				
+				Klant klant = new Klant(contactId, voornaam, achternaam, adresId, telefoon, actief);
+				lijst.add((klant));
+			}
+			return lijst;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+				if (res != null)
+					res.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
+	
 	/**
 	 * Deze methode gaat alle gegevens terugvinden via een voornaam
 	 * @author Abdel
@@ -193,7 +238,7 @@ public class KlantDAO extends BaseDAO {
 	 * @param klant
 	 * @return
 	 */
-	public int insert(Klant klant) {
+	public boolean insert(Klant klant) {
 		PreparedStatement prep = null;
 		String sql = "INSERT INTO klant_contact VALUES(null,?,?,?,?,?)";
 		
@@ -208,10 +253,11 @@ public class KlantDAO extends BaseDAO {
 			prep.setInt(3, klant.getAdresId());
 			prep.setString(4, klant.getTelefoon());
 			prep.setBoolean(5, klant.isActief());
-			return prep.executeUpdate();
+			prep.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)
@@ -515,6 +561,37 @@ public class KlantDAO extends BaseDAO {
         } catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}      
+    }
+	
+	public boolean update(Klant klant) {
+        String sql = "UPDATE klant_contact SET voornaam = ?, naam = ?, telefoon = ?, actief = ? WHERE contact_id = ?";
+        PreparedStatement prep = null;
+        try {
+        	if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+        	prep = getConnection().prepareStatement(sql);
+        	
+            prep.setString(1, klant.getVoornaam());
+            prep.setString(2, klant.getAchternaam());
+            prep.setString(3, klant.getTelefoon());
+            prep.setBoolean(4, klant.isActief());
+            prep.setInt(5, klant.getContactId());
+            prep.executeUpdate();
+            
+            return true;
+        } catch (SQLException e) {
+			return false;
 		} finally {
 			try {
 				if (prep != null)

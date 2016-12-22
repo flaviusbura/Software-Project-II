@@ -7,7 +7,7 @@ package be.nmbs.logic;
  */
 public class Adres {
 	private String straat;
-	private int huisnummer;
+	private String huisnummer;
 	private int postcode;
 	private String bus;
 	private String woonplaats;
@@ -26,7 +26,7 @@ public class Adres {
 	 * @param land
 	 * @param actief
 	 */
-	public Adres(String straat, int huisnummer, int postcode, String bus, String woonplaats, int adresId, String land,
+	public Adres(String straat, String huisnummer, int postcode, String bus, String woonplaats, int adresId, String land,
 			boolean actief) {
 		this.straat = straat;
 		this.huisnummer = huisnummer;
@@ -48,7 +48,7 @@ public class Adres {
 	 * @param land
 	 * @param actief
 	 */
-	public Adres(String straat, int huisnummer, int postcode, String bus, String woonplaats, String land,
+	public Adres(String straat, String huisnummer, int postcode, String bus, String woonplaats, String land,
 			boolean actief) {
 		this.straat = straat;
 		this.huisnummer = huisnummer;
@@ -71,7 +71,7 @@ public class Adres {
 		return straat;
 	}
 
-	public int getHuisnummer() {
+	public String getHuisnummer() {
 		return huisnummer;
 	}
 
@@ -103,7 +103,7 @@ public class Adres {
 		this.straat = straat;
 	}
 
-	public void setHuisnummer(int huisnummer) {
+	public void setHuisnummer(String huisnummer) {
 		this.huisnummer = huisnummer;
 	}
 

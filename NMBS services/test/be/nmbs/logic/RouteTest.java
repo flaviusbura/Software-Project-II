@@ -8,6 +8,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import be.nmbs.controllers.ApiCaller;
+
 public class RouteTest {
 	private Route route;
 	private Route route2;

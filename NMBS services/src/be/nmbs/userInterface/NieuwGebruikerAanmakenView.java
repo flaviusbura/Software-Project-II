@@ -3,179 +3,192 @@ package be.nmbs.userInterface;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import be.nmbs.controllers.NieuwGebruikerAanmakenController;
+import be.nmbs.exceptions.EnkelLettersException;
+import be.nmbs.exceptions.PasswordNotMatchException;
+import be.nmbs.logic.Gebruiker;
+import be.nmbs.logic.VeiligeInvoer;
 
 public class NieuwGebruikerAanmakenView {
-	private static JLabel voornaam, achternaam, username, wachtwoord, wachtwoordConfirm, rol;
-	private static JTextField voornaamText, achternaamText, usernameText;
-	private static JPasswordField wachtwoordText, wachtwoordTextConfirm;
-	@SuppressWarnings("rawtypes")
-	private static JComboBox rolCombo;
-	private static JButton toevoegen, annuleren;
-	private static JPanel panel;
-	@SuppressWarnings("unused")
-	private static NieuwGebruikerAanmakenController nieuwgebruikerAanmakenController;
+	private final JPanel panel = new JPanel(new GridBagLayout());
 	
-	public static JPanel initialize(View view) {
-		panel = new JPanel(new GridBagLayout());
-		
+	private final String[] labelTexts = { "Voornaam", "Achternaam", "Gebruikersnaam", "Wachtwoord", "Wachtwoord bevestigen", "Rol" };
+	private JLabel infoLabel;
+	
+	private final JTextField firstNameTextField = new JTextField();
+	private final JTextField lastNameTextField = new JTextField();
+	private final JTextField usernameTextField = new JTextField();
+	private final JPasswordField passwordField = new JPasswordField();
+	private final JPasswordField passwordConfirmField = new JPasswordField();
+	private final JComboBox<String> roleComboBox = new JComboBox<String>(new String[]{"Gebruiker", "Administrator"});
+	private final JButton addButton = new JButton("Toevoegen");
+	private final JButton backButton = new JButton("Terug");
+
+	private final NieuwGebruikerAanmakenController nieuwGebruikerAanmakenController = new NieuwGebruikerAanmakenController();
+	
+	public JPanel initialize(View view) {
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		
-		voornaam = new JLabel("Voornaam");
+		// Alle labels adden
+		infoLabel = new JLabel(labelTexts[0]);
 		c.gridx = 0;
 		c.gridy = 0;
-		panel.add(voornaam, c);
+		panel.add(infoLabel, c);
 		
-		voornaamText = new JTextField(20);
-		c.insets = new Insets(5, 5, 0, 0);
-		c.gridx = 1;
-		c.gridy = 0;
-		panel.add(voornaamText, c);
-		
-		achternaam = new JLabel("Achternaam");
+		infoLabel = new JLabel(labelTexts[1]);
 		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 1;
-		panel.add(achternaam, c);
+		panel.add(infoLabel, c);
 		
-		achternaamText = new JTextField(20);
+		infoLabel = new JLabel(labelTexts[2]);
+		c.insets = new Insets(5, 0, 0, 0);
+		c.gridx = 0;
+		c.gridy = 2;
+		panel.add(infoLabel, c);
+
+		infoLabel = new JLabel(labelTexts[3]);
+		c.insets = new Insets(5, 0, 0, 0);
+		c.gridx = 0;
+		c.gridy = 3;
+		panel.add(infoLabel, c);
+
+		infoLabel = new JLabel(labelTexts[4]);
+		c.insets = new Insets(5, 0, 0, 0);
+		c.gridx = 0;
+		c.gridy = 4;
+		panel.add(infoLabel, c);
+		
+		infoLabel = new JLabel(labelTexts[5]);
+		c.insets = new Insets(5, 0, 0, 0);
+		c.gridx = 0;
+		c.gridy = 5;
+		panel.add(infoLabel, c);
+		
+		// Add First Name Text Field
+		c.insets = new Insets(5, 5, 0, 0);
+		c.gridx = 1;
+		c.gridy = 0;
+		panel.add(firstNameTextField, c);
+
+		// Add Last Name Text Field
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 1;
-		panel.add(achternaamText, c);
-		
-		username = new JLabel("Username");
-		c.insets = new Insets(5, 0, 0, 0);
-		c.gridx = 0;
-		c.gridy = 2;
-		panel.add(username, c);
-		
-		usernameText = new JTextField(20);
+		panel.add(lastNameTextField, c);
+
+		// Add Username Text Field
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 2;
-		panel.add(usernameText, c);
+		panel.add(usernameTextField, c);
 		
-		wachtwoord = new JLabel("Wachtwoord");
-		c.insets = new Insets(5, 0, 0, 0);
-		c.gridx = 0;
-		c.gridy = 3;
-		panel.add(wachtwoord, c);
-		
-		wachtwoordText = new JPasswordField(20);
+		// Add Password Field
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 3;
-		panel.add(wachtwoordText, c);
+		panel.add(passwordField, c);
 		
-		wachtwoordConfirm = new JLabel("Wachtwoord bevestigen");
-		c.insets = new Insets(5, 0, 0, 0);
-		c.gridx = 0;
-		c.gridy = 4;
-		panel.add(wachtwoordConfirm, c);
-		
-		wachtwoordTextConfirm = new JPasswordField(20);
+		// Add Password Confirm Field
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 4;
-		panel.add(wachtwoordTextConfirm, c);
-		
-		rol = new JLabel("Rol");
-		c.insets = new Insets(5, 0, 0, 0);
-		c.gridx = 0;
-		c.gridy = 5;
-		panel.add(rol, c);
-		
-		rolCombo = new JComboBox<String>(new String[]{"Gebruiker", "Administrator"});
+		panel.add(passwordConfirmField, c);
+
+		// Add Role Combobox
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 5;
-		panel.add(rolCombo, c);
+		panel.add(roleComboBox, c);
 		
-		toevoegen = new JButton("Toevoegen");
+		// Add Add Button
 		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 6;
-		panel.add(toevoegen, c);
+		panel.add(addButton, c);
 		
-		annuleren = new JButton("Actie annuleren");
+		addButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int rol = 0;
+				String secureWachtwoord = "", voornaam, achternaam, username, wachtwoord1, wachtwoord2;
+				
+				Gebruiker g = null;
+				try {
+					voornaam = firstNameTextField.getText();
+					if (VeiligeInvoer.checkForOnlyLetters(voornaam) == false) {
+						throw new EnkelLettersException();
+					}
+					
+					achternaam = lastNameTextField.getText();
+					if (VeiligeInvoer.checkForOnlyLetters(achternaam) == false) {
+						throw new EnkelLettersException();
+					}
+					
+					username = usernameTextField.getText();
+					if (VeiligeInvoer.checkForOnlyLetters(username) == false) {
+						throw new EnkelLettersException();
+					}
+					
+					wachtwoord1 = String.valueOf(passwordField.getPassword());
+					wachtwoord2 = String.valueOf(passwordConfirmField.getPassword());
+					if (!(wachtwoord1.equals(wachtwoord2))) {
+						throw new PasswordNotMatchException();
+					} else {
+						secureWachtwoord = nieuwGebruikerAanmakenController.hashPassword(wachtwoord1);
+					}
+					
+					String selectedItem = roleComboBox.getSelectedItem().toString();
+					if (selectedItem.equals("Administrator")) {
+						rol = 2;
+					} else {
+						rol = 1;
+					}
+					
+					g = new Gebruiker(1, voornaam, achternaam, username, secureWachtwoord, rol, true);
+				} catch (EnkelLettersException ex) {
+					JOptionPane.showMessageDialog(null,
+							"De velden mogen niet leeg zijn en/of andere\nkarakters dan letters bevatten.");
+				} catch (PasswordNotMatchException ex) {
+					JOptionPane.showMessageDialog(null, "Wachtwoorden matchen niet, probeer opnieuw!");
+				}
+				
+				if ( g == null || nieuwGebruikerAanmakenController.addUser(g)) {
+					JOptionPane.showMessageDialog(null, "Er bestaat reeds een gebruiker met deze username!");
+				} else {
+					JOptionPane.showMessageDialog(null, "Uw gebruiker is toegevoegd geweest!");
+					GebruikerBeheerView newView = new GebruikerBeheerView();
+					view.changeView(newView.initialize(view));
+				}
+			}
+		});
+		
+		// Add Back Button
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 6;
-		panel.add(annuleren, c);
-		
-		nieuwgebruikerAanmakenController = new NieuwGebruikerAanmakenController(view);
+		panel.add(backButton, c);
+
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GebruikerBeheerView newView = new GebruikerBeheerView();
+				view.changeView(newView.initialize(view));
+			}
+		});
 		
 		return panel;
-	}
-
-	public static void setNieuwGebruikerAanmakenControllerToNull() {
-		nieuwgebruikerAanmakenController = null;
-	}
-	
-	public static JLabel getVoornaam() {
-		return voornaam;
-	}
-
-	public static JLabel getAchternaam() {
-		return achternaam;
-	}
-
-	@SuppressWarnings("rawtypes")
-	public static JComboBox getRolCombo() {
-		return rolCombo;
-	}
-
-	public static JLabel getUsername() {
-		return username;
-	}
-
-	public static JLabel getWachtwoord() {
-		return wachtwoord;
-	}
-
-	public static JLabel getRol() {
-		return rol;
-	}
-
-	public static JTextField getVoornaamText() {
-		return voornaamText;
-	}
-
-	public static JTextField getAchternaamText() {
-		return achternaamText;
-	}
-
-	public static JTextField getUsernameText() {
-		return usernameText;
-	}
-
-	public static JPasswordField getWachtwoordText() {
-		return wachtwoordText;
-	}
-
-	public static JPasswordField getWachtwoordTextConfirm() {
-		return wachtwoordTextConfirm;
-	}
-
-	public static JLabel getWachtwoordConfirm() {
-		return wachtwoordConfirm;
-	}
-
-	public static JButton getToevoegen() {
-		return toevoegen;
-	}
-
-	public static JButton getAnnuleren() {
-		return annuleren;
 	}
 }

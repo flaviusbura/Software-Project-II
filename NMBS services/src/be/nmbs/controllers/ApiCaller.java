@@ -1,4 +1,4 @@
-package be.nmbs.logic;
+package be.nmbs.controllers;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -18,6 +18,11 @@ import java.util.TimeZone;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import be.nmbs.logic.Overstap;
+import be.nmbs.logic.Route;
+import be.nmbs.logic.Station;
+import be.nmbs.logic.Trein;
 
 /**
  * Deze klasse spreekt de API aan en vraagt gegevens in verband met trainen, stations, etc.

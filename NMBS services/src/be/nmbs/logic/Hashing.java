@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 // sources : http://viralpatel.net/blogs/java-md5-hashing-salting-password/
 // 			http://howtodoinjava.com/security/how-to-generate-secure-password-hash-md5-sha-pbkdf2-bcrypt-examples/
+
 /**
  * Deze klasse gaat de wachtwoorden encrypteren.
  * 
@@ -20,11 +21,10 @@ public class Hashing {
 	 * @return
 	 * @throws NoSuchAlgorithmException
 	 */
-	public static String hashPaswoord(String paswoord) throws NoSuchAlgorithmException {
-
+	public static String hashPaswoord(String password) {
 		String saltString = "QxLUF1bgIAdeQX";
 		byte[] salt = saltString.getBytes();
-		String securePassword = getSecurePassword(md5(paswoord), salt);
+		String securePassword = getSecurePassword(md5(password), salt);
 		return securePassword;
 	}
 
@@ -35,14 +35,12 @@ public class Hashing {
 	 * @return
 	 */
 	public static String md5(String input) {
-
 		String md5 = null;
 
 		if (null == input)
 			return null;
 
 		try {
-
 			// Create MessageDigest object for MD5
 			MessageDigest digest = MessageDigest.getInstance("MD5");
 
@@ -53,11 +51,11 @@ public class Hashing {
 			md5 = new BigInteger(1, digest.digest()).toString(16);
 
 		} catch (NoSuchAlgorithmException e) {
-
 			e.printStackTrace();
 		}
 		return md5;
 	}
+	
 	/**
 	 * Deze methode het wachtwoord hashen.
 	 * @param passwordToHash

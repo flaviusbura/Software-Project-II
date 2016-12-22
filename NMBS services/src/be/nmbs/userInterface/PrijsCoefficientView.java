@@ -15,7 +15,6 @@ public class PrijsCoefficientView {
 	private static JButton voorTicket;
 	private static JButton voorAbo;
 	private static JPanel panel;
-	private static HomeController homeController;
 	private static PrijsCoefficientController prijsCoefficientController;
 
 	public static JPanel initialize(View view) {
@@ -40,7 +39,6 @@ public class PrijsCoefficientView {
 		c.gridy = 0;
 		panel.add(goBackToHome, c);
 
-		homeController = new HomeController(view);
 		prijsCoefficientController = new PrijsCoefficientController(view);
 		return panel;
 	}
@@ -77,14 +75,6 @@ public class PrijsCoefficientView {
 		PrijsCoefficientView.panel = panel;
 	}
 
-	public static HomeController getHomeController() {
-		return homeController;
-	}
-
-	public static void setHomeController(HomeController homeController) {
-		PrijsCoefficientView.homeController = homeController;
-	}
-
 	public static PrijsCoefficientController getPrijsCoefficientController() {
 		return prijsCoefficientController;
 	}
@@ -95,10 +85,5 @@ public class PrijsCoefficientView {
 
 	public static void setPrijsCoefficientControllerToNull() {
 		prijsCoefficientController = null;
-	}
-
-	public static void setHomeControllerToNull() {
-		homeController = null;
-
 	}
 }

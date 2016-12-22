@@ -14,7 +14,7 @@ public class BasisPrijsAbonnement_DelView {
 	private static JPanel panel;
 	private static JLabel lblPrijs;
 	private static JTextField txtPrijs;
-	private static HomeController homeController;
+
 	private static BasisPrijsAbonnement_DelController basisPrijsAbonnement_DelController;
 
 	public static JPanel initialize(View view) {
@@ -48,13 +48,8 @@ public class BasisPrijsAbonnement_DelView {
 		c.gridy = 3;
 		panel.add(goBackToHome, c);
 
-		homeController = new HomeController(view);
 		basisPrijsAbonnement_DelController = new BasisPrijsAbonnement_DelController(view);
 		return panel;
-	}
-
-	public static void setHomeControllerToNull() {
-		homeController = null;
 	}
 
 	public static void setBasisPrijsAbonnement_DelControllerToNull() {
@@ -99,14 +94,6 @@ public class BasisPrijsAbonnement_DelView {
 
 	public static void setTxtPrijs(JTextField txtPrijs) {
 		BasisPrijsAbonnement_DelView.txtPrijs = txtPrijs;
-	}
-
-	public static HomeController getHomeController() {
-		return homeController;
-	}
-
-	public static void setHomeController(HomeController homeController) {
-		BasisPrijsAbonnement_DelView.homeController = homeController;
 	}
 
 	public static BasisPrijsAbonnement_DelController getBasisPrijsAbonnement_DelController() {
