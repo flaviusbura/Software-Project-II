@@ -36,7 +36,7 @@ public class HomeView {
 
 	private HomeController homeController = new HomeController();
 
-	public JPanel initialize(View view) {		
+	public JPanel initialize(View view) {
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		

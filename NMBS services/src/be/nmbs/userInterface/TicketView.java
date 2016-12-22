@@ -98,7 +98,7 @@ public class TicketView {
 	private static JComboBox<TypeTicket> typeLijst;
 	private static TypeTicketDAO typeDao = new TypeTicketDAO();
 	
-	public static JPanel initialize(View view) {
+	public JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
 
 		prijsdao = new PrijsDAO();
