@@ -9,7 +9,7 @@ import org.junit.Test;
 import be.nmbs.logic.Adres;
 
 public class KlantAdresDAOTest {
-	private KlantAdresDAO dao;
+	private Klant_adresDAO dao;
 	private Adres adres;
 	private Adres adres2;
 	private Adres adres3;
@@ -21,10 +21,10 @@ public class KlantAdresDAOTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		adres = new Adres("StraatTest", 2, 1700, "3", "Ternat", "Belgie", true);
-		adres2 = new Adres("StraatTest2", 3, 1700, "5", "Anderlecht", "Belgie", true);
-		adres3 = new Adres("StraatTest3", 4, 1700, "7", "Brussel", "Belgie", true);
-		dao = new KlantAdresDAO();
+		adres = new Adres("StraatTest", "2", 1700, "3", "Ternat", "Belgie", true);
+		adres2 = new Adres("StraatTest2", "3", 1700, "5", "Anderlecht", "Belgie", true);
+		adres3 = new Adres("StraatTest3", "4", 1700, "7", "Brussel", "Belgie", true);
+		dao = new Klant_adresDAO();
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class KlantAdresDAOTest {
 	@Test
 	public void testUpdateAdresKlant() {
 		adres3.setStraat("UpdateTest");
-		adres3.setHuisnummer(5);
+		adres3.setHuisnummer("5");
 		adres3.setPostcode(1740);
 		adres3.setWoonplaats("Ternat");
 		adres3.setLand("Land");

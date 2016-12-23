@@ -10,6 +10,11 @@ public class AdresTest {
 	private Adres adres;
 	private Adres adres2;
 
+	/**
+	 * Hier maken wij de objecten die wij nodig hebben één keer aan zodat wij die niet telkens
+	 * in elke test opnieuw moeten aanmaken
+	 * @throws Exception
+	 */
 	@Before
 	public void setUp() throws Exception {
 		adres = new Adres("MijnStraat", "3", 1700, "2", "Dilbeek", "Belgie", true);
@@ -151,6 +156,10 @@ public class AdresTest {
 		assertFalse(adres2.getActief());
 	}
 
+	/**
+	 * Hier gebeurt de clean-up
+	 * @throws Exception
+	 */
 	@After
 	public void tearDown() throws Exception {
 		adres = null;
