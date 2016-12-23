@@ -19,7 +19,6 @@ import javax.swing.JTextField;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
-import be.nmbs.controllers.HomeController;
 import be.nmbs.controllers.MaakAbonnementController;
 import be.nmbs.database.PrijsDAO;
 import be.nmbs.database.StationDAO;
@@ -660,5 +659,13 @@ public class MaakAbonnementView {
 
 	public static void setBtnzoek(JButton btnzoek) {
 		MaakAbonnementView.btnZoek = btnzoek;
+	}
+
+	public static JComboBox<TypeAbonnement> getTypeLijst() {
+		return typeLijst;
+	}
+
+	public static void setTypeLijst(JComboBox<TypeAbonnement> typeLijst) {
+		MaakAbonnementView.typeLijst = typeLijst;
 	}
 }

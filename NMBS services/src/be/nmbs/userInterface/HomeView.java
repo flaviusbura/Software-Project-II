@@ -69,8 +69,8 @@ public class HomeView {
 		abonnementButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AbonnementView.setAbonnementControllerToNull();
-				view.changeView(AbonnementView.initialize(view));
+				AbonnementView newView = new AbonnementView();
+				view.changeView(newView.initialize(view));
 			}
 		});
 

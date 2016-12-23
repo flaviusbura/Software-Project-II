@@ -2,12 +2,11 @@ package be.nmbs.userInterface;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-
-import be.nmbs.controllers.AbonnementController;
-import be.nmbs.controllers.HomeController;
 
 /**
  * 
@@ -15,87 +14,56 @@ import be.nmbs.controllers.HomeController;
  *
  */
 public class AbonnementView {
-	private static JButton maakAbonnement;
-	private static JButton goBackToHome;
-	private static JButton verlengAbonnement;
-	private static JPanel panel;
+	private final JPanel panel = new JPanel(new GridBagLayout());
+	
+	private final JButton maakAbonnementButton = new JButton("Abonnement aanmaken");
+	private final JButton verlengAbonnementButton = new JButton("Abonnement verlengen");
+	private final JButton backButton = new JButton("Terug");
 
-	private static AbonnementController abonnementController;
-
-	public static JPanel initialize(View view) {
-		panel = new JPanel(new GridBagLayout());
+	public JPanel initialize(View view) {
 		GridBagConstraints c = new GridBagConstraints();
-		
-
-		// buttons
-		maakAbonnement = new JButton("Abonnement aanmaken");
 		c.fill = GridBagConstraints.HORIZONTAL;
+
+		// Add Maak Abonnement Button
 		c.gridx = 0;
 		c.gridy = 0;
-		panel.add(maakAbonnement, c);
+		panel.add(maakAbonnementButton, c);
 		
-		//verlengDrieMaanden
-		verlengAbonnement = new JButton("Abonnement verlengen");
+		maakAbonnementButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MaakAbonnementView.setMaakAbonnementControllerToNull();
+				view.changeView(MaakAbonnementView.initialize(view));
+			}
+		});
+		
+		// Add Verleng Abonnement Button
+		c.gridx = 0;
+		c.gridy = 1;
+		panel.add(verlengAbonnementButton, c);
+		
+		verlengAbonnementButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VerlengAbonnementView.setVerlengAbonnementControllerToNull();
+				view.changeView(VerlengAbonnementView.initialize(view));
+			}
+		});
+		
+		// Add Back Button
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 2;
-		panel.add(verlengAbonnement, c);
+		panel.add(backButton, c);
 		
-		goBackToHome = new JButton("Back");
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 4;
-		panel.add(goBackToHome, c);
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				HomeView newView = new HomeView();
+				view.changeView(newView.initialize(view));
+			}
+		});
 		
-		abonnementController = new AbonnementController(view);
 		return panel;
-	}
-
-	public static void setVerlengAbonnement(JButton verlengAbonnement) {
-		AbonnementView.verlengAbonnement = verlengAbonnement;
-	}
-
-	public static JButton getMaakAbonnement() {
-		return maakAbonnement;
-	}
-
-	public static void setMaakAbonnement(JButton maakAbonnement) {
-		AbonnementView.maakAbonnement = maakAbonnement;
-	}
-
-	public static JButton getGoBackToHome() {
-		return goBackToHome;
-	}
-
-	public static void setGoBackToHome(JButton goBackToHome) {
-		AbonnementView.goBackToHome = goBackToHome;
-	}
-
-	public static JButton getVerlengAbonnement() {
-		return verlengAbonnement;
-	}
-
-	public static void setVerlengDrieMaanden(JButton verlengDrieMaanden) {
-		AbonnementView.verlengAbonnement = verlengDrieMaanden;
-	}
-
-	public static JPanel getPanel() {
-		return panel;
-	}
-
-	public static void setPanel(JPanel panel) {
-		AbonnementView.panel = panel;
-	}
-
-	public static AbonnementController getAbonnementController() {
-		return abonnementController;
-	}
-
-	public static void setAbonnementController(AbonnementController abonnementController) {
-		AbonnementView.abonnementController = abonnementController;
-	}
-
-	public static void setAbonnementControllerToNull() {
-		abonnementController = null;
 	}
 }

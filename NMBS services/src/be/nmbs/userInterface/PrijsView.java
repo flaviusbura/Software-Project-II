@@ -6,8 +6,6 @@ import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import be.nmbs.controllers.AbonnementController;
-import be.nmbs.controllers.HomeController;
 import be.nmbs.controllers.PrijsController;
 
 public class PrijsView {
@@ -20,7 +18,6 @@ public class PrijsView {
 	public static JPanel initialize(View view) {
 		panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		
 
 		voorTicket = new JButton("Voor Ticket");
 		c.fill = new GridBagConstraints().HORIZONTAL;
