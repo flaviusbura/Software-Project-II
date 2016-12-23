@@ -62,6 +62,7 @@ public class MaakAbonnementView {
 	private final JComboBox<String> maandenComboBox = new JComboBox<String>(tab);
 	
 	private final JButton searchButton = new JButton("Zoek Klant");
+	private final JButton showPriceButton = new JButton("Toon Prijs");
 	private final JButton maakAbonnementButton = new JButton("Maak Abonnement");
 	private final JButton backButton = new JButton("Terug");
 	
@@ -241,6 +242,45 @@ public class MaakAbonnementView {
 		c.gridx = 2;
 		c.gridy = 7;
 		panel.add(typeComboBox, c);
+
+		// Add Show Price Button
+ 		c.gridx = 2;
+ 		c.gridy = 10;
+ 		panel.add(showPriceButton, c);
+ 		
+ 		showPriceButton.addActionListener(new ActionListener() {
+ 			@Override
+ 			public void actionPerformed(ActionEvent e) {
+ 				TypeAbonnement type = (TypeAbonnement) typeComboBox.getSelectedItem();
+ 				Korting korting = (Korting) kortingComboBox.getSelectedItem();
+ 				int kortingId = korting.getId();
+ 				System.out.println("KortingId: " + kortingId);
+ 				int typeId = type.getId();
+ 				System.out.println("typeId: " + typeId);
+ 				double prijs2 = maakAbonnementController.getPrijs(typeId);
+ 				System.out.println("prijs2: " + prijs2);
+ 				double coeff = maakAbonnementController.getCoefficient(typeId);
+ 				System.out.println("coeff: " + coeff);
+				Korting korting2 = maakAbonnementController.getKorting(kortingId);
+ 				System.out.println("korting2: " + korting2);
+ 				double kortingPercentage;
+ 				double kortingHoeveelheid = korting2.getHoeveelheid();
+ 				double totaalZonderKorting = 0;
+ 				double totaalMetKorting = 0;
+ 
+ 				/**
+ 				 * Prijs berekening
+				 */
+ 				totaalZonderKorting = (prijs2 * coeff);
+ 				kortingPercentage = (totaalZonderKorting / 100) * kortingHoeveelheid;
+ 				totaalMetKorting = totaalZonderKorting - kortingPercentage;
+ 				System.out.println("totaalZonderKorting: " + totaalZonderKorting);
+ 				System.out.println("kortingPercentage: " + kortingPercentage);
+ 				System.out.println("totaalMetKorting: " + totaalMetKorting);
+ 				JOptionPane.showMessageDialog(panel, "Prijs is: €" + totaalMetKorting);
+  
+ 			}
+ 		});
 		
 		// Add Maak Abonnement Button
 		c.insets = new Insets(5, 5, 0, 0);
@@ -258,7 +298,7 @@ public class MaakAbonnementView {
 							+ arrivalComboBox.getSelectedItem().toString();
 					
 					// eindDatum omzetten
-					SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+					SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 					Date date2 = format.parse(startDatePicker.getJFormattedTextField().getText());
 					Long tijd2 = date2.getTime();
 					Timestamp ts2 = new Timestamp(tijd2);
@@ -307,9 +347,9 @@ public class MaakAbonnementView {
 							 * Prijs berekening
 							 */
 
-							JOptionPane.showMessageDialog(null, "Abonnement aangemaakt voor " + keuze + "\n" + "Prijs is: €");
+							JOptionPane.showMessageDialog(panel, "Abonnement aangemaakt voor " + keuze);
 						} else {
-							JOptionPane.showMessageDialog(null , "Er is iets misgelopen bij het maken van het abonnement, probeer opnieuw.");
+							JOptionPane.showMessageDialog(panel, "Er is iets misgelopen bij het maken van het abonnement, probeer opnieuw.");
 						}
 					} catch (ArrayIndexOutOfBoundsException e2) {
 						JOptionPane.showMessageDialog(null,

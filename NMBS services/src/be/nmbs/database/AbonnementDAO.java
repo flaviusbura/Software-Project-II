@@ -69,7 +69,7 @@ public class AbonnementDAO extends BaseDAO {
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
 			prep.setTimestamp(4, abonnement.getStartDatum());
-			prep.setTimestamp(5, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getStartDatum()));
+			prep.setTimestamp(5, abonnement.getTimestampZesMaandAbonnemant(abonnement.getStartDatum()));
 			prep.setInt(6, abonnement.getKortingId());
 			prep.setInt(7, abonnement.getPrijsId().getPrijs_abonnementid());
 			prep.setBoolean(8, abonnement.isActief());
@@ -103,7 +103,7 @@ public class AbonnementDAO extends BaseDAO {
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
 			prep.setTimestamp(4, abonnement.getStartDatum());
-			prep.setTimestamp(5, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getStartDatum()));
+			prep.setTimestamp(5, abonnement.getTimestampNegenMaandAbonnemant(abonnement.getStartDatum()));
 			prep.setInt(6, abonnement.getKortingId());
 			prep.setInt(7, abonnement.getPrijsId().getPrijs_abonnementid());
 			prep.setBoolean(8, abonnement.isActief());
@@ -137,7 +137,7 @@ public class AbonnementDAO extends BaseDAO {
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
 			prep.setTimestamp(4, abonnement.getStartDatum());
-			prep.setTimestamp(5, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getStartDatum()));
+			prep.setTimestamp(5, abonnement.getTimestampJaarAbonnemant(abonnement.getStartDatum()));
 			prep.setInt(6, abonnement.getKortingId());
 			prep.setInt(7, abonnement.getPrijsId().getPrijs_abonnementid());
 			prep.setBoolean(8, abonnement.isActief());

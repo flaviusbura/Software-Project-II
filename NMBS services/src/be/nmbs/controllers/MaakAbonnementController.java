@@ -88,4 +88,8 @@ public class MaakAbonnementController {
 	public int insertAbonnementPrijs(Prijs_abonnement pa) {
 		return abonnementPrijsDAO.insert(pa);
 	}
+	
+	public Korting getKorting(int id) {
+		return kortingDAO.getKorting(id);
+	}
 }

@@ -18,6 +18,7 @@ public class Abonnement {
 	private String route;
 	private Timestamp startDatum;
 	private Timestamp eindDatum;
+	private int prijsId2;
 	private Prijs prijs;
 	private Korting korting;
 	private boolean actief;
@@ -98,10 +99,10 @@ public class Abonnement {
 	 * @param kortingId
 	 * @param actief
 	 */
-	public Abonnement(int klantId, int gebruikerId, String route, Timestamp eindDatum, int kortingId,
+	public Abonnement(int klantId, int gebruikerId, String route, Timestamp startDatum, int kortingId,
 			boolean actief) {
 
-		this.eindDatum = eindDatum;
+		this.startDatum = startDatum;
 		this.klant_contactId = klantId;
 		this.gebruikerId = gebruikerId;
 		this.route = route;
@@ -109,13 +110,38 @@ public class Abonnement {
 		this.actief = actief;
 	}
 
-	public Abonnement(int klantId, int gebruikerId, String route, Timestamp eindDatum, int kortingId,
+	public Abonnement(int klantId, int gebruikerId, String route, Timestamp startDatum, int kortingId,
 			Prijs_abonnement prijs_abonnement, boolean actief) {
-		this.eindDatum = eindDatum;
+		this.startDatum = startDatum;
 		this.klant_contactId = klantId;
 		this.gebruikerId = gebruikerId;
 		this.route = route;
 		this.kortingId = kortingId;
+		this.actief = actief;
+	}
+	/**
+	 * Deze constructor is noding om de getAll methode in AbonnementDAO te laten werken
+	 * @param abonnementId
+	 * @param klantContactId
+	 * @param gebruikerId
+	 * @param route
+	 * @param startDatum
+	 * @param eindDatum
+	 * @param prijsId
+	 * @param kortingId
+	 * @param actief
+	 */
+	public Abonnement(int abonnementId, int klantContactId, int gebruikerId, String route, Timestamp startDatum,
+			Timestamp eindDatum, int prijsId, int kortingId, boolean actief) {
+		this.eindDatum = eindDatum;
+		this.klant_contactId = klantContactId;
+		this.gebruikerId = gebruikerId;
+		this.kortingId = kortingId;
+		this.actief = actief;
+		this.abonnementId = abonnementId;
+		this.route = route;
+		this.startDatum = startDatum;
+		this.prijsId2 = prijsId;
 		this.actief = actief;
 	}
 
