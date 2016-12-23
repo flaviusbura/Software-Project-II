@@ -120,17 +120,6 @@ public class Abonnement {
 	}
 
 	/**
-	 * Deze methode wordt gebruikt om de tijd te bepalen om het moement dat deze methode wordt aangeroepen.
-	 * @return Een Timestampobject dat de tijd zal bevatten om  het moment van het aanroepen van deze methode.
-	 */
-	public Timestamp getTimestampNow() {
-		Calendar calendar = Calendar.getInstance();
-		java.util.Date now = calendar.getTime();
-		Timestamp timestamp = new Timestamp(now.getTime());
-		return timestamp;
-	}
-
-	/**
 	 * Deze methode gaat de startdatum terugsturen zonder de nanoseconden.
 	 * @return Een Stringobject met datum en tijd zonder nanoseconden.
 	 */
@@ -179,6 +168,7 @@ public class Abonnement {
 		
 		return timestamp;
 	}
+	
 	/**
 	 * Deze methode voegt negen maanden tijd toe aan het Timestampobject dat wordt megegeven.
 	 * @param timestamp De tijd waaraan je 9 maanden tijd wilt toevoegen.

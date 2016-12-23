@@ -9,40 +9,40 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class PrijsBeheerView {
+public class CoefficientView {
 	private final JPanel panel = new JPanel(new GridBagLayout());
 
-	private final JButton prijsButton = new JButton("Prijzen");
-	private final JButton coefficientButton = new JButton("Coëfficient");
+	private final JButton ticketButton = new JButton("Voor Ticket");
+	private final JButton abonnementButton = new JButton("Voor Abonnement");
 	private final JButton backButton = new JButton("Terug");
 
 	public JPanel initialize(View view) {
-		GridBagConstraints c = new GridBagConstraints();
+		GridBagConstraints c = new GridBagConstraints();		
 		c.fill = GridBagConstraints.HORIZONTAL;
 		
-		// Add Prijs Button
+		// Add Ticket Button
 		c.gridx = 0;
 		c.gridy = 0;
-		panel.add(prijsButton, c);
+		panel.add(ticketButton, c);
 		
-		prijsButton.addActionListener(new ActionListener() {
+		ticketButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				PrijsView newView = new PrijsView();
+				CoefficientTicketView newView = new CoefficientTicketView();
 				view.changeView(newView.initialize(view));
 			}
 		});
 		
-		// Add Coefficient Button
+		// Add Abonnement Button
 		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 1;
-		panel.add(coefficientButton, c);
+		panel.add(abonnementButton, c);
 		
-		coefficientButton.addActionListener(new ActionListener() {
+		abonnementButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				CoefficientView newView = new CoefficientView();
+				CoefficientAbonnementView newView = new CoefficientAbonnementView();
 				view.changeView(newView.initialize(view));
 			}
 		});
@@ -56,11 +56,11 @@ public class PrijsBeheerView {
 		backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				HomeView newView = new HomeView();
+				PrijsBeheerView newView = new PrijsBeheerView();
 				view.changeView(newView.initialize(view));
 			}
 		});
-		
+
 		return panel;
 	}
 }

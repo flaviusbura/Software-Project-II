@@ -18,7 +18,7 @@ import be.nmbs.logic.Prijs_abonnement;
 
 public class AbonnementDAO extends BaseDAO {
 
-	public int insertDrieMaandAbonnement(Abonnement abonnement, Timestamp startDatum) {
+	public boolean insertDrieMaandAbonnement(Abonnement abonnement) {
 		PreparedStatement prep = null;
 		String sql = "INSERT INTO abonnement VALUES(null,?,?,?,?,?,?,?,?)";
 
@@ -31,8 +31,8 @@ public class AbonnementDAO extends BaseDAO {
 			prep.setInt(1, abonnement.getKlant_contactId());
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
-			prep.setTimestamp(4, startDatum);
-			prep.setTimestamp(5, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getEindDatum()));
+			prep.setTimestamp(4, abonnement.getStartDatum());
+			prep.setTimestamp(5, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getStartDatum()));
 			prep.setInt(6, abonnement.getKortingId());
 			
 			System.out.println("Prijs ID DAO" +abonnement.getPrijsId());
@@ -40,10 +40,11 @@ public class AbonnementDAO extends BaseDAO {
 			prep.setInt(7, abonnement.getPrijsId().getPrijs_abonnementid());
 			prep.setBoolean(8, abonnement.isActief());
 
-			return prep.executeUpdate();
+			prep.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)
@@ -55,7 +56,7 @@ public class AbonnementDAO extends BaseDAO {
 		}
 	}
 
-	public int insertZesMaandAbonnement(Abonnement abonnement, Timestamp startDatum) {
+	public boolean insertZesMaandAbonnement(Abonnement abonnement) {
 		PreparedStatement prep = null;
 		String sql = "INSERT INTO abonnement VALUES(null,?,?,?,?,?,?,?,?)";
 
@@ -67,16 +68,17 @@ public class AbonnementDAO extends BaseDAO {
 			prep.setInt(1, abonnement.getKlant_contactId());
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
-			prep.setTimestamp(4, startDatum);
-			prep.setTimestamp(5, abonnement.getTimestampZesMaandAbonnemant(abonnement.getEindDatum()));
+			prep.setTimestamp(4, abonnement.getStartDatum());
+			prep.setTimestamp(5, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getStartDatum()));
 			prep.setInt(6, abonnement.getKortingId());
 			prep.setInt(7, abonnement.getPrijsId().getPrijs_abonnementid());
 			prep.setBoolean(8, abonnement.isActief());
 
-			return prep.executeUpdate();
+			prep.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)
@@ -88,7 +90,7 @@ public class AbonnementDAO extends BaseDAO {
 		}
 	}
 
-	public int insertNegenMaandAbonnement(Abonnement abonnement, Timestamp startDatum) {
+	public boolean insertNegenMaandAbonnement(Abonnement abonnement) {
 		PreparedStatement prep = null;
 		String sql = "INSERT INTO abonnement VALUES(null,?,?,?,?,?,?,?,?)";
 
@@ -100,16 +102,17 @@ public class AbonnementDAO extends BaseDAO {
 			prep.setInt(1, abonnement.getKlant_contactId());
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
-			prep.setTimestamp(4, startDatum);
-			prep.setTimestamp(5, abonnement.getTimestampNegenMaandAbonnemant(abonnement.getEindDatum()));
+			prep.setTimestamp(4, abonnement.getStartDatum());
+			prep.setTimestamp(5, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getStartDatum()));
 			prep.setInt(6, abonnement.getKortingId());
 			prep.setInt(7, abonnement.getPrijsId().getPrijs_abonnementid());
 			prep.setBoolean(8, abonnement.isActief());
 
-			return prep.executeUpdate();
+			prep.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)
@@ -121,7 +124,7 @@ public class AbonnementDAO extends BaseDAO {
 		}
 	}
 
-	public int insertEenJaarAbonnement(Abonnement abonnement, Timestamp startDatum) {
+	public boolean insertEenJaarAbonnement(Abonnement abonnement) {
 		PreparedStatement prep = null;
 		String sql = "INSERT INTO abonnement VALUES(null,?,?,?,?,?,?,?,?)";
 
@@ -133,16 +136,17 @@ public class AbonnementDAO extends BaseDAO {
 			prep.setInt(1, abonnement.getKlant_contactId());
 			prep.setInt(2, abonnement.getGebruikerId());
 			prep.setString(3, abonnement.getRoute());
-			prep.setTimestamp(4, startDatum);
-			prep.setTimestamp(5, abonnement.getTimestampJaarAbonnemant(abonnement.getEindDatum()));
+			prep.setTimestamp(4, abonnement.getStartDatum());
+			prep.setTimestamp(5, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getStartDatum()));
 			prep.setInt(6, abonnement.getKortingId());
 			prep.setInt(7, abonnement.getPrijsId().getPrijs_abonnementid());
 			prep.setBoolean(8, abonnement.isActief());
 
-			return prep.executeUpdate();
+			prep.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)
@@ -155,7 +159,7 @@ public class AbonnementDAO extends BaseDAO {
 		}
 	}
 
-	public int verlengAbonnementMetDrieMaand(Abonnement abonnement) {
+	public boolean verlengAbonnementMetDrieMaand(Abonnement abonnement) {
 		String sql = "UPDATE abonnement SET start_datum = ?, eind_datum = ? WHERE abonnement_id=?";
 		PreparedStatement prep = null;
 		try {
@@ -166,14 +170,15 @@ public class AbonnementDAO extends BaseDAO {
 
 			abonnement.getEindDatum().setTime(abonnement.getEindDatum().getTime() + (1 * 1000));
 			
-			prep.setTimestamp(1, abonnement.getEindDatum());
+			prep.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
 			prep.setTimestamp(2, abonnement.getTimestampDrieMaandAbonnemant(abonnement.getEindDatum()));
 			prep.setInt(3, abonnement.getAbonnementId());
 
-			return prep.executeUpdate();
+			prep.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)
@@ -186,7 +191,7 @@ public class AbonnementDAO extends BaseDAO {
 		}
 	}
 
-	public int verlengAbonnementMetZesMaand(Abonnement abonnement) {
+	public boolean verlengAbonnementMetZesMaand(Abonnement abonnement) {
 		String sql = "UPDATE abonnement SET start_datum = ?, eind_datum = ? WHERE abonnement_id=?";
 		PreparedStatement prep = null;
 		try {
@@ -197,14 +202,15 @@ public class AbonnementDAO extends BaseDAO {
 
 			abonnement.getEindDatum().setTime(abonnement.getEindDatum().getTime() + (1 * 1000));
 
-			prep.setTimestamp(1, abonnement.getEindDatum());
+			prep.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
 			prep.setTimestamp(2, abonnement.getTimestampZesMaandAbonnemant(abonnement.getEindDatum()));
 			prep.setInt(3, abonnement.getAbonnementId());
 
-			return prep.executeUpdate();
+			prep.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)
@@ -217,7 +223,7 @@ public class AbonnementDAO extends BaseDAO {
 		}
 	}
 
-	public int verlengAbonnementMetNegenMaand(Abonnement abonnement) {
+	public boolean verlengAbonnementMetNegenMaand(Abonnement abonnement) {
 		String sql = "UPDATE abonnement SET start_datum = ?, eind_datum = ? WHERE abonnement_id=?";
 		PreparedStatement prep = null;
 		try {
@@ -228,14 +234,15 @@ public class AbonnementDAO extends BaseDAO {
 
 			abonnement.getEindDatum().setTime(abonnement.getEindDatum().getTime() + (1 * 1000));
 
-			prep.setTimestamp(1, abonnement.getEindDatum());
+			prep.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
 			prep.setTimestamp(2, abonnement.getTimestampNegenMaandAbonnemant(abonnement.getEindDatum()));
 			prep.setInt(3, abonnement.getAbonnementId());
 
-			return prep.executeUpdate();
+			prep.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)
@@ -248,7 +255,7 @@ public class AbonnementDAO extends BaseDAO {
 		}
 	}
 
-	public int verlengAbonnementMetEenJaar(Abonnement abonnement) {
+	public boolean verlengAbonnementMetEenJaar(Abonnement abonnement) {
 		String sql = "UPDATE abonnement SET start_datum = ?, eind_datum = ? WHERE abonnement_id=?";
 		PreparedStatement prep = null;
 		try {
@@ -259,14 +266,15 @@ public class AbonnementDAO extends BaseDAO {
 
 			abonnement.getEindDatum().setTime(abonnement.getEindDatum().getTime() + (1 * 1000));
 
-			prep.setTimestamp(1, abonnement.getEindDatum());
+			prep.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
 			prep.setTimestamp(2, abonnement.getTimestampJaarAbonnemant(abonnement.getEindDatum()));
 			prep.setInt(3, abonnement.getAbonnementId());
 
-			return prep.executeUpdate();
+			prep.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)

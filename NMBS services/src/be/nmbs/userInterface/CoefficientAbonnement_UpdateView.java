@@ -2,177 +2,108 @@ package be.nmbs.userInterface;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import be.nmbs.controllers.CoefficientAbonnement_UpdateController;
-import be.nmbs.controllers.HomeController;
-import be.nmbs.database.TypeAbonnementDAO;
 import be.nmbs.logic.TypeAbonnement;
 
 public class CoefficientAbonnement_UpdateView {
-	private static JButton updateCoeff;
-	private static JButton goBackToHome;
-	private static JPanel panel;
-	private static JPanel tPanel;
-	private static JLabel lblCoeff;
-	private static JTextField txtCoeff;
-	private static JLabel lblTypeId;
-	private static String coeff;
-	private static JComboBox<TypeAbonnement> typeLijst;
-	private static TypeAbonnementDAO typeAboDao = new TypeAbonnementDAO();
-
-	private static CoefficientAbonnement_UpdateController coefficientAbonnement_UpdateController;
-	public static JPanel initialize(View view) {
-		panel = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
+	private final JPanel panel = new JPanel(new GridBagLayout());
 	
-		lblTypeId = new JLabel("Type Abonnement");
+	private final JLabel typeLabel = new JLabel("Type Abonnement");
+	private final JLabel coefficientLabel = new JLabel("Update naar");
+	
+	private final JTextField coefficientTextField = new JTextField(10);
+	
+	private JComboBox<TypeAbonnement> typeComboBox;
+	
+	private final JButton updateButton = new JButton("Coëfficient aanpassen");
+	private final JButton backButton = new JButton("Terug");
+
+	private final CoefficientAbonnement_UpdateController coefficientAbonnement_UpdateController = new CoefficientAbonnement_UpdateController();
+	
+	public JPanel initialize(View view) {
+		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
+	
+		// Add Type Label
 		c.gridx = 0;
 		c.gridy = 0;
-		panel.add(lblTypeId, c);
+		panel.add(typeLabel, c);
 		
-		ArrayList<TypeAbonnement> allType = typeAboDao.getAll();
-		typeLijst = new JComboBox<>();
+		// Add Type Combobox
+		ArrayList<TypeAbonnement> allType = coefficientAbonnement_UpdateController.getAllAbonnementTypes();
+		typeComboBox = new JComboBox<>();
 		for (TypeAbonnement ta : allType) {
-			typeLijst.addItem(ta);
+			typeComboBox.addItem(ta);
 		}
 		
-		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(0, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 0;
-		panel.add(typeLijst, c);
+		panel.add(typeComboBox, c);
 		
-		lblCoeff = new JLabel("Update naar: ");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Coefficient Label
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 2;
-		panel.add(lblCoeff, c);
+		panel.add(coefficientLabel, c);
 		
-		txtCoeff = new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Coefficient Text Field
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 2;
-		panel.add(txtCoeff, c);
+		panel.add(coefficientTextField, c);
 
-		// buttons
-		updateCoeff = new JButton("Coefficient Updaten");
-		new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Update Button
+		c.insets = new Insets(5, 0, 0, 0);
+		c.gridx = 0;
+		c.gridy = 3;
+		panel.add(updateButton, c);
+		
+		updateButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TypeAbonnement typeAboId = (TypeAbonnement) typeComboBox.getSelectedItem();
+
+				try {
+					double coef = Double.parseDouble(coefficientTextField.getText());
+				
+					if (coefficientAbonnement_UpdateController.updateCoefficient(typeAboId.getId(), coef)) {
+						JOptionPane.showMessageDialog(panel, "Coëfficient aangepast.");
+					} else {
+						JOptionPane.showMessageDialog(panel, "Er is iets foutgelopen bij het aanpassen van de coëfficient, probeer opnieuw.");
+					}
+				} catch (NumberFormatException e1) {
+					
+				}
+			}
+		});
+		
+		// Add Back Button
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 3;
-		panel.add(updateCoeff, c);
+		panel.add(backButton, c);
 		
-		goBackToHome = new JButton("Home");
-		new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 4;
-		panel.add(goBackToHome, c);
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CoefficientAbonnementView newView = new CoefficientAbonnementView();
+				view.changeView(newView.initialize(view));
+			}
+		});
 
-		coefficientAbonnement_UpdateController = new CoefficientAbonnement_UpdateController(view);
-		return panel;
-
-	}
-	
-	public static void setCoefficientAbonnement_UpdateControllerToNull()
-	{
-		coefficientAbonnement_UpdateController = null;
-	}
-
-	public static JButton getUpdateCoeff() {
-		return updateCoeff;
-	}
-
-	public static void setUpdateCoeff(JButton updateCoeff) {
-		CoefficientAbonnement_UpdateView.updateCoeff = updateCoeff;
-	}
-
-	public static JButton getGoBackToHome() {
-		return goBackToHome;
-	}
-
-	public static void setGoBackToHome(JButton goBackToHome) {
-		CoefficientAbonnement_UpdateView.goBackToHome = goBackToHome;
-	}
-
-	public static JPanel getPanel() {
 		return panel;
 	}
-
-	public static void setPanel(JPanel panel) {
-		CoefficientAbonnement_UpdateView.panel = panel;
-	}
-
-	public static JPanel gettPanel() {
-		return tPanel;
-	}
-
-	public static void settPanel(JPanel tPanel) {
-		CoefficientAbonnement_UpdateView.tPanel = tPanel;
-	}
-
-	public static JLabel getLblCoeff() {
-		return lblCoeff;
-	}
-
-	public static void setLblCoeff(JLabel lblCoeff) {
-		CoefficientAbonnement_UpdateView.lblCoeff = lblCoeff;
-	}
-
-	public static JTextField getTxtCoeff() {
-		return txtCoeff;
-	}
-
-	public static void setTxtCoeff(JTextField txtCoeff) {
-		CoefficientAbonnement_UpdateView.txtCoeff = txtCoeff;
-	}
-
-	public static JLabel getLblTypeId() {
-		return lblTypeId;
-	}
-
-	public static void setLblTypeId(JLabel lblTypeId) {
-		CoefficientAbonnement_UpdateView.lblTypeId = lblTypeId;
-	}
-
-	public static String getCoeff() {
-		return coeff;
-	}
-
-	public static void setCoeff(String coeff) {
-		CoefficientAbonnement_UpdateView.coeff = coeff;
-	}
-
-	public static JComboBox<TypeAbonnement> getTypeLijst() {
-		return typeLijst;
-	}
-
-	public static void setTypeLijst(JComboBox<TypeAbonnement> typeLijst) {
-		CoefficientAbonnement_UpdateView.typeLijst = typeLijst;
-	}
-
-	public static TypeAbonnementDAO getTypeAboDao() {
-		return typeAboDao;
-	}
-
-	public static void setTypeAboDao(TypeAbonnementDAO typeAboDao) {
-		CoefficientAbonnement_UpdateView.typeAboDao = typeAboDao;
-	}
-
-	public static CoefficientAbonnement_UpdateController getCoefficientAbonnement_UpdateController() {
-		return coefficientAbonnement_UpdateController;
-	}
-
-	public static void setCoefficientAbonnement_UpdateController(
-			CoefficientAbonnement_UpdateController coefficientAbonnement_UpdateController) {
-		CoefficientAbonnement_UpdateView.coefficientAbonnement_UpdateController = coefficientAbonnement_UpdateController;
-	}
-
 }

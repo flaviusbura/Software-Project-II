@@ -54,13 +54,12 @@ public class TicketDAO extends BaseDAO{
 				int klas = res.getInt("klas");
 				boolean actief = res.getBoolean("actief");
 				eindStation.setNaam(res.getString("eind_station"));
-				String omschrijving = res.getString("omschrijving");
 				int prijsId = res.getInt("prijs_id");
 				prijsticket = tpdao.getPrijs_ticketObjectOpPrijs_ticketId(prijsId);
 				int kortingId = res.getInt("korting_id");
 				station.setNaam(res.getString("station"));
 				int gebrukerId = res.getInt("gebruiker_id");
-				Ticket ticket = new Ticket(ticketId, startStation, soort, timestamp, klas, actief, eindStation, omschrijving,prijsticket,
+				Ticket ticket = new Ticket(ticketId, startStation, soort, timestamp, klas, actief, eindStation,prijsticket,
 						kortingId, station, gebrukerId);
 			
 				lijst.add(ticket);
@@ -89,7 +88,7 @@ public class TicketDAO extends BaseDAO{
 	 */
 	public boolean insert(Ticket ticket) {
 		PreparedStatement prep = null;
-		String sql = "INSERT INTO ticket VALUES(null,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO ticket VALUES(null,?,?,?,?,?,?,?,?,?,?)";
 		
 		try {
 			if (getConnection().isClosed()) {
@@ -115,11 +114,10 @@ public class TicketDAO extends BaseDAO{
 			prep.setInt(4, ticket.getKlas());
 			prep.setBoolean(5, ticket.isActief());
 			prep.setString(6, ticket.getEindStation().getNaam());
-			prep.setString(7, ticket.getOmschrijving());
-			prep.setInt(8, ticket.getPrijsId().getPrijs_ticketid());
-			prep.setInt(9, ticket.getKortingId());
-			prep.setString(10, ticket.getStation().getNaam());
-			prep.setInt(11, ticket.getGebruikerId());
+			prep.setInt(7, ticket.getPrijsId().getPrijs_ticketid());
+			prep.setInt(8, ticket.getKortingId());
+			prep.setString(9, ticket.getStation().getNaam());
+			prep.setInt(10, ticket.getGebruikerId());
 			prep.executeUpdate();
 			return true;
 		} catch (SQLException e) {

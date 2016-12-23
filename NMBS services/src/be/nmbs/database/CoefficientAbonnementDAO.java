@@ -3,14 +3,12 @@ package be.nmbs.database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import be.nmbs.logic.CoefficientAbonnement;
-import be.nmbs.logic.Prijs;;
 
 public class CoefficientAbonnementDAO extends BaseDAO {
 
-	public int insert(CoefficientAbonnement coefficientAbonnement) {
+	public boolean insert(CoefficientAbonnement coefficientAbonnement) {
 		PreparedStatement prep = null;
 		String sql = "INSERT INTO coefficient_abonnement VALUES(null,?,?)";
 
@@ -21,10 +19,11 @@ public class CoefficientAbonnementDAO extends BaseDAO {
 			prep = getConnection().prepareStatement(sql);
 			prep.setInt(1, coefficientAbonnement.getTypeAbonnementId());
 			prep.setDouble(2, coefficientAbonnement.getCoefficient());
-			return prep.executeUpdate();
+			prep.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)
@@ -37,7 +36,7 @@ public class CoefficientAbonnementDAO extends BaseDAO {
 		}
 	}
 
-	public int delete(CoefficientAbonnement coefficientAbonnement) {
+	public boolean delete(int id) {
 		String sql = "DELETE FROM coefficient_abonnement WHERE coefficient_abonnementId=?";
 		PreparedStatement prep = null;
 		try {
@@ -46,11 +45,12 @@ public class CoefficientAbonnementDAO extends BaseDAO {
 			}
 			prep = getConnection().prepareStatement(sql);
 
-			prep.setInt(1, coefficientAbonnement.getCoefficientAbonnementId());
-			return prep.executeUpdate();
+			prep.setInt(1, id);
+			prep.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)
@@ -90,7 +90,7 @@ public class CoefficientAbonnementDAO extends BaseDAO {
 		}
 	}
 
-	public int updateCoefficient_ById(int id, double coef) {
+	public boolean updateCoefficient_ById(int id, double coef) {
 		PreparedStatement prep = null;
 		String sql = "UPDATE coefficient_abonnement SET coefficient=? WHERE type_abonnementId=?";
 
@@ -101,10 +101,11 @@ public class CoefficientAbonnementDAO extends BaseDAO {
 			prep = getConnection().prepareStatement(sql);
 			prep.setDouble(1, coef);
 			prep.setInt(2, id);
-			return prep.executeUpdate();
+			prep.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)

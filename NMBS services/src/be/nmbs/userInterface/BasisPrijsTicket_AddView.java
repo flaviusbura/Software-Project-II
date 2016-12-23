@@ -2,143 +2,112 @@ package be.nmbs.userInterface;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import be.nmbs.controllers.BasisPrijsTicket_AddController;
-import be.nmbs.controllers.CoefficientTicket_AddController;
-import be.nmbs.controllers.HomeController;
-import be.nmbs.database.TypeTicketDAO;
+import be.nmbs.logic.BasisprijsTicket;
 import be.nmbs.logic.TypeTicket;
 
 public class BasisPrijsTicket_AddView {
-	private static JButton addPrijs;
-	private static JButton goBackToHome;
-	private static JPanel panel;
-	private static JLabel lblPrijs;
-	private static JTextField txtPrijs;
-	private static JLabel lblTypeId;
+	private final JPanel panel = new JPanel(new GridBagLayout());
 	
-	private static JComboBox<TypeTicket> typeLijst;
-	private static TypeTicketDAO typeTicketDao = new TypeTicketDAO();
+	private final JLabel typeLabel = new JLabel("Type Ticket");
+	private final JLabel prijsLabel = new JLabel("Prijs");	
+	
+	private final JTextField prijsTextField = new JTextField(10);
+	
+	private final JButton addButton = new JButton("Prijs Toevoegen");;
+	private final JButton backButton = new JButton("Terug");
+	
+	private JComboBox<TypeTicket> typeComboBox;
 
-	private static BasisPrijsTicket_AddController basisPrijsTicket_AddController;
+	private final BasisPrijsTicket_AddController basisPrijsTicket_AddController = new BasisPrijsTicket_AddController();
 	
-	public static JPanel initialize(View view) {
-		panel = new JPanel(new GridBagLayout());
+	public JPanel initialize(View view) {
 		GridBagConstraints c = new GridBagConstraints();
-	
-		lblTypeId = new JLabel("Type Ticket");
 		c.fill = GridBagConstraints.HORIZONTAL;
+	
+		// Add Type Label
 		c.gridx = 0;
 		c.gridy = 0;
-		panel.add(lblTypeId, c);
+		panel.add(typeLabel, c);
 		
-		ArrayList<TypeTicket> allType = typeTicketDao.getAll();
-		typeLijst = new JComboBox<>();
+		// Add Type Combobox
+		ArrayList<TypeTicket> allType = basisPrijsTicket_AddController.getAllTicketTypes();
+		typeComboBox = new JComboBox<>();
 		for (TypeTicket tt : allType) {
-			typeLijst.addItem(tt);
+			typeComboBox.addItem(tt);
 		}
 		
-		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(0, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 0;
-		panel.add(typeLijst, c);
+		panel.add(typeComboBox, c);
 		
-		lblPrijs = new JLabel("Coefficient ");	
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Prijs Label
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 1;
-		panel.add(lblPrijs, c);
+		panel.add(prijsLabel, c);
 		
-		txtPrijs = new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Prijs Text Field
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 1;
-		panel.add(txtPrijs, c);
+		panel.add(prijsTextField, c);
 
-		// buttons
-		addPrijs = new JButton("Prijs Toevoegen");
-		new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Add Button
+		c.insets = new Insets(5, 0, 0, 0);
+		c.gridx = 0;
+		c.gridy = 2;
+		panel.add(addButton, c);
+		
+		addButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TypeTicket typeAboId = (TypeTicket) typeComboBox.getSelectedItem();
+				
+				try {
+					double prijs = Double.parseDouble(prijsTextField.getText());
+	
+					BasisprijsTicket bpt = new BasisprijsTicket(typeAboId.getId(), prijs);
+	
+					if (basisPrijsTicket_AddController.insertBasisPrijsTicket(bpt)) {
+						JOptionPane.showMessageDialog(panel, "Prijs toegevoegd.");
+					} else {
+						JOptionPane.showMessageDialog(panel, "Er is iets foutgelopen bij het toevoegen van de prijs, probeer opnieuw.");
+					}
+				} catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(panel, "Geef een geldige prijs in.");
+				}
+			}
+		});
+		
+		// Add Back Button
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 2;
-		panel.add(addPrijs, c);
+		panel.add(backButton, c);
 		
-		goBackToHome = new JButton("Home");
-		new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 3;
-		panel.add(goBackToHome, c);
-
-		basisPrijsTicket_AddController = new BasisPrijsTicket_AddController(view);
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				BasisPrijsTicketView newView = new BasisPrijsTicketView();
+				view.changeView(newView.initialize(view));
+			}
+		});
 		
 		return panel;
 
 	}
-	public static void setBasisPrijsTicket_AddControllerToNull()
-	{
-		basisPrijsTicket_AddController= null;
-	}
-	public static JButton getAddPrijs() {
-		return addPrijs;
-	}
-	public static void setAddPrijs(JButton addPrijs) {
-		BasisPrijsTicket_AddView.addPrijs = addPrijs;
-	}
-	public static JButton getGoBackToHome() {
-		return goBackToHome;
-	}
-	public static void setGoBackToHome(JButton goBackToHome) {
-		BasisPrijsTicket_AddView.goBackToHome = goBackToHome;
-	}
-	public static JPanel getPanel() {
-		return panel;
-	}
-	public static void setPanel(JPanel panel) {
-		BasisPrijsTicket_AddView.panel = panel;
-	}
-	public static JLabel getLblPrijs() {
-		return lblPrijs;
-	}
-	public static void setLblPrijs(JLabel lblPrijs) {
-		BasisPrijsTicket_AddView.lblPrijs = lblPrijs;
-	}
-	public static JTextField getTxtPrijs() {
-		return txtPrijs;
-	}
-	public static void setTxtPrijs(JTextField txtPrijs) {
-		BasisPrijsTicket_AddView.txtPrijs = txtPrijs;
-	}
-	public static JLabel getLblTypeId() {
-		return lblTypeId;
-	}
-	public static void setLblTypeId(JLabel lblTypeId) {
-		BasisPrijsTicket_AddView.lblTypeId = lblTypeId;
-	}
-	public static JComboBox<TypeTicket> getTypeLijst() {
-		return typeLijst;
-	}
-	public static void setTypeLijst(JComboBox<TypeTicket> typeLijst) {
-		BasisPrijsTicket_AddView.typeLijst = typeLijst;
-	}
-	public static TypeTicketDAO getTypeTicketDao() {
-		return typeTicketDao;
-	}
-	public static void setTypeTicketDao(TypeTicketDAO typeTicketDao) {
-		BasisPrijsTicket_AddView.typeTicketDao = typeTicketDao;
-	}
-	public static BasisPrijsTicket_AddController getBasisPrijsTicket_AddController() {
-		return basisPrijsTicket_AddController;
-	}
-	public static void setBasisPrijsTicket_AddController(BasisPrijsTicket_AddController basisPrijsTicket_AddController) {
-		BasisPrijsTicket_AddView.basisPrijsTicket_AddController = basisPrijsTicket_AddController;
-	}
-	
 }

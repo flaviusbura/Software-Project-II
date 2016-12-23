@@ -201,8 +201,8 @@ public class HomeView {
 			prijzenBeheerButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					PrijsBeheerView.setPrijsBeheerControllerToNull();
-					view.changeView(PrijsBeheerView.initialize(view));
+					PrijsBeheerView newView = new PrijsBeheerView();
+					view.changeView(newView.initialize(view));
 					
 				}
 			});
@@ -215,8 +215,8 @@ public class HomeView {
 			statistiekButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					StatistiekView.setStatistiekControllerToNull();
-					view.changeView(StatistiekView.initialize(view));
+					StatistiekView newView = new StatistiekView();
+					view.changeView(newView.initialize(view));
 				}
 			});
 		}

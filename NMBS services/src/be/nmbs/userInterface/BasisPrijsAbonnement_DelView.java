@@ -1,108 +1,82 @@
 package be.nmbs.userInterface;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import be.nmbs.controllers.BasisPrijsAbonnement_DelController;
-import be.nmbs.controllers.HomeController;
 
 public class BasisPrijsAbonnement_DelView {
-	private static JButton delPrijs;
-	private static JButton goBackToHome;
-	private static JPanel panel;
-	private static JLabel lblPrijs;
-	private static JTextField txtPrijs;
+	private final JPanel panel = new JPanel(new GridBagLayout());
+	
+	private final JLabel prijsLabel = new JLabel("Geef het Basisprijs ID");
+	
+	private final JTextField prijsTextField = new JTextField(10);
+	
+	private final JButton deleteButton = new JButton("Prijs deleten");
+	private final JButton backButton = new JButton("Terug");
 
-	private static BasisPrijsAbonnement_DelController basisPrijsAbonnement_DelController;
+	private final BasisPrijsAbonnement_DelController basisPrijsAbonnement_DelController = new BasisPrijsAbonnement_DelController();
 
-	public static JPanel initialize(View view) {
-		panel = new JPanel(new GridBagLayout());
+	public JPanel initialize(View view) {
 		GridBagConstraints c = new GridBagConstraints();
-
-		lblPrijs = new JLabel("Geef de Basisprijs ID ");
 		c.fill = GridBagConstraints.HORIZONTAL;
+
+		// Add Prijs Label
 		c.gridx = 0;
 		c.gridy = 1;
-		panel.add(lblPrijs, c);
+		panel.add(prijsLabel, c);
 
-		txtPrijs = new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Prijs Text Field
+		c.insets = new Insets(0, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 1;
-		panel.add(txtPrijs, c);
+		panel.add(prijsTextField, c);
 
-		// buttons
-		delPrijs = new JButton("Prijs deleten");
-		new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Delete Button
+		c.insets = new Insets(5, 0, 0, 0);
+		c.gridx = 0;
+		c.gridy = 2;
+		panel.add(deleteButton, c);
+		
+		deleteButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					int id = Integer.parseInt(prijsTextField.getText());
+						
+					if (basisPrijsAbonnement_DelController.deletePrijs(id)) {
+						JOptionPane.showMessageDialog(panel, "Prijs verwijderd.");
+					} else {
+						JOptionPane.showMessageDialog(panel, "Er is iets misgegaan bij het verwijderen van de prijs, probeer opnieuw.");
+					}
+				} catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(panel, "Geef een geldig ID in.");
+				}
+			}
+		});
+
+		// Add Back Button
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 2;
-		panel.add(delPrijs, c);
+		panel.add(backButton, c);
+		
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				BasisPrijsAbonnementView newView = new BasisPrijsAbonnementView();
+				view.changeView(newView.initialize(view));
+			}
+		});
 
-		goBackToHome = new JButton("Home");
-		new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 3;
-		panel.add(goBackToHome, c);
-
-		basisPrijsAbonnement_DelController = new BasisPrijsAbonnement_DelController(view);
 		return panel;
 	}
-
-	public static void setBasisPrijsAbonnement_DelControllerToNull() {
-		basisPrijsAbonnement_DelController = null;
-	}
-
-	public static JButton getDelPrijs() {
-		return delPrijs;
-	}
-
-	public static void setDelPrijs(JButton delPrijs) {
-		BasisPrijsAbonnement_DelView.delPrijs = delPrijs;
-	}
-
-	public static JButton getGoBackToHome() {
-		return goBackToHome;
-	}
-
-	public static void setGoBackToHome(JButton goBackToHome) {
-		BasisPrijsAbonnement_DelView.goBackToHome = goBackToHome;
-	}
-
-	public static JPanel getPanel() {
-		return panel;
-	}
-
-	public static void setPanel(JPanel panel) {
-		BasisPrijsAbonnement_DelView.panel = panel;
-	}
-
-	public static JLabel getLblPrijs() {
-		return lblPrijs;
-	}
-
-	public static void setLblPrijs(JLabel lblPrijs) {
-		BasisPrijsAbonnement_DelView.lblPrijs = lblPrijs;
-	}
-
-	public static JTextField getTxtPrijs() {
-		return txtPrijs;
-	}
-
-	public static void setTxtPrijs(JTextField txtPrijs) {
-		BasisPrijsAbonnement_DelView.txtPrijs = txtPrijs;
-	}
-
-	public static BasisPrijsAbonnement_DelController getBasisPrijsAbonnement_DelController() {
-		return basisPrijsAbonnement_DelController;
-	}
-
-	public static void setBasisPrijsAbonnement_DelController(
-			BasisPrijsAbonnement_DelController basisPrijsAbonnement_DelController) {
-		BasisPrijsAbonnement_DelView.basisPrijsAbonnement_DelController = basisPrijsAbonnement_DelController;
-	}
-	
 }

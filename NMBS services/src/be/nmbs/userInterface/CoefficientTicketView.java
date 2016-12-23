@@ -9,40 +9,55 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class PrijsBeheerView {
+public class CoefficientTicketView {
 	private final JPanel panel = new JPanel(new GridBagLayout());
-
-	private final JButton prijsButton = new JButton("Prijzen");
-	private final JButton coefficientButton = new JButton("Coëfficient");
+	
+	private final JButton insertButton = new JButton("Coëfficient toevoegen");
+	private final JButton deleteButton = new JButton("Coëfficient verwijderen");
+	private final JButton updateButton = new JButton("Coëfficient aanpassen");
 	private final JButton backButton = new JButton("Terug");
 
 	public JPanel initialize(View view) {
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
-		
-		// Add Prijs Button
+
+		// Add Insert Button
 		c.gridx = 0;
 		c.gridy = 0;
-		panel.add(prijsButton, c);
+		panel.add(insertButton, c);
 		
-		prijsButton.addActionListener(new ActionListener() {
+		insertButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				PrijsView newView = new PrijsView();
+				CoefficientTicket_AddView newView = new CoefficientTicket_AddView();
 				view.changeView(newView.initialize(view));
 			}
 		});
 		
-		// Add Coefficient Button
+		// Add Delete Button
 		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 1;
-		panel.add(coefficientButton, c);
+		panel.add(deleteButton, c);
 		
-		coefficientButton.addActionListener(new ActionListener() {
+		deleteButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				CoefficientView newView = new CoefficientView();
+				CoefficientTicket_DelView newView = new CoefficientTicket_DelView();
+				view.changeView(newView.initialize(view));
+			}
+		});
+
+		// Add UpdateButton
+		c.insets = new Insets(5, 0, 0, 0);
+		c.gridx = 0;
+		c.gridy = 2;
+		panel.add(updateButton, c);
+		
+		updateButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CoefficientTicket_UpdateView newView = new CoefficientTicket_UpdateView();
 				view.changeView(newView.initialize(view));
 			}
 		});
@@ -50,13 +65,13 @@ public class PrijsBeheerView {
 		// Add Back Button
 		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
-		c.gridy = 2;
+		c.gridy = 3;
 		panel.add(backButton, c);
 		
 		backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				HomeView newView = new HomeView();
+				CoefficientView newView = new CoefficientView();
 				view.changeView(newView.initialize(view));
 			}
 		});

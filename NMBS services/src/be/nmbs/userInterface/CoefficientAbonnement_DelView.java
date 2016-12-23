@@ -2,107 +2,82 @@ package be.nmbs.userInterface;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.ArrayList;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import be.nmbs.controllers.CoefficientAbonnement_AddController;
 import be.nmbs.controllers.CoefficientAbonnement_DelController;
-import be.nmbs.controllers.HomeController;
-import be.nmbs.database.TypeAbonnementDAO;
-import be.nmbs.logic.TypeAbonnement;
 
 public class CoefficientAbonnement_DelView {
+	private final JPanel panel = new JPanel(new GridBagLayout());
 	
-	private static JButton delCoeff;
-	private static JButton goBackToHome;
-	private static JPanel panel;
-	private static JLabel lblCoeff;
-	private static JTextField txtCoeff;
-	private static CoefficientAbonnement_DelController coefficientAbonnement_DelController;
+	private final JLabel coefficientLabel = new JLabel("Geef het Coëfficient ID");
 	
-	public static JPanel initialize(View view) {
-		panel = new JPanel(new GridBagLayout());
+	private final JTextField coefficientTextField = new JTextField(10);
+	
+	private final JButton deleteButton = new JButton("Coëfficient verwijderen");
+	private final JButton backButton = new JButton("Terug");
+	
+	private final CoefficientAbonnement_DelController coefficientAbonnement_DelController = new CoefficientAbonnement_DelController();
+	
+	public JPanel initialize(View view) {
 		GridBagConstraints c = new GridBagConstraints();
-	
-		lblCoeff = new JLabel("Geef de Coefficient ID ");
 		c.fill = GridBagConstraints.HORIZONTAL;
+	
+		// Add Coefficient Label
 		c.gridx = 0;
 		c.gridy = 1;
-		panel.add(lblCoeff, c);
+		panel.add(coefficientLabel, c);
 		
-		txtCoeff = new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Coefficient Text
+		c.insets = new Insets(0, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 1;
-		panel.add(txtCoeff, c);
+		panel.add(coefficientTextField, c);
 
+		// Add Delete Button
+		c.insets = new Insets(5, 0, 0, 0);
+		c.gridx = 0;
+		c.gridy = 2;
+		panel.add(deleteButton, c);
 		
-
-		// buttons
-		delCoeff = new JButton("Coefficient deleten");
-		new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		deleteButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Integer id = Integer.parseInt(coefficientTextField.getText());
+					
+					if (coefficientAbonnement_DelController.deleteCoefficient(id)) {
+						JOptionPane.showMessageDialog(panel, "Coëfficient verwijderd.");
+					} else {
+						JOptionPane.showMessageDialog(panel, "Er is iets foutgelopen bij het verwijderen van de coëfficient, probeer opnieuw.");
+					}
+				} catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(panel, "Geef een geldige coëfficient in.");
+				}
+			}
+		});
+		
+		// Add Back Button
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 2;
-		panel.add(delCoeff, c);
+		panel.add(backButton, c);
 		
-		goBackToHome = new JButton("Home");
-		new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 3;
-		panel.add(goBackToHome, c);
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CoefficientAbonnementView newView = new CoefficientAbonnementView();
+				view.changeView(newView.initialize(view));
+			}
+		});
 
-		coefficientAbonnement_DelController = new CoefficientAbonnement_DelController(view);
 		return panel;
 	}
-	
-	public static void setCoefficientAbonnement_DelControllerToNull()
-	{
-		coefficientAbonnement_DelController= null;
-	}
-	public static JButton getDelCoeff() {
-		return delCoeff;
-	}
-	public static void setDelCoeff(JButton delCoeff) {
-		CoefficientAbonnement_DelView.delCoeff = delCoeff;
-	}
-	public static JButton getGoBackToHome() {
-		return goBackToHome;
-	}
-	public static void setGoBackToHome(JButton goBackToHome) {
-		CoefficientAbonnement_DelView.goBackToHome = goBackToHome;
-	}
-	public static JPanel getPanel() {
-		return panel;
-	}
-	public static void setPanel(JPanel panel) {
-		CoefficientAbonnement_DelView.panel = panel;
-	}
-	public static JLabel getLblCoeff() {
-		return lblCoeff;
-	}
-	public static void setLblCoeff(JLabel lblCoeff) {
-		CoefficientAbonnement_DelView.lblCoeff = lblCoeff;
-	}
-	public static JTextField getTxtCoeff() {
-		return txtCoeff;
-	}
-	public static void setTxtCoeff(JTextField txtCoeff) {
-		CoefficientAbonnement_DelView.txtCoeff = txtCoeff;
-	}
-	public static CoefficientAbonnement_DelController getCoefficientAbonnement_DelController() {
-		return coefficientAbonnement_DelController;
-	}
-	public static void setCoefficientAbonnement_DelController(
-			CoefficientAbonnement_DelController coefficientAbonnement_DelController) {
-		CoefficientAbonnement_DelView.coefficientAbonnement_DelController = coefficientAbonnement_DelController;
-	}
-
-
 }

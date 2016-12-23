@@ -2,143 +2,111 @@ package be.nmbs.userInterface;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import be.nmbs.controllers.CoefficientTicket_AddController;
-import be.nmbs.controllers.HomeController;
-import be.nmbs.database.TypeAbonnementDAO;
-import be.nmbs.database.TypeTicketDAO;
-import be.nmbs.logic.TypeAbonnement;
+import be.nmbs.logic.CoefficientTicket;
 import be.nmbs.logic.TypeTicket;
 
 public class CoefficientTicket_AddView {
-	private static JButton addCoeff;
-	private static JButton goBackToHome;
-	private static JPanel panel;
-	private static JLabel lblCoeff;
-	private static JTextField txtCoeff;
-	private static JLabel lblTypeId;
+	private final JPanel panel = new JPanel(new GridBagLayout());
 	
-	private static JComboBox<TypeTicket> typeLijst;
-	private static TypeTicketDAO typeTicketDao = new TypeTicketDAO();
+	private final JLabel typeLabel = new JLabel("Type ticket");
+	private final JLabel coefficientLabel = new JLabel("Coëfficient");
+	
+	private final JTextField coefficientTextField = new JTextField(10);
+	
+	private JComboBox<TypeTicket> typeComboBox;
+	
+	private final JButton addButton = new JButton("Coëfficient toevoegen");
+	private final JButton backButton = new JButton("Terug");
 
-	private static CoefficientTicket_AddController coefficientTicket_AddController;
+	private CoefficientTicket_AddController coefficientTicket_AddController = new CoefficientTicket_AddController();
 	
-	public static JPanel initialize(View view) {
-		panel = new JPanel(new GridBagLayout());
+	public JPanel initialize(View view) {
 		GridBagConstraints c = new GridBagConstraints();
-	
-		lblTypeId = new JLabel("Type Ticket");
 		c.fill = GridBagConstraints.HORIZONTAL;
+	
+		// Add Type Label
 		c.gridx = 0;
 		c.gridy = 0;
-		panel.add(lblTypeId, c);
+		panel.add(typeLabel, c);
 		
-		ArrayList<TypeTicket> allType = typeTicketDao.getAll();
-		typeLijst = new JComboBox<>();
+		// Add Type Combobox
+		ArrayList<TypeTicket> allType = coefficientTicket_AddController.getAllTicketTypes();
+		typeComboBox = new JComboBox<>();
 		for (TypeTicket tt : allType) {
-			typeLijst.addItem(tt);
+			typeComboBox.addItem(tt);
 		}
 		
-		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(0, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 0;
-		panel.add(typeLijst, c);
+		panel.add(typeComboBox, c);
 		
-		lblCoeff = new JLabel("Coefficient ");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Coefficient Label
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 1;
-		panel.add(lblCoeff, c);
+		panel.add(coefficientLabel, c);
 		
-		txtCoeff = new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Coefficient Text Field
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 1;
-		panel.add(txtCoeff, c);
+		panel.add(coefficientTextField, c);
 
-		// buttons
-		addCoeff = new JButton("Coefficient Toevoegen");
-		new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Add Button
+		c.insets = new Insets(5, 0, 0, 0);
+		c.gridx = 0;
+		c.gridy = 2;
+		panel.add(addButton, c);
+		
+		addButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TypeTicket typeAboId = (TypeTicket) typeComboBox.getSelectedItem();
+				
+				try {
+					double coeff = Double.parseDouble(coefficientTextField.getText());
+	
+					CoefficientTicket ct = new CoefficientTicket(typeAboId.getId(), coeff);
+	
+					if (coefficientTicket_AddController.insertCoefficient(ct)) {
+						JOptionPane.showMessageDialog(panel, "Coëfficient toegevoegd.");
+					} else {
+						JOptionPane.showMessageDialog(panel, "Er is iets foutgelopen bij het toevoegen van de coëfficient, probeer opnieuw.");
+					}
+				} catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(panel, "Geef een geldige coëfficient in.");
+				}
+			}
+		});
+		
+		// Add Back Button
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 2;
-		panel.add(addCoeff, c);
+		panel.add(backButton, c);
 		
-		goBackToHome = new JButton("Home");
-		new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 3;
-		panel.add(goBackToHome, c);
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CoefficientTicketView newView = new CoefficientTicketView();
+				view.changeView(newView.initialize(view));
+			}
+		});
 
-		coefficientTicket_AddController = new CoefficientTicket_AddController(view);
-		return panel;
-
-	}
-	public static void setCoefficientTicket_AddControllerToNull()
-	{
-		coefficientTicket_AddController= null;
-	}
-	public static JButton getAddCoeff() {
-		return addCoeff;
-	}
-	public static void setAddCoeff(JButton addCoeff) {
-		CoefficientTicket_AddView.addCoeff = addCoeff;
-	}
-	public static JButton getGoBackToHome() {
-		return goBackToHome;
-	}
-	public static void setGoBackToHome(JButton goBackToHome) {
-		CoefficientTicket_AddView.goBackToHome = goBackToHome;
-	}
-	public static JPanel getPanel() {
 		return panel;
 	}
-	public static void setPanel(JPanel panel) {
-		CoefficientTicket_AddView.panel = panel;
-	}
-	public static JLabel getLblCoeff() {
-		return lblCoeff;
-	}
-	public static void setLblCoeff(JLabel lblCoeff) {
-		CoefficientTicket_AddView.lblCoeff = lblCoeff;
-	}
-	public static JTextField getTxtCoeff() {
-		return txtCoeff;
-	}
-	public static void setTxtCoeff(JTextField txtCoeff) {
-		CoefficientTicket_AddView.txtCoeff = txtCoeff;
-	}
-	public static JLabel getLblTypeId() {
-		return lblTypeId;
-	}
-	public static void setLblTypeId(JLabel lblTypeId) {
-		CoefficientTicket_AddView.lblTypeId = lblTypeId;
-	}
-	public static JComboBox<TypeTicket> getTypeLijst() {
-		return typeLijst;
-	}
-	public static void setTypeLijst(JComboBox<TypeTicket> typeLijst) {
-		CoefficientTicket_AddView.typeLijst = typeLijst;
-	}
-	public static TypeTicketDAO getTypeAboDao() {
-		return typeTicketDao;
-	}
-	public static void setTypeAboDao(TypeTicketDAO typeTicketDao) {
-		CoefficientTicket_AddView.typeTicketDao = typeTicketDao;
-	}
-	public static CoefficientTicket_AddController getCoefficientTicket_AddController() {
-		return coefficientTicket_AddController;
-	}
-	public static void setCoefficientTicket_AddController(CoefficientTicket_AddController coefficientTicket_AddController) {
-		CoefficientTicket_AddView.coefficientTicket_AddController = coefficientTicket_AddController;
-	}
-	
 }

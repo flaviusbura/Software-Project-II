@@ -3,11 +3,9 @@ package be.nmbs.database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import be.nmbs.logic.BasisprijsAbonnement;
-import be.nmbs.logic.Prijs;
 
 
 public class BasisprijsAbonnementenDAO extends BaseDAO{
@@ -50,7 +48,8 @@ public class BasisprijsAbonnementenDAO extends BaseDAO{
 			}
 		}
 	}
-	public int insert(BasisprijsAbonnement basisprijsAbonnement) {
+	
+	public boolean insert(BasisprijsAbonnement basisprijsAbonnement) {
 		PreparedStatement prep = null;
 		String sql = "INSERT INTO basisprijs_abonnement VALUES(null,?,?)";
 
@@ -61,10 +60,11 @@ public class BasisprijsAbonnementenDAO extends BaseDAO{
 			prep = getConnection().prepareStatement(sql);
 			prep.setInt(1, basisprijsAbonnement.getTypeAbonnementId());
 			prep.setDouble(2, basisprijsAbonnement.getPrijs());
-			return prep.executeUpdate();
+			prep.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)
@@ -77,7 +77,7 @@ public class BasisprijsAbonnementenDAO extends BaseDAO{
 		}
 	}
 
-	public int delete(BasisprijsAbonnement basisprijsAbonnement) {
+	public boolean delete(int id) {
 		String sql = "DELETE FROM basisprijs_abonnement WHERE basisprijs_abonnementId=?";
 		PreparedStatement prep = null;
 		try {
@@ -86,11 +86,12 @@ public class BasisprijsAbonnementenDAO extends BaseDAO{
 			}
 			prep = getConnection().prepareStatement(sql);
 
-			prep.setInt(1, basisprijsAbonnement.getId());
-			return prep.executeUpdate();
+			prep.setInt(1, id);
+			prep.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)
@@ -130,7 +131,7 @@ public class BasisprijsAbonnementenDAO extends BaseDAO{
 		}
 	}
 
-	public int updatePrijs_ById(int id, double prijs) {
+	public boolean updatePrijs_ById(int id, double prijs) {
 		PreparedStatement prep = null;
 		String sql = "UPDATE basisprijs_abonnement SET prijs=? WHERE basisprijs_abonnementId=?";
 
@@ -141,10 +142,11 @@ public class BasisprijsAbonnementenDAO extends BaseDAO{
 			prep = getConnection().prepareStatement(sql);
 			prep.setDouble(1, prijs);
 			prep.setInt(2, id);
-			return prep.executeUpdate();
+			prep.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)
@@ -192,8 +194,8 @@ public class BasisprijsAbonnementenDAO extends BaseDAO{
 			}
 		}
 	}
-public int getBasisPrijsIdbyTypeId(int id) {
-		
+	
+	public int getBasisPrijsIdbyTypeId(int id) {
 		PreparedStatement prep = null;
 		ResultSet res = null;
 		int prijsid = 0;

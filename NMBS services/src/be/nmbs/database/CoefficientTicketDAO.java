@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 
 public class CoefficientTicketDAO extends BaseDAO {
 
-	public int insert(CoefficientTicket coefficientTicket) {
+	public boolean insert(CoefficientTicket coefficientTicket) {
 		PreparedStatement prep = null;
 		String sql = "INSERT INTO coefficient_ticket VALUES(null,?,?)";
 
@@ -18,10 +18,11 @@ public class CoefficientTicketDAO extends BaseDAO {
 			prep = getConnection().prepareStatement(sql);
 			prep.setInt(1, coefficientTicket.getTypeTicketId());
 			prep.setDouble(2, coefficientTicket.getCoefficient());
-			return prep.executeUpdate();
+			prep.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)
@@ -34,7 +35,7 @@ public class CoefficientTicketDAO extends BaseDAO {
 		}
 	}
 
-	public int delete(CoefficientTicket coefficientTicket) {
+	public boolean delete(int id) {
 		String sql = "DELETE FROM coefficient_ticket WHERE coefficient_ticketId=?";
 		PreparedStatement prep = null;
 		try {
@@ -43,11 +44,12 @@ public class CoefficientTicketDAO extends BaseDAO {
 			}
 			prep = getConnection().prepareStatement(sql);
 
-			prep.setInt(1, coefficientTicket.getCoefficientTicketId());
-			return prep.executeUpdate();
+			prep.setInt(1, id);
+			prep.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)
@@ -86,7 +88,7 @@ public class CoefficientTicketDAO extends BaseDAO {
 		}
 	}
 
-	public int updateCoefficient_ById(int id, double coef) {
+	public boolean updateCoefficient_ById(int id, double coef) {
 		PreparedStatement prep = null;
 		String sql = "UPDATE coefficient_ticket SET coefficient=? WHERE coefficient_ticketId=?";
 
@@ -97,10 +99,11 @@ public class CoefficientTicketDAO extends BaseDAO {
 			prep = getConnection().prepareStatement(sql);
 			prep.setDouble(1, coef);
 			prep.setInt(2, id);
-			return prep.executeUpdate();
+			prep.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)

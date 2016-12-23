@@ -2,143 +2,111 @@ package be.nmbs.userInterface;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import be.nmbs.controllers.BasisPrijsAbonnement_AddController;
-import be.nmbs.controllers.CoefficientAbonnement_AddController;
-import be.nmbs.controllers.HomeController;
-import be.nmbs.database.TypeAbonnementDAO;
+import be.nmbs.logic.BasisprijsAbonnement;
 import be.nmbs.logic.TypeAbonnement;
 
 public class BasisPrijsAbonnement_AddView {
-	private static JButton addPrijs;
-	private static JButton goBackToHome;
-	private static JPanel panel;
-	private static JLabel lblPrijs;
-	private static JTextField txtPrijs;
-	private static JLabel lblTypeId;
+	private final JPanel panel = new JPanel(new GridBagLayout());
 
-	private static JComboBox<TypeAbonnement> typeLijst;
-	private static TypeAbonnementDAO typeAboDao = new TypeAbonnementDAO();
+	private final JLabel prijsLabel = new JLabel("Prijs");
+	private final JLabel typeLabel = new JLabel("Type Abonnement");
+	
+	private final JTextField prijsTextField = new JTextField(10);
+	
+	private final JButton addPrijsButton = new JButton("Prijs Toevoegen");
+	private final JButton backButton = new JButton("Terug");
 
-	private static BasisPrijsAbonnement_AddController basisPrijsAbonnement_AddController;
+	private JComboBox<TypeAbonnement> typeComboBox;
 
-	public static JPanel initialize(View view) {
-		panel = new JPanel(new GridBagLayout());
+	private final BasisPrijsAbonnement_AddController basisPrijsAbonnement_AddController = new BasisPrijsAbonnement_AddController();
+
+	public JPanel initialize(View view) {
 		GridBagConstraints c = new GridBagConstraints();
-
-		lblTypeId = new JLabel("Type Abonnement");
 		c.fill = GridBagConstraints.HORIZONTAL;
+
+		// Add Type Label
 		c.gridx = 0;
 		c.gridy = 0;
-		panel.add(lblTypeId, c);
+		panel.add(typeLabel, c);
 
-		ArrayList<TypeAbonnement> allType = typeAboDao.getAll();
-		typeLijst = new JComboBox<>();
+		// Add Type Combobox
+		ArrayList<TypeAbonnement> allType = basisPrijsAbonnement_AddController.getAllAbonnementTypes();
+		typeComboBox = new JComboBox<TypeAbonnement>();
 		for (TypeAbonnement ta : allType) {
-			typeLijst.addItem(ta);
+			typeComboBox.addItem(ta);
 		}
 
-		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(0, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 0;
-		panel.add(typeLijst, c);
+		panel.add(typeComboBox, c);
 
-		lblPrijs = new JLabel("Prijs ");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Prijs Label
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 1;
-		panel.add(lblPrijs, c);
+		panel.add(prijsLabel, c);
 
-		txtPrijs= new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Prijs Text Field
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 1;
-		panel.add(txtPrijs, c);
+		panel.add(prijsTextField, c);
 
-		// buttons
-		addPrijs = new JButton("Prijs Toevoegen");
-		new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Add Prijs Button
+		c.insets = new Insets(5, 0, 0, 0);
+		c.gridx = 0;
+		c.gridy = 2;
+		panel.add(addPrijsButton, c);
+		
+		addPrijsButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TypeAbonnement typeAboId = (TypeAbonnement) typeComboBox.getSelectedItem();
+				
+				try {
+					double prijs = Double.parseDouble(prijsTextField.getText());
+					
+					BasisprijsAbonnement bpa = new BasisprijsAbonnement(typeAboId.getId(), prijs);
+					
+					if (basisPrijsAbonnement_AddController.insertBasisPrijs(bpa)) {
+						JOptionPane.showMessageDialog(panel, "Prijs toegevoegd.");
+					} else {
+						JOptionPane.showMessageDialog(panel, "Er is iets foutgelopen bij het toevoegen van de prijs, probeer opnieuw.");
+					}
+				} catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(panel, "Geef een geldige prijs in.");
+				}
+			}
+		}); 
+
+		// Add Back Button
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 2;
-		panel.add(addPrijs, c);
-
-		goBackToHome = new JButton("Home");
-		new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 3;
-		panel.add(goBackToHome, c);
-
-		basisPrijsAbonnement_AddController = new BasisPrijsAbonnement_AddController(view);
-		return panel;
-
-	}
-
-	public static void setBasisPrijsAbonnement_AddControllerToNull() {
-		basisPrijsAbonnement_AddController = null;
-	}
-	public static JButton getAddPrijs() {
-		return addPrijs;
-	}
-	public static void setAddPrijs(JButton addPrijs) {
-		BasisPrijsAbonnement_AddView.addPrijs = addPrijs;
-	}
-	public static JButton getGoBackToHome() {
-		return goBackToHome;
-	}
-	public static void setGoBackToHome(JButton goBackToHome) {
-		BasisPrijsAbonnement_AddView.goBackToHome = goBackToHome;
-	}
-	public static JPanel getPanel() {
+		panel.add(backButton, c);
+		
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				BasisPrijsAbonnementView newView = new BasisPrijsAbonnementView();
+				view.changeView(newView.initialize(view));
+			}
+		});
+		
 		return panel;
 	}
-	public static void setPanel(JPanel panel) {
-		BasisPrijsAbonnement_AddView.panel = panel;
-	}
-	public static JLabel getLblPrijs() {
-		return lblPrijs;
-	}
-	public static void setLblPrijs(JLabel lblPrijs) {
-		BasisPrijsAbonnement_AddView.lblPrijs = lblPrijs;
-	}
-	public static JTextField getTxtPrijs() {
-		return txtPrijs;
-	}
-	public static void setTxtPrijs(JTextField txtPrijs) {
-		BasisPrijsAbonnement_AddView.txtPrijs = txtPrijs;
-	}
-	public static JLabel getLblTypeId() {
-		return lblTypeId;
-	}
-	public static void setLblTypeId(JLabel lblTypeId) {
-		BasisPrijsAbonnement_AddView.lblTypeId = lblTypeId;
-	}
-	public static JComboBox<TypeAbonnement> getTypeLijst() {
-		return typeLijst;
-	}
-	public static void setTypeLijst(JComboBox<TypeAbonnement> typeLijst) {
-		BasisPrijsAbonnement_AddView.typeLijst = typeLijst;
-	}
-	public static TypeAbonnementDAO getTypeAboDao() {
-		return typeAboDao;
-	}
-	public static void setTypeAboDao(TypeAbonnementDAO typeAboDao) {
-		BasisPrijsAbonnement_AddView.typeAboDao = typeAboDao;
-	}
-	public static BasisPrijsAbonnement_AddController getBasisPrijsAbonnement_AddController() {
-		return basisPrijsAbonnement_AddController;
-	}
-	public static void setBasisPrijsAbonnement_AddController(
-			BasisPrijsAbonnement_AddController basisPrijsAbonnement_AddController) {
-		BasisPrijsAbonnement_AddView.basisPrijsAbonnement_AddController = basisPrijsAbonnement_AddController;
-	}
-	
 }

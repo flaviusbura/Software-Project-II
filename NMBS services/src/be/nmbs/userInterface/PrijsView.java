@@ -2,86 +2,65 @@ package be.nmbs.userInterface;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import be.nmbs.controllers.PrijsController;
-
 public class PrijsView {
-	private static JButton goBackToHome;
-	private static JButton voorAbo;
-	private static JButton voorTicket;
-	private static JPanel panel;
-	private static PrijsController prijsController;
+	private final JPanel panel = new JPanel(new GridBagLayout());
+	
+	private final JButton ticketButton = new JButton("Voor ticket");
+	private final JButton abonnementButton = new JButton("Voor abonnement");
+	private final JButton backButton = new JButton("Terug");
 
-	public static JPanel initialize(View view) {
-		panel = new JPanel(new GridBagLayout());
+	public JPanel initialize(View view) {		
 		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
 
-		voorTicket = new JButton("Voor Ticket");
-		c.fill = new GridBagConstraints().HORIZONTAL;
+		// Add Ticket Button
 		c.gridx = 0;
 		c.gridy = 0;
-		panel.add(voorTicket, c);
+		panel.add(ticketButton, c);
 		
-		voorAbo = new JButton("Voor Abonnement");
-		c.fill = new GridBagConstraints().HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 0;
-		panel.add(voorAbo, c);
+		ticketButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				BasisPrijsTicketView newView = new BasisPrijsTicketView();
+				view.changeView(newView.initialize(view));
+			}
+		});
 		
-		goBackToHome = new JButton("Home");
-		c.fill = new GridBagConstraints().HORIZONTAL;
-		c.gridx = 2;
-		c.gridy = 0;
-		panel.add(goBackToHome, c);
+		// Add Abonnement Button
+		c.insets = new Insets(5, 0, 0, 0);
+		c.gridx = 0;
+		c.gridy = 1;
+		panel.add(abonnementButton, c);
 		
-		prijsController = new PrijsController(view);
+		abonnementButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				BasisPrijsAbonnementView newView = new BasisPrijsAbonnementView();
+				view.changeView(newView.initialize(view));
+			}
+		});
+		
+		// Add Back Button
+		c.insets = new Insets(5, 0, 0, 0);
+		c.gridx = 0;
+		c.gridy = 2;
+		panel.add(backButton, c);
+		
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PrijsBeheerView newView = new PrijsBeheerView();
+				view.changeView(newView.initialize(view));
+			}
+		});
+		
 		return panel;
 	}
-
-	public static JButton getVoorAbo() {
-		return voorAbo;
-	}
-
-	public static void setVoorAbo(JButton abo) {
-		PrijsView.voorAbo = abo;
-	}
-
-	public static JButton getVoorTicket() {
-		return voorTicket;
-	}
-
-	public static void setVoorTicket(JButton ticket) {
-		PrijsView.voorTicket = ticket;
-	}
-
-	public static JButton getGoBackToHome() {
-		return goBackToHome;
-	}
-
-	public static void setGoBackToHome(JButton goBackToHome) {
-		PrijsView.goBackToHome = goBackToHome;
-	}
-
-	public static JPanel getPanel() {
-		return panel;
-	}
-
-	public static void setPanel(JPanel panel) {
-		PrijsView.panel = panel;
-	}
-
-	public static void setPrijsControllerToNull() {
-		prijsController = null;
-	}
-	public static PrijsController getPrijsController() {
-		return prijsController;
-	}
-
-	public static void setPrijsController(PrijsController prijsController) {
-		PrijsView.prijsController = prijsController;
-	}
-	
 }

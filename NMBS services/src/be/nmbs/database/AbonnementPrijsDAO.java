@@ -25,16 +25,16 @@ public class AbonnementPrijsDAO extends BaseDAO{
 			prep.setDouble(4, pa.getTotaal());
 			
 			prep.executeUpdate();
-			 ResultSet rs = prep.getGeneratedKeys();
-			 int last_inserted_id = 0;
-             if(rs.next())
-             {
-                 last_inserted_id = rs.getInt(1);
-             }
+			
+			ResultSet rs = prep.getGeneratedKeys();
+			int last_inserted_id = 0;
+	        if(rs.next()) {
+	        	last_inserted_id = rs.getInt(1);
+	        }
+	        
 			return last_inserted_id;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return 0;
 		} finally {
 			try {
 				if (prep != null)

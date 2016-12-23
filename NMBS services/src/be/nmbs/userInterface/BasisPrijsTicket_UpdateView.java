@@ -2,141 +2,109 @@ package be.nmbs.userInterface;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import be.nmbs.controllers.BasisPrijsTicket_UpdateController;
-import be.nmbs.controllers.CoefficientTicket_UpdateController;
-import be.nmbs.controllers.HomeController;
-import be.nmbs.database.TypeTicketDAO;
 import be.nmbs.logic.TypeTicket;
 
 public class BasisPrijsTicket_UpdateView {
-	private static JButton updatePrijs;
-	private static JButton goBackToHome;
-	private static JPanel panel;
-	private static JLabel lblPrijs;
-	private static JTextField txtPrijs;
-	private static JLabel lblTypeId;
-	private static JComboBox<TypeTicket> typeLijst;
-	private static TypeTicketDAO typeTicketDao = new TypeTicketDAO();
+	private final JPanel panel = new JPanel(new GridBagLayout());
 
-	private static BasisPrijsTicket_UpdateController basisPrijsTicket_UpdateController;
+	private final JLabel typeLabel = new JLabel("Type Ticket");
+	private final JLabel prijsLabel = new JLabel("Update naar");
 	
-	public static JPanel initialize(View view) {
-		panel = new JPanel(new GridBagLayout());
+	private final JTextField prijsTextField= new JTextField(10);
+
+	private JComboBox<TypeTicket> typeComboBox;
+	
+	private final JButton updateButton = new JButton("Prijs aanpassen");
+	private final JButton backButton = new JButton("Terug");
+
+	private final BasisPrijsTicket_UpdateController basisPrijsTicket_UpdateController = new BasisPrijsTicket_UpdateController();
+	
+	public JPanel initialize(View view) {
 		GridBagConstraints c = new GridBagConstraints();
-	
-		lblTypeId = new JLabel("Type Ticket");
 		c.fill = GridBagConstraints.HORIZONTAL;
+	
+		// Add Type Label
 		c.gridx = 0;
 		c.gridy = 0;
-		panel.add(lblTypeId, c);
+		panel.add(typeLabel, c);
 		
-		ArrayList<TypeTicket> allType = typeTicketDao.getAll();
-		typeLijst = new JComboBox<>();
+		// Add Type Combobox
+		ArrayList<TypeTicket> allType = basisPrijsTicket_UpdateController.getAllTicketTypes();
+		typeComboBox = new JComboBox<>();
 		for (TypeTicket tt : allType) {
-			typeLijst.addItem(tt);
+			typeComboBox.addItem(tt);
 		}
 		
-		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(0, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 0;
-		panel.add(typeLijst, c);
+		panel.add(typeComboBox, c);
 		
 		
-		lblPrijs = new JLabel("Update naar: ");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Prijs Label
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 2;
-		panel.add(lblPrijs, c);
+		panel.add(prijsLabel, c);
 		
-		txtPrijs= new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Prijs Text Field
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 2;
-		panel.add(txtPrijs, c);
+		panel.add(prijsTextField, c);
 
-		// buttons
-		updatePrijs = new JButton("Coefficient Updaten");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Update Button
+		c.insets = new Insets(5, 0, 0, 0);
+		c.gridx = 0;
+		c.gridy = 3;
+		panel.add(updateButton, c);
+		
+		updateButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TypeTicket typeAboId = (TypeTicket) typeComboBox.getSelectedItem();
+
+				try {
+					double prijs = Double.parseDouble(prijsTextField.getText());
+					
+					if (basisPrijsTicket_UpdateController.updatePrijs(typeAboId.getId(), prijs)) {
+						JOptionPane.showMessageDialog(panel, "Prijs aangepast.");
+					} else {
+						JOptionPane.showMessageDialog(panel, "Er is iets foutgelopen bij het aanpassen van de prijs, probeer opnieuw.");
+					}
+				} catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(panel, "Geef een geldige prijs in.");
+				}
+			}
+		});
+		
+		// Add Back Button
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 3;
-		panel.add(updatePrijs, c);
+		panel.add(backButton, c);
 		
-		goBackToHome = new JButton("Home");
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 4;
-		panel.add(goBackToHome, c);
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				BasisPrijsTicketView newView = new BasisPrijsTicketView();
+				view.changeView(newView.initialize(view));
+			}
+		});
 
-		basisPrijsTicket_UpdateController = new BasisPrijsTicket_UpdateController(view);
-		return panel;
-
-	}
-	public static void setBasisPrijsTicket_UpdateControllerToNull() {
-		basisPrijsTicket_UpdateController = null;
-		
-	}
-	public static JButton getUpdatePrijs() {
-		return updatePrijs;
-	}
-	public static void setUpdatePrijs(JButton updatePrijs) {
-		BasisPrijsTicket_UpdateView.updatePrijs = updatePrijs;
-	}
-	public static JButton getGoBackToHome() {
-		return goBackToHome;
-	}
-	public static void setGoBackToHome(JButton goBackToHome) {
-		BasisPrijsTicket_UpdateView.goBackToHome = goBackToHome;
-	}
-	public static JPanel getPanel() {
 		return panel;
 	}
-	public static void setPanel(JPanel panel) {
-		BasisPrijsTicket_UpdateView.panel = panel;
-	}
-	public static JLabel getLblPrijs() {
-		return lblPrijs;
-	}
-	public static void setLblPrijs(JLabel lblPrijs) {
-		BasisPrijsTicket_UpdateView.lblPrijs = lblPrijs;
-	}
-	public static JTextField getTxtPrijs() {
-		return txtPrijs;
-	}
-	public static void setTxtPrijs(JTextField txtPrijs) {
-		BasisPrijsTicket_UpdateView.txtPrijs = txtPrijs;
-	}
-	public static JLabel getLblTypeId() {
-		return lblTypeId;
-	}
-	public static void setLblTypeId(JLabel lblTypeId) {
-		BasisPrijsTicket_UpdateView.lblTypeId = lblTypeId;
-	}
-	public static JComboBox<TypeTicket> getTypeLijst() {
-		return typeLijst;
-	}
-	public static void setTypeLijst(JComboBox<TypeTicket> typeLijst) {
-		BasisPrijsTicket_UpdateView.typeLijst = typeLijst;
-	}
-	public static TypeTicketDAO getTypeTicketDao() {
-		return typeTicketDao;
-	}
-	public static void setTypeTicketDao(TypeTicketDAO typeTicketDao) {
-		BasisPrijsTicket_UpdateView.typeTicketDao = typeTicketDao;
-	}
-	public static BasisPrijsTicket_UpdateController getBasisPrijsTicket_UpdateController() {
-		return basisPrijsTicket_UpdateController;
-	}
-	public static void setBasisPrijsTicket_UpdateController(
-			BasisPrijsTicket_UpdateController basisPrijsTicket_UpdateController) {
-		BasisPrijsTicket_UpdateView.basisPrijsTicket_UpdateController = basisPrijsTicket_UpdateController;
-	}
-	
 }

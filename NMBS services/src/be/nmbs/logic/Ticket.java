@@ -17,7 +17,6 @@ public class Ticket {
 	private int klas;
 	private boolean actief;
 	private StationNMBS eindStation;
-	private String omschrijving;
 	private Prijs_ticket prijsId;
 	private int kortingId;
 	private StationNMBS station; 
@@ -44,7 +43,7 @@ public class Ticket {
 	 * @param gebruikerId De gebruiker die een ticket aanmaakt
 	 */
 	public Ticket(int ticket_id, StationNMBS startStation, String soort, Timestamp timestamp, int klas, boolean actief,
-			StationNMBS eindStation, String omschrijving, int kortingId, StationNMBS station, int gebruikerId) {
+			StationNMBS eindStation, int kortingId, StationNMBS station, int gebruikerId) {
 		super();
 		this.ticket_id = ticket_id;
 		this.startStation = startStation;
@@ -53,24 +52,23 @@ public class Ticket {
 		this.klas = klas;
 		this.actief = actief;
 		this.eindStation = eindStation;
-		this.omschrijving = omschrijving;
 		this.kortingId = kortingId;
 		this.station = station;
 		this.gebruikerId = gebruikerId;
 	}
 	
 	public Ticket(StationNMBS startStation, String soort, Timestamp timestamp, int klas, boolean actief,
-			StationNMBS eindStation, String omschrijving,int kortingId, StationNMBS station, int gebruikerId) {
-		this(0, startStation, soort, timestamp, klas, actief, eindStation, omschrijving, kortingId, station, gebruikerId);
+			StationNMBS eindStation,int kortingId, StationNMBS station, int gebruikerId) {
+		this(0, startStation, soort, timestamp, klas, actief, eindStation, kortingId, station, gebruikerId);
 	}
 	
 	public Ticket(StationNMBS startStation, String soort, Timestamp timestamp, int klas, boolean actief,
-			StationNMBS eindStation, String omschrijving,Prijs_ticket prijsId,int kortingId, StationNMBS station, int gebruikerId) {
-		this(0, startStation, soort, timestamp, klas, actief, eindStation, omschrijving,prijsId, kortingId, station, gebruikerId);
+			StationNMBS eindStation,Prijs_ticket prijsId,int kortingId, StationNMBS station, int gebruikerId) {
+		this(0, startStation, soort, timestamp, klas, actief, eindStation,prijsId, kortingId, station, gebruikerId);
 	}
 	
 	public Ticket(int ticket_id, StationNMBS startStation, String soort,Timestamp timestamp, int klas, boolean actief,
-			StationNMBS eindStation, String omschrijving, Prijs_ticket prijsId, int kortingId, StationNMBS station, int gebruikerId) {
+			StationNMBS eindStation, Prijs_ticket prijsId, int kortingId, StationNMBS station, int gebruikerId) {
 		super();
 		this.ticket_id = ticket_id;
 		this.startStation = startStation;
@@ -79,7 +77,6 @@ public class Ticket {
 		this.klas = klas;
 		this.actief = actief;
 		this.eindStation = eindStation;
-		this.omschrijving = omschrijving;
 		this.prijsId = prijsId;
 		this.kortingId = kortingId;
 		this.station = station;
@@ -204,22 +201,6 @@ public class Ticket {
 	}
 
 	/**
-	 * Deze methode stuurt een String-object terug met de omschrijving van het ticket.
-	 * @return Een String-object
-	 */
-	public String getOmschrijving() {
-		return omschrijving;
-	}
-
-	/**
-	 * Deze methode sets de omschrijving.
-	 * @param omschrijving
-	 */
-	public void setOmschrijving(String omschrijving) {
-		this.omschrijving = omschrijving;
-	}
-
-	/**
 	 * Deze methode gaat de prijsId van het ticket terugsturen.
 	 * @return Een int om aan te geven wat het prijsId is.
 	 */
@@ -275,7 +256,6 @@ public class Ticket {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + klas;
-		result = prime * result + ((omschrijving == null) ? 0 : omschrijving.hashCode());
 		result = prime * result + ((soort == null) ? 0 : soort.hashCode());
 		return result;
 	}
@@ -293,11 +273,6 @@ public class Ticket {
 			return false;
 		Ticket other = (Ticket) obj;
 		if (klas != other.klas)
-			return false;
-		if (omschrijving == null) {
-			if (other.omschrijving != null)
-				return false;
-		} else if (!omschrijving.equals(other.omschrijving))
 			return false;
 		if (soort == null) {
 			if (other.soort != null)

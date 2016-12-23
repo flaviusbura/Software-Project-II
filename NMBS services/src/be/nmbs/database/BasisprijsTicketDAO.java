@@ -8,8 +8,7 @@ import be.nmbs.logic.BasisprijsTicket;;
 
 public class BasisprijsTicketDAO extends BaseDAO{
 
-
-	public int insert(BasisprijsTicket basisprijsTicket) {
+	public boolean insert(BasisprijsTicket basisprijsTicket) {
 		PreparedStatement prep = null;
 		String sql = "INSERT INTO basisprijs_ticket VALUES(null,?,?)";
 
@@ -20,10 +19,11 @@ public class BasisprijsTicketDAO extends BaseDAO{
 			prep = getConnection().prepareStatement(sql);
 			prep.setInt(1, basisprijsTicket.getTypeTicketId());
 			prep.setDouble(2, basisprijsTicket.getPrijs());
-			return prep.executeUpdate();
+			prep.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)
@@ -36,7 +36,7 @@ public class BasisprijsTicketDAO extends BaseDAO{
 		}
 	}
 
-	public int delete(BasisprijsTicket basisprijsTicket) {
+	public boolean delete(int id) {
 		String sql = "DELETE FROM basisprijs_ticket WHERE basisprijs_id=?";
 		PreparedStatement prep = null;
 		try {
@@ -45,11 +45,12 @@ public class BasisprijsTicketDAO extends BaseDAO{
 			}
 			prep = getConnection().prepareStatement(sql);
 
-			prep.setInt(1, basisprijsTicket.getBasisprijsId());
-			return prep.executeUpdate();
+			prep.setInt(1, id);
+			prep.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)
@@ -89,7 +90,7 @@ public class BasisprijsTicketDAO extends BaseDAO{
 		}
 	}
 
-	public int updatePrijs_ById(int id, double prijs) {
+	public boolean updatePrijs_ById(int id, double prijs) {
 		PreparedStatement prep = null;
 		String sql = "UPDATE basisprijs_ticket SET prijs=? WHERE basisprijs_id=?";
 
@@ -100,10 +101,11 @@ public class BasisprijsTicketDAO extends BaseDAO{
 			prep = getConnection().prepareStatement(sql);
 			prep.setDouble(1, prijs);
 			prep.setInt(2, id);
-			return prep.executeUpdate();
+			prep.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e.getMessage());
+			return false;
 		} finally {
 			try {
 				if (prep != null)
@@ -120,7 +122,7 @@ public class BasisprijsTicketDAO extends BaseDAO{
 		PreparedStatement prep = null;
 		ResultSet res = null;
 		double prijs = 0.00;
-		String sql = "SELECT prijs FROM basisprijs_ticket WHERE type_ticketId=?";
+		String sql = "SELECT prijs FROM basisprijs_ticket WHERE basisprijs_id=?";
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
@@ -189,6 +191,4 @@ public class BasisprijsTicketDAO extends BaseDAO{
 			}
 		}
 	}
-
-
 }

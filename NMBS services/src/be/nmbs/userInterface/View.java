@@ -18,7 +18,7 @@ public class View extends JFrame {
 	
 	public View() {
 		super("NMBS Services");
-		this.setSize(800, 600);
+		this.setSize(1000, 600);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
@@ -32,6 +32,7 @@ public class View extends JFrame {
 				}
 			}
 		});
+		
 	}
 
 	public JPanel getPanel() {

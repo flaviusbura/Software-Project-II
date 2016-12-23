@@ -1,60 +1,32 @@
 package be.nmbs.controllers;
 
-import be.nmbs.userInterface.View;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JOptionPane;
+import java.util.ArrayList;
 
 import be.nmbs.database.AbonnementDAO;
 import be.nmbs.logic.Abonnement;
-import be.nmbs.logic.Gebruiker;
-import be.nmbs.userInterface.HomeView;
-import be.nmbs.userInterface.MaakAbonnementView;
-import be.nmbs.userInterface.VerlengAbonnementView;
 
-//VerlengAbonnementView
 public class VerlengAbonnementController {
+	private final AbonnementDAO abonnementDAO = new AbonnementDAO();
 
-	public VerlengAbonnementController(View view) {
-		VerlengAbonnementView.getVerlengMaanden().addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				AbonnementDAO aboDao = new AbonnementDAO();
-				
-				int aboId = Integer.parseInt(VerlengAbonnementView.getTxtId().getText());
-				
-				Abonnement abo = aboDao.getAbo_ByID(aboId);
-				String keuze = (String) VerlengAbonnementView.getCombo().getSelectedItem();
-				if (keuze == "3 maanden") {
-					aboDao.verlengAbonnementMetDrieMaand(abo);
-					JOptionPane.showMessageDialog(view.getPanel(), "Abonnement verlengt met drie maanden");
-
-				} else if (keuze == "6 maanden") {
-					aboDao.verlengAbonnementMetZesMaand(abo);
-					JOptionPane.showMessageDialog(view.getPanel(), "Abonnement verlengt met zes maanden");
-				} else if (keuze == "9 maanden") {
-					aboDao.verlengAbonnementMetNegenMaand(abo);
-					JOptionPane.showMessageDialog(view.getPanel(), "Abonnement verlengt met negen maanden");
-
-				} else if (keuze == "12 maanden") {
-					aboDao.verlengAbonnementMetEenJaar(abo);
-					JOptionPane.showMessageDialog(view.getPanel(), "Abonnement verlengt met een jaar");
-
-				}
-			}
-		});
-
-		VerlengAbonnementView.getGoBackToHome().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				HomeView newView = new HomeView();
-				view.changeView(newView.initialize(view));
-			}
-		});
+	public ArrayList<Abonnement> getAllAbonnementen() {
+		return abonnementDAO.getAll();
 	}
-
+	
+	public Abonnement getAbonnement(int id) {
+		return abonnementDAO.getAbo_ByID(id);
+	}
+	
+	public boolean verlengAbonnement(Abonnement abonnement, String keuze) {
+		if (keuze == "3 maanden") {
+			return abonnementDAO.verlengAbonnementMetDrieMaand(abonnement);
+		} else if (keuze == "6 maanden") {
+			return abonnementDAO.verlengAbonnementMetZesMaand(abonnement);
+		} else if (keuze == "9 maanden") {
+			return abonnementDAO.verlengAbonnementMetNegenMaand(abonnement);
+		} else if (keuze == "12 maanden") {
+			return abonnementDAO.verlengAbonnementMetEenJaar(abonnement);
+		} else {
+			return false;
+		}
+	}
 }

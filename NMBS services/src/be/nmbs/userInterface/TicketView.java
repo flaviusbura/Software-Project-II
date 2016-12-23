@@ -2,6 +2,12 @@ package be.nmbs.userInterface;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,104 +19,48 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import be.nmbs.controllers.TicketController;
-import be.nmbs.database.KortingDAO;
-import be.nmbs.database.PrijsDAO;
-import be.nmbs.database.StationDAO;
-import be.nmbs.database.TypeAbonnementDAO;
-import be.nmbs.database.TypeTicketDAO;
 import be.nmbs.logic.Korting;
 import be.nmbs.logic.Prijs;
+import be.nmbs.logic.Prijs_ticket;
 import be.nmbs.logic.StationNMBS;
-import be.nmbs.logic.TypeAbonnement;
+import be.nmbs.logic.Ticket;
 import be.nmbs.logic.TypeTicket;
 
 public class TicketView {
-	private static JPanel panel;
-	private static JLabel lblBeginStation;
-	public static JTextField getTxtSoort() {
-		return txtSoort;
-	}
-
-
-	public static void setTxtSoort(JTextField txtSoort) {
-		TicketView.txtSoort = txtSoort;
-	}
-
-
-	public static JTextField getTxtDatum() {
-		return txtDatum;
-	}
-
-
-	public static void setTxtDatum(JTextField txtDatum) {
-		TicketView.txtDatum = txtDatum;
-	}
-
-
-	public static JTextField getTxtKlasse() {
-		return txtKlasse;
-	}
-
-
-	public static void setTxtKlasse(JTextField txtKlasse) {
-		TicketView.txtKlasse = txtKlasse;
-	}
-
-
-	public static JTextField getTxtOmschrijving() {
-		return txtOmschrijving;
-	}
-
-
-	public static void setTxtOmschrijving(JTextField txtOmschrijving) {
-		TicketView.txtOmschrijving = txtOmschrijving;
-	}
-
-	private static JTextField txtSoort;
-	private static JTextField txtDatum;
-	private static JTextField txtKlasse;
-	private static JTextField txtOmschrijving;
-	private static JLabel lblPrijs;
-	private static JLabel lblOmschrijving;
-	private static JLabel lblKlasse;
-	private static JLabel lblSoort;
-	private static JLabel lblEindStation;
-	private static JLabel lblDatum;
-	private static JLabel lblKorting;
-	private static JLabel lblStation;
-	private static JButton btnKoopTicket;
-	private static JButton btnVorigScherm;
-	private static JComboBox<Prijs> prijzenLijst;
-	private static JComboBox<Korting> kortingLijst;
-	private static JComboBox stationlijst;
-	private static JComboBox beginstationlijst;
-	private static JComboBox eindstationlijst;
-	private static TicketController ticketController;
-	private static PrijsDAO prijsdao;
-	private static KortingDAO kortingdao;
-	private static StationDAO stationdao;
-	static SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-	static Date now = new Date();
-	static String strDate = sdfDate.format(now);
+	private final JPanel panel = new JPanel(new GridBagLayout());
 	
-	private static JLabel lblType;
-	private static JComboBox<?> cbxType;
-	private static JComboBox<TypeTicket> typeLijst;
-	private static TypeTicketDAO typeDao = new TypeTicketDAO();
+	private final JLabel beginStationLabel = new JLabel("Vertrekstation");
+	private final JLabel lblPrijs = new JLabel("prijs");
+	private final JLabel klasseLabel = new JLabel("Klasse");
+	private final JLabel soortLabel = new JLabel("Soort ticket");
+	private final JLabel eindStationLabel = new JLabel("Eindstation");
+	private final JLabel datumLabel = new JLabel("Datum");
+	private final JLabel kortingLabel = new JLabel("Korting");
+	private final JLabel stationLabel = new JLabel("Station");
+	private final JLabel typeLabel = new JLabel("Type");
+
+	private final JTextField soortTextField = new JTextField(10);
+	private final JTextField datumTextField = new JTextField(10);
+	private final JTextField klasseTextField = new JTextField(10);
+
+	private JComboBox<Prijs> prijsComboBox;
+	private JComboBox<Korting> kortingComboBox = new JComboBox<Korting>();;
+	private JComboBox<String> stationComboBox;
+	private JComboBox<String> beginStationComboBox;
+	private JComboBox<String> eindStationComboBox;
+	private JComboBox<TypeTicket> typeComboBox;
+	
+	private final JButton buyTicketButton = new JButton("Ticket kopen");
+	private final JButton backButton = new JButton("Terug");
+	
+	private final TicketController ticketController = new TicketController();
 	
 	public JPanel initialize(View view) {
-		panel = new JPanel(new GridBagLayout());
-
-		prijsdao = new PrijsDAO();
-		kortingdao = new KortingDAO();
-		stationdao = new StationDAO();
 		GridBagConstraints c = new GridBagConstraints();
-		SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-		Date now = new Date();
-		String strDate = sdfDate.format(now);
-   
+		c.fill = GridBagConstraints.HORIZONTAL;
 		
-		ArrayList<StationNMBS> allStations = stationdao.getAll();
+		// Fetching All Stations for Comboboxes
+		ArrayList<StationNMBS> allStations = ticketController.getAllStations();
 
 		String[] stationLijst = new String[allStations.size()];
 		
@@ -118,489 +68,248 @@ public class TicketView {
 			stationLijst[i] = "" + allStations.get(i).getNaam();
 		}
 		
-		
-		lblBeginStation = new JLabel("begin station");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Begin Station Label
 		c.gridx = 0;
 		c.gridy = 0;
-		panel.add(lblBeginStation, c);
+		panel.add(beginStationLabel, c);
 
-		beginstationlijst = new JComboBox(stationLijst);
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Begin Station Combobox
+		beginStationComboBox = new JComboBox<String>(stationLijst);
+		c.insets = new Insets(0, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 0;
-		panel.add(beginstationlijst, c);
+		panel.add(beginStationComboBox, c);
 
-		lblEindStation = new JLabel("eind station");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Eind Station Label
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 1;
-		panel.add(lblEindStation, c);
-
+		panel.add(eindStationLabel, c);
 		
-		eindstationlijst = new JComboBox(stationLijst);
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Eind Station Combobox
+		eindStationComboBox = new JComboBox<String>(stationLijst);
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 1;
-		panel.add(eindstationlijst, c);
+		panel.add(eindStationComboBox, c);
 		
-		lblSoort = new JLabel("soort ticket");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Soort Label
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 2;
-		panel.add(lblSoort, c);
+		panel.add(soortLabel, c);
 		
-		txtSoort = new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Soort Text Field
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 2;
-		panel.add(txtSoort, c);
+		panel.add(soortTextField, c);
 
-		lblDatum = new JLabel("datum");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Datum Label
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 3;
-		panel.add(lblDatum, c);
+		panel.add(datumLabel, c);
 		
-		txtDatum = new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Datum Text Field
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 3;
 		
+		SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+		String strDate = sdfDate.format(new Date());
+		datumTextField.setText(strDate);
+		panel.add(datumTextField, c);
 		
-		txtDatum.setText(strDate);
-		panel.add(txtDatum, c);
-		
-		lblKlasse = new JLabel("klasse");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Klasse Label
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 5;
-		panel.add(lblKlasse, c);
+		panel.add(klasseLabel, c);
 		
-		txtKlasse = new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Klasse Text Field
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 5;
-		panel.add(txtKlasse, c);
-		
-		lblOmschrijving = new JLabel("omschrijving");
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 6;
-		panel.add(lblOmschrijving, c);
-		
-		txtOmschrijving = new JTextField(10);
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 6;
-		panel.add(txtOmschrijving, c);
+		panel.add(klasseTextField, c);
+
 		/*
-		lblPrijs = new JLabel("prijs");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Prijs Label
+		 * c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
-		c.gridy = 7;
-		panel.add(lblPrijs, c);
+		c.gridy = 6;
+		panel.add(prijsLabel, c);
 		
 
+		// Add Prijs Combobox
 		ArrayList<Prijs> allPrijzen = prijsdao.getAll();
 
-		prijzenLijst = new JComboBox<>();
+		prijsComboBox = new JComboBox<Prijs>();
 		for(Prijs prijs : allPrijzen) {
 			prijzenLijst.addItem(prijs);
 		}
 				
-		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
-		c.gridy = 7;
-		panel.add(prijzenLijst, c);
+		c.gridy = 6;
+		panel.add(prijsComboBox, c);
 		
 		*/
-		ArrayList<Korting> allKorting = kortingdao.getAll();
 		
-		//String[] kortingenLijst = new String[allKorting.size()];
-		kortingLijst = new JComboBox<>();
+		// Add Korting Label
+		c.insets = new Insets(5, 0, 0, 0);
+		c.gridx = 0;
+		c.gridy = 7;
+		panel.add(kortingLabel, c);
 		
+		// Add Korting Combobox
+		ArrayList<Korting> allKorting = ticketController.getAllKortingen();
 		for(Korting korting : allKorting) {
-			kortingLijst.addItem(korting);
+			kortingComboBox.addItem(korting);
 		}
 		
-		lblKorting = new JLabel("korting");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(5, 5, 0, 0);
+		c.gridx = 1;
+		c.gridy = 7;
+		panel.add(kortingComboBox, c);
+
+		// Add Type Label
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 8;
-		panel.add(lblKorting, c);
-		
-		
-		
-		//kortinglijst = new JComboBox(kortingenLijst);
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 8;
-		panel.add(kortingLijst, c);
-		
-		ArrayList<TypeTicket> allType = typeDao.getAll();
-		typeLijst = new JComboBox<>();
+		panel.add(typeLabel, c);
+
+		// Add Type Combobox
+		ArrayList<TypeTicket> allType = ticketController.getAllTicketTypes();
+		typeComboBox = new JComboBox<TypeTicket>();
 		for (TypeTicket typeTicket : allType) {
-			typeLijst.addItem(typeTicket);
+			typeComboBox.addItem(typeTicket);
 		}
-
-		lblType = new JLabel("Type ");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		
+		c.insets = new Insets(5, 5, 0, 0);
+		c.gridx = 1;
+		c.gridy = 8;
+		panel.add(typeComboBox, c);
+		
+		// Add Station Label
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 9;
-		panel.add(lblType, c);
-
-		c.fill = GridBagConstraints.HORIZONTAL;
+		panel.add(stationLabel, c);
+		
+		// Add Station Combobox
+		stationComboBox = new JComboBox<String>(stationLijst);
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 9;
-		panel.add(typeLijst, c);
+		panel.add(stationComboBox, c);
 		
-		lblStation = new JLabel("station");
-		c.fill = GridBagConstraints.HORIZONTAL;
+		// Add Buy Ticket Button
+		c.insets = new Insets(5, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 10;
-		panel.add(lblStation, c);
+		panel.add(buyTicketButton, c);
 		
-		stationlijst = new JComboBox(stationLijst);
-		c.fill = GridBagConstraints.HORIZONTAL;
+		buyTicketButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					// String startstation = (String)
+					// TicketView.getBeginstationlijst().getSelectedItem();
+					StationNMBS startstation = new StationNMBS(beginStationComboBox.getSelectedItem().toString());
+					String soort = soortTextField.getText();
+					String datum = datumTextField.getText();
+
+					DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+					Date date = format.parse(datum);
+					Long tijd = date.getTime();
+					Timestamp ts = new Timestamp(tijd);
+					int klas = Integer.parseInt(klasseTextField.getText());
+
+					StationNMBS eindstation = new StationNMBS(eindStationComboBox.getSelectedItem().toString());
+					// String eindstation = (String)
+					// TicketView.getEindstationlijst().getSelectedItem();
+
+					//Prijs prijs = (Prijs) TicketView.getPrijzenlijst().getSelectedItem();
+					//int prijsId = prijs.getPrijsId();
+					TypeTicket typeTicket = (TypeTicket) typeComboBox.getSelectedItem();
+					int typeTicketId = typeTicket.getId();
+					System.out.println("typeticketid " + typeTicketId);
+					
+					int basisprijsid = ticketController.getBasisPrijsId(typeTicketId);
+					System.out.println("basisprijsid " + basisprijsid);
+					
+					double basisprijs = ticketController.getBasisPrijs(basisprijsid);
+					System.out.println("basisprijs " + basisprijs);
+					
+					int coefid = ticketController.getCoefficientId(typeTicketId);
+					System.out.println("coefid " + coefid);
+					
+					double coef = ticketController.getCoefficient(coefid);
+					System.out.println("coef " + coef);
+					
+					double totaal = basisprijs*coef;
+					System.out.println("totaal " + totaal);
+					
+					Prijs_ticket prijs_ticket = new Prijs_ticket(typeTicketId,coefid,basisprijsid,totaal);
+					
+					int idvoorprijs = ticketController.insertTicketPrijs(prijs_ticket);
+					prijs_ticket.setPrijs_ticketid(idvoorprijs);
+					Korting korting = (Korting) kortingComboBox.getSelectedItem();
+					int kortingId = korting.getId();
+					StationNMBS station = new StationNMBS(stationComboBox.getSelectedItem().toString());
+					int gebruikerId = View.getIngelogdGebruiker().getId();
+					
+					Ticket ticket = new Ticket(startstation, soort, ts, klas, true, eindstation, prijs_ticket,kortingId, station, gebruikerId);
+					ticketController.insertTicket(ticket);
+
+					/**
+					 * Variabelen declarern om de prijs berekening mogelijk
+					 * maken	
+					 */
+					TypeTicket type = (TypeTicket) typeComboBox.getSelectedItem();
+					int typeId = type.getId();
+//
+//					BasisprijsTicketDAO bptDAO = new BasisprijsTicketDAO();
+//					CoefficientTicketDAO ctDAO = new CoefficientTicketDAO();
+//					KortingDAO kortingDAO = new KortingDAO();
+//					double prijs2 = bptDAO.getPrijs_ById(typeId);
+//					double coeff = ctDAO.getCoefficient_ById(typeId);
+//					Korting korting2 = kortingDAO.getKorting(kortingId);
+//					double kortingPercentage;
+//					double kortingHoeveelheid = korting2.getHoeveelheid();
+//					double totaalZonderKorting = 0;
+//					double totaalMetKorting = 0;
+					
+					/**
+					 * Prijs berekening
+					 */
+//					totaalZonderKorting = (prijs2 * coeff);
+//					kortingPercentage = (totaalZonderKorting / 100) * kortingHoeveelheid;
+//					totaalMetKorting = totaalZonderKorting - kortingPercentage;
+
+//					JOptionPane.showMessageDialog(view.getPanel(),
+//							"Ticket aangemaakt" + "\n" + "Prijs is: €" + totaalMetKorting);
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		// Add Back Button
+		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 10;
-		panel.add(stationlijst, c);
+		panel.add(backButton, c);
 		
-		btnKoopTicket = new JButton("koop ticket");
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 11;
-		panel.add(btnKoopTicket, c);
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				HomeView newView = new HomeView();
+				view.changeView(newView.initialize(view));
+			}
+		});
 		
-		btnVorigScherm = new JButton("vorig scherm");
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 11;
-		panel.add(btnVorigScherm, c);
-		
-		ticketController = new TicketController(view);
 		return panel;
 	}
-
-
-	public static JLabel getLblBeginStation() {
-		return lblBeginStation;
-	}
-
-
-	public static void setLblBeginStation(JLabel lblBeginStation) {
-		TicketView.lblBeginStation = lblBeginStation;
-	}
-
-
-	public static JLabel getLblPrijs() {
-		return lblPrijs;
-	}
-
-
-	public static void setLblPrijs(JLabel lblPrijs) {
-		TicketView.lblPrijs = lblPrijs;
-	}
-
-
-	public static JLabel getLblOmschrijving() {
-		return lblOmschrijving;
-	}
-
-
-	public static void setLblOmschrijving(JLabel lblOmschrijving) {
-		TicketView.lblOmschrijving = lblOmschrijving;
-	}
-
-
-	public static JLabel getLblKlasse() {
-		return lblKlasse;
-	}
-
-
-	public static void setLblKlasse(JLabel lblKlasse) {
-		TicketView.lblKlasse = lblKlasse;
-	}
-
-
-	public static JLabel getLblSoort() {
-		return lblSoort;
-	}
-
-
-	public static void setLblSoort(JLabel lblSoort) {
-		TicketView.lblSoort = lblSoort;
-	}
-
-
-	public static JLabel getLblEindStation() {
-		return lblEindStation;
-	}
-
-
-	public static void setLblEindStation(JLabel lblEindStation) {
-		TicketView.lblEindStation = lblEindStation;
-	}
-
-
-	public static JLabel getLblDatum() {
-		return lblDatum;
-	}
-
-
-	public static void setLblDatum(JLabel lblDatum) {
-		TicketView.lblDatum = lblDatum;
-	}
-
-
-	public static JLabel getLblKorting() {
-		return lblKorting;
-	}
-
-
-	public static void setLblKorting(JLabel lblKorting) {
-		TicketView.lblKorting = lblKorting;
-	}
-
-
-	public static JLabel getLblStation() {
-		return lblStation;
-	}
-
-
-	public static void setLblStation(JLabel lblStation) {
-		TicketView.lblStation = lblStation;
-	}
-
-
-	public static JComboBox<Prijs> getPrijzenLijst() {
-		return prijzenLijst;
-	}
-
-
-	public static void setPrijzenLijst(JComboBox<Prijs> prijzenLijst) {
-		TicketView.prijzenLijst = prijzenLijst;
-	}
-
-
-	public static JComboBox<Korting> getKortingLijst() {
-		return kortingLijst;
-	}
-
-
-	public static void setKortingLijst(JComboBox<Korting> kortingLijst) {
-		TicketView.kortingLijst = kortingLijst;
-	}
-
-
-	public static PrijsDAO getPrijsdao() {
-		return prijsdao;
-	}
-
-
-	public static void setPrijsdao(PrijsDAO prijsdao) {
-		TicketView.prijsdao = prijsdao;
-	}
-
-
-	public static KortingDAO getKortingdao() {
-		return kortingdao;
-	}
-
-
-	public static void setKortingdao(KortingDAO kortingdao) {
-		TicketView.kortingdao = kortingdao;
-	}
-
-
-	public static StationDAO getStationdao() {
-		return stationdao;
-	}
-
-
-	public static void setStationdao(StationDAO stationdao) {
-		TicketView.stationdao = stationdao;
-	}
-
-
-	public static SimpleDateFormat getSdfDate() {
-		return sdfDate;
-	}
-
-
-	public static void setSdfDate(SimpleDateFormat sdfDate) {
-		TicketView.sdfDate = sdfDate;
-	}
-
-
-	public static Date getNow() {
-		return now;
-	}
-
-
-	public static void setNow(Date now) {
-		TicketView.now = now;
-	}
-
-
-	public static String getStrDate() {
-		return strDate;
-	}
-
-
-	public static void setStrDate(String strDate) {
-		TicketView.strDate = strDate;
-	}
-
-
-	public static JLabel getLblType() {
-		return lblType;
-	}
-
-
-	public static void setLblType(JLabel lblType) {
-		TicketView.lblType = lblType;
-	}
-
-
-	public static JComboBox<?> getCbxType() {
-		return cbxType;
-	}
-
-
-	public static void setCbxType(JComboBox<?> cbxType) {
-		TicketView.cbxType = cbxType;
-	}
-
-
-	public static JComboBox<TypeTicket> getTypeLijst() {
-		return typeLijst;
-	}
-
-
-	public static void setTypeLijst(JComboBox<TypeTicket> typeLijst) {
-		TicketView.typeLijst = typeLijst;
-	}
-
-
-	public static TypeTicketDAO getTypeDao() {
-		return typeDao;
-	}
-
-
-	public static void setTypeDao(TypeTicketDAO typeDao) {
-		TicketView.typeDao = typeDao;
-	}
-
-
-	public static JComboBox getBeginstationlijst() {
-		return beginstationlijst;
-	}
-
-
-	public static void setBeginstationlijst(JComboBox beginstationlijst) {
-		TicketView.beginstationlijst = beginstationlijst;
-	}
-
-
-	public static JComboBox getEindstationlijst() {
-		return eindstationlijst;
-	}
-
-
-	public static void setEindstationlijst(JComboBox eindstationlijst) {
-		TicketView.eindstationlijst = eindstationlijst;
-	}
-
-
-	public static JPanel getPanel() {
-		return panel;
-	}
-
-
-	public static void setPanel(JPanel panel) {
-		TicketView.panel = panel;
-	}
-
-
-	public static JButton getBtnKoopTicket() {
-		return btnKoopTicket;
-	}
-	
-	
-
-
-	public static JComboBox getPrijzenlijst() {
-		return prijzenLijst;
-	}
-
-
-	public static void setPrijzenlijst(JComboBox<Prijs> prijzenLijst) {
-		TicketView.prijzenLijst = prijzenLijst;
-	}
-
-
-	public static JComboBox getKortinglijst() {
-		return kortingLijst;
-	}
-
-
-	public static void setKortinglijst(JComboBox kortinglijst) {
-		TicketView.kortingLijst = kortinglijst;
-	}
-
-
-	public static JComboBox getStationlijst() {
-		return stationlijst;
-	}
-
-
-	public static void setStationlijst(JComboBox stationlijst) {
-		TicketView.stationlijst = stationlijst;
-	}
-
-
-	public static void setBtnKoopTicket(JButton btnKoopTicket) {
-		TicketView.btnKoopTicket = btnKoopTicket;
-	}
-
-
-	public static JButton getBtnVorigScherm() {
-		return btnVorigScherm;
-	}
-
-
-	public static void setBtnVorigScherm(JButton btnVorigScherm) {
-		TicketView.btnVorigScherm = btnVorigScherm;
-	}
-
-
-	public static TicketController getTicketController() {
-		return ticketController;
-	}
-
-
-	public static void setTicketController(TicketController ticketController) {
-		TicketView.ticketController = ticketController;
-	}
-	
-	public static void setTicketControllerToNull() {
-		ticketController = null;
-	}
-	
-	public static void setHomeControllerToNull() {
-		ticketController = null;
-	}
-
-
-	public static void clearFields() {
-		txtSoort.setText("");
-		txtOmschrijving.setText("");
-		txtKlasse.setText("");
-		txtDatum.setText(strDate);
-		
-		
-	}
-	
 }
