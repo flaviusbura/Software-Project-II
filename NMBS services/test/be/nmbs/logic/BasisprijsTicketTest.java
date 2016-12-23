@@ -90,7 +90,7 @@ public class BasisprijsTicketTest {
 	
 	@Test
 	public void testSetPrijs() {
-		prijs3.setPrijs(2.40);;
+		prijs3.setPrijs(2.40);
 		assertEquals(2.40, prijs3.getPrijs(), 1);
 	}
 	
