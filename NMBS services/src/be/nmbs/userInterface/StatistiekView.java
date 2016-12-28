@@ -16,11 +16,16 @@ import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import be.nmbs.controllers.StatistiekController;
 import be.nmbs.logic.Abonnement;
-
+import be.nmbs.tablemodels.EmptyTableModel;
+import be.nmbs.tablemodels.StatistiekTableModel;
 public class StatistiekView {
 	private JPanel panel = new JPanel(new GridBagLayout());
 	
@@ -28,7 +33,7 @@ public class StatistiekView {
 	private final JLabel startDateLabel = new JLabel("Startdatum");
 	private final JLabel endDateLabel = new JLabel("Einddatum");
 	private final JLabel resultLabel = new JLabel("");
-	
+	private final JTable statistiekTable = new JTable();
 	private final JTextField startDateTextField = new JTextField();
 	private final JTextField endDateTextField = new JTextField();
 	
@@ -42,6 +47,19 @@ public class StatistiekView {
 	private final StatistiekController statistiekController = new StatistiekController();
 	
 	public JPanel initialize(View view) {
+		addStandardItems(view);
+		return panel;
+	}
+	public JPanel initialize(View view, ArrayList<Abonnement> types,ArrayList<Double> totalen,ArrayList<Double> prijzen){
+		addStandardItems(view);
+		StatistiekTableModel model = new StatistiekTableModel();
+		model.setTypen(types);
+		model.setTotalalen(totalen);
+		model.setPrijzen(prijzen);;
+		statistiekTable.setModel(model);
+		return panel;
+	}
+	public void addStandardItems(View view){
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		
@@ -49,6 +67,16 @@ public class StatistiekView {
 		c.gridx = 0;
 		c.gridy = 0;
 		panel.add(uitlegLabel, c);
+		
+		c.fill = GridBagConstraints.VERTICAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridheight = 10;
+		JScrollPane scrollPane = new JScrollPane(statistiekTable);
+		panel.add(scrollPane, c);
+		c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		
 		
 		// Add Result Label
 		c.insets = new Insets(0, 5, 0, 0);
@@ -68,10 +96,22 @@ public class StatistiekView {
 		getTodayButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Timestamp ts = new Timestamp(Calendar.getInstance().getTimeInMillis());
+				Date dat = new Date();
+				dat.setHours(0);
+				dat.setMinutes(0);
+				dat.setSeconds(0);
+				long test = dat.getTime();
+				Timestamp startStamp = new Timestamp(test);
 				ArrayList<Abonnement> abos = new ArrayList<Abonnement>();
-				abos = statistiekController.getAbonnementenOnDate(ts);
-				setStatistiekresultaat(abos);
+				abos = statistiekController.getAbonnementenOnDate(startStamp);
+				if(abos != null){
+					setStatistiekresultaat(abos);
+				}
+				else{
+					EmptyTableModel emptyModel = new EmptyTableModel();
+					statistiekTable.setModel(emptyModel);
+				}
+				
 			}
 		});
 		
@@ -92,7 +132,13 @@ public class StatistiekView {
 				Timestamp endStamp = new Timestamp(endCal.getTimeInMillis());
 				ArrayList<Abonnement> abos = new ArrayList<Abonnement>();
 				abos = statistiekController.getAbonnementen(startStamp, endStamp);
-				setStatistiekresultaat(abos);
+				if(abos != null){
+					setStatistiekresultaat(abos);
+				}
+				else{
+					EmptyTableModel emptyModel = new EmptyTableModel();
+					statistiekTable.setModel(emptyModel);
+				}
 			}
 		});
 		
@@ -105,15 +151,28 @@ public class StatistiekView {
 		getThisMonthButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Calendar startCal = Calendar.getInstance();
-				Calendar endCal = startCal;
-				endCal.setTime(new Date(startCal.getTimeInMillis() - 2629746000L));
-				
-				Timestamp startStamp = new Timestamp(startCal.getTimeInMillis());
-				Timestamp endStamp = new Timestamp(endCal.getTimeInMillis());
+				Date dat = new Date();
+				dat.setDate(0);
+				dat.setHours(0);
+				dat.setMinutes(0);
+				dat.setSeconds(0);
+				long test = dat.getTime();
+				Timestamp startStamp = new Timestamp(test);
+				dat.setDate(30);
+				dat.setHours(23);
+				dat.setMinutes(59);
+				dat.setSeconds(59);
+				long test2 = dat.getTime();
+				Timestamp endStamp = new Timestamp(test2);
 				ArrayList<Abonnement> abos = new ArrayList<Abonnement>();
 				abos = statistiekController.getAbonnementen(startStamp, endStamp);
-				setStatistiekresultaat(abos);
+				if(abos != null){
+					setStatistiekresultaat(abos);
+				}
+				else{
+					EmptyTableModel emptyModel = new EmptyTableModel();
+					statistiekTable.setModel(emptyModel);
+				}
 			}
 		});
 		
@@ -126,15 +185,30 @@ public class StatistiekView {
 		getThisYearButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Calendar startCal = Calendar.getInstance();
-				Calendar endCal = startCal;
-				endCal.setTime(new Date(startCal.getTimeInMillis() - 31556952000L));
-				
-				Timestamp startStamp = new Timestamp(startCal.getTimeInMillis());
-				Timestamp endStamp = new Timestamp(endCal.getTimeInMillis());
+				Date dat = new Date();
+				dat.setDate(1);
+				dat.setMonth(1);
+				dat.setHours(0);
+				dat.setMinutes(0);
+				dat.setSeconds(0);
+				long test = dat.getTime();
+				Timestamp startStamp = new Timestamp(test);
+				dat.setDate(31);
+				dat.setMonth(12);
+				dat.setHours(23);
+				dat.setMinutes(59);
+				dat.setSeconds(59);
+				long test2 = dat.getTime();
+				Timestamp endStamp = new Timestamp(test2);
 				ArrayList<Abonnement> abos = new ArrayList<Abonnement>();
 				abos = statistiekController.getAbonnementen(startStamp, endStamp);
-				setStatistiekresultaat(abos);
+				if(abos != null){
+					setStatistiekresultaat(abos);
+				}
+				else{
+					EmptyTableModel emptyModel = new EmptyTableModel();
+					statistiekTable.setModel(emptyModel);
+				}
 			}
 		});
 		
@@ -149,13 +223,27 @@ public class StatistiekView {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-					Timestamp startStamp = new Timestamp(format.parse(startDateTextField.getText()).getTime());
-					Timestamp endStamp = new Timestamp(format.parse(endDateTextField.getText()).getTime());
+					Date start = format.parse(startDateTextField.getText());
+					start.setHours(0);
+					start.setMinutes(0);
+					start.setSeconds(0);
+					Timestamp startStamp = new Timestamp(start.getTime());
+					Date end = format.parse(endDateTextField.getText());
+					end.setHours(23);
+					end.setMinutes(59);
+					end.setSeconds(59);
+					Timestamp endStamp = new Timestamp(end.getTime());
 					
 					ArrayList<Abonnement> abos = new ArrayList<Abonnement>();
 					
 					abos = statistiekController.getAbonnementen(startStamp, endStamp);
-					setStatistiekresultaat(abos);
+					if(abos != null){
+						setStatistiekresultaat(abos);
+					}
+					else{
+						EmptyTableModel emptyModel = new EmptyTableModel();
+						statistiekTable.setModel(emptyModel);
+					}
 				}
 				catch(ParseException e1) {
 					e1.printStackTrace();
@@ -163,6 +251,7 @@ public class StatistiekView {
 				
 			}
 		});
+		
 		
 		// Add Start Date Label
 		c.insets = new Insets(5, 5, 0, 0);
@@ -201,13 +290,11 @@ public class StatistiekView {
 				view.changeView(newView.initialize(view));
 			}
 		});
-		
-		return panel;
 	}
-	
 	private void setStatistiekresultaat(ArrayList<Abonnement> list) {
 		ArrayList<Abonnement> typen = new ArrayList<Abonnement>();
 		ArrayList<Double> totalen = new ArrayList<Double>();
+		ArrayList<Double> prijzen =new ArrayList<Double>();
 		for(int i=0;i<list.size();i++){
 			//check if type in typen
 			boolean found=false;
@@ -221,22 +308,26 @@ public class StatistiekView {
 			}
 			if(found){
 				double newTotal = totalen.get(foundPlace)+1;
+				double newPrice =prijzen.get(foundPlace)+ typen.get(foundPlace).getPrijs().getPrijs();
 				Abonnement abo = typen.get(foundPlace);
 				totalen.remove(foundPlace);
 				typen.remove(foundPlace);
+				prijzen.remove(foundPlace);
 				totalen.add(newTotal);
 				typen.add(abo);
+				prijzen.add(newPrice);
 			}
 			else{
 				totalen.add(1.0);
 				typen.add(list.get(i));
+				prijzen.add(list.get(i).getPrijs().getPrijs());
 			}
 		}
-		String result="";
-		for (int i=0;i<totalen.size();i++){
-			result = result + statistiekController.getAbonnementType(typen.get(i).getAbonnementId()) + ": "+totalen.get(i) + "/n";
-		}
+		StatistiekTableModel model = new StatistiekTableModel();
+		model.setTypen(typen);
+		model.setTotalalen(totalen);
+		model.setPrijzen(prijzen);;
+		statistiekTable.setModel(model);
 		
-		resultLabel.setText(result);
 	}
 }
