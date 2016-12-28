@@ -588,7 +588,6 @@ public class AbonnementDAO extends BaseDAO {
 				Timestamp startDatum = res.getTimestamp("start_datum");
 				Timestamp eindDatum = res.getTimestamp("eind_datum");
 				int prijsId=res.getInt("prijs_id");
-				prijsAbonnement = apDao.getPrijs_ticketObjectOpPrijs_ticketId(prijsId);
 				int kortingId =res.getInt("korting_id");
 				boolean actief=res.getBoolean("actief");
 				

@@ -23,6 +23,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import be.nmbs.controllers.StatistiekController;
+import be.nmbs.database.AbonnementDAO;
 import be.nmbs.logic.Abonnement;
 import be.nmbs.tablemodels.EmptyTableModel;
 import be.nmbs.tablemodels.StatistiekTableModel;
@@ -38,7 +39,7 @@ public class StatistiekView {
 	private final JTextField endDateTextField = new JTextField();
 	
 	private final JButton getTodayButton = new JButton("Vandaag");
-	private final JButton getThisWeekButton = new JButton("Deze week");
+	private final JButton getThisWeekButton = new JButton("Afgelopen 7 dagen");
 	private final JButton getThisMonthButton = new JButton("Deze maand");
 	private final JButton getThisYearButton = new JButton ("Dit jaar");
 	private final JButton getBetweenDatesButton = new JButton ("Tussen deze datums");
@@ -124,12 +125,19 @@ public class StatistiekView {
 		getThisWeekButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Calendar startCal = Calendar.getInstance();
-				Calendar endCal = startCal;
-				endCal.setTime(new Date(startCal.getTimeInMillis() - 604800000L));
-				
-				Timestamp startStamp = new Timestamp(startCal.getTimeInMillis());
-				Timestamp endStamp = new Timestamp(endCal.getTimeInMillis());
+				Date dat = new Date();
+				dat.setDate(dat.getDate()-7);
+				dat.setHours(0);
+				dat.setMinutes(0);
+				dat.setSeconds(0);
+				long test = dat.getTime();
+				Timestamp startStamp = new Timestamp(test);
+				dat=new Date();
+				dat.setHours(0);
+				dat.setMinutes(00);
+				dat.setSeconds(0);
+				long test2 = dat.getTime();
+				Timestamp endStamp = new Timestamp(test2);
 				ArrayList<Abonnement> abos = new ArrayList<Abonnement>();
 				abos = statistiekController.getAbonnementen(startStamp, endStamp);
 				if(abos != null){
@@ -152,16 +160,16 @@ public class StatistiekView {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Date dat = new Date();
-				dat.setDate(0);
+				dat.setDate(1);
 				dat.setHours(0);
 				dat.setMinutes(0);
 				dat.setSeconds(0);
 				long test = dat.getTime();
 				Timestamp startStamp = new Timestamp(test);
 				dat.setDate(30);
-				dat.setHours(23);
-				dat.setMinutes(59);
-				dat.setSeconds(59);
+				dat.setHours(0);
+				dat.setMinutes(00);
+				dat.setSeconds(0);
 				long test2 = dat.getTime();
 				Timestamp endStamp = new Timestamp(test2);
 				ArrayList<Abonnement> abos = new ArrayList<Abonnement>();
@@ -195,9 +203,9 @@ public class StatistiekView {
 				Timestamp startStamp = new Timestamp(test);
 				dat.setDate(31);
 				dat.setMonth(12);
-				dat.setHours(23);
-				dat.setMinutes(59);
-				dat.setSeconds(59);
+				dat.setHours(0);
+				dat.setMinutes(0);
+				dat.setSeconds(0);
 				long test2 = dat.getTime();
 				Timestamp endStamp = new Timestamp(test2);
 				ArrayList<Abonnement> abos = new ArrayList<Abonnement>();
@@ -222,7 +230,7 @@ public class StatistiekView {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try{
-					DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+					DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 					Date start = format.parse(startDateTextField.getText());
 					start.setHours(0);
 					start.setMinutes(0);
@@ -295,12 +303,13 @@ public class StatistiekView {
 		ArrayList<Abonnement> typen = new ArrayList<Abonnement>();
 		ArrayList<Double> totalen = new ArrayList<Double>();
 		ArrayList<Double> prijzen =new ArrayList<Double>();
+		AbonnementDAO dao= new AbonnementDAO();
 		for(int i=0;i<list.size();i++){
 			//check if type in typen
 			boolean found=false;
 			int foundPlace=0;
 			for(int y=0;y<typen.size();y++){
-				if(statistiekController.getAbonnementType(typen.get(y).getAbonnementId()) == statistiekController.getAbonnementType(list.get(i).getAbonnementId())){
+				if(dao.getAbonnementType(typen.get(y).getAbonnementId()) == dao.getAbonnementType(list.get(i).getAbonnementId())){
 					found=true;
 					foundPlace=y;
 					break;
