@@ -581,14 +581,13 @@ public class AbonnementDAO extends BaseDAO {
 			AbonnementPrijsDAO apDao = new AbonnementPrijsDAO();
 			res = prep.executeQuery();
 			while (res.next()) {
-				int abonnementId=res.getInt("abbonement_id");
+				int abonnementId=res.getInt("abonnement_id");
 				int klantContactId = res.getInt("klant_contact_id");
 				int gebruikerId = res.getInt("gebruiker_id");
 				String route=res.getString("route");
 				Timestamp startDatum = res.getTimestamp("start_datum");
 				Timestamp eindDatum = res.getTimestamp("eind_datum");
 				int prijsId=res.getInt("prijs_id");
-				prijsAbonnement = apDao.getPrijs_ticketObjectOpPrijs_ticketId(prijsId);
 				int kortingId =res.getInt("korting_id");
 				boolean actief=res.getBoolean("actief");
 				
@@ -596,8 +595,9 @@ public class AbonnementDAO extends BaseDAO {
 				Korting korting = kortingdao.getKorting(kortingId);
 				KlantDAO klantdao = new KlantDAO();
 				Klant klant = klantdao.getKlantById(klantContactId);
-				PrijsDAO prijsdao = new PrijsDAO();
-				Prijs prijs = prijsdao.getPrijsByPrijsId(prijsId);
+				BasisprijsAbonnementenDAO prijsdao = new BasisprijsAbonnementenDAO();
+				Prijs prijs = new Prijs(prijsId);
+				prijs.setPrijs(prijsdao.getPrijs_ById(prijsId));
 				
 				 abo = new Abonnement(abonnementId, klant, gebruikerId, route, startDatum, 
 						 eindDatum, prijs, korting, actief);
@@ -619,7 +619,96 @@ public class AbonnementDAO extends BaseDAO {
 		}
 	}
 	
+	public String getAbonnementType(int id){
+		int basisprijsId=0;
+		int typeid=0;
+		String result="";
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		String sql = "SELECT * FROM abonnement WHERE abonnement_id=?";
+		
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+
+			prep.setInt(1, id);
+			res = prep.executeQuery();
+			Prijs_abonnement prijsAbonnement = new Prijs_abonnement();
+			AbonnementPrijsDAO apDao = new AbonnementPrijsDAO();
+			while (res.next()) {
+				basisprijsId = res.getInt("prijs_id");
+			}
+			// get prijs column thingie
+			PreparedStatement prep2 =null;
+			ResultSet res2=null;
+			String sql2 = "SELECT * FROM basisprijs_abonnement WHERE basisprijs_abonnementId =?";
+			try{
+				if (getConnection().isClosed()) {
+					throw new IllegalStateException("Unexpected error!");
+				}
+				prep2 = getConnection().prepareStatement(sql2);
+				prep2.setInt(1,basisprijsId);
+				res2 = prep2.executeQuery();
+				while (res2.next()) {
+					typeid=res2.getInt("type_abonnementId");
+				}
+				// get type string
+				PreparedStatement prep3=null;
+				ResultSet res3=null;
+				String sql3 ="SELECT * FROM type_abonnement WHERE type_abonnementId=?";
+				try{
+					if (getConnection().isClosed()) {
+						throw new IllegalStateException("Unexpected error!");
+					}
+					prep3 = getConnection().prepareStatement(sql3);
+					prep3.setInt(1,typeid);
+					res3 = prep3.executeQuery();
+					while (res3.next()) {
+						result=res3.getString("type");
+					}
+					return result;
+				}catch (SQLException e) {
+					System.out.println(e.getMessage());
+					throw new RuntimeException(e.getMessage());
+				} finally {
+					try {
+						if (prep3 != null)
+							prep3.close();
+		
+					} catch (SQLException e) {
+						System.out.println(e.getMessage());
+						throw new RuntimeException("Unexpected error!");
+					}
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException(e.getMessage());
+			} finally {
+				try {
+					if (prep2 != null)
+						prep2.close();
 	
+				} catch (SQLException e) {
+					System.out.println(e.getMessage());
+					throw new RuntimeException("Unexpected error!");
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
 	
 	public ArrayList<Abonnement> getAllOnDate(Timestamp date){
 		PreparedStatement prep = null;
@@ -637,7 +726,7 @@ public class AbonnementDAO extends BaseDAO {
 
 			res = prep.executeQuery();
 			while (res.next()) {
-				int abonnementId=res.getInt("abbonement_id");
+				int abonnementId=res.getInt("abonnement_id");
 				int klantContactId = res.getInt("klant_contact_id");
 				int gebruikerId = res.getInt("gebruiker_id");
 				String route=res.getString("route");
@@ -651,8 +740,9 @@ public class AbonnementDAO extends BaseDAO {
 				Korting korting = kortingdao.getKorting(kortingId);
 				KlantDAO klantdao = new KlantDAO();
 				Klant klant = klantdao.getKlantById(klantContactId);
-				PrijsDAO prijsdao = new PrijsDAO();
-				Prijs prijs = prijsdao.getPrijsByPrijsId(prijsId);
+				BasisprijsAbonnementenDAO prijsdao = new BasisprijsAbonnementenDAO();
+				Prijs prijs = new Prijs(prijsId);
+				prijs.setPrijs(prijsdao.getPrijs_ById(prijsId));
 				
 				 abo = new Abonnement(abonnementId, klant, gebruikerId, route, startDatum, 
 						 eindDatum, prijs, korting, actief);

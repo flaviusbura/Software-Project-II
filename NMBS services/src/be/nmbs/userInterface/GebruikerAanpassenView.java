@@ -42,7 +42,7 @@ public class GebruikerAanpassenView {
 		usernameTextField.setText(gebruiker.getUsername());
 		
 		// Vanaf RoleCombo alles nog toevoegen
-		roleComboBox.addItem("Bediende");
+		roleComboBox.addItem("Gebruiker");
 		roleComboBox.addItem("Admin");
 		
 		if (gebruiker.getRol() == 1) {

@@ -165,7 +165,7 @@ public class NieuwGebruikerAanmakenView {
 					JOptionPane.showMessageDialog(null, "Wachtwoorden matchen niet, probeer opnieuw!");
 				}
 				
-				if ( g == null || nieuwGebruikerAanmakenController.addUser(g)) {
+				if ( g == null || !nieuwGebruikerAanmakenController.addUser(g)) {
 					JOptionPane.showMessageDialog(null, "Er bestaat reeds een gebruiker met deze username!");
 				} else {
 					JOptionPane.showMessageDialog(null, "Uw gebruiker is toegevoegd geweest!");

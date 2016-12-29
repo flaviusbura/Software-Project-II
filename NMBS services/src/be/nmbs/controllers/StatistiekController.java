@@ -19,7 +19,4 @@ public class StatistiekController {
 		return abonnementDAO.getAllOnDate(stamp);
 	}
 	
-	public String getAbonnementType(int id) {
-		return abonnementTypeDAO.getTypeVanAbonnement(id);
-	}
 }
