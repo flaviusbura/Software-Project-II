@@ -5,6 +5,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -71,20 +73,23 @@ public class VerlengAbonnementView {
 		
 		verlengButton.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {				
-				int aboId = Integer.parseInt(idTextField.getText());
-				
-				Abonnement abonnement = verlengAbonnementController.getAbonnement(aboId);
-				
-				String keuze = maandenComboBox.getSelectedItem().toString();
-				
-				if (verlengAbonnementController.verlengAbonnement(abonnement, keuze)) {
-					JOptionPane.showMessageDialog(null, "Abonnement met succes verlengd voor " + keuze + "!");
+			public void actionPerformed(ActionEvent e) {
+				int aboId = 0;
+				try {
+					aboId = Integer.parseInt(idTextField.getText());
+					Abonnement abonnement = verlengAbonnementController.getAbonnement(aboId);
 					
-					AbonnementView newView = new AbonnementView();
-					view.changeView(newView.initialize(view));
-				} else {
-					JOptionPane.showMessageDialog(null, "Er is iets foutgelopen bij het verlengen van het abonnement, probeer opnieuw.");
+					String keuze = maandenComboBox.getSelectedItem().toString();
+					
+					if (verlengAbonnementController.verlengAbonnement(abonnement, keuze)) {
+						JOptionPane.showMessageDialog(null, "Abonnement met succes verlengd voor " + keuze + "!");
+						AbonnementView newView = new AbonnementView();
+						view.changeView(newView.initialize(view));
+					} else {
+						JOptionPane.showMessageDialog(null, "Er is iets foutgelopen bij het verlengen van het abonnement, probeer opnieuw.");
+					}
+				} catch (NumberFormatException e2) {
+					JOptionPane.showMessageDialog(null, "Ongeldige invoer, probeer opnieuw!");
 				}
 			}
 		});
