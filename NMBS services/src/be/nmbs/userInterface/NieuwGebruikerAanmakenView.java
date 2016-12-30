@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 
 import be.nmbs.controllers.NieuwGebruikerAanmakenController;
 import be.nmbs.exceptions.EnkelLettersException;
+import be.nmbs.exceptions.GebruikerBestaatAlException;
 import be.nmbs.exceptions.PasswordNotMatchException;
 import be.nmbs.logic.Gebruiker;
 import be.nmbs.logic.VeiligeInvoer;
@@ -158,19 +159,20 @@ public class NieuwGebruikerAanmakenView {
 					}
 					
 					g = new Gebruiker(1, voornaam, achternaam, username, secureWachtwoord, rol, true);
+					if (!nieuwGebruikerAanmakenController.addUser(g)) {
+						throw new GebruikerBestaatAlException();
+					} else {
+						JOptionPane.showMessageDialog(null, "Uw gebruiker is toegevoegd geweest!");
+						GebruikerBeheerView newView = new GebruikerBeheerView();
+						view.changeView(newView.initialize(view));
+					}
 				} catch (EnkelLettersException ex) {
 					JOptionPane.showMessageDialog(null,
 							"De velden mogen niet leeg zijn en/of andere\nkarakters dan letters bevatten.");
 				} catch (PasswordNotMatchException ex) {
 					JOptionPane.showMessageDialog(null, "Wachtwoorden matchen niet, probeer opnieuw!");
-				}
-				
-				if ( g == null || !nieuwGebruikerAanmakenController.addUser(g)) {
+				} catch (GebruikerBestaatAlException e2) {
 					JOptionPane.showMessageDialog(null, "Er bestaat reeds een gebruiker met deze username!");
-				} else {
-					JOptionPane.showMessageDialog(null, "Uw gebruiker is toegevoegd geweest!");
-					GebruikerBeheerView newView = new GebruikerBeheerView();
-					view.changeView(newView.initialize(view));
 				}
 			}
 		});

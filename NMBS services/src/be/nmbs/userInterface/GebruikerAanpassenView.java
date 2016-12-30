@@ -43,7 +43,7 @@ public class GebruikerAanpassenView {
 		
 		// Vanaf RoleCombo alles nog toevoegen
 		roleComboBox.addItem("Gebruiker");
-		roleComboBox.addItem("Admin");
+		roleComboBox.addItem("Administrator");
 		
 		if (gebruiker.getRol() == 1) {
 			roleComboBox.setSelectedIndex(0);
