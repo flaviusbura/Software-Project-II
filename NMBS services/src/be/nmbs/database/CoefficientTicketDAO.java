@@ -131,9 +131,7 @@ public class CoefficientTicketDAO extends BaseDAO {
 			res = prep.executeQuery();
 
 			while (res.next()) {
-
 				coefficient = res.getDouble("coefficient");
-				System.out.println(res.getDouble("coefficient"));
 			}
 			return coefficient;
 		} catch (SQLException e) {
