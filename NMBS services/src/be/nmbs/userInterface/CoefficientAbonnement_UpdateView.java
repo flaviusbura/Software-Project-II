@@ -27,7 +27,7 @@ public class CoefficientAbonnement_UpdateView {
 	
 	private JComboBox<TypeAbonnement> typeComboBox;
 	
-	private final JButton updateButton = new JButton("Coëfficient aanpassen");
+	private final JButton updateButton = new JButton("Coefficient aanpassen");
 	private final JButton backButton = new JButton("Terug");
 
 	private final CoefficientAbonnement_UpdateController coefficientAbonnement_UpdateController = new CoefficientAbonnement_UpdateController();
@@ -80,9 +80,9 @@ public class CoefficientAbonnement_UpdateView {
 					double coef = Double.parseDouble(coefficientTextField.getText());
 				
 					if (coefficientAbonnement_UpdateController.updateCoefficient(typeAboId.getId(), coef)) {
-						JOptionPane.showMessageDialog(panel, "Coëfficient aangepast.");
+						JOptionPane.showMessageDialog(panel, "Coefficient aangepast.");
 					} else {
-						JOptionPane.showMessageDialog(panel, "Er is iets foutgelopen bij het aanpassen van de coëfficient, probeer opnieuw.");
+						JOptionPane.showMessageDialog(panel, "Er is iets foutgelopen bij het aanpassen van de coefficient, probeer opnieuw.");
 					}
 				} catch (NumberFormatException e1) {
 					
