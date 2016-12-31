@@ -6,37 +6,37 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 import be.nmbs.controllers.StatistiekController;
 import be.nmbs.database.AbonnementDAO;
 import be.nmbs.logic.Abonnement;
+import be.nmbs.logic.DateLabelFormatter;
 import be.nmbs.tablemodels.EmptyTableModel;
 import be.nmbs.tablemodels.StatistiekTableModel;
+
 public class StatistiekView {
 	private JPanel panel = new JPanel(new GridBagLayout());
 	
-	private final JLabel uitlegLabel = new JLabel("Verkrijg de statistieken van");
 	private final JLabel startDateLabel = new JLabel("Startdatum");
 	private final JLabel endDateLabel = new JLabel("Einddatum");
 	private final JLabel resultLabel = new JLabel("");
 	private final JTable statistiekTable = new JTable();
-	private final JTextField startDateTextField = new JTextField();
-	private final JTextField endDateTextField = new JTextField();
 	
 	private final JButton getTodayButton = new JButton("Vandaag");
 	private final JButton getThisWeekButton = new JButton("Afgelopen 7 dagen");
@@ -44,6 +44,12 @@ public class StatistiekView {
 	private final JButton getThisYearButton = new JButton ("Dit jaar");
 	private final JButton getBetweenDatesButton = new JButton ("Tussen deze datums");
 	private final JButton backButton = new JButton("Terug");
+	
+	private JDatePickerImpl startDatePicker;
+	private JDatePickerImpl endDatePicker;
+	
+	private Calendar startCal;
+	private Calendar endCal;
 	
 	private final StatistiekController statistiekController = new StatistiekController();
 	
@@ -64,11 +70,7 @@ public class StatistiekView {
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		
-		// Add Uitleg Label
-		c.gridx = 0;
-		c.gridy = 0;
-		panel.add(uitlegLabel, c);
-		
+		// Add Result Table
 		c.fill = GridBagConstraints.VERTICAL;
 		c.gridx = 0;
 		c.gridy = 0;
@@ -95,6 +97,7 @@ public class StatistiekView {
 		panel.add(getTodayButton, c);
 		
 		getTodayButton.addActionListener(new ActionListener(){
+			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Date dat = new Date();
@@ -123,6 +126,7 @@ public class StatistiekView {
 		panel.add(getThisWeekButton, c);
 		
 		getThisWeekButton.addActionListener(new ActionListener(){
+			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Date dat = new Date();
@@ -157,6 +161,7 @@ public class StatistiekView {
 		panel.add(getThisMonthButton, c);
 		
 		getThisMonthButton.addActionListener(new ActionListener(){
+			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Date dat = new Date();
@@ -191,6 +196,7 @@ public class StatistiekView {
 		panel.add(getThisYearButton, c);
 		
 		getThisYearButton.addActionListener(new ActionListener(){
+			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Date dat = new Date();
@@ -229,37 +235,39 @@ public class StatistiekView {
 		getBetweenDatesButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try{
-					DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-					Date start = format.parse(startDateTextField.getText());
-					start.setHours(0);
-					start.setMinutes(0);
-					start.setSeconds(0);
-					Timestamp startStamp = new Timestamp(start.getTime());
-					Date end = format.parse(endDateTextField.getText());
-					end.setHours(23);
-					end.setMinutes(59);
-					end.setSeconds(59);
-					Timestamp endStamp = new Timestamp(end.getTime());
-					
-					ArrayList<Abonnement> abos = new ArrayList<Abonnement>();
-					
-					abos = statistiekController.getAbonnementen(startStamp, endStamp);
-					if(abos != null){
-						setStatistiekresultaat(abos);
-					}
-					else{
-						EmptyTableModel emptyModel = new EmptyTableModel();
-						statistiekTable.setModel(emptyModel);
-					}
-				}
-				catch(ParseException e1) {
-					e1.printStackTrace();
-				}
+				Calendar startCal = Calendar.getInstance();
+				SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+				String startDate = startDatePicker.getJFormattedTextField().getText();
+				Date d = null;
+				try {
+					d = format.parse(startDate);
+					startCal.setTimeInMillis(d.getTime());
+				} catch (ParseException e1) { }
 				
+				Calendar endCal = Calendar.getInstance();
+				String endDate = endDatePicker.getJFormattedTextField().getText();
+				d = null;
+				try {
+					d = format.parse(endDate);
+					endCal.setTimeInMillis(d.getTime());
+				} catch (ParseException e1) { }
+
+				System.out.println(startCal.getTime());
+				System.out.println(endCal.getTime());
+				Timestamp startStamp = new Timestamp(startCal.getTimeInMillis());
+				Timestamp endStamp = new Timestamp(endCal.getTimeInMillis());
+				
+				ArrayList<Abonnement> abos = new ArrayList<Abonnement>();
+				
+				abos = statistiekController.getAbonnementen(startStamp, endStamp);
+				if(abos != null) {
+					setStatistiekresultaat(abos);
+				} else{
+					EmptyTableModel emptyModel = new EmptyTableModel();
+					statistiekTable.setModel(emptyModel);
+				}
 			}
 		});
-		
 		
 		// Add Start Date Label
 		c.insets = new Insets(5, 5, 0, 0);
@@ -267,11 +275,23 @@ public class StatistiekView {
 		c.gridy = 5;
 		panel.add(startDateLabel, c);
 		
-		// Add Start Date Text Field
+		// Add Start Date Picker
+		UtilDateModel startModel = new UtilDateModel();
+		startCal = statistiekController.getCurrentDate();
+		startModel.setDate(startCal.get(Calendar.YEAR), startCal.get(Calendar.MONTH), startCal.get(Calendar.DATE));
+		startModel.setSelected(true);
+
+		Properties p = new Properties();
+		p.put("text.today", "Vandaag");
+		p.put("text.month", "Maand");
+		p.put("text.year", "Jaar");
+		JDatePanelImpl startDatePanel = new JDatePanelImpl(startModel, p);
+		startDatePicker = new JDatePickerImpl(startDatePanel, new DateLabelFormatter());
+		
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 2;
 		c.gridy = 6;
-		panel.add(startDateTextField, c);
+		panel.add(startDatePicker, c);
 		
 		// Add End Date Label
 		c.insets = new Insets(5, 5, 0, 0);
@@ -279,11 +299,19 @@ public class StatistiekView {
 		c.gridy = 7;
 		panel.add(endDateLabel, c);
 		
-		// Add End Date Text Field
+		// Add End Date Picker
+		UtilDateModel endModel = new UtilDateModel();
+		endCal = statistiekController.getCurrentDate();
+		endModel.setDate(endCal.get(Calendar.YEAR), endCal.get(Calendar.MONTH), endCal.get(Calendar.DATE));
+		endModel.setSelected(true);
+
+		JDatePanelImpl endDatePanel = new JDatePanelImpl(endModel, p);
+		endDatePicker = new JDatePickerImpl(endDatePanel, new DateLabelFormatter());
+		
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 2;
 		c.gridy = 8;
-		panel.add(endDateTextField, c);
+		panel.add(endDatePicker, c);
 		
 		// Add Back Button
 		c.insets = new Insets(5, 5, 0, 0);
@@ -299,6 +327,7 @@ public class StatistiekView {
 			}
 		});
 	}
+	
 	private void setStatistiekresultaat(ArrayList<Abonnement> list) {
 		ArrayList<Abonnement> typen = new ArrayList<Abonnement>();
 		ArrayList<Double> totalen = new ArrayList<Double>();
@@ -337,6 +366,5 @@ public class StatistiekView {
 		model.setTotalalen(totalen);
 		model.setPrijzen(prijzen);;
 		statistiekTable.setModel(model);
-		
 	}
 }

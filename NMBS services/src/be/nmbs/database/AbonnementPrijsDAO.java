@@ -50,7 +50,7 @@ public class AbonnementPrijsDAO extends BaseDAO{
 	public Prijs_abonnement getPrijs_ticketObjectOpPrijs_ticketId(int id) {
 		PreparedStatement prep = null;
 		ResultSet res = null;
-		String sql = "SELECT * FROM prijs_abonnement where prijs_abonnementid = ?";
+		String sql = "SELECT * FROM prijs_abonnement where prijs_abonnementid = ? LIMIT 1";
 		try {
 			if (getConnection().isClosed()) {
 				throw new IllegalStateException("Unexpected error!");
@@ -58,14 +58,15 @@ public class AbonnementPrijsDAO extends BaseDAO{
 			prep = getConnection().prepareStatement(sql);
 			prep.setInt(1,id);
 			res = prep.executeQuery();
+			res.next();
 			
-				int prijs_abonnementid = res.getInt("prijs_abonnementid");
-				int type_abonnementid = res.getInt("type_abonnementid");
-				int coefficient_abonnementid = res.getInt("coefficient_abonnementid");
-				int basisprijs_abonnementid = res.getInt("basisprijs_abonnementid");
-				double totaal = res.getDouble("totaal");
-				
-				Prijs_abonnement prijs_abonnement = new Prijs_abonnement(prijs_abonnementid,type_abonnementid,coefficient_abonnementid,basisprijs_abonnementid,totaal);
+			int prijs_abonnementid = res.getInt("prijs_abonnementid");
+			int type_abonnementid = res.getInt("type_abonnementid");
+			int coefficient_abonnementid = res.getInt("coefficient_abonnementid");
+			int basisprijs_abonnementid = res.getInt("basisprijs_abonnementid");
+			double totaal = res.getDouble("totaal");
+			
+			Prijs_abonnement prijs_abonnement = new Prijs_abonnement(prijs_abonnementid,type_abonnementid,coefficient_abonnementid,basisprijs_abonnementid,totaal);
 			
 			
 			return prijs_abonnement;
