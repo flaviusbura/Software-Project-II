@@ -2,6 +2,7 @@ package be.nmbs.controllers;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import be.nmbs.database.AbonnementDAO;
 import be.nmbs.database.AbonnementTypeDAO;
@@ -19,7 +20,7 @@ public class StatistiekController {
 		return abonnementDAO.getAllOnDate(stamp);
 	}
 	
-	public String getAbonnementType(int id) {
-		return abonnementTypeDAO.getTypeVanAbonnement(id);
+	public Calendar getCurrentDate() {
+		return Calendar.getInstance();
 	}
 }

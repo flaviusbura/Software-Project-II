@@ -21,13 +21,13 @@ public class CoefficientAbonnement_AddView {
 	private final JPanel panel = new JPanel(new GridBagLayout());
 
 	private final JLabel typeLabel = new JLabel("Type Abonnement");
-	private final JLabel coefficientLabel = new JLabel("Coëfficient");
+	private final JLabel coefficientLabel = new JLabel("Coefficient");
 	
 	private final JTextField coefficientTextField = new JTextField(10);
 	
 	private JComboBox<TypeAbonnement> typeComboBox;
 	
-	private final JButton addButton = new JButton("Coëfficient Toevoegen");
+	private final JButton addButton = new JButton("Coefficient Toevoegen");
 	private final JButton backButton = new JButton("Terug");
 
 	private CoefficientAbonnement_AddController coefficientAbonnement_AddController = new CoefficientAbonnement_AddController();
@@ -82,12 +82,12 @@ public class CoefficientAbonnement_AddView {
 					CoefficientAbonnement ca = new CoefficientAbonnement(typeAboId.getId(),coeff);
 					
 					if (coefficientAbonnement_AddController.insertAbbonementCoefficient(ca)) {
-						JOptionPane.showMessageDialog(panel, "Coëfficient toegevoegd.");
+						JOptionPane.showMessageDialog(panel, "Coefficient toegevoegd.");
 					} else {
-						JOptionPane.showMessageDialog(panel, "Er is iets foutgelopen bij het toevoegen van de coëfficient, probeer opnieuw.");
+						JOptionPane.showMessageDialog(panel, "Er is iets foutgelopen bij het toevoegen van de coefficient, probeer opnieuw.");
 					}
 				} catch (NumberFormatException e1) {
-					JOptionPane.showMessageDialog(panel, "Geef een geldige coëfficient in.");
+					JOptionPane.showMessageDialog(panel, "Geef een geldige coefficient in.");
 				}
 			}
 		}); 

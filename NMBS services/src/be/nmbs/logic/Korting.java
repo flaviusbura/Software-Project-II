@@ -36,6 +36,6 @@ public class Korting {
 
 	@Override
 	public String toString() {
-		return hoeveelheid + " €" + " " + omschrijving;
+		return hoeveelheid + " " + omschrijving;
 	}
 }

@@ -133,9 +133,7 @@ public class BasisprijsTicketDAO extends BaseDAO{
 			res = prep.executeQuery();
 
 			while (res.next()) {
-
 				prijs = res.getDouble("prijs");
-
 			}
 			return prijs;
 		} catch (SQLException e) {

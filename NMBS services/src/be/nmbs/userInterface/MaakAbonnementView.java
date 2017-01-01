@@ -6,6 +6,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Timestamp;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import be.nmbs.controllers.MaakAbonnementController;
+import be.nmbs.database.KlantDAO;
+import be.nmbs.exceptions.KlantOnactiefException;
 import be.nmbs.logic.Abonnement;
 import be.nmbs.logic.DateLabelFormatter;
 import be.nmbs.logic.Gebruiker;
@@ -45,7 +48,7 @@ import be.nmbs.tablemodels.KlantTableModel;
  */
 public class MaakAbonnementView {
 	private final JPanel panel = new JPanel(new GridBagLayout());
-	
+
 	private final JTextField searchTextField = new JTextField();
 
 	private final JLabel typeLabel = new JLabel("Type");
@@ -55,52 +58,53 @@ public class MaakAbonnementView {
 	private final JLabel arrivalLabel = new JLabel("Bestemming");
 	private final JLabel startDatumLabel = new JLabel("Startdatum");
 	private final JLabel maandenLabel = new JLabel("Geldig");
-	
+
 	private final JTable klantTable = new JTable();
-	
+
 	private final String[] tab = { "3 maanden", "6 maanden", "9 maanden", "12 maanden" };
 	private final JComboBox<String> maandenComboBox = new JComboBox<String>(tab);
-	
+
 	private final JButton searchButton = new JButton("Zoek Klant");
 	private final JButton showPriceButton = new JButton("Toon Prijs");
 	private final JButton maakAbonnementButton = new JButton("Maak Abonnement");
 	private final JButton backButton = new JButton("Terug");
-	
+
 	private JComboBox<String> departureComboBox;
 	private JComboBox<String> arrivalComboBox;
 	private JComboBox<Prijs> prijsComboBox = new JComboBox<Prijs>();
 	private JComboBox<TypeAbonnement> typeComboBox;
 	private JComboBox<Korting> kortingComboBox;
-	
+
 	private JDatePickerImpl startDatePicker;
 	private Calendar cal;
-	
+
 	private final MaakAbonnementController maakAbonnementController = new MaakAbonnementController();
-	
+
 	public JPanel initialize(View view) {
 		GridBagConstraints c = new GridBagConstraints();
-		
+
 		// Add Klant Table
 		c.fill = GridBagConstraints.VERTICAL;
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridheight = 10;
 		klantTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		
-		JScrollPane scrollPane = new JScrollPane(klantTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-				
+
+		JScrollPane scrollPane = new JScrollPane(klantTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
 		panel.add(scrollPane, c);
 
 		// Add Station List For Comboboxes
 		ArrayList<StationNMBS> stations = maakAbonnementController.getAllStations();
 		String[] stationList = new String[stations.size()];
-		
-		for(int i=0; i < stations.size(); i++)
+
+		for (int i = 0; i < stations.size(); i++)
 			stationList[i] = "" + stations.get(i).getNaam();
-		
+
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
-		
+
 		// Add Search Text Field
 		c.insets = new Insets(0, 5, 0, 0);
 		c.gridx = 1;
@@ -112,25 +116,25 @@ public class MaakAbonnementView {
 		c.gridx = 2;
 		c.gridy = 0;
 		panel.add(searchButton, c);
-		
+
 		searchButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (!searchTextField.getText().isEmpty()) {
-			        String oms = searchTextField.getText();
-			        
-			        ArrayList<Klant> klanten = maakAbonnementController.getAllKlantenByLike(oms);
-			        
-			        KlantTableModel klantTableModel = new KlantTableModel();
-			        klantTableModel.setKlanten(klanten);
-			        
-			     	klantTable.setModel(klantTableModel);
+					String oms = searchTextField.getText();
+
+					ArrayList<Klant> klanten = maakAbonnementController.getAllKlantenByLike(oms);
+
+					KlantTableModel klantTableModel = new KlantTableModel();
+					klantTableModel.setKlanten(klanten);
+
+					klantTable.setModel(klantTableModel);
 				} else {
 					JOptionPane.showMessageDialog(null, "Geef een geldige waarde in.");
 				}
 			}
 		});
-		
+
 		// Add Departure Label
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
@@ -175,16 +179,17 @@ public class MaakAbonnementView {
 		p.put("text.year", "Jaar");
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 		startDatePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-		
+
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 2;
 		c.gridy = 3;
 		panel.add(startDatePicker, c);
 
-		/*ArrayList<Prijs> allPrijzen = maakAbonnementController.getAllPrijzen();
-		for (Prijs prijs : allPrijzen) {
-			prijsComboBox.addItem(prijs);
-		}*/
+		/*
+		 * ArrayList<Prijs> allPrijzen =
+		 * maakAbonnementController.getAllPrijzen(); for (Prijs prijs :
+		 * allPrijzen) { prijsComboBox.addItem(prijs); }
+		 */
 
 		// Add Prijs Label
 		c.insets = new Insets(5, 5, 0, 0);
@@ -192,10 +197,10 @@ public class MaakAbonnementView {
 		c.gridy = 4;
 		panel.add(prijsLabel, c);
 
-		/*// Add Prijs Combobox
-		c.gridx = 2;
-		c.gridy = 4;
-		panel.add(prijsComboBox, c);*/
+		/*
+		 * // Add Prijs Combobox c.gridx = 2; c.gridy = 4;
+		 * panel.add(prijsComboBox, c);
+		 */
 
 		// Add Korting Label
 		c.insets = new Insets(5, 5, 0, 0);
@@ -224,7 +229,7 @@ public class MaakAbonnementView {
 		c.gridx = 2;
 		c.gridy = 6;
 		panel.add(maandenComboBox, c);
-		
+
 		ArrayList<TypeAbonnement> allType = maakAbonnementController.getAllAbonnementTypes();
 		typeComboBox = new JComboBox<TypeAbonnement>();
 		for (TypeAbonnement typeAbonnement : allType) {
@@ -244,50 +249,44 @@ public class MaakAbonnementView {
 		panel.add(typeComboBox, c);
 
 		// Add Show Price Button
- 		c.gridx = 2;
- 		c.gridy = 10;
- 		panel.add(showPriceButton, c);
- 		
- 		showPriceButton.addActionListener(new ActionListener() {
- 			@Override
- 			public void actionPerformed(ActionEvent e) {
- 				TypeAbonnement type = (TypeAbonnement) typeComboBox.getSelectedItem();
- 				Korting korting = (Korting) kortingComboBox.getSelectedItem();
- 				int kortingId = korting.getId();
- 				System.out.println("KortingId: " + kortingId);
- 				int typeId = type.getId();
- 				System.out.println("typeId: " + typeId);
- 				double prijs2 = maakAbonnementController.getPrijs(typeId);
- 				System.out.println("prijs2: " + prijs2);
- 				double coeff = maakAbonnementController.getCoefficient(typeId);
- 				System.out.println("coeff: " + coeff);
+		c.gridx = 2;
+		c.gridy = 10;
+		panel.add(showPriceButton, c);
+
+		showPriceButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TypeAbonnement type = (TypeAbonnement) typeComboBox.getSelectedItem();
+				Korting korting = (Korting) kortingComboBox.getSelectedItem();
+				int kortingId = korting.getId();
+				int typeId = type.getId();
+				double prijs2 = maakAbonnementController.getPrijs(typeId);
+				double coeff = maakAbonnementController.getCoefficient(typeId);
 				Korting korting2 = maakAbonnementController.getKorting(kortingId);
- 				System.out.println("korting2: " + korting2);
- 				double kortingPercentage;
- 				double kortingHoeveelheid = korting2.getHoeveelheid();
- 				double totaalZonderKorting = 0;
- 				double totaalMetKorting = 0;
- 
- 				/**
- 				 * Prijs berekening
-				 */
- 				totaalZonderKorting = (prijs2 * coeff);
- 				kortingPercentage = (totaalZonderKorting / 100) * kortingHoeveelheid;
- 				totaalMetKorting = totaalZonderKorting - kortingPercentage;
- 				System.out.println("totaalZonderKorting: " + totaalZonderKorting);
- 				System.out.println("kortingPercentage: " + kortingPercentage);
- 				System.out.println("totaalMetKorting: " + totaalMetKorting);
- 				JOptionPane.showMessageDialog(panel, "Prijs is: €" + totaalMetKorting);
-  
- 			}
- 		});
-		
+				double kortingPercentage;
+				double kortingHoeveelheid = korting2.getHoeveelheid();
+				double totaalZonderKorting = 0;
+				double totaalMetKorting = 0;
+
+				totaalZonderKorting = (prijs2 * coeff);
+				kortingPercentage = (totaalZonderKorting / 100) * kortingHoeveelheid;
+				totaalMetKorting = totaalZonderKorting - kortingPercentage;
+				NumberFormat number = NumberFormat.getNumberInstance();
+				number.setMaximumFractionDigits(2);
+				String tzk = number.format(totaalZonderKorting);
+				String kp = number.format(kortingPercentage);
+				String tmk = number.format(totaalMetKorting);
+				JOptionPane.showMessageDialog(panel,
+						"Totaal zonder korting: " + tzk + "\nKortingpercentage: " + kp + "\nTotaal: " + tmk);
+			}
+		});
+
 		// Add Maak Abonnement Button
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 8;
 		panel.add(maakAbonnementButton, c);
-		
+
 		maakAbonnementButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -296,7 +295,7 @@ public class MaakAbonnementView {
 
 					String route = departureComboBox.getSelectedItem().toString() + " - "
 							+ arrivalComboBox.getSelectedItem().toString();
-					
+
 					// eindDatum omzetten
 					SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 					Date date2 = format.parse(startDatePicker.getJFormattedTextField().getText());
@@ -307,66 +306,58 @@ public class MaakAbonnementView {
 					try {
 						int row = klantTable.getSelectedRow();
 						int contactID = Integer.valueOf(klantTable.getModel().getValueAt(row, 0).toString());
-
-						/**
+						KlantDAO dao = new KlantDAO();
+						boolean actief = dao.getActiefById(contactID);
+						if (actief == false) {
+							throw new KlantOnactiefException();
+						}
+						/*
 						 * Variabelen declareren om de prijs berekening mogelijk
 						 * maken
 						 */
 						TypeAbonnement type = (TypeAbonnement) typeComboBox.getSelectedItem();
 
 						int typeAbonnementId = type.getId();
-
 						int basisprijsid = maakAbonnementController.getBasisPrijsId(typeAbonnementId);
-
 						double basisprijs = maakAbonnementController.getPrijs(typeAbonnementId);
-
 						int coefid = maakAbonnementController.getCoefficientId(typeAbonnementId);
-						System.out.println("coefid: " + coefid);
-
 						double coef = maakAbonnementController.getCoefficient(coefid);
-						System.out.println("coef: " + coef);
-
 						double totaal = basisprijs * coef;
-						System.out.println("totaal: " + totaal);
-
 						Prijs_abonnement prijs_abonnement = new Prijs_abonnement(typeAbonnementId, coefid, basisprijsid,
 								totaal);
-						Abonnement abonnement = new Abonnement(contactID, gebruiker.getId(), route, ts2, korting.getId(),
-								prijs_abonnement, true);
+						Abonnement abonnement = new Abonnement(contactID, gebruiker.getId(), route, ts2,
+								korting.getId(), prijs_abonnement, true);
 
 						int idvoorprijs = maakAbonnementController.insertAbonnementPrijs(prijs_abonnement);
 						prijs_abonnement.setPrijs_abonnementid(idvoorprijs);
 						abonnement.setPrijsId(prijs_abonnement);
-						System.out.println("idvoorprijs: " + idvoorprijs);
-						System.out.println("Prijs abonnement ID: " + prijs_abonnement.getPrijs_abonnementid());
-						
 						String keuze = maandenComboBox.getSelectedItem().toString();
-						
-						if (maakAbonnementController.insertAbonnement(keuze, abonnement)) {
-							/**
-							 * Prijs berekening
-							 */
 
+						if (maakAbonnementController.insertAbonnement(keuze, abonnement)) {
 							JOptionPane.showMessageDialog(panel, "Abonnement aangemaakt voor " + keuze);
 						} else {
-							JOptionPane.showMessageDialog(panel, "Er is iets misgelopen bij het maken van het abonnement, probeer opnieuw.");
+							JOptionPane.showMessageDialog(panel,
+									"Er is iets misgelopen bij het maken van het abonnement, probeer opnieuw.");
 						}
 					} catch (ArrayIndexOutOfBoundsException e2) {
 						JOptionPane.showMessageDialog(null,
-								"U heeft geen rij geselecteerd!\nSelecteer een rij die u wenst te wijzigen.");
+								"U heeft geen rij geselecteerd!\nSelecteer een klant voor wie u een abonnement\nwenst aan te maken.");
+					} catch (KlantOnactiefException e2) {
+						JOptionPane.showMessageDialog(null,
+								"Er mogen geen abonnementen aangamaakt worden\nvoor onactieve klanten.");
 					}
 				} catch (ParseException e1) {
 					e1.printStackTrace();
 				}
 			}
 		});
-		
+
 		// Add Back Button
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 2;
 		c.gridy = 8;
 		panel.add(backButton, c);
-		
+
 		backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

@@ -79,11 +79,10 @@ public class BoeteView {
 					
 				boolean betaald = paidCheckBox.isSelected();
 				
-				if (boeteController.updateBoete(boeteId, betaald)) {
-					javax.swing.JOptionPane.showMessageDialog(null, "Geef aub een bestaand ID in.");
+				if (!boeteController.updateBoete(boeteId, betaald)) {
+					JOptionPane.showMessageDialog(null, "Geef aub een bestaand ID in.");
 				} else {
 					JOptionPane.showMessageDialog(null, "Boete betaald.");
-					
 					HomeView newView = new HomeView();
 					view.changeView(newView.initialize(view));
 				}

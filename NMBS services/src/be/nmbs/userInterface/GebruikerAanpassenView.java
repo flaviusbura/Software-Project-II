@@ -16,6 +16,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import be.nmbs.controllers.GebruikerAanpassenController;
+import be.nmbs.database.GebruikerDAO;
 import be.nmbs.logic.Gebruiker;
 
 public class GebruikerAanpassenView {
@@ -42,8 +43,8 @@ public class GebruikerAanpassenView {
 		usernameTextField.setText(gebruiker.getUsername());
 		
 		// Vanaf RoleCombo alles nog toevoegen
-		roleComboBox.addItem("Bediende");
-		roleComboBox.addItem("Admin");
+		roleComboBox.addItem("Gebruiker");
+		roleComboBox.addItem("Administrator");
 		
 		if (gebruiker.getRol() == 1) {
 			roleComboBox.setSelectedIndex(0);
@@ -140,6 +141,7 @@ public class GebruikerAanpassenView {
 		saveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				GebruikerDAO dao = new GebruikerDAO();
 				Gebruiker g = gebruikerAanpassenController.getGebruiker(usernameTextField.getText());
 				
 				if (g != null && g.getId() != gebruiker.getId()) {
@@ -151,10 +153,10 @@ public class GebruikerAanpassenView {
 					g.setAchternaam(lastNameTextField.getText());
 					g.setUsername(usernameTextField.getText());
 					
-					if (!passwordField.getPassword().toString().isEmpty()) {
+					if (!(passwordField.getPassword().length == 0)) {
 						g.setWachtwoord(gebruikerAanpassenController.hashPassword(String.valueOf(passwordField.getPassword())));
 					} else {
-						g.setWachtwoord(gebruiker.getWachtwoord());
+						g.setWachtwoord(dao.getWachtwoordOpId(g.getId()));
 					}
 					
 					if (roleComboBox.getSelectedIndex() == 0) {
