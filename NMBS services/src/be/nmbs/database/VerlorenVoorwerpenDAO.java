@@ -155,7 +155,7 @@ public class VerlorenVoorwerpenDAO extends BaseDAO {
 				else
 				{
 					 timestamp = res.getTimestamp("datum");
-					 System.out.println(timestamp);
+					
 				}
 				
 				boolean actief = res.getBoolean("actief");

@@ -344,5 +344,37 @@ public class GebruikerDAO extends BaseDAO {
 		}
 	}
 	
-	
+	public String getWachtwoordOpId(int id) {
+		String wachtwoord = "";
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		String sql = "SELECT paswoord FROM gebruiker WHERE gebruiker_id = ?";
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+
+			prep.setInt(1, id);
+			res = prep.executeQuery();
+
+			while (res.next()) {
+				wachtwoord = res.getString("paswoord");
+			}
+			return wachtwoord;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+				if (res != null)
+					res.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
 }

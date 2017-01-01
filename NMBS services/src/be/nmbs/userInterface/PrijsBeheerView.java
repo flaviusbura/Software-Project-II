@@ -13,7 +13,7 @@ public class PrijsBeheerView {
 	private final JPanel panel = new JPanel(new GridBagLayout());
 
 	private final JButton prijsButton = new JButton("Prijzen");
-	private final JButton coefficientButton = new JButton("Coëfficient");
+	private final JButton coefficientButton = new JButton("Coefficient");
 	private final JButton backButton = new JButton("Terug");
 
 	public JPanel initialize(View view) {
