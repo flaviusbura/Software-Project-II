@@ -169,13 +169,11 @@ public class Abonnement {
 	 * @return Een Timestampobject dat drie maanden extra heeft gekregen.
 	 */
 	public Timestamp getTimestampDrieMaandAbonnemant(Timestamp timestamp) {
-		System.out.println("1------1  "+timestamp);
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(timestamp);
 		cal.add(Calendar.MONTH, 3);
 		cal.add(Calendar.SECOND, -1);
 		timestamp = new Timestamp(cal.getTime().getTime());
-		System.out.println("2------2  "+timestamp);
 		return timestamp;
 	}
 	
