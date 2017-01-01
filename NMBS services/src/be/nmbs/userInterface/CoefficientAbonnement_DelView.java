@@ -17,11 +17,11 @@ import be.nmbs.controllers.CoefficientAbonnement_DelController;
 public class CoefficientAbonnement_DelView {
 	private final JPanel panel = new JPanel(new GridBagLayout());
 	
-	private final JLabel coefficientLabel = new JLabel("Geef het Coëfficient ID");
+	private final JLabel coefficientLabel = new JLabel("Geef het Coefficient ID");
 	
 	private final JTextField coefficientTextField = new JTextField(10);
 	
-	private final JButton deleteButton = new JButton("Coëfficient verwijderen");
+	private final JButton deleteButton = new JButton("Coefficient verwijderen");
 	private final JButton backButton = new JButton("Terug");
 	
 	private final CoefficientAbonnement_DelController coefficientAbonnement_DelController = new CoefficientAbonnement_DelController();
@@ -54,12 +54,12 @@ public class CoefficientAbonnement_DelView {
 					Integer id = Integer.parseInt(coefficientTextField.getText());
 					
 					if (coefficientAbonnement_DelController.deleteCoefficient(id)) {
-						JOptionPane.showMessageDialog(panel, "Coëfficient verwijderd.");
+						JOptionPane.showMessageDialog(panel, "Coefficient verwijderd.");
 					} else {
-						JOptionPane.showMessageDialog(panel, "Er is iets foutgelopen bij het verwijderen van de coëfficient, probeer opnieuw.");
+						JOptionPane.showMessageDialog(panel, "Er is iets foutgelopen bij het verwijderen van de coefficient, probeer opnieuw.");
 					}
 				} catch (NumberFormatException e1) {
-					JOptionPane.showMessageDialog(panel, "Geef een geldige coëfficient in.");
+					JOptionPane.showMessageDialog(panel, "Geef een geldige coefficient in.");
 				}
 			}
 		});

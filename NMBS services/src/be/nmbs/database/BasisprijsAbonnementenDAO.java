@@ -211,9 +211,7 @@ public class BasisprijsAbonnementenDAO extends BaseDAO{
 			res = prep.executeQuery();
 
 			while (res.next()) {
-				
 				prijsid = res.getInt("basisprijs_abonnementId");
-				System.out.println("prijs id " + prijsid);
 			}
 			return prijsid;
 		} catch (SQLException e) {

@@ -603,5 +603,38 @@ public class KlantDAO extends BaseDAO {
 			}
 		}      
     }
+	
+	public boolean getActiefById(int id) {
+		PreparedStatement prep = null;
+		ResultSet res = null;
+		boolean actief = false;
+		String sql = "SELECT actief FROM klant_contact WHERE contact_id = ?";
+		try {
+			if (getConnection().isClosed()) {
+				throw new IllegalStateException("Unexpected error!");
+			}
+			prep = getConnection().prepareStatement(sql);
+			
+			prep.setInt(1, id);
+			res = prep.executeQuery();
+			while (res.next()) {
+				actief = res.getBoolean("actief");
+			}
+			return actief;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		} finally {
+			try {
+				if (prep != null)
+					prep.close();
+				if (res != null)
+					res.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Unexpected error!");
+			}
+		}
+	}
 }
 

@@ -24,7 +24,7 @@ import be.nmbs.logic.VeiligeInvoer;
 public class NieuweKlantAanmakenView {
 	private final JPanel panel = new JPanel(new GridBagLayout());
 	
-	private final String[] labelTexts = { "Voornaam", "Naam", "Telefoon", "Straat", "Huisnummer", "Bus", "Stad", "Postcode", "Land" };
+	private final String[] labelTexts = { "Voornaam", "Naam", "Telefoon", "Straat", "Huisnummer", "Bus", "Postcode", "Stad", "Land" };
 	private JLabel infoLabel;
 	
 	private final JTextField firstNameTextField = new JTextField(20);
@@ -94,18 +94,18 @@ public class NieuweKlantAanmakenView {
 		busTextField.setDocument(new JTextFieldLimit(5));
 		panel.add(busTextField, c);
 		
+		// Add City Text Field
+		c.insets = new Insets(5, 5, 0, 0);
+		c.gridx = 1;
+		c.gridy = 7;
+		panel.add(cityTextField, c);
+		
 		// Add Post Code Text Field
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
 		c.gridy = 6;
 		postCodeTextField.setDocument(new JTextFieldLimit(4));
 		panel.add(postCodeTextField, c);
-		
-		// Add City Text Field
-		c.insets = new Insets(5, 5, 0, 0);
-		c.gridx = 1;
-		c.gridy = 7;
-		panel.add(cityTextField, c);
 		
 		// Add Country Text Field
 		c.insets = new Insets(5, 5, 0, 0);
@@ -132,10 +132,10 @@ public class NieuweKlantAanmakenView {
 					String bus = busTextField.getText();
 					
 					int postcode = Integer.parseInt(postCodeTextField.getText());
+					
 					if (postcode < 1000 || postcode > 9999) {
 						throw new NietGeldigePostcodeException();
 					}
-					
 					String stad = cityTextField.getText();
 					if (VeiligeInvoer.checkForOnlyLetters(stad) == false) {
 						throw new EnkelLettersException();
@@ -173,12 +173,12 @@ public class NieuweKlantAanmakenView {
 							KlantBeheerView newView = new KlantBeheerView();
 							view.changeView(newView.initialize(view));
 						} else {
-							JOptionPane.showMessageDialog(null, "Er is iets foutgegaan bij het opslaan van de klant, probeer opnieuw.");
+							JOptionPane.showMessageDialog(null, "Er is iets fout gegaan bij het opslaan van de klant, probeer opnieuw.");
 						}
 					} else {
-						JOptionPane.showMessageDialog(null, "Er is iets foutgegaan bij het opslaan van het adres van de klant, probeer opnieuw.");
+						JOptionPane.showMessageDialog(null, "Er is iets fout gegaan bij het opslaan van het adres van de klant, probeer opnieuw.");
 					}
-				} catch (NumberFormatException e1) {
+					} catch (NumberFormatException e1) {
 					JOptionPane.showMessageDialog(null, "Gelieve alle velden correct in te vullen.");
 				} catch (EnkelLettersException e2) {
 					JOptionPane.showMessageDialog(null, "U mocht velden niet leeg laten of speciale karakters gebruiken als invoer.");

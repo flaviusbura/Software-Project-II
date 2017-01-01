@@ -12,9 +12,9 @@ import javax.swing.JPanel;
 public class CoefficientAbonnementView {
 	private final JPanel panel = new JPanel(new GridBagLayout());
 	
-	private final JButton insertButton = new JButton("Coëfficient toevoegen");
-	private final JButton deleteButton = new JButton("Coëfficient verwijderen");
-	private final JButton updateButton = new JButton("Coëfficient updaten");
+	private final JButton insertButton = new JButton("Coefficient toevoegen");
+	private final JButton deleteButton = new JButton("Coefficient verwijderen");
+	private final JButton updateButton = new JButton("Coefficient updaten");
 	private final JButton backButton = new JButton("Terug");
 
 	public JPanel initialize(View view) {

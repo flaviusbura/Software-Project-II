@@ -27,7 +27,7 @@ public class CoefficientTicket_UpdateView {
 	
 	private JComboBox<TypeTicket> typeComboBox;
 	
-	private final JButton updateButton = new JButton("Coëfficient Updaten");
+	private final JButton updateButton = new JButton("Coefficient Updaten");
 	private final JButton backButton = new JButton("Terug");
 
 	private final CoefficientTicket_UpdateController coefficientTicket_UpdateController = new CoefficientTicket_UpdateController();
@@ -80,12 +80,12 @@ public class CoefficientTicket_UpdateView {
 					double coef = Double.parseDouble(coefficientTextField.getText());
 	
 					if (coefficientTicket_UpdateController.updateCoefficient(typeAboId.getId(), coef)) {
-						JOptionPane.showMessageDialog(view.getPanel(), "Coëfficient aangepast.");
+						JOptionPane.showMessageDialog(view.getPanel(), "Coefficient aangepast.");
 					} else {
-						JOptionPane.showMessageDialog(view.getPanel(), "Er is iets foutgelopen tijdens het aanpassen van de coëfficient, probeer opnieuw.");
+						JOptionPane.showMessageDialog(view.getPanel(), "Er is iets foutgelopen tijdens het aanpassen van de coefficient, probeer opnieuw.");
 					}
 				} catch (NumberFormatException e1) {
-					JOptionPane.showMessageDialog(view.getPanel(), "Geen een geldige coëfficient in.");
+					JOptionPane.showMessageDialog(view.getPanel(), "Geen een geldige coefficient in.");
 				}
 			}
 		});

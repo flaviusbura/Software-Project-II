@@ -133,9 +133,7 @@ public class CoefficientAbonnementDAO extends BaseDAO {
 			res = prep.executeQuery();
 
 			while (res.next()) {
-
 				coefficient = res.getDouble("coefficient");
-				System.out.println("coefficient DAO= " +res.getDouble("coefficient"));
 			}
 			return coefficient;
 		} catch (SQLException e) {
@@ -168,9 +166,7 @@ public class CoefficientAbonnementDAO extends BaseDAO {
 			res = prep.executeQuery();
 
 			while (res.next()) {
-
 				coefficientId = res.getInt("coefficient_abonnementId");
-
 			}
 			return coefficientId;
 		} catch (SQLException e) {
