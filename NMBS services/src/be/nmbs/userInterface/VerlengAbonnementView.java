@@ -89,7 +89,8 @@ public class VerlengAbonnementView {
 					}
 				} catch (NumberFormatException e2) {
 					JOptionPane.showMessageDialog(null, "Ongeldige invoer, probeer opnieuw!");
-				}
+				} catch (NullPointerException e2) {
+					JOptionPane.showMessageDialog(null, "Het ingevoerde ID is ongeldig!");				}
 			}
 		});
 		
