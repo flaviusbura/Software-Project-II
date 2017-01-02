@@ -35,7 +35,6 @@ import be.nmbs.logic.DateLabelFormatter;
 import be.nmbs.logic.Gebruiker;
 import be.nmbs.logic.Klant;
 import be.nmbs.logic.Korting;
-import be.nmbs.logic.Prijs;
 import be.nmbs.logic.Prijs_abonnement;
 import be.nmbs.logic.StationNMBS;
 import be.nmbs.logic.TypeAbonnement;
@@ -53,7 +52,6 @@ public class MaakAbonnementView {
 
 	private final JLabel typeLabel = new JLabel("Type");
 	private final JLabel kortingLabel = new JLabel("Korting");
-	private final JLabel prijsLabel = new JLabel("Prijs");
 	private final JLabel departureLabel = new JLabel("Vertrekstation");
 	private final JLabel arrivalLabel = new JLabel("Bestemming");
 	private final JLabel startDatumLabel = new JLabel("Startdatum");
@@ -71,7 +69,6 @@ public class MaakAbonnementView {
 
 	private JComboBox<String> departureComboBox;
 	private JComboBox<String> arrivalComboBox;
-	private JComboBox<Prijs> prijsComboBox = new JComboBox<Prijs>();
 	private JComboBox<TypeAbonnement> typeComboBox;
 	private JComboBox<Korting> kortingComboBox;
 
@@ -185,27 +182,10 @@ public class MaakAbonnementView {
 		c.gridy = 3;
 		panel.add(startDatePicker, c);
 
-		/*
-		 * ArrayList<Prijs> allPrijzen =
-		 * maakAbonnementController.getAllPrijzen(); for (Prijs prijs :
-		 * allPrijzen) { prijsComboBox.addItem(prijs); }
-		 */
-
-		// Add Prijs Label
-		c.insets = new Insets(5, 5, 0, 0);
-		c.gridx = 1;
-		c.gridy = 4;
-		panel.add(prijsLabel, c);
-
-		/*
-		 * // Add Prijs Combobox c.gridx = 2; c.gridy = 4;
-		 * panel.add(prijsComboBox, c);
-		 */
-
 		// Add Korting Label
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
-		c.gridy = 5;
+		c.gridy = 4;
 		panel.add(kortingLabel, c);
 
 		ArrayList<Korting> allKorting = maakAbonnementController.getAllKortingen();
@@ -215,19 +195,19 @@ public class MaakAbonnementView {
 		}
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 2;
-		c.gridy = 5;
+		c.gridy = 4;
 		panel.add(kortingComboBox, c);
 
 		// Add Maanden Label
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
-		c.gridy = 6;
+		c.gridy = 5;
 		panel.add(maandenLabel, c);
 
 		// Add Maanden Combobox
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 2;
-		c.gridy = 6;
+		c.gridy = 5;
 		panel.add(maandenComboBox, c);
 
 		ArrayList<TypeAbonnement> allType = maakAbonnementController.getAllAbonnementTypes();
@@ -239,18 +219,18 @@ public class MaakAbonnementView {
 		// Add Type Label
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 1;
-		c.gridy = 7;
+		c.gridy = 6;
 		panel.add(typeLabel, c);
 
 		// Add Type List
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 2;
-		c.gridy = 7;
+		c.gridy = 6;
 		panel.add(typeComboBox, c);
 
 		// Add Show Price Button
 		c.gridx = 2;
-		c.gridy = 10;
+		c.gridy = 8;
 		panel.add(showPriceButton, c);
 
 		showPriceButton.addActionListener(new ActionListener() {
@@ -355,7 +335,7 @@ public class MaakAbonnementView {
 		// Add Back Button
 		c.insets = new Insets(5, 5, 0, 0);
 		c.gridx = 2;
-		c.gridy = 8;
+		c.gridy = 9;
 		panel.add(backButton, c);
 
 		backButton.addActionListener(new ActionListener() {

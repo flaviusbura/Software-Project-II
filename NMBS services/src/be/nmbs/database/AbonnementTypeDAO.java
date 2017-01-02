@@ -1,19 +1,10 @@
 package be.nmbs.database;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import be.nmbs.logic.Abonnement;
-import be.nmbs.logic.Korting;
 import be.nmbs.database.BaseDAO;
-import be.nmbs.database.KlantDAO;
-import be.nmbs.database.KortingDAO;
-
-import be.nmbs.logic.Klant;
-import be.nmbs.logic.Prijs;
 
 public class AbonnementTypeDAO extends BaseDAO{
 	

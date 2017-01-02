@@ -3,11 +3,9 @@ package be.nmbs.database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import be.nmbs.logic.Abonnement;
-import be.nmbs.logic.TypeAbonnement;;
+import be.nmbs.logic.TypeAbonnement;
 
 public class TypeAbonnementDAO extends BaseDAO {
 

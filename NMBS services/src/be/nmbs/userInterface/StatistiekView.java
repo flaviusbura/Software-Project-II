@@ -25,6 +25,7 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import be.nmbs.controllers.StatistiekController;
 import be.nmbs.database.AbonnementDAO;
+import be.nmbs.database.AbonnementPrijsDAO;
 import be.nmbs.logic.Abonnement;
 import be.nmbs.logic.DateLabelFormatter;
 import be.nmbs.tablemodels.EmptyTableModel;
@@ -346,7 +347,7 @@ public class StatistiekView {
 			}
 			if(found){
 				double newTotal = totalen.get(foundPlace)+1;
-				double newPrice =prijzen.get(foundPlace)+ typen.get(foundPlace).getPrijs().getPrijs();
+				double newPrice =prijzen.get(foundPlace)+ typen.get(foundPlace).getPrijsId().getTotaal();
 				Abonnement abo = typen.get(foundPlace);
 				totalen.remove(foundPlace);
 				typen.remove(foundPlace);
@@ -358,13 +359,14 @@ public class StatistiekView {
 			else{
 				totalen.add(1.0);
 				typen.add(list.get(i));
-				prijzen.add(list.get(i).getPrijs().getPrijs());
+				AbonnementPrijsDAO dao2 = new AbonnementPrijsDAO();
+				prijzen.add(dao2.getPrijs_ticketObjectOpPrijs_ticketId(list.get(i).getPrijsId2()).getTotaal());
 			}
 		}
 		StatistiekTableModel model = new StatistiekTableModel();
 		model.setTypen(typen);
 		model.setTotalalen(totalen);
-		model.setPrijzen(prijzen);;
+		model.setPrijzen(prijzen);
 		statistiekTable.setModel(model);
 	}
 }

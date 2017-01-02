@@ -1,6 +1,7 @@
 package be.nmbs.controllers;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import be.nmbs.database.BasisprijsTicketDAO;
 import be.nmbs.database.CoefficientTicketDAO;
@@ -58,5 +59,9 @@ public class TicketController {
 	
 	public double getCoefficient(int id) {
 		return coefficientTicketDAO.getCoefficient_ById(id);
+	}
+	
+	public Calendar getCurrentDate() {
+		return Calendar.getInstance();
 	}
 }

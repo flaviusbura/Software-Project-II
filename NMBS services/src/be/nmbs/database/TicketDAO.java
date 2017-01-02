@@ -175,7 +175,6 @@ public class TicketDAO extends BaseDAO{
 				int klas = res.getInt("klas");
 				boolean actief = res.getBoolean("actief");
 				eindStation.setNaam(res.getString("eind_station"));
-				String omschrijving = res.getString("omschrijving");
 				int prijsId = res.getInt("prijs_id");
 				System.out.println(prijsId);
 				prijsticket = tpdao.getPrijs_ticketObjectOpPrijs_ticketIdOFFLINE(prijsId);

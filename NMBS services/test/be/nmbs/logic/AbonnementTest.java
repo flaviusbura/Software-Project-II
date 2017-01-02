@@ -21,7 +21,7 @@ public class AbonnementTest {
 	private Abonnement abonnementMetParam;
 	private Korting korting;
 	private Klant klant;
-	private Prijs prijs;
+	private int prijs;
 	
 	/**
 	 * Objecten declareren om deze te kunnen hergebruiken
@@ -33,7 +33,7 @@ public class AbonnementTest {
 		Timestamp ts = new Timestamp(System.currentTimeMillis());
 		korting = new Korting(1, 0.5, "Korting", true, "Standaard");
 		klant = new Klant();
-		prijs = new Prijs();
+		prijs = 0;
 		abonnementMetParam = new Abonnement(1,klant, 1,"Brussel-Mechelen", ts, ts, prijs, korting, true);
 	}
 	/**
@@ -59,9 +59,7 @@ public class AbonnementTest {
 		assertEquals(klant, abonnementMetParam.getKlant());
 		assertEquals("testroute", abonnementMetParam.getRoute());
 		assertEquals("november", abonnementMetParam.getEindDatum());
-		assertEquals(prijs, abonnementMetParam.getPrijs());
-		
-	
+		assertEquals(prijs, abonnementMetParam.getPrijsId2());
 	}
 
 	/*
@@ -93,7 +91,7 @@ public class AbonnementTest {
 	}
 	@Test
 	public void testGetPrijs(){
-		assertEquals(prijs,abonnementMetParam.getPrijs());
+		assertEquals(prijs,abonnementMetParam.getPrijsId2());
 	}
 	/**
 	 *  test setters
@@ -133,9 +131,9 @@ public class AbonnementTest {
 	}
 	@Test
 	public void testSetPrijs(){
-		prijs = null;
-		abonnementMetParam.setPrijs(prijs);
-		assertEquals(prijs,abonnementMetParam.getPrijs());
+		prijs = 0;
+		abonnementMetParam.setPrijsId2(prijs);
+		assertEquals(prijs,abonnementMetParam.getPrijsId2());
 	}
 	
 	@Test
@@ -161,6 +159,5 @@ public class AbonnementTest {
 		abonnementMetParam = null;
 		korting = null;
 		klant = null;
-		prijs = null;
 	}
 }

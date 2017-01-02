@@ -11,9 +11,7 @@ import be.nmbs.logic.Korting;
 import be.nmbs.database.BaseDAO;
 import be.nmbs.database.KlantDAO;
 import be.nmbs.database.KortingDAO;
-import be.nmbs.database.PrijsDAO;
 import be.nmbs.logic.Klant;
-import be.nmbs.logic.Prijs;
 import be.nmbs.logic.Prijs_abonnement;
 
 public class AbonnementDAO extends BaseDAO {
@@ -339,10 +337,8 @@ public class AbonnementDAO extends BaseDAO {
 				Korting korting = kortingdao.getKorting(kortingId);
 				KlantDAO klantdao = new KlantDAO();
 				Klant klant = klantdao.getKlantById(klantContactId);
-				PrijsDAO prijsdao = new PrijsDAO();
-				Prijs prijs = prijsdao.getPrijsByPrijsId(prijsId);
 
-				abo = new Abonnement(abonnementId, klant, gebruikerId, route, startDatum, eindDatum, prijs, korting,
+				abo = new Abonnement(abonnementId, klant, gebruikerId, route, startDatum, eindDatum, prijsId, korting,
 						actief);
 			}
 			return abo;
@@ -572,8 +568,7 @@ public class AbonnementDAO extends BaseDAO {
 			//dit later veranderen naar getKlantContactId();
 			prep.setTimestamp(1, date1);
 			prep.setTimestamp(2, date2);
-			Prijs_abonnement prijsAbonnement = new Prijs_abonnement();
-			AbonnementPrijsDAO apDao = new AbonnementPrijsDAO();
+			
 			res = prep.executeQuery();
 			while (res.next()) {
 				int abonnementId=res.getInt("abonnement_id");
@@ -590,12 +585,9 @@ public class AbonnementDAO extends BaseDAO {
 				Korting korting = kortingdao.getKorting(kortingId);
 				KlantDAO klantdao = new KlantDAO();
 				Klant klant = klantdao.getKlantById(klantContactId);
-				BasisprijsAbonnementenDAO prijsdao = new BasisprijsAbonnementenDAO();
-				Prijs prijs = new Prijs(prijsId);
-				prijs.setPrijs(prijsdao.getPrijs_ById(prijsId));
 				
 				 abo = new Abonnement(abonnementId, klant, gebruikerId, route, startDatum, 
-						 eindDatum, prijs, korting, actief);
+						 eindDatum, prijsId, korting, actief);
 				 list.add(abo);
 			}
 			return list;
@@ -630,8 +622,7 @@ public class AbonnementDAO extends BaseDAO {
 
 			prep.setInt(1, id);
 			res = prep.executeQuery();
-			Prijs_abonnement prijsAbonnement = new Prijs_abonnement();
-			AbonnementPrijsDAO apDao = new AbonnementPrijsDAO();
+
 			while (res.next()) {
 				basisprijsId = res.getInt("prijs_id");
 			}
@@ -735,12 +726,9 @@ public class AbonnementDAO extends BaseDAO {
 				Korting korting = kortingdao.getKorting(kortingId);
 				KlantDAO klantdao = new KlantDAO();
 				Klant klant = klantdao.getKlantById(klantContactId);
-				BasisprijsAbonnementenDAO prijsdao = new BasisprijsAbonnementenDAO();
-				Prijs prijs = new Prijs(prijsId);
-				prijs.setPrijs(prijsdao.getPrijs_ById(prijsId));
 				
 				 abo = new Abonnement(abonnementId, klant, gebruikerId, route, startDatum, 
-						 eindDatum, prijs, korting, actief);
+						 eindDatum, prijsId, korting, actief);
 				 list.add(abo);
 			}
 			return list;

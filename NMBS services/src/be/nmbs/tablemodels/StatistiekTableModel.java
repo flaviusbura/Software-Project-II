@@ -7,7 +7,7 @@ import javax.swing.table.TableModel;
 
 import be.nmbs.database.AbonnementDAO;
 import be.nmbs.logic.Abonnement;
-import be.nmbs.logic.Gebruiker;
+
 public class StatistiekTableModel implements TableModel {
 	private ArrayList<Abonnement> types;
 	private ArrayList<Double> totalen;

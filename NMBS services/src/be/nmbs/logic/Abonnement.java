@@ -19,7 +19,6 @@ public class Abonnement {
 	private Timestamp startDatum;
 	private Timestamp eindDatum;
 	private int prijsId2;
-	private Prijs prijs;
 	private Korting korting;
 	private boolean actief;
 	private int klant_contactId;
@@ -40,7 +39,7 @@ public class Abonnement {
 	 * @param actief
 	 */
 	public Abonnement(int abonnementId, Klant klant, int gebruikerId, String route, Timestamp startDatum,
-			Timestamp eindDatum, Prijs prijs, Korting korting, boolean actief) {
+			Timestamp eindDatum, int prijsId2, Korting korting, boolean actief) {
 		super();
 		this.abonnementId = abonnementId;
 		this.klant = klant;
@@ -48,7 +47,7 @@ public class Abonnement {
 		this.route = route;
 		this.startDatum = startDatum;
 		this.eindDatum = eindDatum;
-		this.prijs = prijs;
+		this.setPrijsId2(prijsId2);
 		this.korting = korting;
 		this.actief = actief;
 	}
@@ -141,7 +140,7 @@ public class Abonnement {
 		this.abonnementId = abonnementId;
 		this.route = route;
 		this.startDatum = startDatum;
-		this.prijsId2 = prijsId;
+		this.setPrijsId2(prijsId);
 		this.actief = actief;
 	}
 
@@ -275,7 +274,7 @@ public class Abonnement {
 	public String toString() {
 		return "Abonnement [sdf=" + sdf + ", abonnementId=" + abonnementId + ", klant=" + klant + ", gebruikerId="
 				+ gebruikerId + ", route=" + route + ", startDatum=" + startDatum + ", eindDatum=" + eindDatum
-				+ ", prijs=" + prijs + ", korting=" + korting + ", actief=" + actief + ", klant_contactId="
+				+ ", korting=" + korting + ", actief=" + actief + ", klant_contactId="
 				+ klant_contactId + ", prijsId=" + prijsId + ", kortingId=" + kortingId + "]";
 	}
 
@@ -306,14 +305,6 @@ public class Abonnement {
 
 	public void setEindDatum(Timestamp eindDatum) {
 		this.eindDatum = eindDatum;
-	}
-
-	public Prijs getPrijs() {
-		return prijs;
-	}
-
-	public void setPrijs(Prijs prijs) {
-		this.prijs = prijs;
 	}
 
 	public int getKlantContactId() {
@@ -347,5 +338,13 @@ public class Abonnement {
 
 	public void setKortingId(int kortingId) {
 		this.kortingId = kortingId;
+	}
+
+	public int getPrijsId2() {
+		return prijsId2;
+	}
+
+	public void setPrijsId2(int prijsId2) {
+		this.prijsId2 = prijsId2;
 	}
 }

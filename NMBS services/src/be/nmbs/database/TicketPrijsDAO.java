@@ -4,17 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
-import be.nmbs.logic.Klant;
 import be.nmbs.logic.Prijs_ticket;
-import be.nmbs.logic.StationNMBS;
-import be.nmbs.logic.Ticket;
-import be.nmbs.logic.TypeAbonnement;
 
 public class TicketPrijsDAO extends BaseDAO{
 	

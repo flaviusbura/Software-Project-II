@@ -5,12 +5,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import be.nmbs.database.AbonnementDAO;
-import be.nmbs.database.AbonnementTypeDAO;
 import be.nmbs.logic.Abonnement;
 
 public class StatistiekController {
 	private final AbonnementDAO abonnementDAO = new AbonnementDAO();
-	private final AbonnementTypeDAO abonnementTypeDAO = new AbonnementTypeDAO();
 	
 	public ArrayList<Abonnement> getAbonnementen(Timestamp startStamp, Timestamp endStamp) {
 		return abonnementDAO.getAllBetweenDates(startStamp, endStamp);

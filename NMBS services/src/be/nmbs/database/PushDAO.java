@@ -1,11 +1,8 @@
 package be.nmbs.database;
 
-import java.sql.DriverManager;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import be.nmbs.logic.Klant;
 import be.nmbs.logic.Prijs_ticket;
 import be.nmbs.logic.Ticket;
 import be.nmbs.logic.VerlorenVoorwerp;

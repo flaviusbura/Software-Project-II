@@ -6,13 +6,11 @@ import be.nmbs.database.BasisprijsAbonnementenDAO;
 import be.nmbs.database.CoefficientAbonnementDAO;
 import be.nmbs.database.KlantDAO;
 import be.nmbs.database.KortingDAO;
-import be.nmbs.database.PrijsDAO;
 import be.nmbs.database.StationDAO;
 import be.nmbs.database.TypeAbonnementDAO;
 import be.nmbs.logic.Abonnement;
 import be.nmbs.logic.Klant;
 import be.nmbs.logic.Korting;
-import be.nmbs.logic.Prijs;
 import be.nmbs.logic.Prijs_abonnement;
 import be.nmbs.logic.StationNMBS;
 import be.nmbs.logic.TypeAbonnement;
@@ -25,7 +23,6 @@ public class MaakAbonnementController {
 	private final KlantDAO klantDAO = new KlantDAO();
 	private final KortingDAO kortingDAO = new KortingDAO();
 	private final AbonnementDAO abonnementDAO = new AbonnementDAO();
-	private final PrijsDAO prijsDAO = new PrijsDAO();
 	private final TypeAbonnementDAO typeAbonnementDAO = new TypeAbonnementDAO();
 	private final BasisprijsAbonnementenDAO basisprijsAbonnementenDAO = new BasisprijsAbonnementenDAO();
 	private final CoefficientAbonnementDAO coefficientAbonnementDAO = new CoefficientAbonnementDAO();
@@ -59,10 +56,6 @@ public class MaakAbonnementController {
 
 	public Calendar getCurrentDate() {
 		return Calendar.getInstance();
-	}
-	
-	public ArrayList<Prijs> getAllPrijzen() {
-		return prijsDAO.getAll();
 	}
 	
 	public ArrayList<TypeAbonnement> getAllAbonnementTypes() {

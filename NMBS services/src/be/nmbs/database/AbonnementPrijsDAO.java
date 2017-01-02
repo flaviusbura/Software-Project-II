@@ -9,7 +9,6 @@ import be.nmbs.logic.Prijs_abonnement;
 
 public class AbonnementPrijsDAO extends BaseDAO{
 	
-	
 	public int insert(Prijs_abonnement pa) {
 		PreparedStatement prep = null;
 		String sql = "INSERT INTO prijs_abonnement VALUES(null,?,?,?,?)";
@@ -85,5 +84,4 @@ public class AbonnementPrijsDAO extends BaseDAO{
 			}
 		}
 	}
-
 }
